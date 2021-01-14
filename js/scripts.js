@@ -22,7 +22,7 @@ function loadItems() {
 
              <div class="cardBottom">
                <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" >
-               <p>Inzet: <input form="deMolForm" type="text" class="btnValue" id="${deelnemer.naam}" value="0"/></p>              
+               <p>Inzet: <input form="deMolForm" type="text" class="btnValue" id="${deelnemer.naam}" value="0" readonly/></p>              
                <input type="button" class="btnMin" onclick="decrementValue('${deelnemer.naam}')" value="-" disabled/>  
                <input type="button" class="btnPlus" onclick="incrementValue('${deelnemer.naam}')" value="+" /> 
              </div> 
