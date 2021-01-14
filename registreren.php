@@ -21,22 +21,12 @@ session_start();
     $sql = "SELECT * FROM table_Users";
     if($result = mysqli_query($dbconn, $sql)){
         if(mysqli_num_rows($result) > 0){
-            echo "<table>";
-                echo "<tr>";
-                    echo "<th>id</th>";
-                    echo "<th>first_name</th>";
-                    echo "<th>last_name</th>";
-                    echo "<th>email</th>";
-                echo "</tr>";
             while($row = mysqli_fetch_array($result)){
-                echo "<tr>";
-                    echo "<td>" . $row['Id'] . "</td>";
-                    echo "<td>" . $row['Naam'] . "</td>";
-                    echo "<td>" . $row['alina'] . "</td>";
-                    echo "<td>" . $row['bart'] . "</td>";
-                echo "</tr>";
+              echo "<p>" . $row['Id'] . "</p>";
+              echo "<p>" . $row['Naam'] . "</p>";
+              echo "<p>" . $row['alina'] . "</p>";
+              echo "<p>" . $row['bart'] . "</p>";
             }
-            echo "</table>";
             // Free result set
             mysqli_free_result($result);
         } else{

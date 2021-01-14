@@ -33,7 +33,7 @@ function loadItems() {
 }
 
 window.addEventListener('load', function() {
-    loadItems();
+    //loadItems();
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 1,
         loop: true,
