@@ -19,24 +19,18 @@ mysqli_close($dbconn);
   <?php
   
     //query ledenoverzicht
-    $qrySelectLeden = `SELECT Id, Naam, alina
+    $qrySelectLid = `SELECT Id, Naam, alina
     FROM table_Users 
     WHERE Naam = "Joske"
     `;
 
     //statement aanmaken
-    if ($stmtSelectLeden = mysqli_prepare($dbconn, $qrySelectLeden)){
-    //query uitvoeren
-    mysqli_stmt_execute($stmtSelectLeden);
-    //resultaat binden aan lokale variabelen
-    mysqli_stmt_bind_result($stmtSelectLeden, $Id, $Naam, $alina);
-    //resultaten opslaan
-    mysqli_stmt_store_result($stmtSelectLeden);
+    if ($stmtSelectLid = mysqli_prepare($dbconn, $qrySelectLid)){
+      mysqli_stmt_bind_param($stmtSelectLid, "sss", $Id, $Naam, $alina);
+      mysqli_stmt_execute($stmtSelectLid);
+      //mysqli_stmt_bind_result($stmtSelectLid, $lidID);
+      mysqli_stmt_fetch($stmtSelectLid);
     }
-
-    echo $Id;
-    echo $Naam;
-    echo $alina;
   ?>
 
     <p><?php echo $Id; ?></p>
