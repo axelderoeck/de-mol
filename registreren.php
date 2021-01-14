@@ -4,7 +4,7 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
-mysqli_close($dbconn);
+//mysqli_close($dbconn);
 
 ?>
 
