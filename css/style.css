@@ -162,8 +162,8 @@ position: absolute;
   font-size: 100px;
   border: none;
   border-radius: 50px;
-  width: 100px;
-  height: 100px;
+  width: 100px !important;
+  height: 100px !important;
   line-height: 100px;
   display: inline-block;
     position: relative;
@@ -172,10 +172,6 @@ position: absolute;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
-     -moz-width: 100px;
-  -moz-height: 100px;
-    -webkit-width: 100px;
-  -webkit-height: 100px;
 }
 
 .btnPlus:disabled {
@@ -198,10 +194,6 @@ position: relative;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
-    -moz-width: 100px;
-  -moz-height: 100px;
-    -webkit-width: 100px;
-  -webkit-height: 100px;
 }
 
 .btnMin:disabled {
