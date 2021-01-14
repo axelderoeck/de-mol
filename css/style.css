@@ -17,7 +17,13 @@ input {
 -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
-    -webkit-border-radius: 0;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
 }
 
 .carousel {
