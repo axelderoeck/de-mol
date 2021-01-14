@@ -28,7 +28,7 @@ mysqli_close($dbconn);
     if ($stmtSelectLid = mysqli_prepare($dbconn, $qrySelectLid)){
       mysqli_stmt_bind_param($stmtSelectLid, "sss", $Id, $Naam, $alina);
       mysqli_stmt_execute($stmtSelectLid);
-      //mysqli_stmt_bind_result($stmtSelectLid, $lidID);
+      mysqli_stmt_bind_result($stmtSelectLid, $Id, $Naam, $alina);
       mysqli_stmt_fetch($stmtSelectLid);
     }
   ?>
