@@ -19,8 +19,10 @@ mysqli_close($dbconn);
   <?php
   
     //query ledenoverzicht
-    $qrySelectLeden = "SELECT Id, Naam, alina
-    FROM table_Users Where Naam = 'Joske';";
+    $qrySelectLeden = `SELECT Id, Naam, alina
+    FROM table_Users 
+    WHERE Naam = "Joske"
+    `
 
     //statement aanmaken
     if ($stmtSelectLeden = mysqli_prepare($dbconn, $qrySelectLeden)){
