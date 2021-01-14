@@ -172,6 +172,7 @@ position: absolute;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
+    padding: 0
 }
 
 .btnPlus:disabled {
@@ -194,6 +195,7 @@ position: relative;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
+    padding: 0
 }
 
 .btnMin:disabled {
