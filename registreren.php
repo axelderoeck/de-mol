@@ -17,20 +17,18 @@ mysqli_close($dbconn);
   <?php include "includes/navigation.php"; ?>
 
   <?php
-  
-    //query ledenoverzicht
-    $qrySelectLid = `SELECT Id, Naam, alina
-    FROM table_Users 
-    WHERE Naam = "Joske"
-    `;
 
-    //statement aanmaken
-    if ($stmtSelectLid = mysqli_prepare($dbconn, $qrySelectLid)){
-      //mysqli_stmt_bind_param($stmtSelectLid, "sss", $Id, $Naam, $alina);
-      mysqli_stmt_execute($stmtSelectLid);
-      mysqli_stmt_bind_result($stmtSelectLid, $Id, $Naam, $alina);
-      mysqli_stmt_fetch($stmtSelectLid);
-    }
+    mysql_select_db('u939917173_demol');
+
+    $query = "SELECT Id, Naam, alina
+    FROM table_Users";
+
+    $result = mysql_query($query);
+
+    while($row = mysql_fetch_array($result)){   //Creates a loop to loop through results
+      echo "<p>" . $row['Naam'] . $row['alina'] . "</p>";  //$row['index'] the index here is a field name
+      }
+
   ?>
 
     <p><?php echo $Id; ?></p>
