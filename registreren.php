@@ -23,7 +23,7 @@ mysqli_close($dbconn);
     $query = "SELECT Id, Naam, alina
     FROM table_Users";
 
-    $result = mysql_query($query);
+    $result = $dbconn->query($query);
 
     while($row = mysql_fetch_array($result)){   //Creates a loop to loop through results
       echo "<p>" . $row['Naam'] . $row['alina'] . "</p>";  //$row['index'] the index here is a field name
