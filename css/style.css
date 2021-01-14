@@ -126,7 +126,10 @@ position: absolute;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
-    -webkit-border-radius: 0;
+     -moz-width: 100px;
+  -moz-height: 100px;
+    -webkit-width: 100px;
+  -webkit-height: 100px;
 }
 
 .btnPlus:disabled {
@@ -149,7 +152,10 @@ position: relative;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
-    -webkit-border-radius: 0;
+    -moz-width: 100px;
+  -moz-height: 100px;
+    -webkit-width: 100px;
+  -webkit-height: 100px;
 }
 
 .btnMin:disabled {
@@ -213,7 +219,6 @@ appearance: none;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
-    -webkit-border-radius: 0;
 }
 
 .formSubmitBtn:disabled {
