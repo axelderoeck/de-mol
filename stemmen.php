@@ -13,19 +13,33 @@ session_start();
 <head>
   <?php include "includes/headinfo.php"; ?>
   <script>
+
     window.addEventListener('load', function() {
+
       var deelnemers = [
-          { id: 1, naam: "alina", leeftijd: "20", job: "studente logopedie" },
-          { id: 2, naam: "bart", leeftijd: "43", job: "advocaat" },
-          { id: 3, naam: "bruno", leeftijd: "50", job: "technisch directeur" },
-          { id: 4, naam: "christian", leeftijd: "26", job: "consultant" },
-          { id: 5, naam: "dorien", leeftijd: "27", job: "sauna uitbaatster" },
-          { id: 6, naam: "els", leeftijd: "51", job: "lerares" },
-          { id: 7, naam: "gilles", leeftijd: "29", job: "horeca uitbater" },
-          { id: 8, naam: "jolien", leeftijd: "25", job: "bankbediende" },
-          { id: 9, naam: "laure", leeftijd: "46", job: "management assistant" },
-          { id: 10, naam: "salim", leeftijd: "28", job: "shopmanager bioscoop" }
-      ]   
+
+      <?php
+        $sql = "SELECT * FROM 'table_Kandidaten'";
+        if($result = mysqli_query($dbconn, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+
+                  ?>
+                    { id: <?php $row['Id'] ?>, naam: "alina", leeftijd: <?php $row['Leeftijd'] ?>, job: "studente logopedie" },
+                  <?php
+                  echo "<p>" . $row['bart'] . "</p>";
+                }
+                // Free result set
+                mysqli_free_result($result);
+            } else{
+                echo "No records matching your query were found.";
+            }
+        } else{
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+        }
+      ?>  
+
+    ] 
 
       var html = "";
       deelnemers.forEach(deelnemer => {
