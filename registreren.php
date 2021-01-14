@@ -39,9 +39,9 @@ mysqli_close($dbconn);
     echo $alina;
   ?>
 
-    <p><?php $Id ?></p>
-    <p><?php $Naam ?></p>
-    <p><?php $alina ?></p>
+    <p><?php echo $Id; ?></p>
+    <p><?php echo $Naam; ?></p>
+    <p><?php echo $alina; ?></p>
     <!-- JavaScript -->
     <script type="text/javascript" src="js/scripts.js"></script>
 
