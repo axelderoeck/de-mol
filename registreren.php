@@ -37,11 +37,11 @@ mysqli_close($dbconn);
     echo $Id;
     echo $Naam;
     echo $alina;
-
-
   ?>
 
-  
+    <p><?php echo $Id; ?></p>
+    <p><?php echo $Naam; ?></p>
+    <p><?php echo $alina; ?></p>
     <!-- JavaScript -->
     <script type="text/javascript" src="js/scripts.js"></script>
 
