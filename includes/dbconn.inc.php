@@ -1,5 +1,5 @@
 <?php 
-define("SERVERNAME", "localhost");
+define("SERVERNAME", "sql189.main-hosting.eu");
 define("USERNAME", "u939917173_Aksol");
 define("PASSWORD", "Axelsnow1973");
 define("DATABASE", "u939917173_demol");
