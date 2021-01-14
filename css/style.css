@@ -156,45 +156,13 @@ position: absolute;
     z-index: 2;
 }
 
-.btnPlus {
-  background-color: #53adb5;
-  color: #ffffff;
-  font-size: 100px;
+.btnValueChange {
   border: none;
-  border-radius: 50px;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+  width: 150px;
+  height: 150px;
   display: inline-block;
     position: relative;
     z-index: 100;
-    font-family: 'Knockout', sans-serif;   
-}
-
-.btnPlus:disabled {
-  background-color: #5e5f61 !important;
-}
-
-.btnMin {
-background-color: #53adb5;
-  color: #ffffff;
-  font-size: 100px;
-  border: none;
-  border-radius: 50px;
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
-  display: inline-block;
-position: relative;
-    z-index: 100;
-    font-family: 'Knockout', sans-serif;  
-    -webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
-}
-
-.btnMin:disabled {
-  background-color: #5e5f61 !important;
 }
 
 .btnValue {
