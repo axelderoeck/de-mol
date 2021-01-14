@@ -16,7 +16,28 @@ mysqli_close($dbconn);
 <body>
   <?php include "includes/navigation.php"; ?>
 
- 
+  <?php
+  
+    //query ledenoverzicht
+    $qrySelectLeden = "SELECT Id, Naam, alina
+    FROM table_Users Where Naam = 'Joske';";
+
+    //statement aanmaken
+    if ($stmtSelectLeden = mysqli_prepare($dbconn, $qrySelectLeden)){
+    //query uitvoeren
+    mysqli_stmt_execute($stmtSelectLeden);
+    //resultaat binden aan lokale variabelen
+    mysqli_stmt_bind_result($stmtSelectLeden, $Id, $Naam, $alina);
+    //resultaten opslaan
+    mysqli_stmt_store_result($stmtSelectLeden);
+    }
+
+    echo $Id;
+    echo $Naam;
+    echo $alina;
+
+
+  ?>
 
   
     <!-- JavaScript -->
