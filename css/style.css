@@ -17,6 +17,7 @@ input {
 -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
+    -webkit-border-radius: 0;
 }
 
 .carousel {
@@ -125,6 +126,7 @@ position: absolute;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
+    -webkit-border-radius: 0;
 }
 
 .btnPlus:disabled {
@@ -132,7 +134,7 @@ appearance: none;
 }
 
 .btnMin {
-  background-color: #53adb5;
+background-color: #53adb5;
   color: #ffffff;
   font-size: 100px;
   border: none;
@@ -141,12 +143,13 @@ appearance: none;
   height: 100px;
   line-height: 100px;
   display: inline-block;
-    position: relative;
+position: relative;
     z-index: 100;
     font-family: 'Knockout', sans-serif;  
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
+    -webkit-border-radius: 0;
 }
 
 .btnMin:disabled {
@@ -210,6 +213,7 @@ appearance: none;
     -webkit-appearance: none;
 -moz-appearance: none;
 appearance: none;
+    -webkit-border-radius: 0;
 }
 
 .formSubmitBtn:disabled {
