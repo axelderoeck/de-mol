@@ -14,7 +14,6 @@ mysqli_close($dbconn);
   <?php include "includes/headinfo.php"; ?>
 </head>
 <body>
-
   <?php include "includes/navigation.php"; ?>
   
   <div class="infoDiv">

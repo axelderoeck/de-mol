@@ -9,6 +9,6 @@ define("DATABASE", "u939917173_demol");
 $dbconn = mysqli_connect(SERVERNAME,USERNAME,PASSWORD,DATABASE);
 
 // testen of de connectie is gemaakt
- var_dump($dbconn);
+ //var_dump($dbconn);
 
 ?>
