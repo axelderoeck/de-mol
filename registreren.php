@@ -22,7 +22,7 @@ mysqli_close($dbconn);
     $qrySelectLeden = `SELECT Id, Naam, alina
     FROM table_Users 
     WHERE Naam = "Joske"
-    `
+    `;
 
     //statement aanmaken
     if ($stmtSelectLeden = mysqli_prepare($dbconn, $qrySelectLeden)){
