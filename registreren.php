@@ -4,7 +4,7 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
-//mysqli_close($dbconn);
+mysqli_close($dbconn);
 
 ?>
 
@@ -18,22 +18,35 @@ session_start();
 
   <?php
 
-    mysql_select_db('u939917173_demol');
-
-    $query = "SELECT Id, Naam, alina
-    FROM table_Users";
-
-    $result = $dbconn->query($query);
-
-    while($row = mysql_fetch_array($result)){   //Creates a loop to loop through results
-      echo "<p>" . $row['Naam'] . $row['alina'] . "</p>";  //$row['index'] the index here is a field name
-      }
+    $sql = "SELECT * FROM table_Users";
+    if($result = mysqli_query($dbconn, $sql)){
+        if(mysqli_num_rows($result) > 0){
+            echo "<table>";
+                echo "<tr>";
+                    echo "<th>id</th>";
+                    echo "<th>first_name</th>";
+                    echo "<th>last_name</th>";
+                    echo "<th>email</th>";
+                echo "</tr>";
+            while($row = mysqli_fetch_array($result)){
+                echo "<tr>";
+                    echo "<td>" . $row['Id'] . "</td>";
+                    echo "<td>" . $row['Naam'] . "</td>";
+                    echo "<td>" . $row['alina'] . "</td>";
+                    echo "<td>" . $row['bart'] . "</td>";
+                echo "</tr>";
+            }
+            echo "</table>";
+            // Free result set
+            mysqli_free_result($result);
+        } else{
+            echo "No records matching your query were found.";
+        }
+    } else{
+        echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    }
 
   ?>
-
-    <p><?php echo $Id; ?></p>
-    <p><?php echo $Naam; ?></p>
-    <p><?php echo $alina; ?></p>
     <!-- JavaScript -->
     <script type="text/javascript" src="js/scripts.js"></script>
 
