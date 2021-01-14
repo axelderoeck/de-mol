@@ -121,7 +121,10 @@ position: absolute;
   display: inline-block;
     position: relative;
     z-index: 100;
-    font-family: 'Knockout', sans-serif;    
+    font-family: 'Knockout', sans-serif;   
+    -webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
 }
 
 .btnPlus:disabled {
@@ -141,6 +144,9 @@ position: absolute;
     position: relative;
     z-index: 100;
     font-family: 'Knockout', sans-serif;  
+    -webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
 }
 
 .btnMin:disabled {
@@ -201,6 +207,9 @@ position: absolute;
     border-radius: 30px;
   margin: 4px 2px;
   cursor: pointer;
+    -webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
 }
 
 .formSubmitBtn:disabled {
