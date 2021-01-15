@@ -13,11 +13,10 @@ session_start();
 <head>
   <?php include "includes/headinfo.php"; ?>
   <script type="text/javascript">
-  
 
     window.addEventListener('load', function() {
       //PHP waardes in array steken
-      var deelnemers = [
+      let deelnemers = [
       <?php
         $sql = "SELECT * FROM table_Kandidaten";
         if($result = mysqli_query($dbconn, $sql)){
@@ -79,41 +78,11 @@ session_start();
       
     }) //Einde Event Listener
 
-    
-
-  </script>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-  
-  <div class="infoDiv">
-        <h1>WIE IS DE <span>MOL</span> ?</h1>
-        <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
-  </div>
-  
-  <form id="deMolForm"></form>
-
-  <div class="swiper-container">
-    <div id="carousel" class="swiper-wrapper">
-   
-      <!-- dynamische items -->
-         
-    </div>
-  </div>
-    
-  <div class="submitDiv">
-    <input form="deMolForm" class="formSubmitBtn" type="submit" value="Inzenden">
-  </div>
-
-  <!-- JavaScript --> 
-  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script>
     //Punten Bereken functies
     function isOverValue(value)
     {
       var total = 0;  
-      deelnemers.forEach(deelnemer => {
+      window.deelnemers.forEach(deelnemer => {
           total += parseInt(document.getElementById(deelnemer.naam).value, 10);
       });   
       if( total < value ){
@@ -143,7 +112,34 @@ session_start();
       }     
       document.getElementById(id).value = value;
     }
+
   </script>
+</head>
+<body>
+  <?php include "includes/navigation.php"; ?>
+  
+  <div class="infoDiv">
+        <h1>WIE IS DE <span>MOL</span> ?</h1>
+        <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
+  </div>
+  
+  <form id="deMolForm"></form>
+
+  <div class="swiper-container">
+    <div id="carousel" class="swiper-wrapper">
+   
+      <!-- dynamische items -->
+         
+    </div>
+  </div>
+    
+  <div class="submitDiv">
+    <input form="deMolForm" class="formSubmitBtn" type="submit" value="Inzenden">
+  </div>
+
+  <!-- JavaScript --> 
+  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <!-- <script type="text/javascript" src="js/scripts.js"></script> -->
 
   <?php mysqli_close($dbconn); ?>
