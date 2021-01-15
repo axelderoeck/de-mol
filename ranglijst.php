@@ -4,8 +4,6 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
-mysqli_close($dbconn);
-
 ?>
 
 <!DOCTYPE html>
@@ -55,5 +53,6 @@ mysqli_close($dbconn);
     <!-- JavaScript -->
     <script type="text/javascript" src="js/scripts.js"></script>
 
+    <?php mysqli_close($dbconn); ?>
 </body>
 </html>
