@@ -20,7 +20,7 @@ session_start();
     <p style="text-align: center">De meest gespendeerde punten:</p>
         <?php
 
-            $sql = "SELECT table_Users.Naam AS 'Gebruikersnaam', table_Scores.Score, table_Kandidaten.Naam
+            $sql = "SELECT table_Scores.Score, table_Kandidaten.Naam
             FROM table_Users
             LEFT JOIN table_Scores
             ON table_Users.Naam = table_Scores.Naam
@@ -33,8 +33,8 @@ session_start();
                     while($row = mysqli_fetch_array($result)){
                         ?>
                         <div class="displayItem">
-                            <p class="displayItemName"><?php echo $row['Naam']; ?></p>
-                            <p class="displayItemNumber"><?php echo $row['Score']; ?></p>
+                            <p><?php echo $row['Naam']; ?></p>
+                            <p><?php echo $row['Score']; ?></p>
                         </div>
                         <?php
                     }
