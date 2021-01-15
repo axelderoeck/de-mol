@@ -82,7 +82,7 @@ session_start();
     function isOverValue(value)
     {
       var total = 0;  
-      window.deelnemers.forEach(deelnemer => {
+      deelnemers.forEach(deelnemer => {
           total += parseInt(document.getElementById(deelnemer.naam).value, 10);
       });   
       if( total < value ){
