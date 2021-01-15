@@ -17,7 +17,6 @@ session_start();
     window.addEventListener('load', function() {
 
       var deelnemers = [
-
       <?php
         $sql = "SELECT * FROM table_Kandidaten";
         if($result = mysqli_query($dbconn, $sql)){
@@ -39,7 +38,6 @@ session_start();
         }
         
       ?>  
-
     ] 
 
       var html = "";
@@ -105,6 +103,8 @@ session_start();
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
+
+  <?php mysqli_close($dbconn); ?>
 
 </body>
 </html>
