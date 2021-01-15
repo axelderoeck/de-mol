@@ -10,9 +10,9 @@ var deelnemers = [
     { id: 8, naam: "jolien", leeftijd: "25", job: "bankbediende" },
     { id: 9, naam: "laure", leeftijd: "46", job: "management assistant" },
     { id: 10, naam: "salim", leeftijd: "28", job: "shopmanager bioscoop" }
-]   
+]   */
 
-/*
+
 function loadItems() {
     var html = "";
     deelnemers.forEach(deelnemer => {
@@ -33,7 +33,7 @@ function loadItems() {
     });
     document.getElementById("carousel").innerHTML += html;
 } 
-
+/*
 window.addEventListener('load', function() {
     //loadItems();
     var swiper = new Swiper('.swiper-container', {

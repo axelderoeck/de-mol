@@ -82,7 +82,7 @@ function decrementValue(id)
     }     
     document.getElementById(id).value = value;
 }
-
+/*
       var html = "";
       deelnemers.forEach(deelnemer => {
       html += `<div class="swiper-slide" id="${deelnemer.id}"> 
@@ -100,7 +100,7 @@ function decrementValue(id)
                 <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}">
               </div>`;
     });
-    document.getElementById("carousel").innerHTML += html;
+    document.getElementById("carousel").innerHTML += html; */
 
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 1,
