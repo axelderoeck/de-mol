@@ -16,7 +16,7 @@ session_start();
  
  <div class="displayList">
 
-    <h1>Mijn Molboekje</h1>
+    <h1>Mijn Molboek</h1>
     <p style="text-align: center">Jouw meest gespendeerde punten:</p>
         <?php
 
@@ -34,7 +34,7 @@ session_start();
                         ?>
                         <div class="displayItem">
                             <p class="displayItemName"><?php echo $row['Naam']; ?></p>
-                            <p class="displayItemName"><?php echo $row['Score']; ?></p>
+                            <p class="displayItemNumber"><?php echo $row['Score']; ?></p>
                         </div>
                         <?php
                     }

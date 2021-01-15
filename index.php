@@ -13,13 +13,17 @@ session_start();
   <script>
     window.addEventListener('load', function() {
       <?php
+        /* DEZE FUNCTIE AANZETTEN VOOR FINAL VERSIE
+
         if(date('D') == 'Sun' || date('D') == 'Mon') { 
           ?>stemKnop("aan");<?php
         } else {
           ?>stemKnop("uit");<?php
-        }
+        } 
+        
+        */
       ?>
-      
+      stemKnop("aan");
     })    
   </script>
 </head>
