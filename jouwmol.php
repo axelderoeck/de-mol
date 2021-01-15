@@ -17,48 +17,39 @@ mysqli_close($dbconn);
     <?php include "includes/navigation.php"; ?>
  
  <div class="displayList">
+
     <h1>Jouw Mol</h1>
     <p style="text-align: center">De meest gespendeerde punten:</p>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">15</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">13</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">10</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">8</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">4</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">1</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">0</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">0</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">0</p>
-     </div>
-     <div class="displayItem">
-         <p class="displayItemName">Naam</p>
-         <p class="displayItemNumber">0</p>
-     </div>
+        <?php
+
+            $sql = "SELECT table_Users.Naam AS 'Gebruikersnaam', table_Scores.Score, table_Kandidaten.Naam
+            FROM table_Users
+            LEFT JOIN table_Scores
+            ON table_Users.Naam = table_Scores.Naam
+            LEFT JOIN table_Kandidaten
+            ON table_Kandidaten.Identifier = table_Scores.Identifier
+            WHERE table_Users.Id = 2
+            ORDER BY table_Scores.score DESC";
+            if($result = mysqli_query($dbconn, $sql)){
+                if(mysqli_num_rows($result) > 0){
+                    while($row = mysqli_fetch_array($result)){
+                        ?>
+                        <div class="displayItem">
+                            <p class="displayItemName"><?php echo $row['Naam']; ?></p>
+                            <p class="displayItemNumber"><?php echo $row['Score']; ?></p>
+                        </div>
+                        <?php
+                    }
+                    // Free result set
+                    mysqli_free_result($result);
+                } else{
+                    echo "No records matching your query were found.";
+                }
+            } else{
+                echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+            }
+
+        ?>
  </div>
   
     <!-- JavaScript -->

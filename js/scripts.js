@@ -1,4 +1,4 @@
-/*
+
 var deelnemers = [
     { id: 1, naam: "alina", leeftijd: "20", job: "studente logopedie" },
     { id: 2, naam: "bart", leeftijd: "43", job: "advocaat" },
@@ -12,6 +12,7 @@ var deelnemers = [
     { id: 10, naam: "salim", leeftijd: "28", job: "shopmanager bioscoop" }
 ]   
 
+/*
 function loadItems() {
     var html = "";
     deelnemers.forEach(deelnemer => {
@@ -53,23 +54,6 @@ window.addEventListener('load', function() {
     stemKnop("aan");
 }) */
 
-function switchButtons(className, disableOrEnable) {
-    if(disableOrEnable == "disable") {
-        var elems = document.getElementsByClassName(className);
-        for(var i = 0; i < elems.length; i++) {
-            elems[i].disabled = true;
-        }
-    }else if(disableOrEnable == "enable"){
-        var elems = document.getElementsByClassName(className);
-        for(var i = 0; i < elems.length; i++) {
-            elems[i].disabled = false;
-        }
-    }    
-}
-
-const plusButtons = [...document.getElementsByClassName("btnPlus")];
-const minButtons = [...document.getElementsByClassName("btnMin")];
-
 function isOverValue(value)
 {
     var total = 0;  
@@ -86,16 +70,6 @@ function incrementValue(id)
 {
     var value = parseInt(document.getElementById(id).value, 10);
     value = isNaN(value) ? 0 : value;
-    
-    if( isOverValue(0) == true) {
-        switchButtons('btnMin', 'enable');
-    }
-    //available checker
-    if( isOverValue(9) == true ){
-            switchButtons('btnPlus', 'disable');
-    }else if( isOverValue(9) == false) {
-        document.getElementsByClassName("btnPlus").disabled = false;
-    }
     
     //value adder
     if( isOverValue(10) == false ){

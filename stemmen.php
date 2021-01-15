@@ -62,19 +62,23 @@ session_start();
     var swiper = new Swiper('.swiper-container', {
       slidesPerView: 1,
         loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-      },
-        // Responsive breakpoints
-  breakpoints: {
-    // when window width is >= 1000px
-    1000: {
-      slidesPerView: 3,
-        loop: true,
-    }
-  }
+        pagination: {
+          el: '.swiper-pagination',
+        },
+      breakpoints: {
+        // when window width is >= 1000px
+        1000: {
+          slidesPerView: 3,
+          loop: true,
+        }
+      }
     });
-})
+
+    stemKnop("aan");
+
+    })
+
+    
   </script>
 </head>
 <body>
