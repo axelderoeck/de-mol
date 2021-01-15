@@ -52,7 +52,7 @@ window.addEventListener('load', function() {
   }
     });
     stemKnop("aan");
-}) 
+}) */
 
 function isOverValue(value)
 {
@@ -95,7 +95,7 @@ function decrementValue(id)
         }
     }     
     document.getElementById(id).value = value;
-} */
+}
 
 
 function hamburgerMenu() {

@@ -15,7 +15,7 @@ session_start();
   <script>
 
     window.addEventListener('load', function() {
-
+      //PHP waardes in array steken
       var deelnemers = [
       <?php
         $sql = "SELECT * FROM table_Kandidaten";
@@ -38,50 +38,29 @@ session_start();
         }
         
       ?>  
-    ] 
+      ] 
+      
+      //Array inladen
+      loadItems();
 
-    function isOverValue(value)
-{
-    var total = 0;  
-    deelnemers.forEach(deelnemer => {
-        total += parseInt(document.getElementById(deelnemer.naam).value, 10);
-    });   
-    if( total < value ){
-    	return false;
-    }
-    return true;
-}
-
-function incrementValue(id)
-{
-    var value = parseInt(document.getElementById(id).value, 10);
-    value = isNaN(value) ? 0 : value;
-    
-    //value adder
-    if( isOverValue(10) == false ){
-    	value++;   
-    }else {
-    	console.log("Je kan niet meer dan 10 punten inzetten.")    
-    }
-    
-    document.getElementById(id).value = value;
-}
-
-function decrementValue(id) 
-{
-    if( isOverValue(9) == true ){
-            switchButtons('btnPlus', 'enable');
-    }
-    var value = parseInt(document.getElementById(id).value, 10);
-    value = isNaN(value) ? 0 : value;
-    if(value > 0) {
-    	value--;
-        if(isOverValue(0) == false) {
-            switchButtons('btnMin', 'disable');
+      //Carousel aanmaken
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+          },
+        breakpoints: {
+          // when window width is >= 1000px
+          1000: {
+            slidesPerView: 3,
+            loop: true,
+          }
         }
-    }     
-    document.getElementById(id).value = value;
-}
+      });
+
+
+    });
 /*
       var html = "";
       deelnemers.forEach(deelnemer => {
@@ -101,24 +80,6 @@ function decrementValue(id)
               </div>`;
     });
     document.getElementById("carousel").innerHTML += html; */
-
-    var swiper = new Swiper('.swiper-container', {
-      slidesPerView: 1,
-        loop: true,
-        pagination: {
-          el: '.swiper-pagination',
-        },
-      breakpoints: {
-        // when window width is >= 1000px
-        1000: {
-          slidesPerView: 3,
-          loop: true,
-        }
-      }
-    });
-
-    })
-
     
   </script>
 </head>
