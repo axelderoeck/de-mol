@@ -37,7 +37,7 @@ session_start();
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         }
-        sleep(1);
+        
       ?>  
 
     ] 
@@ -60,6 +60,22 @@ session_start();
               </div>`;
     });
     document.getElementById("carousel").innerHTML += html;
+
+    var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 1,
+        loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+      },
+        // Responsive breakpoints
+  breakpoints: {
+    // when window width is >= 1000px
+    1000: {
+      slidesPerView: 3,
+        loop: true,
+    }
+  }
+    });
 })
   </script>
 </head>
