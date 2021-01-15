@@ -1,3 +1,4 @@
+/*
 var deelnemers = [
     { id: 1, naam: "alina", leeftijd: "20", job: "studente logopedie" },
     { id: 2, naam: "bart", leeftijd: "43", job: "advocaat" },
@@ -9,7 +10,7 @@ var deelnemers = [
     { id: 8, naam: "jolien", leeftijd: "25", job: "bankbediende" },
     { id: 9, naam: "laure", leeftijd: "46", job: "management assistant" },
     { id: 10, naam: "salim", leeftijd: "28", job: "shopmanager bioscoop" }
-]   
+]   */ 
 
 function loadItems() {
     var html = "";

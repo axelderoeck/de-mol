@@ -19,7 +19,7 @@ session_start();
       var deelnemers = [
 
       <?php
-        $sql = "SELECT * FROM 'table_Kandidaten'";
+        $sql = "SELECT * FROM table_Kandidaten";
         if($result = mysqli_query($dbconn, $sql)){
             if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){
