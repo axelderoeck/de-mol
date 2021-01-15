@@ -40,7 +40,7 @@ session_start();
       ?>  
       ] 
       
-      //Array inladen
+      //Array waardes in een div card steken
       var html = "";
       deelnemers.forEach(deelnemer => {
       html += `<div class="swiper-slide" id="${deelnemer.id}"> 
@@ -68,36 +68,51 @@ session_start();
             el: '.swiper-pagination',
           },
         breakpoints: {
-          // when window width is >= 1000px
+          //ALS scherm gelijk is aan >= 1000px
           1000: {
             slidesPerView: 3,
             loop: true,
           }
         }
       });
+      
+    }); //Einde Event Listener
 
-
-    });
-/*
-      var html = "";
+    //Punten Bereken functies
+    function isOverValue(value)
+    {
+      var total = 0;  
       deelnemers.forEach(deelnemer => {
-      html += `<div class="swiper-slide" id="${deelnemer.id}"> 
-                <div class="cardNameBG">
-                <p class="cardName">${deelnemer.naam}</p>
-                </div>
-                <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+          total += parseInt(document.getElementById(deelnemer.naam).value, 10);
+      });   
+      if( total < value ){
+        return false;
+      }
+      return true;
+    }
 
-                <div class="cardBottom">
-                  <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" >
-                  <p>Inzet: <input form="deMolForm" type="text" class="btnValue" id="${deelnemer.naam}" value="0" readonly/></p>              
-                  <input type="image" src="img/assets/ButtonMin.png" class="btnValueChange" onclick="decrementValue('${deelnemer.naam}')"/>  
-                  <input type="image" src="img/assets/ButtonPlus.png" class="btnValueChange" onclick="incrementValue('${deelnemer.naam}')"/> 
-                </div> 
-                <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}">
-              </div>`;
-    });
-    document.getElementById("carousel").innerHTML += html; */
-    
+    function incrementValue(id)
+    {
+      var value = parseInt(document.getElementById(id).value, 10);
+      value = isNaN(value) ? 0 : value;     
+      if( isOverValue(10) == false ){
+        value++;   
+      }else {
+        console.log("Je kan niet meer dan 10 punten inzetten.")    
+      }    
+      document.getElementById(id).value = value;
+    }
+
+    function decrementValue(id) 
+    {
+      var value = parseInt(document.getElementById(id).value, 10);
+      value = isNaN(value) ? 0 : value;
+      if(value > 0) {
+        value--;
+      }     
+      document.getElementById(id).value = value;
+    }
+
   </script>
 </head>
 <body>
