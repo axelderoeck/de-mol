@@ -13,7 +13,7 @@ session_start();
   <script>
     window.addEventListener('load', function() {
       <?php
-        if(date('D') == 'Fri' || date('D') == 'Mon') { 
+        if(date('D') == 'Sun' || date('D') == 'Mon') { 
           ?>stemKnop("aan");<?php
         } else {
           ?>stemKnop("uit");<?php
