@@ -12,7 +12,7 @@ var deelnemers = [
     { id: 10, naam: "salim", leeftijd: "28", job: "shopmanager bioscoop" }
 ]   */
 
-
+/*
 function loadItems() {
     var html = "";
     deelnemers.forEach(deelnemer => {

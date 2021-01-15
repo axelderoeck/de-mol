@@ -41,7 +41,24 @@ session_start();
       ] 
       
       //Array inladen
-      loadItems();
+      var html = "";
+      deelnemers.forEach(deelnemer => {
+      html += `<div class="swiper-slide" id="${deelnemer.id}"> 
+              <div class="cardNameBG">
+              <p class="cardName">${deelnemer.naam}</p>
+              </div>
+              <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+
+              <div class="cardBottom">
+                <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" >
+                <p>Inzet: <input form="deMolForm" type="text" class="btnValue" id="${deelnemer.naam}" value="0" readonly/></p>              
+                <input type="image" src="img/assets/ButtonMin.png" class="btnValueChange" onclick="decrementValue('${deelnemer.naam}')"/>  
+                <input type="image" src="img/assets/ButtonPlus.png" class="btnValueChange" onclick="incrementValue('${deelnemer.naam}')"/> 
+              </div> 
+              <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}">
+        </div>`;
+      });
+      document.getElementById("carousel").innerHTML += html;
 
       //Carousel aanmaken
       var swiper = new Swiper('.swiper-container', {
