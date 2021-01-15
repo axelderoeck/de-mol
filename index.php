@@ -13,7 +13,9 @@ mysqli_close($dbconn);
 <head>
   <?php include "includes/headinfo.php"; ?>
   <script>
-    stemKnop("aan");
+    window.addEventListener('load', function() {
+      stemKnop("aan");
+    })    
   </script>
 </head>
 <body>
