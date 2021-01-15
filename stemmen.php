@@ -74,6 +74,49 @@ session_start();
       }
     });
 
+    function isOverValue(value)
+{
+    var total = 0;  
+    deelnemers.forEach(deelnemer => {
+        total += parseInt(document.getElementById(deelnemer.naam).value, 10);
+    });   
+    if( total < value ){
+    	return false;
+    }
+    return true;
+}
+
+function incrementValue(id)
+{
+    var value = parseInt(document.getElementById(id).value, 10);
+    value = isNaN(value) ? 0 : value;
+    
+    //value adder
+    if( isOverValue(10) == false ){
+    	value++;   
+    }else {
+    	console.log("Je kan niet meer dan 10 punten inzetten.")    
+    }
+    
+    document.getElementById(id).value = value;
+}
+
+function decrementValue(id) 
+{
+    if( isOverValue(9) == true ){
+            switchButtons('btnPlus', 'enable');
+    }
+    var value = parseInt(document.getElementById(id).value, 10);
+    value = isNaN(value) ? 0 : value;
+    if(value > 0) {
+    	value--;
+        if(isOverValue(0) == false) {
+            switchButtons('btnMin', 'disable');
+        }
+    }     
+    document.getElementById(id).value = value;
+}
+
     stemKnop("aan");
 
     })
