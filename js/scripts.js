@@ -7,7 +7,7 @@ function hamburgerMenu() {
   }
 }
 
-function stemKnop(toggle) {
+window.stemKnop = function(toggle) {
     if(toggle == "aan"){
         document.getElementById('stemTekst').innerHTML = "<span>Stemmen</span> is nu mogelijk.";   
         document.getElementById('stemKnop').disabled = false;
