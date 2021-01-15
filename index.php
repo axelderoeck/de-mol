@@ -4,8 +4,6 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
-mysqli_close($dbconn);
-
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +12,14 @@ mysqli_close($dbconn);
   <?php include "includes/headinfo.php"; ?>
   <script>
     window.addEventListener('load', function() {
-      stemKnop("aan");
+      <?php
+        if(date('D') == 'Fri' || date('D') == 'Mon') { 
+          ?>stemKnop("aan");<?php
+        } else {
+          ?>stemKnop("uit");<?php
+        }
+      ?>
+      
     })    
   </script>
 </head>
@@ -36,6 +41,6 @@ mysqli_close($dbconn);
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
 
-
+<?php mysqli_close($dbconn); ?>
 </body>
 </html>

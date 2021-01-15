@@ -16,8 +16,8 @@ session_start();
  
  <div class="displayList">
 
-    <h1>Jouw Mol</h1>
-    <p style="text-align: center">De meest gespendeerde punten:</p>
+    <h1>Mijn Molboekje</h1>
+    <p style="text-align: center">Jouw meest gespendeerde punten:</p>
         <?php
 
             $sql = "SELECT table_Scores.Score, table_Kandidaten.Naam
