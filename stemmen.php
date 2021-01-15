@@ -76,7 +76,7 @@ session_start();
       });
 
       //Punten Bereken functies
-      function isOverValue(value)
+      window.isOverValue = function(value)
       {
         var total = 0;  
         deelnemers.forEach(deelnemer => {
