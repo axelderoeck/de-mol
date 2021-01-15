@@ -25,7 +25,7 @@ session_start();
                 while($row = mysqli_fetch_array($result)){
 
                   ?>
-                    { id: <?php echo $row['Id']; ?>, naam: <?php echo $row['Naam']; ?>, leeftijd: <?php echo $row['Leeftijd']; ?>, job: <?php echo $row['Job']; ?> },
+                    { id: <?php echo $row['Id']; ?>, naam: <?php echo "'" . $row['Naam'] . "'"; ?>, leeftijd: <?php echo $row['Leeftijd']; ?>, job: <?php echo "'" . $row['Job'] . "'"; ?> },
                   <?php
                   
                 }
