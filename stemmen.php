@@ -12,7 +12,7 @@ session_start();
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
-  <script src="js/scripts.js">
+  <script>
 
     window.addEventListener('load', function() {
       //PHP waardes in array steken
@@ -76,7 +76,7 @@ session_start();
         }
       });
       
-    }); //Einde Event Listener
+    }) //Einde Event Listener
 
     //Punten Bereken functies
     function isOverValue(value)

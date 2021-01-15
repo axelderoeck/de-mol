@@ -12,7 +12,7 @@ mysqli_close($dbconn);
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
-  <script src="js/scripts.js">
+  <script>
     stemKnop("aan");
   </script>
 </head>
