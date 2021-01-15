@@ -33,8 +33,8 @@ session_start();
                     while($row = mysqli_fetch_array($result)){
                         ?>
                         <div class="displayItem">
-                            <p><?php echo $row['Naam']; ?></p>
-                            <p><?php echo $row['Score']; ?></p>
+                            <p class="displayItemName"><?php echo $row['Naam']; ?></p>
+                            <p class="displayItemName"><?php echo $row['Score']; ?></p>
                         </div>
                         <?php
                     }

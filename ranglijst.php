@@ -32,8 +32,8 @@ session_start();
                 while($row = mysqli_fetch_array($result)){
                     ?>
                     <div class="rangItem"> 
-                        <p><?php echo $row['Naam']; ?></p>
-                        <p><?php echo $row['Score']; ?></p>
+                        <p class="rangItemName"><?php echo $row['Naam']; ?></p>
+                        <p class="rangItemNumber"><?php echo $row['Score']; ?></p>
                     </div>
                     <?php
                 }

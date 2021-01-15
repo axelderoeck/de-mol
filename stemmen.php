@@ -117,8 +117,6 @@ function decrementValue(id)
       }
     });
 
-    stemKnop("aan");
-
     })
 
     
