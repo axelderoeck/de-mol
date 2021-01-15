@@ -12,34 +12,6 @@ session_start();
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-  
-  <div class="infoDiv">
-        <h1>WIE IS DE <span>MOL</span> ?</h1>
-        <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
-  </div>
-  
-  <form id="deMolForm"></form>
-
-  <div class="swiper-container">
-    <div id="carousel" class="swiper-wrapper">
-   
-      <!-- dynamische items -->
-         
-    </div>
-  </div>
-    
-  <div class="submitDiv">
-    <input form="deMolForm" class="formSubmitBtn" type="submit" value="Inzenden">
-  </div>
-
-  <!-- JavaScript --> 
-  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<!-- <script type="text/javascript" src="js/scripts.js"></script> -->
-
   <script>
     window.addEventListener('load', function() {
       //PHP waardes in array steken
@@ -102,44 +74,73 @@ session_start();
           }
         }
       });
+
+      //Punten Bereken functies
+      function isOverValue(value)
+      {
+        var total = 0;  
+        deelnemers.forEach(deelnemer => {
+            total += parseInt(document.getElementById(deelnemer.naam).value, 10);
+        });   
+        if( total < value ){
+          return false;
+        }
+        return true;
+      }
+
+      function incrementValue(id)
+      {
+        var value = parseInt(document.getElementById(id).value, 10);
+        value = isNaN(value) ? 0 : value;     
+        if( isOverValue(10) == false ){
+          value++;   
+        }else {
+          console.log("Je kan niet meer dan 10 punten inzetten.")    
+        }    
+        document.getElementById(id).value = value;
+      }
+
+      function decrementValue(id) 
+      {
+        var value = parseInt(document.getElementById(id).value, 10);
+        value = isNaN(value) ? 0 : value;
+        if(value > 0) {
+          value--;
+        }     
+        document.getElementById(id).value = value;
+      }
       
     }) //Einde Event Listener
 
-    //Punten Bereken functies
-    function isOverValue(value)
-    {
-      var total = 0;  
-      deelnemers.forEach(deelnemer => {
-          total += parseInt(document.getElementById(deelnemer.naam).value, 10);
-      });   
-      if( total < value ){
-        return false;
-      }
-      return true;
-    }
-
-    function incrementValue(id)
-    {
-      var value = parseInt(document.getElementById(id).value, 10);
-      value = isNaN(value) ? 0 : value;     
-      if( isOverValue(10) == false ){
-        value++;   
-      }else {
-        console.log("Je kan niet meer dan 10 punten inzetten.")    
-      }    
-      document.getElementById(id).value = value;
-    }
-
-    function decrementValue(id) 
-    {
-      var value = parseInt(document.getElementById(id).value, 10);
-      value = isNaN(value) ? 0 : value;
-      if(value > 0) {
-        value--;
-      }     
-      document.getElementById(id).value = value;
-    }
+    
   </script>
+</head>
+<body>
+  <?php include "includes/navigation.php"; ?>
+  
+  <div class="infoDiv">
+        <h1>WIE IS DE <span>MOL</span> ?</h1>
+        <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
+  </div>
+  
+  <form id="deMolForm"></form>
+
+  <div class="swiper-container">
+    <div id="carousel" class="swiper-wrapper">
+   
+      <!-- dynamische items -->
+         
+    </div>
+  </div>
+    
+  <div class="submitDiv">
+    <input form="deMolForm" class="formSubmitBtn" type="submit" value="Inzenden">
+  </div>
+
+  <!-- JavaScript --> 
+  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- <script type="text/javascript" src="js/scripts.js"></script> -->  
 
 
 <?php mysqli_close($dbconn); ?>
