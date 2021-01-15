@@ -12,7 +12,7 @@ session_start();
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
-  <script>
+  <script src="js/scripts.js">
 
     window.addEventListener('load', function() {
       //PHP waardes in array steken
