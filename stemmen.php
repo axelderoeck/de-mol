@@ -12,7 +12,7 @@ session_start();
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
-  <script>
+  <script type="text/javascript">
 
     window.addEventListener('load', function() {
       //PHP waardes in array steken
@@ -140,7 +140,7 @@ session_start();
   <!-- JavaScript --> 
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script type="text/javascript" src="js/scripts.js"></script>
+<!-- <script type="text/javascript" src="js/scripts.js"></script> -->
 
   <?php mysqli_close($dbconn); ?>
 
