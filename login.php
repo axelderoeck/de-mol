@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 ob_start();
 require_once("includes/dbconn.inc.php");
@@ -17,7 +17,7 @@ mysqli_close($dbconn);
   <?php include "includes/navigation.php"; ?>
 
 
-  
+
     <!-- JavaScript -->
     <script type="text/javascript" src="js/scripts.js"></script>
 

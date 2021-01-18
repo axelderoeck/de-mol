@@ -1,8 +1,25 @@
-<?php 
+<?php
 
 ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
+
+if (isset($_POST["formSubmitVote"])){
+
+  $kandidaten = 10;
+  $naam = $_POST["naam"];
+
+  for ($i=1; $i <= $kandidaten; $i++) {
+    $score = $_POST["person$i"];
+
+    $query = "UPDATE `table_Scores`
+    SET `Score` = `Score` + $score
+    WHERE `Naam` = '$naam' AND `Identifier` = 'person$i'";
+
+    mysqli_query($dbconn, $query);
+  }
+
+}
 
 ?>
 
@@ -14,6 +31,7 @@ session_start();
     window.addEventListener('load', function() {
       //PHP waardes in array steken
       let deelnemers = [
+        { id: 0, identifier: 'person0', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden' },
       <?php
         $sql = "SELECT * FROM table_Kandidaten";
         if($result = mysqli_query($dbconn, $sql)){
@@ -21,9 +39,9 @@ session_start();
                 while($row = mysqli_fetch_array($result)){
 
                   ?>
-                    { id: <?php echo $row['Id']; ?>, naam: <?php echo "'" . $row['Naam'] . "'"; ?>, leeftijd: <?php echo $row['Leeftijd']; ?>, job: <?php echo "'" . $row['Job'] . "'"; ?> },
+                    { id: <?php echo $row['Id'] ?> , identifier: <?php echo "'" . $row['Identifier'] . "'"; ?>, naam: <?php echo "'" . $row['Naam'] . "'"; ?>, leeftijd: <?php echo $row['Leeftijd']; ?>, job: <?php echo "'" . $row['Job'] . "'"; ?>, visibility: <?php echo "'" . $row['Visibility'] . "'"; ?> },
                   <?php
-                  
+
                 }
                 // Free result set
                 mysqli_free_result($result);
@@ -33,27 +51,63 @@ session_start();
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         }
-        
-      ?>  
-      ] 
-      
+
+      ?>
+        { id: 0, identifier: 'person11', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden' }
+      ]
+
       //Array waardes in een div card steken
       var html = "";
       deelnemers.forEach(deelnemer => {
-      html += `<div class="swiper-slide" id="${deelnemer.id}"> 
-              <div class="cardNameBG">
-              <p class="cardName">${deelnemer.naam}</p>
-              </div>
-              <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+        if (deelnemer.visibility == 'hidden') {
+          html += `<div class='swiper-slide' id='${deelnemer.id}'>
+                  <div class="cardNameBG">
+                  <p class="cardName">${deelnemer.naam}</p>
+                  </div>
+                  <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
 
-              <div class="cardBottom">
-                <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" >
-                <p>Inzet: <input form="deMolForm" type="text" class="btnValue" id="${deelnemer.naam}" value="0" readonly/></p>              
-                <input type="image" src="img/assets/ButtonMin.png" class="btnValueChange" onclick="decrementValue('${deelnemer.naam}')"/>  
-                <input type="image" src="img/assets/ButtonPlus.png" class="btnValueChange" onclick="incrementValue('${deelnemer.naam}')"/> 
-              </div> 
-              <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}">
-        </div>`;
+                  <div class="cardBottom">
+                    <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
+                    <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
+                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/></p>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
+                  </div>
+                  <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+            </div>`;
+        }else if(deelnemer.visibility == 'out') {
+          html += `<div class='swiper-slide' id='${deelnemer.id}'>
+                  <div class="cardNameBG">
+                  <p class="cardName">${deelnemer.naam}</p>
+                  </div>
+                  <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+
+                  <div class="cardBottom">
+                    <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
+                    <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
+                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/></p>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
+                  </div>
+                  <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+            </div>`;
+        } else {
+          html += `<div class='swiper-slide' id='${deelnemer.id}'>
+                  <div class="cardNameBG">
+                  <p class="cardName">${deelnemer.naam}</p>
+                  </div>
+                  <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+
+                  <div class="cardBottom">
+                    <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
+                    <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
+                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/></p>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
+                  </div>
+                  <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+            </div>`;
+        }
       });
       document.getElementById("carousel").innerHTML += html;
 
@@ -76,68 +130,70 @@ session_start();
       //Punten Bereken functies
       window.isOverValue = function(value)
       {
-        var total = 0;  
+        var total = 0;
         deelnemers.forEach(deelnemer => {
-            total += parseInt(document.getElementById(deelnemer.naam).value, 10);
-        });   
+            total += parseInt(document.getElementById(deelnemer.identifier).value, 10);
+        });
         if( total < value ){
           return false;
         }
         return true;
-      }      
-      
+      }
+
     }) //Einde Event Listener
 
       function incrementValue(id)
       {
         var value = parseInt(document.getElementById(id).value, 10);
-        value = isNaN(value) ? 0 : value;     
+        value = isNaN(value) ? 0 : value;
         if( isOverValue(10) == false ){
-          value++;   
+          value++;
         }else {
-          console.log("Je kan niet meer dan 10 punten inzetten.")    
-        }    
-        document.getElementById(id).value = value;
+          console.log("Je kan niet meer dan 10 punten inzetten.")
+        }
+        document.getElementById(id).defaultValue = value;
       }
 
-      function decrementValue(id) 
+      function decrementValue(id)
       {
         var value = parseInt(document.getElementById(id).value, 10);
         value = isNaN(value) ? 0 : value;
         if(value > 0) {
           value--;
-        }     
-        document.getElementById(id).value = value;
+        }
+        document.getElementById(id).defaultValue = value;
       }
-    
+
   </script>
 </head>
 <body>
   <?php include "includes/navigation.php"; ?>
-  
+
   <div class="infoDiv">
         <h1>WIE IS DE <span>MOL</span> ?</h1>
         <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
   </div>
-  
-  <form id="deMolForm"></form>
+
+  <form id="deMolForm" method="POST" action="">
+  <input form="deMolForm" type="hidden" id="naam" name="naam" value="Joske" />
 
   <div class="swiper-container">
     <div id="carousel" class="swiper-wrapper">
-   
+
       <!-- dynamische items -->
-         
+
     </div>
   </div>
-    
-  <div class="submitDiv">
-    <input form="deMolForm" class="formSubmitBtn" type="submit" value="Inzenden">
-  </div>
 
-  <!-- JavaScript --> 
+  <div class="submitDiv">
+    <input form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
+  </div>
+  </form>
+
+  <!-- JavaScript -->
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script type="text/javascript" src="js/scripts.js"></script> 
+  <script type="text/javascript" src="js/scripts.js"></script>
 
 
 <?php mysqli_close($dbconn); ?>
