@@ -4,10 +4,14 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
+if ($_SESSION["Id"] == NULL) {
+  header('location:index.php');
+}
+
 if (isset($_POST["formSubmitVote"])){
 
   $kandidaten = 10;
-  $naam = $_POST["naam"];
+  $naam = $_SESSION["Naam"];
 
   for ($i=1; $i <= $kandidaten; $i++) {
     $score = $_POST["person$i"];
@@ -18,6 +22,13 @@ if (isset($_POST["formSubmitVote"])){
 
     mysqli_query($dbconn, $query);
   }
+
+  $votedQuery = "UPDATE `table_Users`
+  SET `Voted` = 1
+  WHERE `Naam` = '$naam'";
+  mysqli_query($dbconn, $votedQuery);
+  $_SESSION["Voted"] = 1;
+  header('location:home.php');
 
 }
 
@@ -167,7 +178,6 @@ if (isset($_POST["formSubmitVote"])){
   </div>
 
   <form id="deMolForm" method="POST" action="">
-  <input form="deMolForm" type="hidden" id="naam" name="naam" value="Joske" />
 
   <div class="swiper-container">
     <div id="carousel" class="swiper-wrapper">
