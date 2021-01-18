@@ -31,7 +31,7 @@ if (isset($_POST["formSubmitVote"])){
     window.addEventListener('load', function() {
       //PHP waardes in array steken
       let deelnemers = [
-        { id: 0, identifier: 'person0', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden' },
+        { id: 0, identifier: 'person0', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Right' },
       <?php
         $sql = "SELECT * FROM table_Kandidaten";
         if($result = mysqli_query($dbconn, $sql)){
@@ -53,27 +53,23 @@ if (isset($_POST["formSubmitVote"])){
         }
 
       ?>
-        { id: 0, identifier: 'person11', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden' }
+        { id: 0, identifier: 'person11', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
       ]
 
       //Array waardes in een div card steken
       var html = "";
       deelnemers.forEach(deelnemer => {
         if (deelnemer.visibility == 'hidden') {
+          if (deelnemer.direction == "Left") {
+            var imgSrc = "src='img/dummyLeft.jpg'";
+          } else if (deelnemer.direction == "Right") {
+            var imgSrc = "src='img/dummyRight.jpg'";
+          }
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
-                  <div class="cardNameBG">
-                  <p class="cardName">${deelnemer.naam}</p>
+                  <div style="display: none;">
+                    <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
                   </div>
-                  <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
-
-                  <div class="cardBottom">
-                    <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
-                    <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
-                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/></p>
-                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
-                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
-                  </div>
-                  <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+                  <img class="cardImage" ${imgSrc} alt="foto van ${deelnemer.naam}" />
             </div>`;
         }else if(deelnemer.visibility == 'out') {
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
@@ -82,14 +78,10 @@ if (isset($_POST["formSubmitVote"])){
                   </div>
                   <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
 
-                  <div class="cardBottom">
-                    <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
-                    <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
-                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/></p>
-                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
-                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
+                  <div style="display: none;">
+                    <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
                   </div>
-                  <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+                  <div class="disabledPerson"><img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" /></div>
             </div>`;
         } else {
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
@@ -114,7 +106,7 @@ if (isset($_POST["formSubmitVote"])){
       //Carousel aanmaken
       var swiper = new Swiper('.swiper-container', {
         slidesPerView: 1,
-          loop: true,
+          loop: false,
           pagination: {
             el: '.swiper-pagination',
           },
@@ -122,7 +114,7 @@ if (isset($_POST["formSubmitVote"])){
           //ALS scherm >= 1000px
           1000: {
             slidesPerView: 3,
-            loop: true,
+            loop: false,
           }
         }
       });
