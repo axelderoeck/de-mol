@@ -28,3 +28,24 @@ function openReg() {
         y.style.display = "none";
     }
 }
+
+document.getElementById('menu-btn').onclick = function() {
+    // access properties using this keyword
+    if ( this.checked ) {
+        document.getElementById("sideNav").style.width = "250px";
+    } else {
+        document.getElementById("sideNav").style.width = "0";
+    }
+};
+
+// maak navigatie breder op klik
+
+  function openNav() {
+    document.getElementById("sideNav").style.width = "250px";
+  }
+
+  //maak navigatie terug smal op klik
+
+  function closeNav() {
+    document.getElementById("sideNav").style.width = "0";
+  }

@@ -39,9 +39,18 @@ if ($_SESSION["Id"] == NULL) {
 <body>
   <?php include "includes/navigation.php"; ?>
 
+  <div class="welcomeImage">
+    <img src="img/assets/header.jpg" style="width: 100%; visibility: hidden;" alt="" />
+  </div>
+
+  <div class="welcomeBox">
+    <span>Dag <?php echo $_SESSION["Naam"]; ?></span>
+    <br>
+    <span style="font-size: 30px;">Kan jij mij <b class="colored">ontmaskeren</b> ?</span>
+  </div>
+
   <div class="infoDiv">
-    <h1>DE MOL</h1>
-    <p>Welkom <?php echo $_SESSION["Naam"]; ?></p>
+    <p>Dag vrienden</p>
     <p id="stemTekst"></p>
   </div>
 

@@ -50,7 +50,6 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
 <html lang="nl">
 <head>
     <?php include "includes/headinfo.php"; ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 </head>
 <body>
     <?php include "includes/navigation.php"; ?>

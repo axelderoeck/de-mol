@@ -17,5 +17,5 @@
 <!-- META -->
 
 <meta charset="UTF-8">
-<meta name="viewport" content="user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>De Mol</title>

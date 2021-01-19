@@ -1,11 +1,13 @@
-<div class="topnav">
-  <a href="home.php" class="active">Home</a>
-  <div id="myLinks">
-    <a href="jouwmol.php">Mijn Molboek</a>
-    <a href="ranglijst.php">Ranglijst</a>
-    <a href="index.php?code=9">Uitloggen</a>
-  </div>
-  <a href="javascript:void(0);" class="icon" onclick="hamburgerMenu()">
-    <i class="fa fa-bars"></i>
-  </a>
+<input type="checkbox" class="menu-btn" id="menu-btn">
+<label for="menu-btn" class="menu-icon">
+  <span class="navicon"></span>
+</label>
+
+<div id="sideNav" class="sideNav">
+  <ul class="menu">
+    <li><a href="home.php">Home</a></li>
+    <li><a href="jouwmol.php">Molboek</a></li>
+    <li><a href="ranglijst.php">Ranglijst</a></li>
+    <li style="background-color: #5391ad !important;"><a href="index.php?code=9">Uitloggen</a></li>
+  </ul>
 </div>

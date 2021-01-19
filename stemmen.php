@@ -7,6 +7,9 @@ session_start();
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
+if ($_SESSION["Voted"] == 1) {
+  header('location:home.php');
+}
 
 if (isset($_POST["formSubmitVote"])){
 
