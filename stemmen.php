@@ -152,7 +152,7 @@ if (isset($_POST["formSubmitVote"])){
         if( isOverValue(10) == false ){
           value++;
         }else {
-          console.log("Je kan niet meer dan 10 punten inzetten.")
+          alert("Je kan niet meer dan 10 punten inzetten.")
         }
         document.getElementById(id).defaultValue = value;
       }

@@ -91,16 +91,17 @@ box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.75);
     padding: 0;
 }
 
-.redOverlay3 {
-  -webkit-filter: sepia(100%) hue-rotate(90deg) saturate(400%) !important;
-  filter: sepia(100%) hue-rotate(90deg) saturate(400%) !important;
-}
-
 .disabledPerson{
   position: relative;
 }
 
 .disabledPerson:after{
+  -webkit-position: absolute; content: ''; display: block; top: 0; left: 0; height: 100%; width: 100%;
+  -webkit-background: rgba(235, 38, 38, 0.99);
+  -webkit-mix-blend-mode: color;
+  -moz-position: absolute; content: ''; display: block; top: 0; left: 0; height: 100%; width: 100%;
+  -moz-background: rgba(235, 38, 38, 0.99);
+  -moz-mix-blend-mode: color;
   position: absolute; content: ''; display: block; top: 0; left: 0; height: 100%; width: 100%;
   background: rgba(235, 38, 38, 0.99);
   mix-blend-mode: color;

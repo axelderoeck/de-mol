@@ -17,22 +17,20 @@ if ($_SESSION["Id"] == NULL) {
   <script>
     window.addEventListener('load', function() {
       <?php
-        /* DEZE FUNCTIE AANZETTEN VOOR FINAL VERSIE
 
-        if(date('D') == 'Sun' || date('D') == 'Mon') {
-          ?>stemKnop("aan");<?php
-        } else {
+        if(date('D') == 'Sun') {
           ?>stemKnop("uit");<?php
+        } else {
+          if ($_SESSION["Voted"] == 0) {
+            ?> stemKnop("aan"); <?php
+          } elseif ($_SESSION["Voted"] == 1) {
+            ?> stemKnop("uit"); <?php
+          }
+        }
+        if ($_SESSION["Id"] == 7) {
+          ?> stemKnop("aan") <?php
         }
 
-        */
-      ?>
-      <?php
-        if ($_SESSION["Voted"] == 0) {
-          ?> stemKnop("aan"); <?php
-        } elseif ($_SESSION["Voted"] == 1) {
-          ?> stemKnop("uit"); <?php
-        }
       ?>
 
     })
