@@ -40,7 +40,7 @@ if ($_SESSION["Id"] == NULL) {
   <?php include "includes/navigation.php"; ?>
 
   <div class="welcomeImage">
-    <img src="img/assets/header.jpg" style="width: 100%; visibility: hidden;" alt="" />
+    <img src="img/assets/headerEdited.png" style="width: 100%;" alt="" />
   </div>
 
   <div class="welcomeBox">
@@ -49,8 +49,10 @@ if ($_SESSION["Id"] == NULL) {
     <span style="font-size: 30px;">Kan jij mij <b class="colored">ontmaskeren</b> ?</span>
   </div>
 
+  <div class="gradientHome"></div>
+
   <div class="infoDiv">
-    <p>Dag vrienden</p>
+    <p>Vergeet niet te <span>stemmen</span> voor de volgende aflevering <span>begint</span>!</p>
     <p id="stemTekst"></p>
   </div>
 

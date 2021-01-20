@@ -136,11 +136,6 @@ input {
 appearance: none;
 }
 
-/**
- * 1. Change the font styles in all browsers.
- * 2. Remove the margin in Firefox and Safari.
- */
-
 button,
 input,
 optgroup,
@@ -226,7 +221,7 @@ box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.75);
 
 .cardLogo {
     position: absolute;
-    width: 250px;
+    width: 100px;
     right: 0;
     bottom: 30px;
     z-index: 1;
@@ -244,7 +239,7 @@ position: absolute;
 .cardBottom p {
     color: #ffffff;
     text-transform: uppercase;
-    font-size: 60px;
+    font-size: 40px;
     text-align: left;
     margin: 0 10px;
 }
@@ -277,7 +272,7 @@ position: absolute;
 }
 
 .cardInfo {
-  font-size: 50px;
+  font-size: 30px;
   font-weight: 100;
     margin: 0;
     color: #ffffff;
@@ -291,8 +286,8 @@ position: absolute;
 
 .btnValueChange {
   border: none;
-  width: 150px;
-  height: 150px;
+  width: 60px;
+  height: 60px;
   display: inline-block;
     position: relative;
     z-index: 100;
@@ -301,7 +296,7 @@ position: absolute;
 .btnValue {
   background-color: rgba(0,0,0,0);
   color: #ffffff;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: 600;
     font-family: 'Knockout';
   border: none;
@@ -310,57 +305,36 @@ position: absolute;
   text-align: left;
 }
 
-.infoDiv {
-    width: 100%;
-    background-color: black;
-    margin: 0;
-    padding: 5px;
-    text-align: center;
-}
-
-.infoDiv h1 {
-    font-size: 150px;
-    color: #ffffff;
-}
-
-.infoDiv span {
-    color: #53adb5;
-}
-
-.infoDiv p {
-    font-size: 90px;
-    color: #ffffff;
-}
-
 .submitDiv {
     width: 100%;
-    background-color: black;
-    height: auto;
-    margin: 0 auto;
+    margin: 0;
     text-align: center;
-    padding: 100px 0;
-    transform: translateY(-10px);
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .formSubmitBtn {
-    font-size: 150px;
+    font-size: 40px;
     background-color: #53adb5;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-    border-radius: 30px;
-  margin: 4px 2px;
-  cursor: pointer;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    border-radius: 10px;
+    margin: 15% 2px;
+    cursor: pointer;
     -webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 90%;
+    text-transform: uppercase;
 }
 
 .formSubmitBtn:disabled {
     background-color: #5e5f61 !important;
 }
 
+/* MOLBOEK SCREEN */
 
 .displayList {
     height: 100%;
@@ -369,43 +343,111 @@ appearance: none;
 
 .displayList h1 {
     color: #ffffff;
-    font-size: 100px;
+    font-size: 50px;
     text-align: center;
     text-transform: uppercase;
 }
 
-.displayList p {
+.displayList .subtitle {
     color: #ffffff;
-    font-size: 80px;
+    font-size: 30px;
+}
+
+.progressBar {
+  width: 100%;
+	height: 20px;  /* Can be anything */
+	position: relative;
+	background: #53adb5;
+}
+
+.wrapper {
+  height: 100px;
+  width: 100%;
+}
+
+.div1 {
+    display: inline-block;
+    width: 40%;
+    margin: 0;
+}
+.div2 {
+    display: inline-block;
+    width: 58%;
+    transform: translateY(-60px);
+    margin: 0;
+}
+
+.progressBar span {
+  display: block;
+  height: 100%;
+  filter: brightness(50%);
+  background-color: #53adb5;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes swoopIn {
+  0% {transform: translateX(-400px);}
+  100% {transform: translateX(0px);}
+}
+
+-webkit-@keyframes swoopIn {
+  0% {transform: translateX(-400px);}
+  100% {transform: translateX(0px);}
+}
+
+-moz-@keyframes swoopIn {
+  0% {transform: translateX(-400px);}
+  100% {transform: translateX(0px);}
 }
 
 .displayItem {
-    background-color: #53adb5;
-    width: 90%;
-    height: 100px;
-    margin: 20px auto;
-    display: flex;
-    justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 90%;
+  margin: 80px auto;
+  animation-duration: 1.2s;
+  animation-name: swoopIn;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  -webkit-animation-duration: 1.2s;
+  -webkit-animation-name: swoopIn;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-duration: 1.2s;
+  -moz-animation-name: swoopIn;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: backwards;
+}
+
+
+.div1 img {
+  width: 100%;
+  overflow: hidden;
 }
 
 .displayItemName {
-    text-transform: uppercase !important;
-    margin-top: 10px;
-    margin-left: 30px;
-
+  text-transform: uppercase !important;
+  margin-left: 10%;
+  color: #ffffff;
+  font-size: 30px;
 }
 
 .displayItemNumber {
-    margin-top: 10px;
-    margin-right: 40px;
+  color: #ffffff;
+  float: right;
+  font-size: 50px;
+  margin-right: 10%;
+  background-color: #53adb5;
+  width: 50px;
+  padding: 2px;
+  text-align: center;
 }
 
 .isOut {
-  background-color: red !important;
+  background-color: rgba(255, 0, 0, 0.4) !important;
 }
 
-
-
+/* RANGLIST SCREEN */
 
 .rangList {
     height: 100%;
@@ -469,6 +511,8 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
     margin-right: 30px;
 }
 
+/* LOGIN SCREEN */
+
 .gradient {
   background-image:
     linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
@@ -510,7 +554,7 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
   align-self: center;
   color: #ffffff;
   font-size: 30px;
-  padding-bottom: 5%;
+  padding-bottom: 10%;
   margin-bottom: 0;
 }
 
@@ -562,27 +606,11 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
   display: none;
 }
 
-/* Home image */
+/* HOME SCREEN */
 
 .welcomeImage {
-  background-image:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url('../img/assets/header.jpg');
-  background-image:
-    -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url('../img/assets/header.jpg');
-  background-image:
-    -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url('../img/assets/header.jpg');
-  background-image:
-    -o-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
-    url('../img/assets/header.jpg');
-  background-repeat:no-repeat;
-  background-size:contain;
-  background-position:center;
   width: 100%;
   height: 100%;
-  background-size: cover;
 }
 
 .welcomeBox{
@@ -590,6 +618,7 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
   text-align: center;
   margin-top: -200px;
   z-index: 10;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .welcomeBox span {
@@ -600,6 +629,29 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
 
 .colored {
   color: #53adb5;
+}
+
+.infoDiv {
+    width: 100%;
+    margin: 0;
+    padding: 5px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.infoDiv h1 {
+    font-size: 60px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.infoDiv span {
+    color: #53adb5;
+}
+
+.infoDiv p {
+    font-size: 40px;
+    color: #ffffff;
 }
 
 /*

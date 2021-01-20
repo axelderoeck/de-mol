@@ -12,7 +12,7 @@ window.stemKnop = function(toggle) {
         document.getElementById('stemTekst').innerHTML = "<span>Stemmen</span> is nu mogelijk.";
         document.getElementById('stemKnop').disabled = false;
     }else if(toggle == "uit") {
-        document.getElementById('stemTekst').innerHTML = "<span>Stemmen</span> is nu niet mogelijk. <br/> Je hebt al gestemd voor de meest recente aflevering.";
+        document.getElementById('stemTekst').innerHTML = "<span>Stemmen</span> is nu niet mogelijk.";
         document.getElementById('stemKnop').disabled = true;
     }
 }

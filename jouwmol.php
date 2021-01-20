@@ -21,7 +21,7 @@ if ($_SESSION["Id"] == NULL) {
  <div class="displayList">
 
     <h1>Mijn Molboek</h1>
-    <p style="text-align: center">Jouw meest gespendeerde punten:</p>
+    <p class="subtitle" style="text-align: center">Jouw meest gespendeerde punten:</p>
         <?php
             $id = $_SESSION["Id"];
 
@@ -35,17 +35,29 @@ if ($_SESSION["Id"] == NULL) {
             ORDER BY table_Scores.score DESC";
             if($result = mysqli_query($dbconn, $sql)){
                 if(mysqli_num_rows($result) > 0){
+                    $i = 0;
                     while($row = mysqli_fetch_array($result)){
                         if ($row['Visibility'] == 'out' ) {
                           $out = "isOut";
                         }else {
                           $out = "";
                         } ?>
-                        <div class="displayItem <?php echo $out ?>">
-                            <p class="displayItemName"><?php echo $row['Naam']; ?></p>
-                            <p class="displayItemNumber"><?php echo $row['Score']; ?></p>
+                        <div style="animation-delay: <?php echo $i/4; ?>s;" class="displayItem <?php echo $out ?>">
+                          <div class="wrapper">
+                            <div class="div1">
+                              <img src="img/small/<?php echo $row['Naam']; ?>.jpg" alt="">
+                            </div>
+                            <div class="div2">
+                              <span class="displayItemName"><?php echo $row['Naam']; ?></span>
+                              <br>
+                              <br>
+                              <br>
+                              <span class="displayItemNumber"><?php echo $row['Score']; ?></span>
+                            </div>
+                          </div>
                         </div>
                         <?php
+                        $i++;
                     }
                     // Free result set
                     mysqli_free_result($result);
