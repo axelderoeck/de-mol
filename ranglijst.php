@@ -33,13 +33,19 @@ if ($_SESSION["Id"] == NULL) {
         ORDER BY table_Scores.score DESC";
         if($result = mysqli_query($dbconn, $sql)){
             if(mysqli_num_rows($result) > 0){
+              $i = 1;
                 while($row = mysqli_fetch_array($result)){
                     ?>
-                    <div class="rangItem">
+
+                    <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem">
+                      <?php if ($i <= 3){ ?>
+                        <img style="animation-delay: <?php echo $i+2; ?>s;" src="img/assets/place<?php echo $i; ?>.png" alt="">
+                      <?php }; ?>
                         <p class="rangItemName"><?php echo $row['Naam']; ?></p>
                         <p class="rangItemNumber"><?php echo $row['Score']; ?></p>
                     </div>
                     <?php
+                    $i++;
                 }
                 // Free result set
                 mysqli_free_result($result);
