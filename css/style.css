@@ -10,6 +10,11 @@ body {
     font-family: 'Knockout', sans-serif;
     max-width: 100%;
     overflow-x: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-image: url('../img/assets/background.jpg');
     background-color: #000000;
 }
 
@@ -464,10 +469,89 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
     margin-right: 30px;
 }
 
+.gradient {
+  background-image:
+    linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  background-image:
+    -webkit-linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  background-image:
+    -moz-linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  background-image:
+    -ms-linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  background-image:
+    -o-linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  height: 100px;
+  width: 100%;
+  margin: 0;
+}
+
 #loginbox {
-  width: 95%;
-  margin: 20% auto;
-  background-color: white;
+  width: 100%;
+  margin: 0 auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.loginImg {
+  width: 60%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10%;
+}
+
+.loginText {
+  text-transform: uppercase;
+  font-size: 40px;
+  align-self: center;
+  color: #ffffff;
+}
+
+.loginLink {
+  align-self: center;
+  color: #ffffff;
+  font-size: 30px;
+  padding-bottom: 5%;
+  margin-bottom: 0;
+}
+
+.loginLink a {
+  color: #53adb5;
+  text-transform: uppercase;
+}
+
+.loginError {
+  align-self: center;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.box {
+  text-align: center;
+}
+
+.box form input {
+  border: 0;
+  width: 70%;
+  padding: 5px 10px;
+  margin: 10px auto;
+  font-size: 50px;
+  color: #ffffff;
+  background-color: rgba(255,255,255,0);
+  border-bottom: 2px solid #53adb5;
+}
+
+.box form input::placeholder {
+  color: #ffffff;
+}
+
+.box form input:focus {
+  outline: none;
+}
+
+.box form input[type=submit]{
+  background-color: #53adb5;
+  border: 0;
+  text-transform: uppercase;
 }
 
 #log {
@@ -480,19 +564,18 @@ box-shadow: 0px 0px 45px 21px rgba(170,169,173,1);
 
 /* Home image */
 
-.gradient-bg{
-
-}
-
-.gradient-bg img{
-z-index:0;
-display:block;
-width:100%;
-}
-
 .welcomeImage {
   background-image:
     linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url('../img/assets/header.jpg');
+  background-image:
+    -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url('../img/assets/header.jpg');
+  background-image:
+    -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
+    url('../img/assets/header.jpg');
+  background-image:
+    -o-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url('../img/assets/header.jpg');
   background-repeat:no-repeat;
   background-size:contain;

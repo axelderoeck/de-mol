@@ -95,29 +95,41 @@ if (isset($_POST["userRegister"])){
 </head>
 <body>
 
+  <div style="text-align: center; margin: 30% 0;">
+    <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
+    <p class="loginText">Jij weet <span class="colored">niets</span><br>
+    <span style="font-size: 25px;">(Behalve dat je moet <span class="colored">inloggen</span>)</span></p>
+    <img style="width: 10%;" src="img/assets/arrow.png" alt="">
+  </div>
+
+  <div class="gradient"></div>
   <div id="loginbox">
-            <div id="log">
+            <div id="log" class="box">
                 <form name="formLogin" action="" method="post">
                     <input placeholder="Naam" name="Naam" id="Naam" required>
+                    <br>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
-                    <?php echo "<p>" . $foutmelding . "</p>"; ?>
+                    <?php echo "<p class='loginError'>" . $foutmelding . "</p>"; ?>
                 </form>
-                <h2>Nieuw? Registreer <a href="javascript:openReg();">hier.</a></h2>
+                <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
-            <div id="reg">
+            <div id="reg" class="box">
                 <form name="formRegister" action="" method="post">
                     <input placeholder="Naam" name="Naam" id="Naam" required>
+                    <br>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
-                    <input placeholder="Bevestig Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
-                    <?php echo "<p>" . $foutmelding . "</p>"; ?>
+                    <br>
+                    <input placeholder="Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
                     <br>
                     <input type="submit" name="userRegister" id="userRegister" value="Register">
+                    <br>
+                    <?php echo "<p class='loginError'>" . $foutmelding . "</p>"; ?>
                 </form>
-                <h2>Heb je al een account? <a href="javascript:openReg();">login.</a></h2>
+                <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
             </div>
-        </div>
+  </div>
 
   <!-- JavaScript -->
 

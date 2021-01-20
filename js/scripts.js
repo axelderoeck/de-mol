@@ -37,15 +37,3 @@ document.getElementById('menu-btn').onclick = function() {
         document.getElementById("sideNav").style.width = "0";
     }
 };
-
-// maak navigatie breder op klik
-
-  function openNav() {
-    document.getElementById("sideNav").style.width = "250px";
-  }
-
-  //maak navigatie terug smal op klik
-
-  function closeNav() {
-    document.getElementById("sideNav").style.width = "0";
-  }
