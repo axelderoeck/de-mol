@@ -1,12 +1,28 @@
-.carousel {
-  background-color: green;
+
+.swiper-slide {
+  transform: rotate(0) scale(0.7);
+  transition: .5s;
+}
+
+.swiper-slide-prev {
+  transform: rotate(-20deg) scale(0.7);
+  transition: .5s;
+}
+
+.swiper-slide-next {
+  transform: rotate(20deg) scale(0.7);
+  transition: .5s;
+}
+
+.swiper-slide-active {
+  transform: rotate(0) scale(0.9);
+  transition: .5s;
 }
 
 .card {
   background-color: rgba(0,0,0,0.8);
   width: 500px;
   border-radius: 20px;
-    margin: 0 auto;
     padding: 0;
     overflow:hidden;
     z-index: 0;
@@ -65,8 +81,7 @@ position: absolute;
 }
 
 .cardNameBG {
-    background-color: #001313;
-     margin: 0;
+    margin: 0;
     color: #ffffff;
     text-transform: uppercase;
     text-align: left;

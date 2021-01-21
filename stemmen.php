@@ -122,6 +122,8 @@ if (isset($_POST["formSubmitVote"])){
       var swiper = new Swiper('.swiper-container', {
         slidesPerView: 1,
           loop: false,
+          spaceBetween: 0,
+          initialSlide: 1,
           pagination: {
             el: '.swiper-pagination',
           },
