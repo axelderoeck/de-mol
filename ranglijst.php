@@ -18,7 +18,7 @@ if ($_SESSION["Id"] == NULL) {
 <body>
  <?php include "includes/navigation.php"; ?>
 
- <div class="rangList">
+ <div class="rangList" id="main">
     <h1>Ranglijst</h1>
 
     <?php

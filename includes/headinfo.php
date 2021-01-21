@@ -7,12 +7,13 @@
 <!-- CSS -->
 
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/navigation.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
 <!-- FONTAWESOME -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://kit.fontawesome.com/90f9e5d42f.js" crossorigin="anonymous"></script>
 
 <!-- META -->
 

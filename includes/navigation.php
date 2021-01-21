@@ -1,13 +1,12 @@
-<input type="checkbox" class="menu-btn" id="menu-btn">
-<label for="menu-btn" class="menu-icon">
-  <span class="navicon"></span>
-</label>
-
-<div id="sideNav" class="sideNav">
-  <ul class="menu">
-    <li><a href="home.php">Home</a></li>
-    <li><a href="jouwmol.php">Molboek</a></li>
-    <li><a href="ranglijst.php">Ranglijst</a></li>
-    <li style="background-color: #5391ad !important;"><a href="index.php?code=9">Uitloggen</a></li>
-  </ul>
+<div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times closeIcon"></i></a>
+  <a href="home.php"><i class="fas fa-home"></i>Home</a>
+  <a href="jouwmol.php"><i class="fas fa-fingerprint"></i>Molboek</a>
+  <a href="ranglijst.php"><i class="fas fa-medal"></i>Ranglijst</a>
+  <a href="uitleg.php"><i class="fas fa-question-circle"></i>Uitleg</a>
+  <a href="index.php?code=9"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
+  <img src="img/assets/molLogo.png" alt="">
 </div>
+
+<!-- Use any element to open the sidenav -->
+<span class="navButton" onclick="openNav()"><i class="fas fa-stream"></i></span>

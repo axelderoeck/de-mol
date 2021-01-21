@@ -8,6 +8,9 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+$setVotesQuery = "UPDATE `table_Users`
+SET `Voted` = 0";
+
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +22,22 @@ if ($_SESSION["Id"] == NULL) {
       <?php
 
         if(date('D') == 'Sun') {
-          ?>stemKnop("uit");<?php
+          ?>
+          stemKnop("uit");
+          infoTekst("Op de dag van de aflevering kan je niet stemmen.");
+          <?php
+          mysqli_query($dbconn, $setVotesQuery);
         } else {
           if ($_SESSION["Voted"] == 0) {
-            ?> stemKnop("aan"); <?php
+            ?>
+            stemKnop("aan");
+            infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen.<i 'color: #53adb5;' class='fas fa-clock'></i>");
+            <?php
           } elseif ($_SESSION["Voted"] == 1) {
-            ?> stemKnop("uit"); <?php
+            ?>
+            stemKnop("uit");
+            infoTekst("Je hebt al <span>gestemd</span> <i style='color: #53adb5;' class='fas fa-check'></i>");
+            <?php
           }
         }
         if ($_SESSION["Id"] == 7) {
@@ -39,26 +52,22 @@ if ($_SESSION["Id"] == NULL) {
 <body>
   <?php include "includes/navigation.php"; ?>
 
-  <div class="welcomeImage">
-    <img src="img/assets/headerEdited.png" style="width: 100%;" alt="" />
-  </div>
+<div class="homeScreen" id="main">
 
-  <div class="welcomeBox">
-    <span>Dag <?php echo $_SESSION["Naam"]; ?></span>
-    <br>
-    <span style="font-size: 30px;">Kan jij mij <b class="colored">ontmaskeren</b> ?</span>
-  </div>
+  <h1>Dag <?php echo $_SESSION["Naam"]; ?></h1>
 
-  <div class="gradientHome"></div>
-
-  <div class="infoDiv">
-    <p>Vergeet niet te <span>stemmen</span> voor de volgende aflevering <span>begint</span>!</p>
-    <p id="stemTekst"></p>
+  <div class="buttonsDiv">
+    <a href="jouwmol.php"><i class="fas fa-fingerprint"></i></a>
+    <a href="uitleg.php"><i class="fas fa-question-circle"></i></a>
+    <a href="ranglijst.php"><i class="fas fa-medal"></i></a>
   </div>
 
   <div class="submitDiv">
     <button onclick="location.href = 'stemmen.php';" id="stemKnop" class="formSubmitBtn" type="submit">Stemmen</button>
   </div>
+
+  <p id="infoTekst"></p>
+</div>
 
   <!-- JavaScript -->
 

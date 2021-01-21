@@ -18,7 +18,7 @@ if ($_SESSION["Id"] == NULL) {
 <body>
     <?php include "includes/navigation.php"; ?>
 
- <div class="displayList">
+ <div class="displayList" id="main">
 
     <h1>Mijn Molboek</h1>
     <p class="subtitle" style="text-align: center">Jouw meest gespendeerde punten:</p>

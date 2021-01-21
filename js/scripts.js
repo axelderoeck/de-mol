@@ -9,12 +9,14 @@ function hamburgerMenu() {
 
 window.stemKnop = function(toggle) {
     if(toggle == "aan"){
-        document.getElementById('stemTekst').innerHTML = "<span>Stemmen</span> is nu mogelijk.";
         document.getElementById('stemKnop').disabled = false;
     }else if(toggle == "uit") {
-        document.getElementById('stemTekst').innerHTML = "<span>Stemmen</span> is nu niet mogelijk.";
         document.getElementById('stemKnop').disabled = true;
     }
+}
+
+window.infoTekst = function(tekst) {
+  document.getElementById('infoTekst').innerHTML = tekst;
 }
 
 function openReg() {
@@ -37,3 +39,14 @@ document.getElementById('menu-btn').onclick = function() {
         document.getElementById("sideNav").style.width = "0";
     }
 };
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+}
