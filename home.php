@@ -24,14 +24,14 @@ SET `Voted` = 0";
         if(date('D') == 'Sun') {
           ?>
           stemKnop("uit");
-          infoTekst("Op de dag van de aflevering kan je niet stemmen.");
+          infoTekst("Op de dag van de aflevering kan je niet stemmen. <br> Kom morgen terug!");
           <?php
           mysqli_query($dbconn, $setVotesQuery);
         } else {
           if ($_SESSION["Voted"] == 0) {
             ?>
             stemKnop("aan");
-            infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen.<i 'color: #53adb5;' class='fas fa-clock'></i>");
+            infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i style='color: #53adb5;' class='fas fa-clock'></i>");
             <?php
           } elseif ($_SESSION["Voted"] == 1) {
             ?>

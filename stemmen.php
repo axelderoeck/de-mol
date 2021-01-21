@@ -176,10 +176,9 @@ if (isset($_POST["formSubmitVote"])){
 <body>
   <?php include "includes/navigation.php"; ?>
 
-  <div class="infoDiv">
-        <h1>WIE IS DE <span>MOL</span> ?</h1>
-        <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
-  </div>
+<div class="votePage" id="main">
+  <h1>WIE IS DE <span>MOL</span> ?</h1>
+  <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
 
   <form id="deMolForm" method="POST" action="">
 
@@ -195,6 +194,8 @@ if (isset($_POST["formSubmitVote"])){
     <input form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
   </div>
   </form>
+
+</div>
 
   <!-- JavaScript -->
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>

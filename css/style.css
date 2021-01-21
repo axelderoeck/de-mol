@@ -95,6 +95,7 @@ button,
     font-size: 50px;
     text-align: center;
     text-transform: uppercase;
+    margin-top: 30%;
 }
 
 .displayList .subtitle {
@@ -213,6 +214,7 @@ button,
     font-size: 50px;
     text-align: center;
     text-transform: uppercase;
+    margin-top: 30%;
 }
 
 .rangList p {
@@ -386,6 +388,7 @@ button,
   font-size: 50px;
   text-align: center;
   text-transform: uppercase;
+  margin-top: 30%;
 }
 
 .homeScreen span {
@@ -395,6 +398,7 @@ button,
 .homeScreen p {
     font-size: 40px;
     color: #ffffff;
+    padding: 0 10%;
 }
 
 .buttonsDiv {
