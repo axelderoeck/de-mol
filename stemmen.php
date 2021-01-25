@@ -10,6 +10,9 @@ if ($_SESSION["Id"] == NULL) {
 if ($_SESSION["Voted"] == 1) {
   header('location:home.php');
 }
+if(date('D') == 'Sun') {
+  header('location:home.php');
+}
 
 if (isset($_POST["formSubmitVote"])){
 
