@@ -1,5 +1,5 @@
 # De Mol Spel
-![de mol logo](https://github.com/AxelDeRoeck/DeMolGame/blob/main/img/assets/molLogo.png)
+<img src="https://github.com/AxelDeRoeck/DeMolGame/blob/main/img/assets/molLogo.png" alt="De Mol Logo" width="250"/>
 
 Dag vrienden...
 **De Mol** is weer begonnen.  Jullie kunnen niet alleen kijken, maar ook meedoen.
@@ -7,12 +7,14 @@ De bedoeling van deze site is om zo snel mogelijk de **mol** te ontmaskeren voor
 
 Veel succes.
 
+<hr>
+
 # Het Spel
 
 Je kan wekelijks per aflevering **10** punten inzetten op wie dat jij denkt de **mol** is.
 Deze **10** punten kan je ook verspreiden over meerdere kandidaten.
->Bijvoorbeeld: 
->**6** -> **Bart**
+>Bijvoorbeeld: <br/>
+>**6** -> **Bart** <br/>
 >**4** -> **Alina**
 
 ## Wanneer kan ik stemmen?
