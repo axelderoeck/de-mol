@@ -133,7 +133,7 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
         </div>
 
       </div>
-
+      <script type="text/javascript" src="js/scripts.js"></script>
     <?php mysqli_close($dbconn); ?>
 </body>
 </html>
