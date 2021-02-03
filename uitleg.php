@@ -24,7 +24,7 @@ if ($_SESSION["Id"] == NULL) {
     <p>De bedoeling is om zo snel mogelijk de <span>mol</span> te ontmaskeren voor dat de anderen dit doen.</p>
 
     <h2>Het spel</h2>
-    <p>Je kan <span>wekelijks</span> per aflevering <span>10</span> punten inzetten op wie dat jij denkt de <span>mol</span> is. <br> Deze <span>10</span> punten kan je ook <span>verspreiden</span> over meerdere kandidaten.</p>
+    <p>Elke week kunnen er <span>10</span> punten ingezet worden op de persoon die jij verdenkt als <span>mol</span></p>
     <p class="example">Bijvoorbeeld: <br>
       6 -> Bart <br>
       4 -> Alina
