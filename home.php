@@ -29,12 +29,12 @@ SET `Voted` = 0";
       if($begindate > $now) {
         ?>
         stemKnop("uit");
-        infoTekst("Het seizoen is nog niet begonnen.");
+        infoTekst("Het <span>seizoen</span> is nog niet begonnen.");
         <?php
       }elseif ($enddate < $now) {
         ?>
         stemKnop("uit");
-        infoTekst("Het seizoen is voorbij.");
+        infoTekst("Het <span>seizoen</span> is voorbij.");
         <?php
       }
       elseif(date('D') == 'Sun') {
