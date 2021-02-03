@@ -51,11 +51,11 @@ if (isset($_POST["userLogin"])){
             header('location:home.php');
             }else{
             //gebruiker is niet gevonden => niet aangemeld
-            $foutmelding = "Gebruiker niet gevonden of wachtwoord niet correct!";
+            $foutmelding = "Wachtwoord niet correct!";
             }
         }
     } else {
-        $foutmelding = "Gebruiker niet gevonden of wachtwoord niet correct!";
+        $foutmelding = "Wachtwoord niet correct!";
     }
 
 }
@@ -68,8 +68,14 @@ if (isset($_POST["userRegister"])){
     $wachtwoord = $_POST["Wachtwoord"];
     $confirmWachtwoord = $_POST["confirmWachtwoord"];
 
+    $sql = $dbconn->query("SELECT Naam
+                    FROM table_Users
+                    WHERE Naam = '$naam'");
+
     if($wachtwoord != $confirmWachtwoord){
         $foutmelding = "Het wachtwoord is niet bevestigd.";
+    }if ($sql->num_rows > 0) { //als er meer dan 0 resultaten zijn bestaat de naam al
+        $foutmelding = "Deze naam is al in gebruik.";
     }else{
         $hash = password_hash($wachtwoord, PASSWORD_BCRYPT);
         $dbconn->query("INSERT INTO table_Users (Naam, Wachtwoord)

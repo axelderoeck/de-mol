@@ -8,5 +8,4 @@
   <img src="img/assets/molLogo.png" alt="">
 </div>
 
-<!-- Use any element to open the sidenav -->
 <span class="navButton" onclick="openNav()"><i class="fas fa-stream"></i></span>

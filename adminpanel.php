@@ -16,18 +16,33 @@ if(isset($_POST["resetVotes"])) {
 }
 
 
-
-//testen of er op de knop werd gedrukt
-
-if (isset($_POST["deletebtn"])){
-    $identifier2 = $_GET["Identifier"];
+if (isset($_POST["setOutBtn"])){
+    $identifierOut = $_POST["identifier"];
 
     $qrySetOut = "UPDATE `table_Kandidaten`
     SET `Visibility` = 'out'
-    WHERE `Identifier` = '$identifier2'";
+    WHERE `Identifier` = '$identifierOut'";
 
     mysqli_query($dbconn, $qrySetOut);
+}
 
+if (isset($_POST["setInBtn"])){
+    $identifierIn = $_POST["identifier"];
+
+    $qrySetIn = "UPDATE `table_Kandidaten`
+    SET `Visibility` = 'visible'
+    WHERE `Identifier` = '$identifierIn'";
+
+    mysqli_query($dbconn, $qrySetIn);
+}
+
+if (isset($_POST["setMolBtn"])){
+    $demol = $_POST["demol"];
+
+    $qrySetMol = "UPDATE `table_Mol`
+    SET `demol` = '$demol'";
+
+    mysqli_query($dbconn, $qrySetMol);
 }
 
 //query ledenoverzicht
@@ -54,15 +69,16 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
 <body>
     <?php include "includes/navigation.php"; ?>
 
-      <form id="resetVoteForm" action="" method="post">
-        <input type="submit" name="resetVotes" value="Reset Votes" />
-      </form>
+    <div class="adminPanel" id="main">
+      <h1>Admin Panel</h1>
+
+        <h2>De Kandidaten</h2>
 
         <table>
             <tr>
                 <th>Naam</th>
+                <th>Identifier</th>
                 <th>Visibility</th>
-                <th>Set Out</th>
             </tr>
             <?php
             $i = 1;
@@ -70,16 +86,53 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
             echo
             "<tr>
             <td> " . $naam . " </td>
+            <td> " . $identifier . " </td>
             <td> " . $visibility . " </td>
-            <td>
-            <a href='adminpanel.php?identifier=" . $identifier . "'>
-            Set out
-            </a>
-            </td>
             </tr>";
             $i++;
             }   ?>
         </table>
+
+        <h2>Hup der uit jong</h2>
+
+        <div class="box">
+        <form id="setOutForm" class="setOutForm" method="post">
+          <input placeholder="identifier" type="text" name="identifier">
+          <input type="submit" name="setOutBtn">
+        </form>
+        </div>
+        <hr>
+
+        <h2>Oops foutje komt ma terug</h2>
+
+        <div class="box">
+        <form id="setInForm" class="setInForm" method="post">
+          <input placeholder="identifier" type="text" name="identifier">
+          <input type="submit" name="setInBtn">
+        </form>
+        </div>
+        <hr>
+
+        <h2>De Mol is... *tromgeroffel*</h2>
+
+        <div class="box">
+          <form id="setMolForm" class="setMolForm" method="post">
+            <input placeholder="identifier" type="text" id="demol" name="demol">
+            <input type="submit" name="setMolBtn">
+          </form>
+        </div>
+        <hr>
+
+
+        <h2>Reset heeft gestemd</h2>
+
+        <div class="box">
+        <form id="resetVoteForm" method="post">
+          <input type="submit" name="resetVotes" value="Reset" />
+        </form>
+        </div>
+
+      </div>
 
     <?php mysqli_close($dbconn); ?>
 </body>
