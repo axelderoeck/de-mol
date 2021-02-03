@@ -20,8 +20,24 @@ SET `Voted` = 0";
   <script>
     window.addEventListener('load', function() {
       <?php
+      //begin datum van het seizoen
+      $begindate = new DateTime("03/09/2021"); // maand-dag-jaar
+      //eind datum van het seizoen
+      $enddate = new DateTime("05/10/2021"); // maand-dag-jaar
+      $now = new DateTime();
 
-        if(date('D') == 'Sun') {
+      if($begindate > $now) {
+        ?>
+        stemKnop("uit");
+        infoTekst("Het seizoen is nog niet begonnen.");
+        <?php
+      }elseif ($enddate < $now) {
+        ?>
+        stemKnop("uit");
+        infoTekst("Het seizoen is voorbij.");
+        <?php
+      }
+      elseif(date('D') == 'Sun') {
           ?>
           stemKnop("uit");
           infoTekst("Op de dag van de aflevering kan je niet stemmen. <br> Kom morgen terug!");
@@ -39,9 +55,6 @@ SET `Voted` = 0";
             infoTekst("Je hebt al <span>gestemd</span> <i style='color: #53adb5;' class='fas fa-check'></i>");
             <?php
           }
-        }
-        if ($_SESSION["Id"] == 7) {
-          ?> stemKnop("aan") <?php
         }
 
       ?>
