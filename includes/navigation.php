@@ -4,6 +4,7 @@
   <a href="jouwmol.php"><i class="fas fa-fingerprint"></i>Molboek</a>
   <a href="ranglijst.php"><i class="fas fa-medal"></i>Ranglijst</a>
   <a href="uitleg.php"><i class="fas fa-question-circle"></i>Uitleg</a>
+  <a href="profiel.php"><i class="fas fa-user"></i>Profiel</a>
   <a href="index.php?code=9"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
   <img src="img/assets/molLogo.png" alt="">
 </div>

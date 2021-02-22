@@ -57,10 +57,7 @@ if (isset($_POST["userLogin"])){
     } else {
         $foutmelding = "Wachtwoord niet correct!";
     }
-
 }
-
-
 
 if (isset($_POST["userRegister"])){
     //waardes uit het formulier in lokale var steken
@@ -86,9 +83,6 @@ if (isset($_POST["userRegister"])){
           VALUES ('$naam','person$i',0)");
         }
     }
-
-
-
 }
 
 ?>

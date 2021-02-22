@@ -139,6 +139,8 @@ if (isset($_POST["formSubmitVote"])){
         }
       });
 
+      submitKnop("uit");
+
       //Punten Bereken functies
       window.isOverValue = function(value)
       {
@@ -158,7 +160,10 @@ if (isset($_POST["formSubmitVote"])){
       {
         var value = parseInt(document.getElementById(id).value, 10);
         value = isNaN(value) ? 0 : value;
-        if( isOverValue(10) == false ){
+        if (isOverValue(9) == true) {
+          submitKnop("aan");
+        }
+        if (isOverValue(10) == false){
           value++;
         }else {
           alert("Je kan niet meer dan 10 punten inzetten.")
@@ -170,6 +175,9 @@ if (isset($_POST["formSubmitVote"])){
       {
         var value = parseInt(document.getElementById(id).value, 10);
         value = isNaN(value) ? 0 : value;
+        if (isOverValue(9) == true) {
+          submitKnop("uit");
+        }
         if(value > 0) {
           value--;
         }

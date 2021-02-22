@@ -1,6 +1,6 @@
 <?php
 
-//include "./demoldatabaseinfo.php"; //for development purposes
+//include "./demol_database_info.php"; //for development purposes
 
 include "./../demol_database_info.php"; //external file above project folder level
 

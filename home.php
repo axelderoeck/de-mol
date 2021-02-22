@@ -21,7 +21,7 @@ SET `Voted` = 0";
     window.addEventListener('load', function() {
       <?php
       //begin datum van het seizoen
-      $begindate = new DateTime("03/09/2021"); // maand-dag-jaar
+      $begindate = new DateTime("03/19/2021"); // maand-dag-jaar
       //eind datum van het seizoen
       $enddate = new DateTime("05/10/2021"); // maand-dag-jaar
       $now = new DateTime();
