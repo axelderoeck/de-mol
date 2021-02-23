@@ -21,7 +21,7 @@ SET `Voted` = 0";
     window.addEventListener('load', function() {
       <?php
       //begin datum van het seizoen
-      $begindate = new DateTime("03/19/2021"); // maand-dag-jaar
+      $begindate = new DateTime("01/19/2021"); // maand-dag-jaar
       //eind datum van het seizoen
       $enddate = new DateTime("05/10/2021"); // maand-dag-jaar
       $now = new DateTime();
@@ -47,12 +47,12 @@ SET `Voted` = 0";
           if ($_SESSION["Voted"] == 0) {
             ?>
             stemKnop("aan");
-            infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i style='color: #53adb5;' class='fas fa-clock'></i>");
+            infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i class='fas fa-clock'></i>");
             <?php
           } elseif ($_SESSION["Voted"] == 1) {
             ?>
             stemKnop("uit");
-            infoTekst("Je hebt al <span>gestemd</span> <i style='color: #53adb5;' class='fas fa-check'></i>");
+            infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i>");
             <?php
           }
         }
@@ -70,16 +70,16 @@ SET `Voted` = 0";
   <h1>Dag <?php echo $_SESSION["Naam"]; ?></h1>
 
   <div class="buttonsDiv">
-    <a href="jouwmol.php"><i class="fas fa-fingerprint"></i></a>
-    <a href="uitleg.php"><i class="fas fa-question-circle"></i></a>
-    <a href="ranglijst.php"><i class="fas fa-medal"></i></a>
+    <a href="jouwmol.php"><i class="fas fa-fingerprint translucent"></i></a>
+    <a href="uitleg.php"><i class="fas fa-question-circle translucent"></i></a>
+    <a href="ranglijst.php"><i class="fas fa-medal translucent"></i></a>
   </div>
 
   <div class="submitDiv">
     <button onclick="location.href = 'stemmen.php';" id="stemKnop" class="formSubmitBtn" type="submit">Stemmen</button>
   </div>
 
-  <p id="infoTekst"></p>
+  <h2 id="infoTekst"></h2>
 </div>
 
   <!-- JavaScript -->

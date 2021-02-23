@@ -18,9 +18,26 @@ if ($_SESSION["Id"] == NULL) {
 <body>
   <?php include "includes/navigation.php"; ?>
 
-<div class="profileScreen" id="main">
+<div id="main">
 
   <h1><?php echo $_SESSION["Naam"]; ?></h1>
+  <hr>
+  <h3>Awards</h3>
+  <div class="awards">
+    <a href="#">
+      <div class="info">
+        <img src="img/assets/place1.png" alt="">
+        <p>Winnaar</p>
+      </div>
+    </a>
+  </div>
+  <hr>
+  <h3>Account Acties</h3>
+  <ul>
+    <li><i class="fas fa-edit"></i><a href="#"> naam wijzigen</a></li>
+    <li><i class="fas fa-edit"></i><a href="changepassword.php"> wachtwoord wijzigen</a></li>
+    <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="#"> verwijder account</a></li>
+  </ul>
   <hr>
 
 </div>

@@ -1,124 +1,4 @@
-@font-face {
-  font-family: Knockout;
-  src: url("../Knockout.otf") format("truetype");
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Knockout", sans-serif;
-  max-width: 100%;
-  overflow-x: hidden;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-image: url("../img/assets/background.jpg");
-  background-color: #000000;
-}
-
-input {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-}
-
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: inherit;
-  font-size: 100%;
-  line-height: 1.15;
-  margin: 0;
-}
-button,
-input {
-  overflow: visible;
-}
-button,
-select {
-  text-transform: none;
-}
-button,
-[type="button"],
-[type="reset"],
-[type="submit"] {
-  -webkit-appearance: button;
-}
-
-.colored {
-  color: #53adb5;
-}
-
-/* BUTTON */
-
-.submitDiv {
-  width: 100%;
-  text-align: center;
-}
-
-.formSubmitBtn {
-  font-size: 40px;
-  background-color: #53adb5;
-  border: none;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  border-radius: 10px;
-  margin: 5% 2px;
-  cursor: pointer;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  width: 90%;
-  text-transform: uppercase;
-}
-
-.formSubmitBtn:disabled {
-  background-color: #5e5f61 !important;
-}
-
-/* BUTTON */
-
-/* MOLBOEK SCREEN */
-
-.displayList {
-  height: 100%;
-  width: 100%;
-}
-
-.displayList h1 {
-  color: #ffffff;
-  font-size: 50px;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 30%;
-}
-
-.displayList .subtitle {
-  color: #ffffff;
-  font-size: 30px;
-}
-
-.wrapper {
-  height: 100px;
-  width: 100%;
-}
-
-.div1 {
-  display: inline-block;
-  width: 40%;
-  margin: 0;
-}
-.div2 {
-  display: inline-block;
-  width: 58%;
-  transform: translateY(-70px);
-  margin: 0;
-}
+/* Animations */
 
 @keyframes swoopIn {
   0% {
@@ -128,7 +8,6 @@ button,
     transform: translateX(0px);
   }
 }
-
 -webkit-@keyframes swoopIn {
   0% {
     transform: translateX(-400px);
@@ -137,7 +16,6 @@ button,
     transform: translateX(0px);
   }
 }
-
 -moz-@keyframes swoopIn {
   0% {
     transform: translateX(-400px);
@@ -146,56 +24,6 @@ button,
     transform: translateX(0px);
   }
 }
-
-.displayItem {
-  background-color: rgba(0, 0, 0, 0.4);
-  width: 90%;
-  margin: 80px auto;
-  animation-duration: 1.2s;
-  animation-name: swoopIn;
-  animation-timing-function: ease;
-  animation-fill-mode: backwards;
-  -webkit-animation-duration: 1.2s;
-  -webkit-animation-name: swoopIn;
-  -webkit-animation-timing-function: ease;
-  -webkit-animation-fill-mode: backwards;
-  -moz-animation-duration: 1.2s;
-  -moz-animation-name: swoopIn;
-  -moz-animation-timing-function: ease;
-  -moz-animation-fill-mode: backwards;
-}
-
-.div1 img {
-  width: 100%;
-  overflow: hidden;
-}
-
-.displayItemName {
-  text-transform: uppercase !important;
-  margin-left: 10%;
-  color: #ffffff;
-  font-size: 30px;
-  margin-top: -10px !important;
-  background-color: #53adb5;
-  padding: 5px;
-}
-
-.displayItemNumber {
-  color: #ffffff;
-  float: right;
-  font-size: 50px;
-  margin-right: 10%;
-  background-color: #53adb5;
-  width: 50px;
-  padding: 2px;
-  text-align: center;
-}
-
-.isOut {
-  background-color: rgba(255, 0, 0, 0.4) !important;
-}
-
-/* RANGLIST SCREEN */
 
 @keyframes size {
   0% {
@@ -232,6 +60,107 @@ button,
     transform: scale(1);
   }
 }
+
+/* BUTTON */
+
+.submitDiv {
+  width: 100%;
+  text-align: center;
+}
+
+.formSubmitBtn {
+  font-size: 40px;
+  background-color: #53adb5;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  border-radius: 10px;
+  margin: 5% 2px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 90%;
+  text-transform: uppercase;
+}
+
+.formSubmitBtn:disabled {
+  background-color: #5e5f61 !important;
+}
+
+/* BUTTON */
+
+/* MOLBOEK SCREEN */
+
+.wrapper {
+  height: 100px;
+  width: 100%;
+}
+
+.div1 {
+  display: inline-block;
+  width: 40%;
+  margin: 0;
+}
+.div2 {
+  display: inline-block;
+  width: 58%;
+  transform: translateY(-70px);
+  margin: 0;
+}
+
+.displayItem {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 90%;
+  margin: 80px auto;
+  animation-duration: 1.2s;
+  animation-name: swoopIn;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  -webkit-animation-duration: 1.2s;
+  -webkit-animation-name: swoopIn;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-duration: 1.2s;
+  -moz-animation-name: swoopIn;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: backwards;
+}
+
+.displayItem span {
+  color: #ffffff !important;
+}
+
+.div1 img {
+  width: 100%;
+  overflow: hidden;
+}
+
+.displayItemName {
+  text-transform: uppercase !important;
+  margin-left: 10%;
+  font-size: 30px !important;
+  margin-top: -10px !important;
+  background-color: #53adb5;
+  padding: 5px;
+}
+
+.displayItemNumber {
+  float: right;
+  font-size: 50px !important;
+  margin-right: 10%;
+  background-color: #53adb5;
+  width: 50px;
+  padding: 2px;
+  text-align: center;
+}
+
+.isOut {
+  background-color: rgba(255, 0, 0, 0.4) !important;
+}
+
+/* RANGLIST SCREEN */
 
 .rangList {
   height: 100%;
@@ -375,10 +304,10 @@ button,
   font-size: 30px;
   padding-bottom: 10%;
   margin-bottom: 0;
+  text-align: center !important;
 }
 
 .loginLink a {
-  color: #53adb5;
   text-transform: uppercase;
 }
 
@@ -389,68 +318,17 @@ button,
   color: #eb2626;
 }
 
-.box {
-  text-align: center;
-}
-
-.box form input {
-  border: 0;
-  width: 70%;
-  padding: 5px 10px;
-  margin: 10px auto;
-  font-size: 50px;
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0);
-  border-bottom: 2px solid #53adb5;
-}
-
-.box form input::placeholder {
-  color: #ffffff;
-}
-
-.box form input:focus {
-  outline: none;
-}
-
-.box form input[type="submit"] {
-  background-color: #53adb5;
-  border: 0;
-  text-transform: uppercase;
-}
-
 #log {
   display: block;
+  text-align: center;
 }
 
 #reg {
   display: none;
-}
-
-/* HOME SCREEN */
-
-.homeScreen {
-  width: 100%;
-  height: 100%;
   text-align: center;
 }
 
-.homeScreen h1 {
-  color: #ffffff;
-  font-size: 50px;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 30%;
-}
-
-.homeScreen span {
-  color: #53adb5;
-}
-
-.homeScreen p {
-  font-size: 40px;
-  color: #ffffff;
-  padding: 0 10%;
-}
+/* Home screen */
 
 .buttonsDiv {
   width: 100%;
@@ -462,88 +340,14 @@ button,
 }
 
 .buttonsDiv a i {
-  color: #53adb5;
   padding-top: 20px;
   font-size: 30px;
   width: 80px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #53adb5;
-  border-radius: 10px;
   height: 50px;
   margin: 10px;
 }
 
-/* ADMIN PANEL */
-
-.adminPanel {
-  height: 100%;
-  width: 100%;
-  color: #ffffff;
-}
-
-.adminPanel h1 {
-  color: #ffffff;
-  font-size: 50px;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 30%;
-}
-
-.adminPanel h2 {
-  color: #ffffff;
-  font-size: 45px;
-  text-align: center;
-  text-transform: uppercase;
-  padding: 30px;
-}
-
-.adminPanel table {
-  width: 90%;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 25px;
-}
-
-.adminPanel table th {
-  color: #53adb5;
-  font-size: 30px;
-}
-
-.setMolForm {
-  width: 100%;
-  margin: 0 auto;
-}
-
-/* UITLEG SCREEN */
-
-.uitlegScreen {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-}
-
-.uitlegScreen h1 {
-  color: #ffffff;
-  font-size: 50px;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 30%;
-}
-
-.uitlegScreen h2 {
-  color: #53adb5;
-  font-size: 30px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.uitlegScreen p {
-  color: #ffffff;
-  font-size: 25px;
-  text-align: left;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+/* Uitleg screen */
 
 .example {
   color: darkgray !important;
@@ -551,31 +355,34 @@ button,
   margin-left: 20px;
 }
 
-.uitlegScreen span {
-  color: #53adb5;
-}
+/* Profile screen */
 
-/* PROFILE SCREEN */
-
-.profileScreen {
-  width: 100%;
-  height: 100%;
+.awards a div {
   text-align: center;
+  width: 150px;
+  height: 200px;
+  margin: 0 10%;
 }
 
-.profileScreen h1 {
+.awards a div img {
+  width: 70%;
+  top: 5%;
+  left: 15%;
+  right: 15%;
+}
+
+.awards a div p {
+  font-size: 25px;
+  display: inline-block;
+  transform: translateY(-50%);
+  text-transform: capitalize;
+}
+
+.delete {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.delete i {
   color: #ffffff;
-  font-size: 50px;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 30%;
-}
-
-.profileScreen span {
-  color: #53adb5;
-}
-
-.profileScreen hr {
-  background-color: #53adb5;
-  width: 90%;
 }

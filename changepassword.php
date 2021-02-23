@@ -45,9 +45,9 @@ header('location:changepassword.php');
 <body>
   <?php include "includes/navigation.php"; ?>
 
-<div class="profileScreen" id="main">
+<div id="main">
 
-  <h1>Wachtwoord veranderen</h1>
+  <h1>Wachtwoord wijzigen</h1>
   <hr>
   <div class="box">
     <form name="formChangePassword" action="" method="post">

@@ -93,6 +93,8 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
             }   ?>
         </table>
 
+        <hr>
+
         <h2>Hup der uit jong</h2>
 
         <div class="box">

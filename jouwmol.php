@@ -21,7 +21,7 @@ if ($_SESSION["Id"] == NULL) {
  <div class="displayList" id="main">
 
     <h1>Mijn Molboek</h1>
-    <p class="subtitle" style="text-align: center">Jouw meest gespendeerde punten:</p>
+    <h2>Jouw meest gespendeerde punten:</h2>
         <?php
             $id = $_SESSION["Id"];
 

@@ -97,14 +97,14 @@ if (isset($_POST["userRegister"])){
 
   <div style="text-align: center; margin: 30% 0;">
     <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
-    <p class="loginText">Jij weet <span class="colored">niets</span><br>
-    <span style="font-size: 25px;">(Behalve dat je moet <span class="colored">inloggen</span>)</span></p>
+    <h1>Jij weet <span>niets</span></h1>
+    <h2>(Behalve dat je moet <span>inloggen</span>)</h2>
     <img style="width: 10%;" src="img/assets/arrow.png" alt="">
   </div>
 
   <div class="gradient"></div>
   <div id="loginbox">
-            <div id="log" class="box">
+            <div id="log">
                 <form name="formLogin" action="" method="post">
                     <input placeholder="Naam" name="Naam" id="Naam" required>
                     <br>
@@ -115,7 +115,7 @@ if (isset($_POST["userRegister"])){
                 </form>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
-            <div id="reg" class="box">
+            <div id="reg">
                 <form name="formRegister" action="" method="post">
                     <input placeholder="Naam" name="Naam" id="Naam" required>
                     <br>

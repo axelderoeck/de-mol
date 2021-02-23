@@ -191,7 +191,7 @@ if (isset($_POST["formSubmitVote"])){
 
 <div class="votePage" id="main">
   <h1>WIE IS DE <span>MOL</span> ?</h1>
-  <p><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</p>
+  <h2><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</h2>
 
   <form id="deMolForm" method="POST" action="">
 

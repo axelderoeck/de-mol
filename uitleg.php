@@ -17,7 +17,7 @@ if ($_SESSION["Id"] == NULL) {
 <body>
   <?php include "includes/navigation.php"; ?>
 
-  <div class="uitlegScreen" id="main">
+  <div id="main">
 
     <h1>Uitleg</h1>
     <h2>Het doel</h2>

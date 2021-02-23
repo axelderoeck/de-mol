@@ -6,6 +6,7 @@
 
 <!-- CSS -->
 
+<link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/navigation.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
