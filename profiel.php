@@ -20,25 +20,34 @@ if ($_SESSION["Id"] == NULL) {
 
 <div id="main">
 
-  <h1><?php echo $_SESSION["Naam"]; ?></h1>
+  <h1>Mijn Profiel</h1>
   <hr>
   <h3>Awards</h3>
   <div class="awards">
-    <a href="#">
-      <div class="info">
-        <img src="img/assets/place1.png" alt="">
-        <p>Winnaar</p>
-      </div>
-    </a>
+    <div class="info">
+      <img src="img/assets/place1.png" alt="">
+      <p>Winnaar</p>
+    </div>
+    <div class="info">
+      <img src="img/assets/place2.png" alt="">
+      <p>Tunnelvisie</p>
+    </div>
+    <div class="info">
+      <img src="img/assets/place3.png" alt="">
+      <p>Jij weet niets</p>
+    </div>
   </div>
   <hr>
-  <h3>Account Acties</h3>
-  <ul>
-    <li><i class="fas fa-edit"></i><a href="#"> naam wijzigen</a></li>
-    <li><i class="fas fa-edit"></i><a href="changepassword.php"> wachtwoord wijzigen</a></li>
-    <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="#"> verwijder account</a></li>
-  </ul>
-  <hr>
+
+  <h3>Account Acties <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
+  <div id="collapsible-content">
+    <ul>
+      <li><i class="fas fa-edit"></i><a href="#"> naam wijzigen</a></li>
+      <li><i class="fas fa-edit"></i><a href="changepassword.php"> wachtwoord wijzigen</a></li>
+      <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="#"> verwijder account</a></li>
+    </ul>
+  </div>
+
 
 </div>
 

@@ -41,7 +41,7 @@ mysqli_stmt_fetch($stmtSelectMol)
           $sql = "SELECT table_Users.Naam, table_Scores.Score
           FROM table_Users
           LEFT JOIN table_Scores
-          ON table_Users.Naam = table_Scores.Naam
+          ON table_Users.Id = table_Scores.UserId
           LEFT JOIN table_Kandidaten
           ON table_Kandidaten.Identifier = table_Scores.Identifier
           WHERE table_Kandidaten.Identifier = '$demol'

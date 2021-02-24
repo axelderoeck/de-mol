@@ -18,20 +18,21 @@ if (isset($_POST["formSubmitVote"])){
 
   $kandidaten = 10;
   $naam = $_SESSION["Naam"];
+  $id = $_SESSION["Id"];
 
   for ($i=1; $i <= $kandidaten; $i++) {
     $score = $_POST["person$i"];
 
     $query = "UPDATE `table_Scores`
     SET `Score` = `Score` + $score
-    WHERE `Naam` = '$naam' AND `Identifier` = 'person$i'";
+    WHERE `UserId` = '$id' AND `Identifier` = 'person$i'";
 
     mysqli_query($dbconn, $query);
   }
 
   $votedQuery = "UPDATE `table_Users`
   SET `Voted` = 1
-  WHERE `Naam` = '$naam'";
+  WHERE `Id` = '$id'";
   mysqli_query($dbconn, $votedQuery);
   $_SESSION["Voted"] = 1;
   header('location:home.php');

@@ -58,3 +58,15 @@ function closeNav() {
 	document.getElementById("mySidenav").style.width = "0";
 	document.getElementById("main").style.marginLeft = "0";
 }
+
+function collapse(contentId, buttonId) {
+	var button = document.getElementById(buttonId);
+	var content = document.getElementById(contentId);
+	if (content.style.display === "block") {
+		button.style.transform = "rotate(0deg)";
+		content.style.display = "none";
+	} else {
+		button.style.transform = "rotate(180deg)";
+		content.style.display = "block";
+	}
+}

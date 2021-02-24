@@ -357,25 +357,36 @@
 
 /* Profile screen */
 
-.awards a div {
-  text-align: center;
+.awards {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.awards div {
   width: 150px;
-  height: 200px;
-  margin: 0 10%;
-}
-
-.awards a div img {
-  width: 70%;
-  top: 5%;
-  left: 15%;
-  right: 15%;
-}
-
-.awards a div p {
-  font-size: 25px;
   display: inline-block;
-  transform: translateY(-50%);
+  margin: 10px;
+}
+
+.awards div img {
+  width: 100%;
+}
+
+.awards div p {
+  font-size: 25px;
+  text-align: center !important;
+  margin: 10px auto;
   text-transform: capitalize;
+}
+
+#collapsible {
+  transition: 0.4s;
+}
+
+#collapsible-content {
+  display: none;
+  overflow: hidden;
+  transition: 0.4s;
 }
 
 .delete {

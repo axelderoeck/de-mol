@@ -30,30 +30,30 @@ if (isset($_POST["userLogin"])){
                     WHERE Naam = '$naam'");
 
     if($sql->num_rows > 0) {
-        $data = $sql->fetch_array();
-        $id = ($data['Id']);
-        $hasVoted = ($data['Voted']);
-        if(password_verify($wachtwoord, $data['Wachtwoord'])){
+          $data = $sql->fetch_array();
+          $id = ($data['Id']);
+          $hasVoted = ($data['Voted']);
+          if(password_verify($wachtwoord, $data['Wachtwoord'])){
             if($id == 7){
-            $_SESSION["Id"] = $id;
-            $_SESSION["Naam"] = $naam;
-            $_SESSION["Voted"] = $hasVoted;
-            $_SESSION["Admin"] = 1;
-            $foutmelding = "";
-            header('location:adminpanel.php');
-          }elseif ($id <> NULL){
-            //gebruiker is gevonden => aangemeld
-            $_SESSION["Id"] = $id;
-            $_SESSION["Naam"] = $naam;
-            $_SESSION["Voted"] = $hasVoted;
-            $_SESSION["Admin"] = 0;
-            $foutmelding = "";
-            header('location:home.php');
-            }else{
-            //gebruiker is niet gevonden => niet aangemeld
-            $foutmelding = "Wachtwoord niet correct!";
-            }
-        }
+              $_SESSION["Id"] = $id;
+              $_SESSION["Naam"] = $naam;
+              $_SESSION["Voted"] = $hasVoted;
+              $_SESSION["Admin"] = 1;
+              $foutmelding = "";
+              header('location:adminpanel.php');
+            }elseif ($id <> NULL){
+              //gebruiker is gevonden => aangemeld
+              $_SESSION["Id"] = $id;
+              $_SESSION["Naam"] = $naam;
+              $_SESSION["Voted"] = $hasVoted;
+              $_SESSION["Admin"] = 0;
+              $foutmelding = "";
+              header('location:home.php');
+              }else{
+              //gebruiker is niet gevonden => niet aangemeld
+              $foutmelding = "Wachtwoord niet correct!";
+              }
+          }
     } else {
         $foutmelding = "Wachtwoord niet correct!";
     }
@@ -71,16 +71,21 @@ if (isset($_POST["userRegister"])){
 
     if($wachtwoord != $confirmWachtwoord){
         $foutmelding = "Het wachtwoord is niet bevestigd.";
-    }if ($sql->num_rows > 0) { //als er meer dan 0 resultaten zijn bestaat de naam al
-        $foutmelding = "Deze naam is al in gebruik.";
     }else{
         $hash = password_hash($wachtwoord, PASSWORD_BCRYPT);
         $dbconn->query("INSERT INTO table_Users (Naam, Wachtwoord)
         VALUES ('$naam','$hash')");
 
+        $selectNewId = $dbconn->query("SELECT Id
+                        FROM table_Users
+                        WHERE Naam = '$naam' AND Wachtwoord = '$hash'");
+
+        $data = $selectNewId->fetch_array();
+        $newId = ($data['Id']);
+
         for ($i=1; $i <= 10; $i++) {
-          $dbconn->query("INSERT INTO table_Scores (Naam, Identifier, Score)
-          VALUES ('$naam','person$i',0)");
+          $dbconn->query("INSERT INTO table_Scores (UserId, Naam, Identifier, Score)
+          VALUES ('$newId','$naam','person$i',0)");
         }
     }
 }

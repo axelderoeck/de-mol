@@ -28,7 +28,7 @@ if ($_SESSION["Id"] == NULL) {
             $sql = "SELECT table_Scores.Score, table_Kandidaten.Naam, table_Kandidaten.Visibility
             FROM table_Users
             LEFT JOIN table_Scores
-            ON table_Users.Naam = table_Scores.Naam
+            ON table_Users.Id = table_Scores.UserId
             LEFT JOIN table_Kandidaten
             ON table_Kandidaten.Identifier = table_Scores.Identifier
             WHERE table_Users.Id = $id
