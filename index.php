@@ -4,6 +4,8 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
+$meldingSoort = "succes";
+
 $code = $_GET["code"];
 if ($code==9) {
     $_SESSION["Id"] = NULL;
@@ -11,14 +13,13 @@ if ($code==9) {
     $_SESSION["Voted"] = 0;
     $_SESSION["Admin"] = 0;
     session_destroy();
-    header('location:index.php');
+    $meldingSoort = "succes";
+    $foutmelding = "Je bent uitgelogd.";
 }
 
 if ($_SESSION["Id"] != NULL) {
   header('location:home.php');
 }
-
-$foutmelding = "";
 
 if (isset($_POST["userLogin"])){
     //gegevens van de formfields ontvangen
@@ -48,14 +49,16 @@ if (isset($_POST["userLogin"])){
               $_SESSION["Voted"] = $hasVoted;
               $_SESSION["Admin"] = 0;
               $foutmelding = "";
-              header('location:home.php');
+              header('location:home.php?code=7');
               }else{
               //gebruiker is niet gevonden => niet aangemeld
-              $foutmelding = "Wachtwoord niet correct!";
+              $meldingSoort = "warning";
+              $foutmelding = "Wachtwoord is niet correct!";
               }
           }
     } else {
-        $foutmelding = "Wachtwoord niet correct!";
+      $meldingSoort = "warning";
+      $foutmelding = "Wachtwoord is niet correct!";
     }
 }
 
@@ -70,6 +73,7 @@ if (isset($_POST["userRegister"])){
                     WHERE Naam = '$naam'");
 
     if($wachtwoord != $confirmWachtwoord){
+        $meldingSoort = "warning";
         $foutmelding = "Het wachtwoord is niet bevestigd.";
     }else{
         $hash = password_hash($wachtwoord, PASSWORD_BCRYPT);
@@ -87,6 +91,8 @@ if (isset($_POST["userRegister"])){
           $dbconn->query("INSERT INTO table_Scores (UserId, Naam, Identifier, Score)
           VALUES ('$newId','$naam','person$i',0)");
         }
+        $meldingSoort = "succes";
+        $foutmelding = "Account is aangemaakt.";
     }
 }
 
@@ -97,17 +103,36 @@ if (isset($_POST["userRegister"])){
 <head>
   <?php include "includes/headinfo.php"; ?>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <script>
+  window.addEventListener('load', function() {
+    <?php
+      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
+      if($pageRefreshed == 1){
+        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
+      }
+      if ($code == 9) {
+        echo "showNotification('$foutmelding','$meldingSoort');";
+      }
+    ?>
+  })
+  </script>
 </head>
 <body>
 
-  <div style="text-align: center; margin: 30% 0;">
-    <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
-    <h1>Jij weet <span>niets</span></h1>
-    <h2>(Behalve dat je moet <span>inloggen</span>)</h2>
-    <img style="width: 10%;" src="img/assets/arrow.png" alt="">
+  <div id="informationPopup">
+    <!-- Dynamische info -->
   </div>
 
+  <div style="text-align: center; margin: 10% 0;">
+    <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
+    <!--
+    <h1>Jij weet <span>niets</span></h1>
+    <h2>(Behalve dat je moet <span>inloggen</span>)</h2>
+    <img style="width: 10%;" src="img/assets/arrow.png" alt=""> -->
+  </div>
+<!--
   <div class="gradient"></div>
+-->
   <div id="loginbox">
             <div id="log">
                 <form name="formLogin" action="" method="post">
@@ -116,7 +141,6 @@ if (isset($_POST["userRegister"])){
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
-                    <?php echo "<p class='loginError'>" . $foutmelding . "</p>"; ?>
                 </form>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
@@ -130,7 +154,6 @@ if (isset($_POST["userRegister"])){
                     <br>
                     <input type="submit" name="userRegister" id="userRegister" value="Register">
                     <br>
-                    <?php echo "<p class='loginError'>" . $foutmelding . "</p>"; ?>
                 </form>
                 <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
             </div>

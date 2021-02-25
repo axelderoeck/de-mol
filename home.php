@@ -8,6 +8,12 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+$code = $_GET["code"];
+if ($code==7) {
+    $meldingSoort = "succes";
+    $foutmelding = "Je bent ingelogd.";
+}
+
 $setVotesQuery = "UPDATE `table_Users`
 SET `Voted` = 0";
 
@@ -31,32 +37,34 @@ SET `Voted` = 0";
         stemKnop("uit");
         infoTekst("Het <span>seizoen</span> is nog niet begonnen.");
         <?php
-      }elseif ($enddate < $now) {
+      }elseif($enddate < $now) {
         ?>
         stemKnop("uit");
         infoTekst("Het <span>seizoen</span> is voorbij.");
         <?php
-      }
-      elseif(date('D') == 'Sun') {
+      }elseif(date('D') == 'Sun') {
+        ?>
+        stemKnop("uit");
+        infoTekst("Op de dag van de aflevering kan je niet stemmen. <br> Kom morgen terug!");
+        <?php
+        mysqli_query($dbconn, $setVotesQuery);
+      }else{
+        if($_SESSION["Voted"] == 0) {
+          ?>
+          stemKnop("aan");
+          infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i class='fas fa-clock'></i>");
+          <?php
+        }elseif($_SESSION["Voted"] == 1) {
           ?>
           stemKnop("uit");
-          infoTekst("Op de dag van de aflevering kan je niet stemmen. <br> Kom morgen terug!");
+          infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i>");
           <?php
-          mysqli_query($dbconn, $setVotesQuery);
-        } else {
-          if ($_SESSION["Voted"] == 0) {
-            ?>
-            stemKnop("aan");
-            infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i class='fas fa-clock'></i>");
-            <?php
-          } elseif ($_SESSION["Voted"] == 1) {
-            ?>
-            stemKnop("uit");
-            infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i>");
-            <?php
-          }
         }
+      }
 
+      if ($code == 7) {
+        echo "showNotification('$foutmelding','$meldingSoort');";
+      }
       ?>
 
     })
@@ -64,6 +72,10 @@ SET `Voted` = 0";
 </head>
 <body>
   <?php include "includes/navigation.php"; ?>
+
+  <div id="informationPopup">
+    <!-- Dynamische info -->
+  </div>
 
 <div class="homeScreen" id="main">
 

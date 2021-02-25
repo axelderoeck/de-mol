@@ -70,3 +70,13 @@ function collapse(contentId, buttonId) {
 		content.style.display = "block";
 	}
 }
+
+function showNotification(message, type) {
+	var notification = document.getElementById('informationPopup')
+	notification.classList.add(type);
+	notification.innerHTML = "<p>" + message + "</p>";
+	notification.style.top = "20px";
+	setTimeout(function() {
+		notification.style.top = "-50px";
+	}, 4000); //wait 4 seconds before closing again
+}

@@ -8,6 +8,8 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+include "includes/account-actions/changepassword.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +21,20 @@ if ($_SESSION["Id"] == NULL) {
   <?php include "includes/navigation.php"; ?>
 
 <div id="main">
+
+  <div style="display: none;" id="popUpChangePassword"> <!-- DISPLAY NONE IS VOORLOPIG: https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal -->
+    <div class="box">
+      <form name="formChangePassword" action="" method="post">
+          <input placeholder="Oud wachtwoord" name="oudWachtwoord" id="oudWachtwoord" type="password" required>
+          <br>
+          <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
+          <br>
+          <input placeholder="Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
+          <br>
+          <input type="submit" name="changePassword" id="changePassword" value="Verander">
+      </form>
+    </div>
+  </div>
 
   <h1>Mijn Profiel</h1>
   <hr>
