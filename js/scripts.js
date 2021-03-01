@@ -80,3 +80,11 @@ function showNotification(message, type) {
 		notification.style.top = "-50px";
 	}, 4000); //wait 4 seconds before closing again
 }
+
+function showPopup(id, showhide) {
+	if (showhide == "show") {
+		document.getElementById(id).style.display = "block";
+	} else if (showhide == "hide") {
+		document.getElementById(id).style.display = "none";
+	}
+}

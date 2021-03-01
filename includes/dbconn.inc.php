@@ -1,8 +1,13 @@
 <?php
 
-//include "./demol_database_info.php"; //for development purposes
+$localdbinfo = './demol_database_info.php';
+$onlinedbinfo = './../demol_database_info.php';
 
-include "./../demol_database_info.php"; //external file above project folder level
+if (file_exists($localdbinfo)) {
+  include $localdbinfo;
+} else {
+  include $onlinedbinfo;
+}
 
 $dbconn = mysqli_connect($servername,$username,$password,$database);
 

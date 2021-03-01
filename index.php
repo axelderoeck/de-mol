@@ -13,8 +13,9 @@ if ($code==9) {
     $_SESSION["Voted"] = 0;
     $_SESSION["Admin"] = 0;
     session_destroy();
-    $meldingSoort = "succes";
-    $foutmelding = "Je bent uitgelogd.";
+    header('location:index.php');
+    //$meldingSoort = "succes";
+    //$foutmelding = "Je bent uitgelogd.";
 }
 
 if ($_SESSION["Id"] != NULL) {
@@ -125,14 +126,10 @@ if (isset($_POST["userRegister"])){
 
   <div style="text-align: center; margin: 10% 0;">
     <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
-    <!--
-    <h1>Jij weet <span>niets</span></h1>
-    <h2>(Behalve dat je moet <span>inloggen</span>)</h2>
-    <img style="width: 10%;" src="img/assets/arrow.png" alt=""> -->
   </div>
-<!--
-  <div class="gradient"></div>
--->
+
+
+
   <div id="loginbox">
             <div id="log">
                 <form name="formLogin" action="" method="post">

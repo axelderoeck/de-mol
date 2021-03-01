@@ -88,7 +88,7 @@ SET `Voted` = 0";
   </div>
 
   <div class="submitDiv">
-    <button onclick="location.href = 'stemmen.php';" id="stemKnop" class="formSubmitBtn" type="submit">Stemmen</button>
+    <button onclick="location.href = 'stemmen.php';" id="stemKnop" class="styledBtn" type="submit">Stemmen</button>
   </div>
 
   <h2 id="infoTekst"></h2>

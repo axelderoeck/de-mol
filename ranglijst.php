@@ -54,7 +54,7 @@ mysqli_stmt_fetch($stmtSelectMol)
 
                       <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem">
                         <?php if ($i <= 3){ ?>
-                          <img style="animation-delay: <?php echo $i+2; ?>s;" src="img/assets/place<?php echo $i; ?>.png" alt="">
+                          <img style="animation-delay: <?php echo $i+2; ?>s;" src="img/awards/place<?php echo $i; ?>.png" alt="">
                         <?php }; ?>
                           <p class="rangItemName"><?php echo $row['Naam']; ?></p>
                           <p class="rangItemNumber"><?php echo $row['Score']; ?></p>

@@ -153,10 +153,18 @@ form input:focus {
   outline: none;
 }
 
-form input[type="submit"] {
+input[type="submit"] {
   background-color: #53adb5;
   border: 0;
   text-transform: uppercase;
+  background-color: rgba(83, 173, 181, 0.4);
+  border: 1px solid #53adb5;
+  border-radius: 10px;
+}
+
+input[type="submit"]:disabled {
+  background-color: rgba(94, 95, 97, 0.4) !important;
+  border: 1px solid #5e5f61;
 }
 
 table {

@@ -61,6 +61,59 @@
   }
 }
 
+/* Popup style */
+
+.closeLink {
+  position: absolute;
+  font-size: 100px;
+  left: 20px;
+  top: -10px;
+}
+
+#popUpChangeName {
+  display: none;
+}
+
+#popUpChangePassword {
+  display: none;
+}
+
+#popUpDeleteAccount {
+  display: none;
+}
+
+/* specific css for delete popup */
+
+#deleteAccount {
+  background-color: rgba(255, 0, 0, 0.4);
+  border: 1px solid #eb2626;
+}
+
+.popupStyle {
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 90%;
+  position: fixed;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 100;
+  margin-top: 10%;
+  top: 30%;
+  left: 50%;
+  padding: 10% 0;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.popupStyle form {
+  margin-top: 5%;
+}
+
+.popupStyle p {
+  text-align: center !important;
+  font-size: 30px;
+}
+
 /* BUTTON */
 
 .submitDiv {
@@ -68,10 +121,8 @@
   text-align: center;
 }
 
-.formSubmitBtn {
+.styledBtn {
   font-size: 40px;
-  background-color: #53adb5;
-  border: none;
   color: white;
   padding: 16px 32px;
   text-decoration: none;
@@ -83,10 +134,17 @@
   appearance: none;
   width: 90%;
   text-transform: uppercase;
+  background-color: #53adb5;
+  border: 0;
+  text-transform: uppercase;
+  background-color: rgba(83, 173, 181, 0.4);
+  border: 1px solid #53adb5;
+  border-radius: 10px;
 }
 
-.formSubmitBtn:disabled {
-  background-color: #5e5f61 !important;
+.styledBtn:disabled {
+  background-color: rgba(94, 95, 97, 0.4) !important;
+  border: 1px solid #5e5f61;
 }
 
 /* BUTTON */
@@ -271,40 +329,21 @@
   color: #ffffff !important;
 }
 
-.gradient {
-  background-image: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0)
-  );
-  background-image: -webkit-linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0)
-  );
-  background-image: -moz-linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0)
-  );
-  background-image: -ms-linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0)
-  );
-  background-image: -o-linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0)
-  );
-  height: 100px;
-  width: 100%;
-  margin: 0;
-}
-
 #loginbox {
   width: 100%;
   margin: 0 auto;
+  animation-duration: 1.2s;
+  animation-name: swoopIn;
+  animation-timing-function: ease;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1.2s;
+  -webkit-animation-name: swoopIn;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: both;
+  -moz-animation-duration: 1.2s;
+  -moz-animation-name: swoopIn;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: both;
 }
 
 .loginImg {

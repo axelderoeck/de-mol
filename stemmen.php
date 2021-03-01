@@ -80,9 +80,9 @@ if (isset($_POST["formSubmitVote"])){
       deelnemers.forEach(deelnemer => {
         if (deelnemer.visibility == 'hidden') {
           if (deelnemer.direction == "Left") {
-            var imgSrc = "src='img/dummyLeft.jpg'";
+            var imgSrc = "src='img/assets/dummyLeft.jpg'";
           } else if (deelnemer.direction == "Right") {
-            var imgSrc = "src='img/dummyRight.jpg'";
+            var imgSrc = "src='img/assets/dummyRight.jpg'";
           }
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
                   <div style="display: none;">
@@ -100,7 +100,7 @@ if (isset($_POST["formSubmitVote"])){
                   <div style="display: none;">
                     <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
                   </div>
-                  <div class="disabledPerson"><img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" /></div>
+                  <div class="disabledPerson"><img class="cardImage" src="img/kandidaten/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" /></div>
             </div>`;
         } else {
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
@@ -116,7 +116,7 @@ if (isset($_POST["formSubmitVote"])){
                     <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
                     <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
                   </div>
-                  <img class="cardImage" src="img/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+                  <img class="cardImage" src="img/kandidaten/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
             </div>`;
         }
       });

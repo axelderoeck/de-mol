@@ -45,7 +45,7 @@ if ($_SESSION["Id"] == NULL) {
                         <div style="animation-delay: <?php echo $i/4; ?>s;" class="displayItem <?php echo $out ?>">
                           <div class="wrapper">
                             <div class="div1">
-                              <img src="img/small/<?php echo $row['Naam']; ?>.jpg" alt="">
+                              <img src="img/kandidaten/small/<?php echo $row['Naam']; ?>.jpg" alt="">
                             </div>
                             <div class="div2">
                               <span class="displayItemName"><?php echo $row['Naam']; ?></span>
