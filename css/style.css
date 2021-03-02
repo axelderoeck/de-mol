@@ -332,18 +332,6 @@
 #loginbox {
   width: 100%;
   margin: 0 auto;
-  animation-duration: 1.2s;
-  animation-name: swoopIn;
-  animation-timing-function: ease;
-  animation-fill-mode: both;
-  -webkit-animation-duration: 1.2s;
-  -webkit-animation-name: swoopIn;
-  -webkit-animation-timing-function: ease;
-  -webkit-animation-fill-mode: both;
-  -moz-animation-duration: 1.2s;
-  -moz-animation-name: swoopIn;
-  -moz-animation-timing-function: ease;
-  -moz-animation-fill-mode: both;
 }
 
 .loginImg {

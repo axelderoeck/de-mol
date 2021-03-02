@@ -8,9 +8,18 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+$id = $_SESSION["Id"];
+
 include "includes/account-actions/changename.php";
 include "includes/account-actions/changepassword.php";
 include "includes/account-actions/deleteaccount.php";
+
+$selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
+FROM table_UserAwards
+LEFT JOIN table_Awards
+ON table_UserAwards.AwardId = table_Awards.Id
+WHERE table_UserAwards.UserId = '$id'
+";
 
 ?>
 
@@ -76,18 +85,26 @@ include "includes/account-actions/deleteaccount.php";
   <hr>
   <h3>Awards</h3>
   <div class="awards">
-    <div class="info">
-      <img src="img/awards/place1.png" alt="">
-      <p>Winnaar</p>
-    </div>
-    <div class="info">
-      <img src="img/awards/place2.png" alt="">
-      <p>Tunnelvisie</p>
-    </div>
-    <div class="info">
-      <img src="img/awards/place3.png" alt="">
-      <p>Jij weet niets</p>
-    </div>
+    <?php
+
+    if($result = mysqli_query($dbconn, $selectAwards)){
+      if(mysqli_num_rows($result) > 0){
+        while($row = mysqli_fetch_array($result)){
+          ?>
+          <div class="info">
+            <img src="img/awards/<?php echo $row['AwardId']; ?>.png" alt="award foto van <?php echo $row['Naam']; ?>">
+            <p><?php echo $row['Naam']; ?><br><span><?php echo $row['Editie']; ?></span></p>
+          </div>
+          <?php
+        }
+      }else{
+        ?>
+        <p style="text-align: center !important;">Je hebt nog geen <span>awards</span>.</p>
+        <?php
+      }
+    }
+
+    ?>
   </div>
   <hr>
 

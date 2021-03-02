@@ -33,6 +33,7 @@ if ($_SESSION["Id"] == NULL) {
             ON table_Kandidaten.Identifier = table_Scores.Identifier
             WHERE table_Users.Id = $id
             ORDER BY table_Scores.score DESC";
+            
             if($result = mysqli_query($dbconn, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     $i = 0;
