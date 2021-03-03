@@ -5,6 +5,7 @@
   <a href="ranglijst.php"><i class="fas fa-medal"></i>Ranglijst</a>
   <a href="uitleg.php"><i class="fas fa-question-circle"></i>Uitleg</a>
   <a href="profiel.php"><i class="fas fa-user"></i>Profiel</a>
+  <a href="deelnemers.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Mollenjagers</a>
   <a href="index.php?code=9"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
   <img src="img/assets/molLogo.png" alt="">
 </div>
