@@ -408,6 +408,10 @@
 
 /* Profile screen */
 
+.userInfo {
+  margin: 0;
+}
+
 .awards {
   overflow: auto;
   white-space: nowrap;

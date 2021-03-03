@@ -25,6 +25,7 @@ if (isset($_POST["deleteAccount"])){
 
     $_SESSION["Id"] = NULL;
     $_SESSION["Naam"] = "";
+    $_SESSION["Gebruikersnaam"] = "";
     $_SESSION["Voted"] = 0;
     $_SESSION["Admin"] = 0;
     session_destroy();

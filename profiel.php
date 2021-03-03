@@ -27,23 +27,25 @@ WHERE table_UserAwards.UserId = '$id'
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
+  <script>
+  window.addEventListener('load', function() {
+    <?php
+      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
+      if($pageRefreshed == 1){
+        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
+      }
+    ?>
+  })
+  </script>
 </head>
 <body>
   <?php include "includes/navigation.php"; ?>
 
-<div id="main">
-
-
-<!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
+  <div id="informationPopup">
+    <!-- Dynamische info -->
   </div>
 
-</div>
+<div id="main">
 
   <div id="popUpChangePassword" class="popupStyle translucent">
     <div class="box">
@@ -82,6 +84,8 @@ WHERE table_UserAwards.UserId = '$id'
   </div>
 
   <h1>Mijn Profiel</h1>
+  <p class="userInfo">Gebruikersnaam: <span><?php echo $_SESSION["Gebruikersnaam"]; ?></span></p>
+  <p class="userInfo">Naam: <span><?php echo $_SESSION["Naam"]; ?></span></p>
   <hr>
   <h3>Awards</h3>
   <div class="awards">
@@ -111,7 +115,7 @@ WHERE table_UserAwards.UserId = '$id'
   <h3>Account Acties <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
   <div id="collapsible-content">
     <ul>
-      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeName','show');"> naam wijzigen</a></li>
+      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeName','show');"> gebruikersnaam wijzigen</a></li>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangePassword','show');"> wachtwoord wijzigen</a></li>
       <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="javascript:showPopup('popUpDeleteAccount','show');"> verwijder account</a></li>
     </ul>

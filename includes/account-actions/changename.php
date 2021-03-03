@@ -12,17 +12,21 @@ if (isset($_POST["changeName"])){
   $id = $_SESSION["Id"];
   $newName = $_POST["nieuweNaam"];
 
-  $dbconn->query("UPDATE table_Users
-    SET Naam = '$newName'
-    WHERE Id = '$id';
-    ");
+  $sql = $dbconn->query("SELECT Gebruikersnaam
+                  FROM table_Users
+                  WHERE Gebruikersnaam = '$newName'");
 
-  $dbconn->query("UPDATE table_Scores
-    SET Naam = '$newName'
-    WHERE UserId = '$id';
-    ");
+  if($sql->num_rows > 0){
+    $meldingSoort = "warning";
+    $foutmelding = "Deze gebruikersnaam is al in gebruik.";
+  }else{
+    $dbconn->query("UPDATE table_Users
+      SET Gebruikersnaam = '$newName'
+      WHERE Id = '$id';
+      ");
 
-$_SESSION["Naam"] = $newName;
+    $_SESSION["Gebruikersnaam"] = $newName;
+  }
 header('location:profiel.php');
 }
 

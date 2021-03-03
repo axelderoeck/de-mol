@@ -24,22 +24,24 @@ if ($_SESSION["Id"] != NULL) {
 
 if (isset($_POST["userLogin"])){
     //gegevens van de formfields ontvangen
-    $naam = $_POST["Naam"];
+    $gebruikersnaam = $_POST["Naam"];
     $wachtwoord = $_POST["Wachtwoord"];
 
-    $sql = $dbconn->query("SELECT Id, Wachtwoord, Voted
+    $sql = $dbconn->query("SELECT Id, Naam, Wachtwoord, Voted
                     FROM table_Users
-                    WHERE Naam = '$naam'");
+                    WHERE Gebruikersnaam = '$gebruikersnaam'");
 
     if($sql->num_rows > 0) {
           $data = $sql->fetch_array();
           $id = ($data['Id']);
+          $naam = ($data['Naam']);
           $hasVoted = ($data['Voted']);
           if(password_verify($wachtwoord, $data['Wachtwoord'])){
             if($id == 7){
               $_SESSION["Id"] = $id;
               $_SESSION["Naam"] = $naam;
               $_SESSION["Voted"] = $hasVoted;
+              $_SESSION["Gebruikersnaam"] = $gebruikersnaam;
               $_SESSION["Admin"] = 1;
               $foutmelding = "";
               header('location:adminpanel.php');
@@ -47,6 +49,7 @@ if (isset($_POST["userLogin"])){
               //gebruiker is gevonden => aangemeld
               $_SESSION["Id"] = $id;
               $_SESSION["Naam"] = $naam;
+              $_SESSION["Gebruikersnaam"] = $gebruikersnaam;
               $_SESSION["Voted"] = $hasVoted;
               $_SESSION["Admin"] = 0;
               $foutmelding = "";
@@ -66,31 +69,35 @@ if (isset($_POST["userLogin"])){
 if (isset($_POST["userRegister"])){
     //waardes uit het formulier in lokale var steken
     $naam = $_POST["Naam"];
+    $gebruikersnaam = $_POST["Gebruikersnaam"];
     $wachtwoord = $_POST["Wachtwoord"];
     $confirmWachtwoord = $_POST["confirmWachtwoord"];
 
-    $sql = $dbconn->query("SELECT Naam
+    $sql = $dbconn->query("SELECT Gebruikersnaam
                     FROM table_Users
-                    WHERE Naam = '$naam'");
+                    WHERE Gebruikersnaam = '$gebruikersnaam'");
 
     if($wachtwoord != $confirmWachtwoord){
-        $meldingSoort = "warning";
-        $foutmelding = "Het wachtwoord is niet bevestigd.";
+      $meldingSoort = "warning";
+      $foutmelding = "Het wachtwoord is niet bevestigd.";
+    }elseif($sql->num_rows > 0){
+      $meldingSoort = "warning";
+      $foutmelding = "Deze gebruikersnaam is al in gebruik.";
     }else{
         $hash = password_hash($wachtwoord, PASSWORD_BCRYPT);
-        $dbconn->query("INSERT INTO table_Users (Naam, Wachtwoord)
-        VALUES ('$naam','$hash')");
+        $dbconn->query("INSERT INTO table_Users (Gebruikersnaam, Naam, Wachtwoord)
+        VALUES ('$gebruikersnaam','$naam','$hash')");
 
         $selectNewId = $dbconn->query("SELECT Id
                         FROM table_Users
-                        WHERE Naam = '$naam' AND Wachtwoord = '$hash'");
+                        WHERE Gebruikersnaam = '$gebruikersnaam' AND Wachtwoord = '$hash'");
 
         $data = $selectNewId->fetch_array();
         $newId = ($data['Id']);
 
         for ($i=1; $i <= 10; $i++) {
-          $dbconn->query("INSERT INTO table_Scores (UserId, Naam, Identifier, Score)
-          VALUES ('$newId','$naam','person$i',0)");
+          $dbconn->query("INSERT INTO table_Scores (UserId, Identifier, Score)
+          VALUES ('$newId','person$i',0)");
         }
         $meldingSoort = "succes";
         $foutmelding = "Account is aangemaakt.";
@@ -133,7 +140,7 @@ if (isset($_POST["userRegister"])){
   <div id="loginbox">
             <div id="log">
                 <form name="formLogin" action="" method="post">
-                    <input placeholder="Naam" name="Naam" id="Naam" required>
+                    <input placeholder="Gebruikersnaam" name="Naam" id="Naam" required>
                     <br>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>
@@ -143,7 +150,9 @@ if (isset($_POST["userRegister"])){
             </div>
             <div id="reg">
                 <form name="formRegister" action="" method="post">
-                    <input placeholder="Naam" name="Naam" id="Naam" required>
+                    <input placeholder="Gebruikersnaam" name="Gebruikersnaam" id="Gebruikersnaam" required>
+                    <br>
+                    <input placeholder="Voornaam" name="Naam" id="Naam" required>
                     <br>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>

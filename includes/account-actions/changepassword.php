@@ -10,14 +10,14 @@ if ($_SESSION["Id"] == NULL) {
 
 if (isset($_POST["changePassword"])){
   $id = $_SESSION["Id"];
-  $naam = $_SESSION["Naam"];
+  $gebruikersnaam = $_SESSION["gebruikersnaam"];
   $wachtwoord = $_POST["oudWachtwoord"];
   $newWachtwoord = $_POST["Wachtwoord"];
   $confirmWachtwoord = $_POST["confirmWachtwoord"];
 
   $sql = $dbconn->query("SELECT Id, Wachtwoord
                   FROM table_Users
-                  WHERE Naam = '$naam'");
+                  WHERE Id = '$id'");
 
   if($sql->num_rows > 0) {
     $data = $sql->fetch_array();
