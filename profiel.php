@@ -12,6 +12,10 @@ $id = $_SESSION["Id"];
 
 $user = $_GET["user"];
 
+if ($user == $id) {
+  header('location:home.php');
+}
+
 if ($user == null) {
   include "includes/account-actions/changename.php";
   include "includes/account-actions/changepassword.php";

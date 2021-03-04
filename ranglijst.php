@@ -23,6 +23,25 @@ if ($stmtSelectMol = mysqli_prepare($dbconn, $qrySelectMol)){
 
 mysqli_stmt_fetch($stmtSelectMol)
 
+/*
+
+SELECT table_Users.Naam, table_Scores.Score
+FROM table_Users
+LEFT JOIN table_Scores
+ON table_Users.Id = table_Scores.UserId
+RIGHT JOIN table_Kandidaten
+ON table_Kandidaten.Identifier = table_Scores.Identifier
+WHERE table_Kandidaten.Identifier = 'person1'
+AND table_Users.Id IN
+(SELECT Id
+    FROM table_Users
+    LEFT JOIN table_Followers
+    ON table_Users.Id = table_Followers.UserIsFollowingId
+    WHERE table_Followers.UserId = 10)
+ORDER BY table_Scores.score DESC
+
+*/
+
 ?>
 
 <!DOCTYPE html>
@@ -46,7 +65,23 @@ mysqli_stmt_fetch($stmtSelectMol)
           ON table_Kandidaten.Identifier = table_Scores.Identifier
           WHERE table_Kandidaten.Identifier = '$demol'
           ORDER BY table_Scores.score DESC";
-          if($result = mysqli_query($dbconn, $sql)){
+
+          $selectScoreList = "SELECT table_Users.Naam, table_Scores.Score
+          FROM table_Users
+          LEFT JOIN table_Scores
+          ON table_Users.Id = table_Scores.UserId
+          RIGHT JOIN table_Kandidaten
+          ON table_Kandidaten.Identifier = table_Scores.Identifier
+          WHERE table_Kandidaten.Identifier = 'person1'
+          AND table_Users.Id IN
+          (SELECT Id
+              FROM table_Users
+              LEFT JOIN table_Followers
+              ON table_Users.Id = table_Followers.UserIsFollowingId
+              WHERE table_Followers.UserId = 10)
+          ORDER BY table_Scores.score DESC";
+
+          if($result = mysqli_query($dbconn, $selectScoreList)){
               if(mysqli_num_rows($result) > 0){
                 $i = 1;
                   while($row = mysqli_fetch_array($result)){

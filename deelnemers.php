@@ -31,7 +31,6 @@ WHERE table_Followers.UserId = '$id'
 
     <h1>Mollenjagers</h1>
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden.</p>
-    <button onclick="location.href = 'followUser.php';" class="styledBtn" type="button" name="button">Voeg spelers toe</button>
     <hr>
 
     <div class="deelnemersList">
@@ -41,19 +40,18 @@ WHERE table_Followers.UserId = '$id'
           if(mysqli_num_rows($result) > 0){
             $i = 1;
               while($row = mysqli_fetch_array($result)){
-                  ?>
-
-                  <a class="info" style="animation-delay: <?php echo $i/4; ?>s;" href="profiel.php?user=<?php echo $row['Id'];?>">
-                      <?php echo $row['Naam']; ?>
-                  </a>
-
+                  if ($row['Id'] != $id) { ?>
+                    <a class="info" style="animation-delay: <?php echo $i/4; ?>s;" href="profiel.php?user=<?php echo $row['Id'];?>">
+                        <?php echo $row['Naam']; ?>
+                    </a>
                   <?php
+                  }
                   $i++;
               }
               // Free result set
               mysqli_free_result($result);
           } else{
-              echo "<h2>Je hebt nog geen spelers toegevoegd.<br>Voeg er toe door op de knop hierboven te klikken.</h2>";
+              echo "<h2>Je hebt nog geen spelers toegevoegd.<br>Voeg er toe door op de knop hieronder te klikken.</h2>";
           }
       } else{
           echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
@@ -61,6 +59,9 @@ WHERE table_Followers.UserId = '$id'
 
       ?>
     </div>
+
+    <hr>
+    <button onclick="location.href = 'followUser.php';" class="styledBtn" type="button" name="button">Voeg spelers toe</button>
 
   </div>
 

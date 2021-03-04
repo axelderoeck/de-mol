@@ -99,6 +99,11 @@ if (isset($_POST["userRegister"])){
           $dbconn->query("INSERT INTO table_Scores (UserId, Identifier, Score)
           VALUES ('$newId','person$i',0)");
         }
+
+        $dbconn->query("INSERT INTO table_Followers (UserId, UserIsFollowingId)
+        VALUES ('$newId','$newId')");
+
+        //HIERE DA DING DOEN YES add id aan volgers volg zichzelf
         $meldingSoort = "succes";
         $foutmelding = "Account is aangemaakt.";
     }

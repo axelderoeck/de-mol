@@ -84,7 +84,7 @@ SET `Voted` = 0";
   <div class="buttonsDiv">
     <a href="jouwmol.php"><i class="fas fa-fingerprint translucent"></i></a>
     <a href="uitleg.php"><i class="fas fa-question-circle translucent"></i></a>
-    <a href="ranglijst.php"><i class="fas fa-medal translucent"></i></a>
+    <a href="deelnemers.php"><i class="fas fa-users translucent"></i></a>
   </div>
 
   <div class="submitDiv">
