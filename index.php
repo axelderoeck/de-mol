@@ -53,7 +53,7 @@ if (isset($_POST["userLogin"])){
               $_SESSION["Voted"] = $hasVoted;
               $_SESSION["Admin"] = 0;
               $foutmelding = "";
-              header('location:home.php?code=7');
+              header('location:home.php');
               }else{
               //gebruiker is niet gevonden => niet aangemeld
               $meldingSoort = "warning";
@@ -139,8 +139,6 @@ if (isset($_POST["userRegister"])){
   <div style="text-align: center; margin: 10% 0;">
     <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
   </div>
-
-
 
   <div id="loginbox">
             <div id="log">

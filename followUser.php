@@ -30,8 +30,17 @@ if (isset($_POST["submitUserToFollow"])){
 
   mysqli_stmt_fetch($stmtFindUserToFollowId);
 
-  $dbconn->query("INSERT INTO table_Followers (UserId, UserIsFollowingId)
-  VALUES ('$id','$userToFollowId')");
+  if ($userToFollowId != 0) {
+    $dbconn->query("INSERT INTO table_Followers (UserId, UserIsFollowingId)
+    VALUES ('$id','$userToFollowId')");
+    $foutmelding = "Gebruiker toegevoegd.";
+    $meldingSoort = "succes";
+  }else{
+    $foutmelding = "Gebruiker niet gevonden.";
+    $meldingSoort = "warning";
+  }
+
+
 }
 
 ?>
@@ -40,12 +49,26 @@ if (isset($_POST["submitUserToFollow"])){
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
+  <script>
+  window.addEventListener('load', function() {
+    <?php
+      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
+      if($pageRefreshed == 1){
+        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
+      }
+    ?>
+  })
+  </script>
 </head>
 <body>
   <?php include "includes/navigation.php"; ?>
 
-  <div id="main">
+  <div id="informationPopup">
+    <!-- Dynamische info -->
+  </div>
 
+  <div id="main">
+    <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Voeg een speler toe</h1>
     <form action="" method="post">
       <input placeholder="Gebruikersnaam" type="text" id="userToAdd" name="userToAdd">

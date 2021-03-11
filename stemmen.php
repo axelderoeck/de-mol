@@ -16,11 +16,10 @@ if(date('D') == 'Sun') {
 
 if (isset($_POST["formSubmitVote"])){
 
-  $kandidaten = 10;
   $naam = $_SESSION["Naam"];
   $id = $_SESSION["Id"];
 
-  for ($i=1; $i <= $kandidaten; $i++) {
+  for ($i=1; $i <= $aantal_kandidaten; $i++) {
     $score = $_POST["person$i"];
 
     $query = "UPDATE `table_Scores`
@@ -133,8 +132,8 @@ if (isset($_POST["formSubmitVote"])){
           },
         breakpoints: {
           //ALS scherm >= 1000px
-          1000: {
-            slidesPerView: 3,
+          600: {
+            slidesPerView: 1,
             loop: false,
           }
         }
@@ -191,6 +190,8 @@ if (isset($_POST["formSubmitVote"])){
   <?php include "includes/navigation.php"; ?>
 
 <div class="votePage" id="main">
+  <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+
   <h1>WIE IS DE <span>MOL</span> ?</h1>
   <h2><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</h2>
 
@@ -205,7 +206,7 @@ if (isset($_POST["formSubmitVote"])){
   </div>
 
   <div class="submitDiv">
-    <input form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
+    <input style="margin-bottom: 20%;" form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
   </div>
   </form>
 

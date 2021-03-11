@@ -90,6 +90,9 @@ if ($user == null) {
   </div>
 
 <div id="main">
+  <?php if ($user != null) { ?>
+  <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+  <?php } ?>
 
   <?php if ($user == null) { ?>
 
@@ -133,7 +136,7 @@ if ($user == null) {
 
   <?php if ($user != null) { ?>
   <h1><?php echo $profiel_gebruikersnaam; ?></h1>
-  <h4 style="font-size: 25px;margin-top: -5%;"><?php echo $profiel_naam; ?></h4>
+  <p class="userInfo">Naam: <span><?php echo $profiel_naam; ?></span></p>
   <?php }else{ ?>
   <h1>Mijn Profiel</h1>
   <p class="userInfo">Gebruikersnaam: <span><?php echo $_SESSION["Gebruikersnaam"]; ?></span></p>

@@ -1,0 +1,11 @@
+@media screen and (min-width: 600px) {
+  .loginImg {
+    width: 20%;
+    margin-top: -5%;
+  }
+
+  form {
+    width: 60%;
+    margin: 0 auto;
+  }
+}

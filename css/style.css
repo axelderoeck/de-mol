@@ -525,3 +525,11 @@
   margin: 10px 0;
   text-transform: capitalize;
 }
+
+.goBackArrow {
+  width: 50px;
+  transform: rotate(90deg);
+  position: absolute;
+  right: 20px;
+  top: 2%;
+}

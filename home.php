@@ -8,12 +8,6 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
-$code = $_GET["code"];
-if ($code==7) {
-    $meldingSoort = "succes";
-    $foutmelding = "Je bent ingelogd.";
-}
-
 $setVotesQuery = "UPDATE `table_Users`
 SET `Voted` = 0";
 
@@ -26,10 +20,8 @@ SET `Voted` = 0";
   <script>
     window.addEventListener('load', function() {
       <?php
-      //begin datum van het seizoen
-      $begindate = new DateTime("01/19/2021"); // maand-dag-jaar
-      //eind datum van het seizoen
-      $enddate = new DateTime("05/10/2021"); // maand-dag-jaar
+      $begindate = new DateTime($seizoen_start);
+      $enddate = new DateTime($seizoen_eind);
       $now = new DateTime();
 
       if($begindate > $now) {
@@ -40,7 +32,7 @@ SET `Voted` = 0";
       }elseif($enddate < $now) {
         ?>
         stemKnop("uit");
-        infoTekst("Het <span>seizoen</span> is voorbij.");
+        infoTekst("Het <span>seizoen</span> is voorbij. <br> <button onclick='location.href = `ranglijst.php`;' class='styledBtn'>Bekijk de scores</button>");
         <?php
       }elseif(date('D') == 'Sun') {
         ?>
@@ -61,10 +53,6 @@ SET `Voted` = 0";
           <?php
         }
       }
-
-      if ($code == 7) {
-        echo "showNotification('$foutmelding','$meldingSoort');";
-      }
       ?>
 
     })
@@ -72,10 +60,6 @@ SET `Voted` = 0";
 </head>
 <body>
   <?php include "includes/navigation.php"; ?>
-
-  <div id="informationPopup">
-    <!-- Dynamische info -->
-  </div>
 
 <div class="homeScreen" id="main">
 

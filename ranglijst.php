@@ -23,7 +23,34 @@ if ($stmtSelectMol = mysqli_prepare($dbconn, $qrySelectMol)){
     mysqli_stmt_store_result($stmtSelectMol);
 }
 
-mysqli_stmt_fetch($stmtSelectMol)
+mysqli_stmt_fetch($stmtSelectMol);
+
+$topAmount = 10;
+
+$selectScoreListAll = "SELECT table_Users.Gebruikersnaam, table_Scores.Score
+FROM table_Users
+LEFT JOIN table_Scores
+ON table_Users.Id = table_Scores.UserId
+LEFT JOIN table_Kandidaten
+ON table_Kandidaten.Identifier = table_Scores.Identifier
+WHERE table_Kandidaten.Identifier = '$demol'
+ORDER BY table_Scores.score DESC
+LIMIT $topAmount";
+
+$selectScoreList = "SELECT table_Users.Naam, table_Scores.Score
+FROM table_Users
+LEFT JOIN table_Scores
+ON table_Users.Id = table_Scores.UserId
+RIGHT JOIN table_Kandidaten
+ON table_Kandidaten.Identifier = table_Scores.Identifier
+WHERE table_Kandidaten.Identifier = '$demol'
+AND table_Users.Id IN
+(SELECT Id
+    FROM table_Users
+    LEFT JOIN table_Followers
+    ON table_Users.Id = table_Followers.UserIsFollowingId
+    WHERE table_Followers.UserId = '$id')
+ORDER BY table_Scores.score DESC";
 
 ?>
 
@@ -38,34 +65,9 @@ mysqli_stmt_fetch($stmtSelectMol)
  <?php if ($demol != 'onbekend') {
    ?>
    <div class="rangList" id="main">
-      <h1>Ranglijst</h1>
+     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+      <h1>Scores</h1>
       <?php
-          $topAmount = 10;
-
-          $selectScoreListAll = "SELECT table_Users.Naam, table_Scores.Score
-          FROM table_Users
-          LEFT JOIN table_Scores
-          ON table_Users.Id = table_Scores.UserId
-          LEFT JOIN table_Kandidaten
-          ON table_Kandidaten.Identifier = table_Scores.Identifier
-          WHERE table_Kandidaten.Identifier = '$demol'
-          ORDER BY table_Scores.score DESC
-          LIMIT $topAmount";
-
-          $selectScoreList = "SELECT table_Users.Naam, table_Scores.Score
-          FROM table_Users
-          LEFT JOIN table_Scores
-          ON table_Users.Id = table_Scores.UserId
-          RIGHT JOIN table_Kandidaten
-          ON table_Kandidaten.Identifier = table_Scores.Identifier
-          WHERE table_Kandidaten.Identifier = '$demol'
-          AND table_Users.Id IN
-          (SELECT Id
-              FROM table_Users
-              LEFT JOIN table_Followers
-              ON table_Users.Id = table_Followers.UserIsFollowingId
-              WHERE table_Followers.UserId = '$id')
-          ORDER BY table_Scores.score DESC";
 
           if($result = mysqli_query($dbconn, $selectScoreList)){
               if(mysqli_num_rows($result) > 0){

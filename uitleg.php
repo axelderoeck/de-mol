@@ -18,6 +18,7 @@ if ($_SESSION["Id"] == NULL) {
   <?php include "includes/navigation.php"; ?>
 
   <div id="main">
+    <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
     <h1>Uitleg</h1>
     <h2>Het doel</h2>
