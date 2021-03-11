@@ -8,6 +8,8 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+$id = $_SESSION["Id"];
+
 $qrySelectMol = "SELECT demol
 FROM table_Mol";
 
@@ -22,25 +24,6 @@ if ($stmtSelectMol = mysqli_prepare($dbconn, $qrySelectMol)){
 }
 
 mysqli_stmt_fetch($stmtSelectMol)
-
-/*
-
-SELECT table_Users.Naam, table_Scores.Score
-FROM table_Users
-LEFT JOIN table_Scores
-ON table_Users.Id = table_Scores.UserId
-RIGHT JOIN table_Kandidaten
-ON table_Kandidaten.Identifier = table_Scores.Identifier
-WHERE table_Kandidaten.Identifier = 'person1'
-AND table_Users.Id IN
-(SELECT Id
-    FROM table_Users
-    LEFT JOIN table_Followers
-    ON table_Users.Id = table_Followers.UserIsFollowingId
-    WHERE table_Followers.UserId = 10)
-ORDER BY table_Scores.score DESC
-
-*/
 
 ?>
 
@@ -57,14 +40,17 @@ ORDER BY table_Scores.score DESC
    <div class="rangList" id="main">
       <h1>Ranglijst</h1>
       <?php
-          $sql = "SELECT table_Users.Naam, table_Scores.Score
+          $topAmount = 10;
+
+          $selectScoreListAll = "SELECT table_Users.Naam, table_Scores.Score
           FROM table_Users
           LEFT JOIN table_Scores
           ON table_Users.Id = table_Scores.UserId
           LEFT JOIN table_Kandidaten
           ON table_Kandidaten.Identifier = table_Scores.Identifier
           WHERE table_Kandidaten.Identifier = '$demol'
-          ORDER BY table_Scores.score DESC";
+          ORDER BY table_Scores.score DESC
+          LIMIT $topAmount";
 
           $selectScoreList = "SELECT table_Users.Naam, table_Scores.Score
           FROM table_Users
@@ -72,13 +58,13 @@ ORDER BY table_Scores.score DESC
           ON table_Users.Id = table_Scores.UserId
           RIGHT JOIN table_Kandidaten
           ON table_Kandidaten.Identifier = table_Scores.Identifier
-          WHERE table_Kandidaten.Identifier = 'person1'
+          WHERE table_Kandidaten.Identifier = '$demol'
           AND table_Users.Id IN
           (SELECT Id
               FROM table_Users
               LEFT JOIN table_Followers
               ON table_Users.Id = table_Followers.UserIsFollowingId
-              WHERE table_Followers.UserId = 10)
+              WHERE table_Followers.UserId = '$id')
           ORDER BY table_Scores.score DESC";
 
           if($result = mysqli_query($dbconn, $selectScoreList)){
