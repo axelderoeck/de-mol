@@ -131,9 +131,8 @@ if (isset($_POST["formSubmitVote"])){
             el: '.swiper-pagination',
           },
         breakpoints: {
-          //ALS scherm >= 1000px
           600: {
-            slidesPerView: 1,
+            slidesPerView: 3,
             loop: false,
           }
         }

@@ -166,6 +166,8 @@ if (isset($_POST["userRegister"])){
                 </form>
                 <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
             </div>
+<!--
+            <?php include "includes/legal.php"; ?> -->
   </div>
 
   <!-- JavaScript -->

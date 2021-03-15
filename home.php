@@ -76,6 +76,7 @@ SET `Voted` = 0";
   </div>
 
   <h2 id="infoTekst"></h2>
+
 </div>
 
   <!-- JavaScript -->

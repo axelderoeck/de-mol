@@ -88,3 +88,10 @@ function showPopup(id, showhide) {
 		document.getElementById(id).style.display = "none";
 	}
 }
+
+$(document).ready(function() {
+	$('ul.tabs').tabs({
+		swipeable: true,
+		responsiveThreshold: 1920
+	});
+});

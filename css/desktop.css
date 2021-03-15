@@ -8,4 +8,24 @@
     width: 60%;
     margin: 0 auto;
   }
+
+  h1 {
+    margin-top: 10%;
+  }
+
+  .swiper-slide,
+  .swiper-slide-active,
+  .swiper-slide-prev,
+  .swiper-slide-next {
+    transform: rotate(0) scale(1);
+  }
+
+  .cardLogo {
+    width: 60px;
+  }
+
+  .votePage p {
+    font-size: 30px;
+    padding: 0 5%;
+  }
 }
