@@ -23,6 +23,14 @@ if (isset($_POST["deleteAccount"])){
     WHERE UserId = '$id';
     ");
 
+    $dbconn->query("DELETE FROM table_Followers
+      WHERE UserId = '$id';
+    ");
+
+    $dbconn->query("DELETE FROM table_Followers
+      WHERE UserIsFollowingId = '$id';
+    ");
+
     $_SESSION["Id"] = NULL;
     $_SESSION["Naam"] = "";
     $_SESSION["Gebruikersnaam"] = "";

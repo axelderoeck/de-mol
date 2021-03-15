@@ -4,6 +4,8 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
+include "includes/settings.php";
+
 $meldingSoort = "succes";
 
 $code = $_GET["code"];
@@ -37,28 +39,24 @@ if (isset($_POST["userLogin"])){
           $naam = ($data['Naam']);
           $hasVoted = ($data['Voted']);
           if(password_verify($wachtwoord, $data['Wachtwoord'])){
-            if($id == 7){
-              $_SESSION["Id"] = $id;
-              $_SESSION["Naam"] = $naam;
-              $_SESSION["Voted"] = $hasVoted;
-              $_SESSION["Gebruikersnaam"] = $gebruikersnaam;
+            $_SESSION["Id"] = $id;
+            $_SESSION["Naam"] = $naam;
+            $_SESSION["Gebruikersnaam"] = $gebruikersnaam;
+            $_SESSION["Voted"] = $hasVoted;
+            $foutmelding = "";
+            if(in_array($id, $admins)){
+              //admin is gevonden => aangemeld met rechten
               $_SESSION["Admin"] = 1;
-              $foutmelding = "";
-              header('location:adminpanel.php');
+              header('location:home.php');
             }elseif ($id <> NULL){
               //gebruiker is gevonden => aangemeld
-              $_SESSION["Id"] = $id;
-              $_SESSION["Naam"] = $naam;
-              $_SESSION["Gebruikersnaam"] = $gebruikersnaam;
-              $_SESSION["Voted"] = $hasVoted;
               $_SESSION["Admin"] = 0;
-              $foutmelding = "";
               header('location:home.php');
-              }else{
+            }else{
               //gebruiker is niet gevonden => niet aangemeld
               $meldingSoort = "warning";
               $foutmelding = "Wachtwoord is niet correct!";
-              }
+            }
           }
     } else {
       $meldingSoort = "warning";
@@ -166,8 +164,7 @@ if (isset($_POST["userRegister"])){
                 </form>
                 <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
             </div>
-<!--
-            <?php include "includes/legal.php"; ?> -->
+            <?php include "includes/legal.php"; ?>
   </div>
 
   <!-- JavaScript -->

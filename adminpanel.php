@@ -8,6 +8,37 @@ if ($_SESSION["Admin"] != 1) {
   header('location:home.php');
 }
 
+if (isset($_POST["deleteUser"])){
+  $deleteId = $_POST["idToDelete"];
+
+  $dbconn->query("DELETE FROM table_Users
+    WHERE Id = '$deleteId';
+    ");
+
+  $dbconn->query("DELETE FROM table_Scores
+    WHERE UserId = '$deleteId';
+    ");
+
+  $dbconn->query("DELETE FROM table_UserAwards
+    WHERE UserId = '$deleteId';
+    ");
+
+    $dbconn->query("DELETE FROM table_Followers
+      WHERE UserId = '$deleteId';
+    ");
+
+    $dbconn->query("DELETE FROM table_Followers
+      WHERE UserIsFollowingId = '$deleteId';
+    ");
+}
+
+if(isset($_POST["resetScores"])) {
+  $qryReset = "UPDATE `table_Scores`
+  SET `Score` = 0";
+
+  mysqli_query($dbconn, $qryReset);
+}
+
 if(isset($_POST["resetVotes"])) {
   $query = "UPDATE `table_Users`
   SET `Voted` = 0";
@@ -122,6 +153,7 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
             <input placeholder="identifier" type="text" id="demol" name="demol">
             <input type="submit" name="setMolBtn">
           </form>
+          <p class="example">onbekend of person1,person2,...</p>
         </div>
         <hr>
 
@@ -132,6 +164,23 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
         <form id="resetVoteForm" method="post">
           <input type="submit" name="resetVotes" value="Reset" />
         </form>
+        </div>
+        <hr>
+
+        <h2>Delete een account</h2>
+        <div class="box">
+          <form method="post">
+            <input type="text" name="idToDelete" id="idToDelete" placeholder="Id">
+            <input type="submit" name="deleteUser" value="Delete">
+          </form>
+        </div>
+        <hr>
+
+        <h2>Reset alle scores</h2>
+        <div class="box">
+          <form method="post">
+            <input type="submit" name="resetScores" value="Reset">
+          </form>
         </div>
 
       </div>

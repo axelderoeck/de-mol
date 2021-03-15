@@ -4,14 +4,15 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
+include "includes/settings.php";
+
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
-if ($_SESSION["Voted"] == 1) {
-  header('location:home.php');
-}
-if(date('D') == 'Sun') {
-  header('location:home.php');
+if ($_SESSION["Voted"] == 1 || date('D') == 'Sun') {
+  if ($_SESSION["Admin"] != 1) {
+    header('location:home.php');
+  }
 }
 
 if (isset($_POST["formSubmitVote"])){
@@ -71,7 +72,7 @@ if (isset($_POST["formSubmitVote"])){
         }
 
       ?>
-        { id: 0, identifier: 'person11', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
+        { id: <?php echo $aantal_kandidaten+1; ?>, identifier: 'person<?php echo $aantal_kandidaten+1 . "'"; ?>, naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
       ]
 
       //Array waardes in een div card steken
