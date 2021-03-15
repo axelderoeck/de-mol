@@ -25,16 +25,6 @@ if ($stmtSelectMol = mysqli_prepare($dbconn, $qrySelectMol)){
 
 mysqli_stmt_fetch($stmtSelectMol);
 
-$selectScoreListAll = "SELECT table_Users.Gebruikersnaam, table_Scores.Score
-FROM table_Users
-LEFT JOIN table_Scores
-ON table_Users.Id = table_Scores.UserId
-LEFT JOIN table_Kandidaten
-ON table_Kandidaten.Identifier = table_Scores.Identifier
-WHERE table_Kandidaten.Identifier = '$demol'
-ORDER BY table_Scores.score DESC
-LIMIT $top_aantal";
-
 $selectScoreList = "SELECT table_Users.Naam, table_Scores.Score
 FROM table_Users
 LEFT JOIN table_Scores
@@ -55,10 +45,21 @@ ORDER BY table_Scores.score DESC";
 <!DOCTYPE html>
 <html lang="nl">
 <head>
- <!--
+  <!-- externe stylesheet maakt problemen -->
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css'>
-  -->
     <?php include "includes/headinfo.php"; ?>
+
+    <?php
+    $selectScoreListAll = "SELECT table_Users.Gebruikersnaam, table_Scores.Score
+    FROM table_Users
+    LEFT JOIN table_Scores
+    ON table_Users.Id = table_Scores.UserId
+    LEFT JOIN table_Kandidaten
+    ON table_Kandidaten.Identifier = table_Scores.Identifier
+    WHERE table_Kandidaten.Identifier = '$demol'
+    ORDER BY table_Scores.score DESC
+    LIMIT $top_aantal";
+    ?>
 </head>
 <body>
  <?php include "includes/navigation.php"; ?>
@@ -80,11 +81,10 @@ $i = 1;
 while($row = mysqli_fetch_array($result)){?>
 
                             <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem">
-                              <?php if ($i <= 3){ ?>
-                                <img style="animation-delay: <?php echo $i+2; ?>s;" src="img/awards/place<?php echo $i; ?>.png" alt="">
-                              <?php }; ?>
-                                <p class="rangItemName"><?php echo $row['Naam']; ?></p>
-                                <p class="rangItemNumber"><?php echo $row['Score']; ?></p>
+                              <p>
+                                <span class="rangItemScore"><?php echo $row['Score']; ?></span>
+                                <?php echo $row['Naam']; ?>
+                              </p>
                             </div>
 
 <?php
@@ -97,17 +97,16 @@ mysqli_free_result($result);
           </div>
           <div id="swipe-2">
 <?php
-if($result = mysqli_query($dbconn, $selectScoreList)){
+if($result = mysqli_query($dbconn, $selectScoreListAll)){
 if(mysqli_num_rows($result) > 0){
 $i = 1;
 while($row = mysqli_fetch_array($result)){?>
 
                             <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem">
-                              <?php if ($i <= 3){ ?>
-                                <img style="animation-delay: <?php echo $i+2; ?>s;" src="img/awards/place<?php echo $i; ?>.png" alt="">
-                              <?php }; ?>
-                                <p class="rangItemName"><?php echo $row['Naam']; ?></p>
-                                <p class="rangItemNumber"><?php echo $row['Score']; ?></p>
+                              <p>
+                                <span><?php echo $row['Score']; ?></span>
+                                <?php echo $row['Gebruikersnaam']; ?>
+                              </p>
                             </div>
 
 <?php
