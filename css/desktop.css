@@ -28,4 +28,26 @@
     font-size: 30px;
     padding: 0 5%;
   }
+
+  .wrapper {
+    margin: 20% 0;
+  }
+
+  .div1 {
+    display: inline-block;
+    width: 40%;
+    margin: 0;
+  }
+  .div2 {
+    display: inline-block;
+    width: 58%;
+    transform: translateY(-90px);
+    margin: 0;
+  }
+
+  .div1 img {
+    width: 50%;
+    left: 0;
+    overflow: hidden;
+  }
 }
