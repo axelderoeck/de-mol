@@ -583,3 +583,8 @@
   align-content: center;
   text-align: center;
 }
+
+.bericht {
+  width: 90%;
+  margin: 0 auto;
+}

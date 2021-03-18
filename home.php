@@ -77,6 +77,12 @@ SET `Voted` = 0";
 
   <h2 id="infoTekst"></h2>
 
+  <?php if ($bericht == true) { ?>
+    <div class="bericht <?php echo $melding->soort; ?>">
+      <p><?php echo $melding->tekst; ?></p>
+    </div>
+  <?php } ?>
+
 </div>
 
   <!-- JavaScript -->
