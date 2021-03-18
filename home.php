@@ -81,6 +81,7 @@ SET `Voted` = 0";
     <div class="bericht <?php echo $melding->soort; ?>">
       <p><?php echo $melding->tekst; ?></p>
     </div>
+    <br><br>
   <?php } ?>
 
 </div>

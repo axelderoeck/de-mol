@@ -62,7 +62,6 @@ ORDER BY table_Scores.score DESC";
     ?>
 </head>
 <body>
- <?php include "includes/navigation.php"; ?>
 
    <div class="rangList" id="main">
      <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>

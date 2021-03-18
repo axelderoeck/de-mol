@@ -50,9 +50,15 @@
     left: 0;
     overflow: hidden;
   }
+}
 
+@media screen and (min-width: 800px) {
   .bericht {
     width: 30%;
     margin: 0 auto;
+  }
+
+  .styledBtn {
+    width: 30%;
   }
 }
