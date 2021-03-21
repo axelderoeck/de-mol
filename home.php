@@ -1,8 +1,11 @@
 <?php
 
+date_default_timezone_set('Europe/Brussels');
+
 ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
+include "includes/settings.php";
 
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
@@ -34,10 +37,10 @@ SET `Voted` = 0";
         stemKnop("uit");
         infoTekst("Het <span>seizoen</span> is voorbij. <br> <button onclick='location.href = `ranglijst.php`;' class='styledBtn'>Bekijk de scores</button>");
         <?php
-      }elseif(date('D') == 'Sun') {
+      }elseif(date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
         ?>
         stemKnop("uit");
-        infoTekst("Op de dag van de aflevering kan je niet stemmen. <br> Kom morgen terug!");
+        infoTekst("Vanaf 22:00u kan je <span>stemmen</span>.");
         <?php
         mysqli_query($dbconn, $setVotesQuery);
       }else{
@@ -49,7 +52,7 @@ SET `Voted` = 0";
         }elseif($_SESSION["Voted"] == 1) {
           ?>
           stemKnop("uit");
-          infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i>");
+          infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i><br>Kom terug na de volgende aflevering!");
           <?php
         }
       }
