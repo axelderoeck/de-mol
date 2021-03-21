@@ -70,14 +70,9 @@
   top: -10px;
 }
 
-#popUpChangeName {
-  display: none;
-}
-
-#popUpChangePassword {
-  display: none;
-}
-
+#popUpChangeName,
+#popUpChangePassword,
+#popUpAddEmail,
 #popUpDeleteAccount {
   display: none;
 }

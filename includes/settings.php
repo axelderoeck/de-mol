@@ -4,6 +4,8 @@
   $aantal_kandidaten = 10; // hoeveel kandidaten in het spel
   $top_aantal = 20; // algemene ranglijst top ... tonen
   $admins = array(7, 10); // array van alle admin's hun ID
+  $stemmen_dag = 'Sun'; // dag waarop gestemd wordt
+  $stemmen_uur = "1600"; // vanaf dit uur mag er gestemd worden
 
   // bericht tonen op de home page
   // bericht settings
