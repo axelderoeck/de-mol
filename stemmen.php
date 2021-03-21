@@ -10,7 +10,7 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 if ($_SESSION["Voted"] == 1 || date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
-    header('location:home.php');
+  header('location:home.php');
 }
 
 if (isset($_POST["formSubmitVote"])){
