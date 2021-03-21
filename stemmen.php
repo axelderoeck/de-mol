@@ -9,9 +9,10 @@ include "includes/settings.php";
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
-if ($_SESSION["Voted"] == 1 || date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
+if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
+//|| date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur"
 
 if (isset($_POST["formSubmitVote"])){
 
