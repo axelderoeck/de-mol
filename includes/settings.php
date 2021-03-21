@@ -13,8 +13,8 @@
   // 'info' = blauw, 'succes' = groen, 'warning' = rood
   $bericht = true;
   $melding = (object) [
-    'soort' => 'warning',
-    'tekst' => "Opgelet! Aangezien we niet zeker zijn dat deze 10 kandidaten mogen beginnen, vraag ik om na de 1ste aflevering even geduld te hebben zodat ik de 'juiste' kandidaten kan bijwerken. Bedankt voor het begrip en veel plezier!"
+    'soort' => 'succes',
+    'tekst' => "De kandidaten zijn geupdate, de mollenjacht is begonnen. Veel plezier!"
   ];
 
 ?>
