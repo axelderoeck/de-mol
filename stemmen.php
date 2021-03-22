@@ -7,14 +7,13 @@ session_start();
 include "includes/settings.php";
 
 $id = $_SESSION["Id"];
-$award_deelnemerId = 4;
 
 $checkIfUserHasAward = "SELECT *
 FROM table_UserAwards
-WHERE UserId = '$id' AND AwardId = $award_deelnemerId";
+WHERE UserId = '$id' AND AwardId = $award_deelnemer";
 
 $giveUserAward = "INSERT INTO table_UserAwards (UserId, AwardId)
-VALUES ($id, $award_deelnemerId)";
+VALUES ($id, $award_deelnemer)";
 
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');

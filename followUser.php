@@ -8,7 +8,16 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+include "includes/settings.php";
+
 $id = $_SESSION["Id"];
+
+$checkIfUserHasAward = "SELECT *
+FROM table_UserAwards
+WHERE UserId = '$id' AND AwardId = $award_gilles";
+
+$giveUserAward = "INSERT INTO table_UserAwards (UserId, AwardId)
+VALUES ($id, $award_gilles)";
 
 if (isset($_POST["submitUserToFollow"])){
   $userToFollow = $_POST["userToAdd"];
@@ -38,6 +47,24 @@ if (isset($_POST["submitUserToFollow"])){
   }else{
     $foutmelding = "Gebruiker niet gevonden.";
     $meldingSoort = "warning";
+  }
+
+  $queryCheckIfUserHasAward = $dbconn->query("SELECT *
+  FROM table_UserAwards
+  WHERE UserId = '$id' AND AwardId = $award_gilles");
+
+  if($queryCheckIfUserHasAward->num_rows == 0) {
+    $queryIf10Followed = $dbconn->query("SELECT COUNT(UserId) AS 'Count'
+    FROM table_Followers
+    WHERE UserId = '$id'
+    GROUP BY UserId");
+
+    $data = $queryIf10Followed->fetch_array();
+    $amountFollowed = ($data['Count']);
+
+    if ($amountFollowed == 11) {
+      mysqli_query($dbconn, $giveUserAward);
+    }
   }
 
 

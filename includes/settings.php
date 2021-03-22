@@ -14,7 +14,16 @@
   $bericht = true;
   $melding = (object) [
     'soort' => 'succes',
-    'tekst' => "De kandidaten zijn geupdate, de mollenjacht is begonnen. Veel plezier!"
+    'tekst' => "De kandidaten zijn geupdated, de mollenjacht is begonnen. Veel plezier!"
   ];
+
+  //jaarlijkse awards
+  $award_deelnemer = 4;
+
+  //vaste awards
+  $award_weetniets = 5;
+  $award_tunnelvisie = 8;
+  $award_allin = 9;
+  $award_gilles = 10;
 
 ?>
