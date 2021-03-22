@@ -6,9 +6,22 @@ session_start();
 
 include "includes/settings.php";
 
+$id = $_SESSION["Id"];
+$award_deelnemerId = 4;
+
+$checkIfUserHasAward = "SELECT *
+FROM table_UserAwards
+WHERE UserId = '$id' AND AwardId = $award_deelnemerId";
+
+$giveUserAward = "INSERT INTO table_UserAwards (UserId, AwardId)
+VALUES ($id, $award_deelnemerId)";
+
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
+// if(date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
+//   header('location:home.php');
+// }
 if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
@@ -34,6 +47,15 @@ if (isset($_POST["formSubmitVote"])){
   WHERE `Id` = '$id'";
   mysqli_query($dbconn, $votedQuery);
   $_SESSION["Voted"] = 1;
+
+  $queryCheckIfUserHasAward = $dbconn->query("SELECT *
+  FROM table_UserAwards
+  WHERE UserId = '$id' AND AwardId = $award_deelnemerId");
+
+  if($queryCheckIfUserHasAward->num_rows == 0) {
+    mysqli_query($dbconn, $giveUserAward);
+  }
+
   header('location:home.php');
 
 }
