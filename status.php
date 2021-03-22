@@ -9,9 +9,6 @@ $id = $_SESSION["Id"];
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
-if ($_SESSION["Admin"] != 1) {
-  header('location:index.php');
-}
 
 $getMostVoted = "SELECT Naam, SUM(Score), visibility
 FROM table_Scores
