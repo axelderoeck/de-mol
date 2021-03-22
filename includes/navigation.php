@@ -10,6 +10,7 @@ $now = new DateTime();
   <a href="uitleg.php"><i class="fas fa-question-circle"></i>Uitleg</a>
   <a href="profiel.php"><i class="fas fa-user"></i>Profiel</a>
   <a href="deelnemers.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Mollenjagers</a>
+  <a href="status.php"><i class="fas fa-chart-bar"></i>Statistieken</a>
   <?php if ($_SESSION["Admin"] == 1) { ?>
     <a href="adminpanel.php"><i class="fas fa-hammer"></i>Admin</a>
   <?php } ?>

@@ -232,6 +232,10 @@
   background-color: rgba(255, 0, 0, 0.4) !important;
 }
 
+.isOut2 {
+  color: rgba(255, 0, 0, 0.4) !important;
+}
+
 /* RANGLIST SCREEN */
 
 .rangList {
@@ -582,4 +586,32 @@
 .bericht {
   width: 90%;
   margin: 0 auto;
+}
+
+.status p {
+  text-transform: capitalize;
+  margin: 0 0;
+  font-size: 30px;
+}
+
+.percent .smaller {
+  font-size: 10px;
+}
+
+.meter {
+  height: 20px;
+  margin: 5px auto;
+  position: relative;
+  padding: 5px;
+  width: 90%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.meter > span {
+  display: block;
+  height: 100%;
+  background-color: #53adb5;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff !important;
 }

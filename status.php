@@ -13,7 +13,7 @@ if ($_SESSION["Admin"] != 1) {
   header('location:index.php');
 }
 
-$getMostVoted = "SELECT Naam, SUM(Score)
+$getMostVoted = "SELECT Naam, SUM(Score), visibility
 FROM table_Scores
 LEFT JOIN table_Kandidaten
 ON table_Scores.Identifier = table_Kandidaten.Identifier
@@ -49,25 +49,28 @@ mysqli_stmt_fetch($stmtGetTotalVoted);
   <div id="main">
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
-    <h1>Status</h1>
-    <h2><span><?php echo $amountVoted; ?></span> <?php if ($amountVoted == 1) {echo "heeft";}else{echo "hebben";} ?>  gestemd deze week.</h2>
-    <table>
-      <tr>
-        <th>Naam</th>
-        <th>Score</th>
-        <th>%</th>
-      </tr>
+    <h1>Statistieken</h1>
+    <h2>Verdenkingen</h2>
       <?php
           if($result = mysqli_query($dbconn, $getMostVoted)){
               if(mysqli_num_rows($result) > 0){
                   while($row = mysqli_fetch_array($result)){
-                    $percentScore = ceil(($row['SUM(Score)'] / $totalVoted) * 100);
+                    $percentCalc = round(($row['SUM(Score)'] / $totalVoted) * 100, 2);
+                    $percentScore = explode(".", $percentCalc);
+                    if ($row['Visibility'] == 'out') {
+                      $outClass = 'class="isOut"';
+                      $outClass2 = "isOut2";
+                    }else{
+                      $outClass = "";
+                      $outClass2 = "";
+                    }
                     ?>
-                      <tr>
-                        <td><?php echo $row['Naam']; ?></td>
-                        <td><?php echo $row['SUM(Score)']; ?></td>
-                        <td><?php echo $percentScore; ?>%</td>
-                      </tr>
+                    <div class="status">
+                      <p><?php echo $row['Naam']; ?> - <span class="percent <?php echo $outClass2; ?>"><?php echo $percentScore[0]; ?>%<span class="smaller <?php echo $outClass2; ?>">.<?php echo $percentScore[1]; ?></span></span></p>
+                    </div>
+                    <div class="meter">
+                      <span <?php echo $outClass; ?> style="width: <?php echo $percentScore[0] . '.' . $percentScore[1]; ?>%"></span>
+                    </div>
                     <?php
                   }
                   // Free result set
@@ -75,7 +78,9 @@ mysqli_stmt_fetch($stmtGetTotalVoted);
               }
           }
       ?>
-    </table>
+      <p class="example">Dit zijn percentages van alle punten die door iedereen zijn ingezet over het hele seizoen.</p>
+      <p class="example"><?php echo $amountVoted; ?> <?php if ($amountVoted == 1) {echo "mollenjager heeft";}else{echo "mollenjagers hebben";} ?>  gestemd deze week.</p>
+
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>
