@@ -75,7 +75,6 @@ mysqli_stmt_fetch($stmtGetTotalVoted);
               }
           }
       ?>
-      <p class="example">Dit zijn percentages van alle punten die door iedereen zijn ingezet over het hele seizoen.</p>
       <p class="example"><?php echo $amountVoted; ?> <?php if ($amountVoted == 1) {echo "mollenjager heeft";}else{echo "mollenjagers hebben";} ?>  gestemd deze week.</p>
 
   </div>
