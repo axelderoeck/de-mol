@@ -5,6 +5,7 @@
   }
 }
 
+/* desktop styling */
 @media screen and (min-width: 850px) {
   /* Force the side navigation menu to be open */
   .sidenav {
@@ -15,5 +16,10 @@
   }
   .navButton {
     display: none;
+  }
+
+  /* ranglist indicator style */
+  .tabs .indicator {
+    width: 25%;
   }
 }
