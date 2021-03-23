@@ -25,6 +25,10 @@
 
 <script src="https://kit.fontawesome.com/90f9e5d42f.js" crossorigin="anonymous"></script>
 
+<!-- EXTERNAL SCRIPTS -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+
 <!-- META -->
 
 <meta charset="UTF-8">

@@ -1,4 +1,21 @@
-/* Animations */
+/* GENERAL */
+
+.isOut {
+  background-color: rgba(255, 0, 0, 0.4) !important;
+}
+
+.isOut2 {
+  color: rgba(255, 0, 0, 0.4) !important;
+}
+
+.respContainer {
+  margin: 0 auto;
+  max-width: 400px;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+/* ANIMATIONS */
 
 @keyframes swoopIn {
   0% {
@@ -88,14 +105,7 @@
   }
 }
 
-/* Popup style */
-
-.closeLink {
-  position: absolute;
-  font-size: 100px;
-  left: 20px;
-  top: -10px;
-}
+/* POPUP STYLE */
 
 #popUpChangeName,
 #popUpChangeFirstName,
@@ -106,7 +116,6 @@
 }
 
 /* specific css for delete popup */
-
 #deleteAccount {
   background-color: rgba(255, 0, 0, 0.4);
   border: 1px solid #eb2626;
@@ -135,6 +144,13 @@
 .popupStyle p {
   text-align: center !important;
   font-size: 30px;
+}
+
+.closeLink {
+  position: absolute;
+  font-size: 100px;
+  left: 20px;
+  top: -10px;
 }
 
 /* BUTTON */
@@ -188,8 +204,6 @@
   border: 1px solid #eb2626;
   border-radius: 10px;
 }
-
-/* BUTTON */
 
 /* MOLBOEK SCREEN */
 
@@ -256,15 +270,7 @@
   text-align: center;
 }
 
-.isOut {
-  background-color: rgba(255, 0, 0, 0.4) !important;
-}
-
-.isOut2 {
-  color: rgba(255, 0, 0, 0.4) !important;
-}
-
-/* RANGLIST SCREEN */
+/* RANGLIST */
 
 .rangList {
   height: 100%;
@@ -320,6 +326,46 @@
   width: 100px !important;
   text-align: center;
   color: #ffffff;
+}
+
+.carousel .carousel-item {
+  width: 100%;
+}
+
+.tabs .tab a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 30px;
+}
+
+.tabs .indicator {
+  width: 55%;
+  height: 2px;
+  background-color: #53adb5;
+}
+
+.tabs .tab a:hover,
+.tabs .tab a.active {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.tabs .tab {
+  line-height: 48px;
+  height: 48px;
+  text-transform: uppercase;
+}
+
+.tabs {
+  position: relative;
+  overflow-x: hidden !important;
+  overflow-y: hidden;
+  background-color: transparent !important;
+  height: 48px;
+  width: 100%;
+  align-self: center;
+  white-space: nowrap;
+  align-content: center;
+  text-align: center;
 }
 
 /* LOGIN SCREEN */
@@ -400,6 +446,11 @@
 }
 
 /* Home screen */
+
+.bericht {
+  width: 90%;
+  margin: 0 auto;
+}
 
 .buttonsDiv {
   width: 100%;
@@ -581,52 +632,7 @@
   margin: 2px 5px;
 }
 
-/* Ranglist swipe menu */
-
-.carousel .carousel-item {
-  width: 100%;
-}
-
-.tabs .tab a {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 30px;
-}
-
-.tabs .indicator {
-  width: 55%;
-  height: 2px;
-  background-color: #53adb5;
-}
-
-.tabs .tab a:hover,
-.tabs .tab a.active {
-  background-color: transparent;
-  color: #ffffff;
-}
-
-.tabs .tab {
-  line-height: 48px;
-  height: 48px;
-  text-transform: uppercase;
-}
-
-.tabs {
-  position: relative;
-  overflow-x: hidden !important;
-  overflow-y: hidden;
-  background-color: transparent !important;
-  height: 48px;
-  width: 100%;
-  align-self: center;
-  white-space: nowrap;
-  align-content: center;
-  text-align: center;
-}
-
-.bericht {
-  width: 90%;
-  margin: 0 auto;
-}
+/* PROGRESS BAR PERCENT */
 
 .status p {
   text-transform: capitalize;
@@ -654,11 +660,4 @@
   position: relative;
   overflow: hidden;
   color: #ffffff !important;
-}
-
-.respContainer {
-  margin: 0 auto;
-  max-width: 400px;
-  overflow-x: hidden;
-  width: 100%;
 }
