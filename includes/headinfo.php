@@ -14,10 +14,10 @@
 
 <!-- CSS -->
 
-<link rel="stylesheet" href="css/theme.css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/navigation.css">
-<link rel="stylesheet" href="css/desktop.css">
+<link rel="stylesheet" href="css/theme<?php echo "V" . $styleversion; ?>.css">
+<link rel="stylesheet" href="css/style<?php echo "V" . $styleversion; ?>.css">
+<link rel="stylesheet" href="css/navigation<?php echo "V" . $styleversion; ?>.css">
+<link rel="stylesheet" href="css/desktop<?php echo "V" . $styleversion; ?>.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 

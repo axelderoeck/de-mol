@@ -1,4 +1,5 @@
 <?php
+  $styleversion = 2; //versie van css als ik dit wil forceren te updaten bij iedereen
   $seizoen_start = "03/21/2021"; // maand/dag/jaar   echte: 03/21/2021
   $seizoen_eind = "05/23/2021"; // maand/dag/jaar    echte: 05/23/2021
   $aantal_kandidaten = 10; // hoeveel kandidaten in het spel
