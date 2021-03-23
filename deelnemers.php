@@ -28,6 +28,8 @@ WHERE table_Followers.UserId = '$id'
   <?php include "includes/navigation.php"; ?>
 
   <div id="main">
+    <div class="respContainer">
+
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Mollenjagers</h1>
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden.</p>
@@ -61,7 +63,7 @@ WHERE table_Followers.UserId = '$id'
 
     <hr>
     <button onclick="location.href = 'followUser.php';" class="styledBtn" type="button" name="button">Voeg spelers toe</button>
-
+</div>
   </div>
 
   <!-- JavaScript -->

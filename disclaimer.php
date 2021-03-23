@@ -6,6 +6,8 @@
 <body>
 
 <div id="main">
+  <div class="respContainer">
+
   <a href="index.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
   <h1>Disclaimer</h1>
@@ -17,6 +19,7 @@
   <h2>Contact</h2>
   <p>U kan mij altijd contacteren op <span>mail@aksol.be</span></p>
 
+</div>
 </div>
 
   <!-- JavaScript -->

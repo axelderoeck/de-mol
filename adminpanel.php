@@ -101,6 +101,8 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
     <?php include "includes/navigation.php"; ?>
 
     <div class="adminPanel" id="main">
+      <div class="respContainer">
+
       <h1>Admin Panel</h1>
 
         <h2>De Kandidaten</h2>
@@ -182,7 +184,7 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
             <input type="submit" name="resetScores" value="Reset">
           </form>
         </div>
-
+        </div>
       </div>
       <script type="text/javascript" src="js/scripts.js"></script>
     <?php mysqli_close($dbconn); ?>

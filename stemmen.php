@@ -151,12 +151,6 @@ if (isset($_POST["formSubmitVote"])){
           pagination: {
             el: '.swiper-pagination',
           },
-        breakpoints: {
-          600: {
-            slidesPerView: 3,
-            loop: false,
-          }
-        }
       });
 
       submitKnop("uit");
@@ -210,6 +204,7 @@ if (isset($_POST["formSubmitVote"])){
   <?php include "includes/navigation.php"; ?>
 
 <div class="votePage" id="main">
+ <div class="respContainer">
   <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
   <h1>WIE IS DE <span>MOL</span> ?</h1>
@@ -229,7 +224,7 @@ if (isset($_POST["formSubmitVote"])){
     <input style="margin-bottom: 20%;" form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
   </div>
   </form>
-
+  </div>
 </div>
 
   <!-- JavaScript -->

@@ -615,3 +615,10 @@
   overflow: hidden;
   color: #ffffff !important;
 }
+
+.respContainer {
+  margin: 0 auto;
+  max-width: 400px;
+  overflow-x: hidden;
+  width: 100%;
+}

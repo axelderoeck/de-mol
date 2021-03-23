@@ -19,6 +19,7 @@ if ($_SESSION["Id"] == NULL) {
     <?php include "includes/navigation.php"; ?>
 
  <div class="displayList" id="main">
+   <div class="respContainer">
    <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Mijn Molboek</h1>
     <h2>Jouw meest gespendeerde punten:</h2>
@@ -70,6 +71,7 @@ if ($_SESSION["Id"] == NULL) {
             }
 
         ?>
+      </div>
  </div>
 
     <!-- JavaScript -->

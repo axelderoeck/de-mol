@@ -6,6 +6,8 @@
 <body>
 
 <div id="main">
+  <div class="respContainer">
+
   <a href="index.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
   <h1>Privacy Beleid</h1>
@@ -18,6 +20,7 @@
   <p>Deze site maakt gebruik van sessie <span>cookies</span>. Deze cookies onthouden wie je bent tot je weer <span>uitlogt</span> of te lang <span>inactief</span> bent.
     Zonder dit kan deze site <span>niet</span> functioneren. <br> Als u registreert gaat u <span>akkoord</span> met het gebruik deze <span>cookies</span>. </p>
 
+</div>
 </div>
 
   <!-- JavaScript -->

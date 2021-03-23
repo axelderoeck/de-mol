@@ -65,6 +65,7 @@ SET `Voted` = 0";
   <?php include "includes/navigation.php"; ?>
 
 <div class="homeScreen" id="main">
+  <div class="respContainer">
 
   <h1>Dag <?php echo $_SESSION["Naam"]; ?></h1>
 
@@ -87,6 +88,7 @@ SET `Voted` = 0";
     <br><br>
   <?php } ?>
 
+  </div>
 </div>
 
   <!-- JavaScript -->

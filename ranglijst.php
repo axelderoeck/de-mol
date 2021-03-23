@@ -64,6 +64,8 @@ ORDER BY table_Scores.score DESC";
 <body>
 
    <div class="rangList" id="main">
+     <div class="respContainer">
+
      <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
       <h1>Scores</h1>
       <ul id="tabs-swipe-demo" class="tabs">
@@ -118,6 +120,7 @@ mysqli_free_result($result);
           </div>
         </div>
       </div>
+       </div>
    </div>
 
     <!-- JavaScript -->

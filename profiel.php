@@ -90,6 +90,8 @@ if ($user == null) {
   </div>
 
 <div id="main">
+  <div class="respContainer">
+
   <?php if ($user != null) { ?>
   <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
   <?php } ?>
@@ -183,8 +185,8 @@ if ($user == null) {
       <input type="submit" name="deleteFromFollowing" id="deleteFromFollowing" value="Verwijder van lijst">
     </form>
   <?php } ?>
-
   </div>
+</div>
 
   <!-- JavaScript -->
   <script type="text/javascript" src="js/scripts.js"></script>

@@ -95,6 +95,8 @@ if (isset($_POST["submitUserToFollow"])){
   </div>
 
   <div id="main">
+    <div class="respContainer">
+
     <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Voeg een speler toe</h1>
     <form action="" method="post">
@@ -108,7 +110,7 @@ if (isset($_POST["submitUserToFollow"])){
     <h2>Voor wat dient dit?</h2>
     <p>Als je jouw vrienden en/of familie hier <span>toevoegt</span>, spelen jullie tegen elkaar in de <span>mollenjacht</span>. <br><br>
     Wanneer de <span>mol</span> bekend is zal er een <span>ranglijst</span> te zien zijn die jullie vertelt wie de beste <span>mollenjager</span> is.</p>
-
+    </div>
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>

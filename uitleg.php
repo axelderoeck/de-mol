@@ -18,6 +18,8 @@ if ($_SESSION["Id"] == NULL) {
   <?php include "includes/navigation.php"; ?>
 
   <div id="main">
+    <div class="respContainer">
+
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
     <h1>Uitleg</h1>
@@ -53,6 +55,7 @@ if ($_SESSION["Id"] == NULL) {
 
     <h2>Ranglijst</h2>
     <p>Wanneer de <span>mol</span> bekend is zal deze pagina verschijnen en alle gebruikers hun punten <span>vergelijken</span>. Degene met de <span>meeste</span> punten op de juiste <span>mol</span> wint!</p>
+    </div>
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>

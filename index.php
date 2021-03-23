@@ -134,6 +134,8 @@ if (isset($_POST["userRegister"])){
     <!-- Dynamische info -->
   </div>
 
+  <div class="respContainer">
+
   <div style="text-align: center; margin: 10% 0;">
     <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
   </div>
@@ -165,6 +167,7 @@ if (isset($_POST["userRegister"])){
                 <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
             </div>
             <?php include "includes/legal.php"; ?>
+    </div>
   </div>
 
   <!-- JavaScript -->

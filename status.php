@@ -44,6 +44,8 @@ mysqli_stmt_fetch($stmtGetTotalVoted);
   <?php include "includes/navigation.php"; ?>
 
   <div id="main">
+    <div class="respContainer">
+
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
     <h1>Statistieken</h1>
@@ -77,6 +79,7 @@ mysqli_stmt_fetch($stmtGetTotalVoted);
       ?>
       <p class="example"><?php echo $amountVoted; ?> <?php if ($amountVoted == 1) {echo "mollenjager heeft";}else{echo "mollenjagers hebben";} ?>  gestemd deze week.</p>
 
+    </div>
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>
