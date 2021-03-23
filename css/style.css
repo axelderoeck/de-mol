@@ -61,6 +61,33 @@
   }
 }
 
+@keyframes ploop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+-webkit-@keyframes ploop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+-moz-@keyframes ploop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* Popup style */
 
 .closeLink {
@@ -414,6 +441,18 @@
   width: 150px;
   display: inline-block;
   margin: 10px;
+  animation-duration: 1s;
+  animation-name: ploop;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-name: ploop;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-duration: 1s;
+  -moz-animation-name: ploop;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: backwards;
 }
 
 .awards div img {

@@ -163,6 +163,7 @@ if ($user == null) {
 
     if($result = mysqli_query($dbconn, $selectAwards)){
       if(mysqli_num_rows($result) > 0){
+        $i = 0;
         while($row = mysqli_fetch_array($result)){
           if ($row['Editie'] == "De Mol") {
             $hideEditionName = "style='opacity: 0;'";
@@ -170,11 +171,12 @@ if ($user == null) {
             $hideEditionName = "";
           }
           ?>
-          <div class="info">
+          <div style="animation-delay: <?php echo $i/4; ?>s;" class="info">
             <img src="img/awards/<?php echo $row['AwardId']; ?>.png" alt="award foto van <?php echo $row['Naam']; ?>">
             <p><?php echo $row['Naam']; ?><br><span <?php echo $hideEditionName; ?> ><?php echo $row['Editie']; ?></span></p>
           </div>
           <?php
+          $i++;
         }
       }else{
         ?>
