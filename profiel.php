@@ -20,6 +20,7 @@ if ($user == null) {
   include "includes/account-actions/changename.php";
   include "includes/account-actions/changepassword.php";
   include "includes/account-actions/deleteaccount.php";
+  include "includes/account-actions/changefirstname.php";
 
   $selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
   FROM table_UserAwards
@@ -124,6 +125,17 @@ if ($user == null) {
     </div>
   </div>
 
+  <div id="popUpChangeFirstName" class="popupStyle translucent">
+    <div class="box">
+      <a class="closeLink" href="javascript:showPopup('popUpChangeFirstName','hide');">&times;</a>
+      <form name="formChangeFirstName" action="" method="post">
+          <input placeholder="Nieuwe Voornaam" name="nieuweVoornaam" id="nieuweVoornaam" type="text" required>
+          <br>
+          <input type="submit" name="changeFirstName" id="changeFirstName" value="Verander">
+      </form>
+    </div>
+  </div>
+
   <div id="popUpDeleteAccount" class="popupStyle translucent">
     <div class="box">
       <a class="closeLink" href="javascript:showPopup('popUpDeleteAccount','hide');">&times;</a>
@@ -180,6 +192,7 @@ if ($user == null) {
   <div id="collapsible-content">
     <ul>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeName','show');"> gebruikersnaam wijzigen</a></li>
+      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeFirstName','show');"> voornaam wijzigen</a></li>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangePassword','show');"> wachtwoord wijzigen</a></li>
       <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="javascript:showPopup('popUpDeleteAccount','show');"> verwijder account</a></li>
     </ul>
