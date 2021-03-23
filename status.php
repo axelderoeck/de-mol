@@ -65,7 +65,7 @@ mysqli_stmt_fetch($stmtGetTotalVoted);
                     }
                     ?>
                     <div class="status">
-                      <p><?php echo $row['Naam']; ?> - <span class="percent <?php echo $outClass2; ?>"><?php echo $percentScore[0]; ?>%<span class="smaller <?php echo $outClass2; ?>">.<?php echo $percentScore[1]; ?></span></span></p>
+                      <p><?php echo $row['Naam']; ?> - <span class="percent <?php echo $outClass2; ?>"><?php echo $percentScore[0]; ?><span class="smaller <?php echo $outClass2; ?>">.<?php echo $percentScore[1]; ?></span>%</span></p>
                     </div>
                     <div class="meter">
                       <span <?php echo $outClass; ?> style="width: <?php echo $percentScore[0]; ?>%"></span>
