@@ -4,3 +4,16 @@
     padding: 1% 0;
   }
 }
+
+@media screen and (min-width: 850px) {
+  /* Force the side navigation menu to be open */
+  .sidenav {
+    width: 250px;
+  }
+  .sidenav .closebtn {
+    display: none;
+  }
+  .navButton {
+    display: none;
+  }
+}
