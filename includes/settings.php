@@ -16,8 +16,8 @@
   // ALERT SETTINGS
     $bericht = true;
     $melding = (object) [
-      'soort' => 'succes', // 'info' = blauw, 'succes' = groen, 'warning' = rood
-      'tekst' => "De kandidaten zijn geupdated, de mollenjacht is begonnen. Veel plezier!"
+      'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
+      'tekst' => "Voor degenen die nog geen 'deelnemer' award hebben gekregen. De volgende keer dat jullie stemmen zal dit automatisch op je profiel komen. <br/>Hoe behaal je die andere awards? Dat is nog een geheim."
     ];
 
   // AWARDS SETTINGS
