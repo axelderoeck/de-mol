@@ -64,7 +64,7 @@ if (isset($_POST["formSubmitVote"])){
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <link rel="stylesheet" href="css/stemmen.css">
+  <link rel="stylesheet" href="css/stemmen<?php echo "V" . $styleversion; ?>.css">
   <?php include "includes/headinfo.php"; ?>
   <script>
     window.addEventListener('load', function() {
