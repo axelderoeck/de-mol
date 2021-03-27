@@ -1,7 +1,5 @@
 <?php
 
-date_default_timezone_set('Europe/Brussels');
-
 ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();

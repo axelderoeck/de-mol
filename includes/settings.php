@@ -3,6 +3,7 @@
     $admins = array(7, 10); // array van alle admin's hun ID
     $stemmen_dag = 'Sun'; // dag waarop gestemd wordt
     $stemmen_uur = "2200"; // vanaf dit uur mag er gestemd worden
+    date_default_timezone_set('Europe/Brussels'); // tijdzone
 
   // SPEL SETTINGS
     $seizoen_start = "03/21/2021"; // maand/dag/jaar   echte: 03/21/2021

@@ -18,9 +18,11 @@ VALUES ($id, $award_deelnemer)";
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
-// if(date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
-//   header('location:home.php');
-// }
+if(date('D') == "$stemmen_dag") {
+  if (date('Hi') < "$stemmen_uur") {
+    header('location:home.php');
+  }
+}
 if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
