@@ -51,7 +51,7 @@ if (isset($_POST["formSubmitVote"])){
 
   $queryCheckIfUserHasAward = $dbconn->query("SELECT *
   FROM table_UserAwards
-  WHERE UserId = '$id' AND AwardId = $award_deelnemerId");
+  WHERE UserId = '$id' AND AwardId = $award_deelnemer");
 
   if($queryCheckIfUserHasAward->num_rows == 0) {
     mysqli_query($dbconn, $giveUserAward);
