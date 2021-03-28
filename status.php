@@ -10,7 +10,7 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
-$getMostVoted = "SELECT Naam, SUM(Score), visibility
+$getMostVoted = "SELECT Naam, SUM(Score), Visibility
 FROM table_Scores
 LEFT JOIN table_Kandidaten
 ON table_Scores.Identifier = table_Kandidaten.Identifier
