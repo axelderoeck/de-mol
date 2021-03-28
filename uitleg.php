@@ -36,7 +36,7 @@ if ($_SESSION["Id"] == NULL) {
     <h2>Wanneer kan ik stemmen?</h2>
     <p>Voor de <span>eerste</span> aflevering begint wordt er <span>niet</span> gestemd.<br>
     <span>Daarna</span> ga je elke week stemmen voor de <span>komende</span> aflevering.</p>
-    <p class="example">Je kan <b>niet</b> op de dag van de aflevering zelf stemmen. <br>
+    <p class="example">Op de dag van de aflevering (zondag) kan je beginnen met stemmen om 22:00u <br>
     Dus vergeet niet te stemmen op ten laatste zaterdag.</p>
     <p>Op deze manier stem je dus <span>voor</span> dat de finale begint als <span>laatste</span> keer.</p>
 

@@ -15,7 +15,7 @@
     $styleversion = 2; // versie van css als ik dit wil forceren te updaten bij iedereen
 
   // ALERT SETTINGS
-    $bericht = true;
+    $bericht = false;
     $melding = (object) [
       'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
       'tekst' => "Voor degenen die nog geen 'deelnemer' award hebben gekregen. De volgende keer dat jullie stemmen zal dit automatisch op je profiel komen. <br/>Hoe behaal je die andere awards? Dat is nog een geheim."
