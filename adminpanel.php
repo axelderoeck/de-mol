@@ -90,6 +90,14 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
     mysqli_stmt_store_result($stmtSelectAll);
 }
 
+$qryCountAllUsers = "SELECT COUNT(Id) FROM table_Users";
+if ($stmtCountAllUsers = mysqli_prepare($dbconn, $qryCountAllUsers)){
+    mysqli_stmt_execute($stmtCountAllUsers);
+    mysqli_stmt_bind_result($stmtCountAllUsers, $totalUsers);
+    mysqli_stmt_store_result($stmtCountAllUsers);
+}
+mysqli_stmt_fetch($stmtCountAllUsers);
+
 ?>
 
 <!DOCTYPE html>
@@ -105,68 +113,11 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
 
       <h1>Admin Panel</h1>
 
-        <h2>De Kandidaten</h2>
-
-        <table>
-            <tr>
-                <th>Naam</th>
-                <th>Identifier</th>
-                <th>Visibility</th>
-            </tr>
-            <?php
-            $i = 1;
-            while(mysqli_stmt_fetch($stmtSelectAll)){
-            echo
-            "<tr>
-            <td> " . $naam . " </td>
-            <td> " . $identifier . " </td>
-            <td> " . $visibility . " </td>
-            </tr>";
-            $i++;
-            }   ?>
-        </table>
-
-        <hr>
-
-        <h2>Hup der uit jong</h2>
-
-        <div class="box">
-        <form id="setOutForm" class="setOutForm" method="post">
-          <input placeholder="identifier" type="text" name="identifier">
-          <input type="submit" name="setOutBtn">
-        </form>
+        <div class="info">
+          <h2>Info:</h2>
+          <p>Aantal Accounts: <?php echo $totalUsers; ?></p>
         </div>
-        <hr>
 
-        <h2>Oops foutje komt ma terug</h2>
-
-        <div class="box">
-        <form id="setInForm" class="setInForm" method="post">
-          <input placeholder="identifier" type="text" name="identifier">
-          <input type="submit" name="setInBtn">
-        </form>
-        </div>
-        <hr>
-
-        <h2>De Mol is... *tromgeroffel*</h2>
-
-        <div class="box">
-          <form id="setMolForm" class="setMolForm" method="post">
-            <input placeholder="identifier" type="text" id="demol" name="demol">
-            <input type="submit" name="setMolBtn">
-          </form>
-          <p class="example">onbekend of person1,person2,...</p>
-        </div>
-        <hr>
-
-
-        <h2>Reset heeft gestemd</h2>
-
-        <div class="box">
-        <form id="resetVoteForm" method="post">
-          <input type="submit" name="resetVotes" value="Reset" />
-        </form>
-        </div>
         <hr>
 
         <h2>Delete een account</h2>
@@ -178,12 +129,75 @@ if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
         </div>
         <hr>
 
-        <h2>Reset alle scores</h2>
-        <div class="box">
-          <form method="post">
-            <input type="submit" name="resetScores" value="Reset">
+        <h3>Update Kandidaten <button onclick="collapse('collapsible-content2','collapsible2');" type="button" id="collapsible2"><i class="fas fa-chevron-down"></i></button></h3>
+        <div id="collapsible-content2">
+          <h2>De Kandidaten</h2>
+          <table>
+              <tr>
+                  <th>Naam</th>
+                  <th>Identifier</th>
+                  <th>Visibility</th>
+              </tr>
+              <?php
+              $i = 1;
+              while(mysqli_stmt_fetch($stmtSelectAll)){
+              echo
+              "<tr>
+              <td> " . $naam . " </td>
+              <td> " . $identifier . " </td>
+              <td> " . $visibility . " </td>
+              </tr>";
+              $i++;
+              }   ?>
+          </table>
+
+          <h2>Hup der uit jong</h2>
+          <div class="box">
+          <form id="setOutForm" class="setOutForm" method="post">
+            <input placeholder="identifier" type="text" name="identifier">
+            <input type="submit" name="setOutBtn">
           </form>
+          </div>
+          <hr>
+
+          <h2>Oops foutje komt ma terug</h2>
+          <div class="box">
+          <form id="setInForm" class="setInForm" method="post">
+            <input placeholder="identifier" type="text" name="identifier">
+            <input type="submit" name="setInBtn">
+          </form>
+          </div>
+          <hr>
+
+          <h2>De Mol is... *tromgeroffel*</h2>
+          <div class="box">
+            <form id="setMolForm" class="setMolForm" method="post">
+              <input placeholder="identifier" type="text" id="demol" name="demol">
+              <input type="submit" name="setMolBtn">
+            </form>
+            <p class="example">onbekend of person1,person2,...</p>
+          </div>
+          <hr>
         </div>
+
+        <h3>Danger Zone <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
+        <div id="collapsible-content">
+          <h2>Reset heeft gestemd</h2>
+          <div class="box">
+          <form id="resetVoteForm" method="post">
+            <input class="warning" type="submit" name="resetVotes" value="Reset" />
+          </form>
+          </div>
+          <hr>
+
+          <h2>Reset alle scores</h2>
+          <div class="box">
+            <form method="post">
+              <input type="submit" name="resetScores" value="Reset">
+            </form>
+          </div>
+        </div>
+
         </div>
       </div>
       <script type="text/javascript" src="js/scripts.js"></script>
