@@ -8,6 +8,9 @@ if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
 
+include "includes/settings.php";
+include "includes/functions.php";
+
 $id = $_SESSION["Id"];
 
 $user = $_GET["user"];
@@ -61,6 +64,22 @@ if ($user == null) {
     $dbconn->query("DELETE FROM table_Followers
       WHERE UserId = '$id' AND UserIsFollowingId = '$user';
       ");
+
+    // AWARD_GILLES SECTION
+    // get how many people this person is following
+    $queryIf10Followed = $dbconn->query("SELECT COUNT(UserId) AS 'Count'
+    FROM table_Followers
+    WHERE UserId = '$id'
+    GROUP BY UserId");
+    $data = $queryIf10Followed->fetch_array();
+    // enter amount followed in a variable
+    $amountFollowed = ($data['Count']);
+
+    // IF user follows less than 10 -> delete award
+    if ($amountFollowed == 10) {
+      deleteAward($id, $award_gilles, $dbconn);
+    }
+
     header('location:deelnemers.php');
   }
 
@@ -157,10 +176,9 @@ if ($user == null) {
   <p class="userInfo">Naam: <span><?php echo $_SESSION["Naam"]; ?></span></p>
   <?php } ?>
   <hr>
-  <h3>Awards</h3>
+  <h3>Awards <!-- - <a class="smallBtn info" href="awardslist.php">Bekijk alle awards</a> --> </h3>
   <div class="awards">
     <?php
-
     if($result = mysqli_query($dbconn, $selectAwards)){
       if(mysqli_num_rows($result) > 0){
         $i = 0;
@@ -171,7 +189,7 @@ if ($user == null) {
             $hideEditionName = "";
           }
           ?>
-          <div style="animation-delay: <?php echo $i/4; ?>s;" class="info">
+          <div style="animation-delay: <?php echo $i/4; ?>s;" >
             <img src="img/awards/<?php echo $row['AwardId']; ?>.png" alt="award foto van <?php echo $row['Naam']; ?>">
             <p><?php echo $row['Naam']; ?><br><span <?php echo $hideEditionName; ?> ><?php echo $row['Editie']; ?></span></p>
           </div>
@@ -184,11 +202,9 @@ if ($user == null) {
         <?php
       }
     }
-
     ?>
   </div>
   <hr>
-
   <?php if($user == null) { ?>
   <h3>Account Acties <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
   <div id="collapsible-content">
