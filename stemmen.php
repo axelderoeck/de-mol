@@ -5,15 +5,9 @@ require_once("includes/dbconn.inc.php");
 session_start();
 
 include "includes/settings.php";
+include "includes/functions.php";
 
 $id = $_SESSION["Id"];
-
-$checkIfUserHasAward = "SELECT *
-FROM table_UserAwards
-WHERE UserId = '$id' AND AwardId = $award_deelnemer";
-
-$giveUserAward = "INSERT INTO table_UserAwards (UserId, AwardId)
-VALUES ($id, $award_deelnemer)";
 
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
@@ -26,7 +20,6 @@ if(date('D') == "$stemmen_dag") {
 if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
-//|| date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur"
 
 if (isset($_POST["formSubmitVote"])){
 
@@ -35,6 +28,11 @@ if (isset($_POST["formSubmitVote"])){
 
   for ($i=1; $i <= $aantal_kandidaten; $i++) {
     $score = $_POST["person$i"];
+
+    // Check if user matches criteria for All-In award
+    if ($score == 10) {
+      giveAward($id, $award_allin, $dbconn);
+    }
 
     $query = "UPDATE `table_Scores`
     SET `Score` = `Score` + $score
@@ -49,13 +47,8 @@ if (isset($_POST["formSubmitVote"])){
   mysqli_query($dbconn, $votedQuery);
   $_SESSION["Voted"] = 1;
 
-  $queryCheckIfUserHasAward = $dbconn->query("SELECT *
-  FROM table_UserAwards
-  WHERE UserId = '$id' AND AwardId = $award_deelnemer");
-
-  if($queryCheckIfUserHasAward->num_rows == 0) {
-    mysqli_query($dbconn, $giveUserAward);
-  }
+  // give deelnemer award if not exists
+  giveAward($id, $award_deelnemer, $dbconn);
 
   header('location:home.php');
 
