@@ -47,8 +47,16 @@ if (isset($_POST["formSubmitVote"])){
   mysqli_query($dbconn, $votedQuery);
   $_SESSION["Voted"] = 1;
 
-  // give deelnemer award if not exists
-  giveAward($id, $award_deelnemer, $dbconn);
+  // AWARD SECTION
+    // TUNNELVISIE
+    $checkForTunnelvisieAward = "SELECT * FROM table_Scores WHERE UserId = '$id' AND Score > $award_tunnelvisie_amount";
+    if($result = mysqli_query($dbconn, $checkForTunnelvisieAward)){
+      if(mysqli_num_rows($result) > 0){
+        giveAward($id, $award_tunnelvisie, $dbconn);
+      }
+    }
+    // DEELNEMER
+    giveAward($id, $award_deelnemer, $dbconn);
 
   header('location:home.php');
 

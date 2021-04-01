@@ -22,11 +22,14 @@
     ];
 
   // AWARDS SETTINGS
+    // AWARD CRITERIA
+      $award_tunnelvisie_amount = 45;
     // VAST
       $award_weetniets = 5;
       $award_tunnelvisie = 8;
       $award_allin = 9;
       $award_gilles = 10;
+      $award_secret_mol = 11;
     // JAARLIJKS - elk jaar aanpassen, nieuwe edities maken
       $award_winnaar = 1;
       $award_topper = 2;
