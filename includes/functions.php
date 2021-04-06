@@ -24,4 +24,14 @@ function deleteAward($accountId, $awardId, $dbconn){
   mysqli_query($dbconn, $deleteUserAward);
 }
 
+function generateRandomString($length) {
+    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+
 ?>

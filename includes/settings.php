@@ -12,7 +12,7 @@
     $top_aantal = 20; // algemene ranglijst top ... tonen
 
   // STYLE VERSIES - CACHING
-    $styleversion = 2; // versie van css als ik dit wil forceren te updaten bij iedereen
+    $styleversion = 3; // versie van css als ik dit wil forceren te updaten bij iedereen
 
   // ALERT SETTINGS
     $bericht = false;
@@ -23,6 +23,7 @@
 
   // AWARDS SETTINGS
     // AWARD CRITERIA
+      $award_secret_mol_randomcode = "OK4LIVX3";
       $award_tunnelvisie_amount = 45;
     // VAST
       $award_weetniets = 5;

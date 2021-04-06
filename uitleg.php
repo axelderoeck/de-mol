@@ -4,6 +4,10 @@ ob_start();
 require_once("includes/dbconn.inc.php");
 session_start();
 
+include "includes/settings.php";
+
+$votetime = str_split($stemmen_uur, 2);
+
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
@@ -36,7 +40,7 @@ if ($_SESSION["Id"] == NULL) {
     <h2>Wanneer kan ik stemmen?</h2>
     <p>Voor de <span>eerste</span> aflevering begint wordt er <span>niet</span> gestemd.<br>
     <span>Daarna</span> ga je elke week stemmen voor de <span>komende</span> aflevering.</p>
-    <p class="example">Op de dag van de aflevering (zondag) kan je beginnen met stemmen om 22:00u.</p>
+    <p class="example">Op de dag van de aflevering (zondag) kan je beginnen met stemmen om <?php echo $votetime[0] . ":" . $votetime[1]; ?>u.</p>
     <p>Op deze manier stem je dus <span>voor</span> dat de finale begint als <span>laatste</span> keer.</p>
 
     <h2>Hoe stemmen?</h2>

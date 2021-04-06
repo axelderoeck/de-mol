@@ -32,6 +32,17 @@ button,
 
 /* Page Theme */
 
+/* Highlight style */
+
+::-moz-selection {
+  color: #53adb5;
+  background: #ffffff;
+}
+::selection {
+  color: #53adb5;
+  background: #ffffff;
+}
+
 @font-face {
   font-family: Knockout;
   src: url("../Knockout.otf") format("truetype");
@@ -190,26 +201,34 @@ table td {
 .warning,
 .info,
 .translucent,
-.succes {
+.succes,
+.locked {
   border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
 }
 
 .warning {
   background-color: rgba(255, 0, 0, 0.4);
-  border: 1px solid #eb2626;
+  border-color: #eb2626;
 }
 
 .info {
   background-color: rgba(83, 173, 181, 0.4);
-  border: 1px solid #53adb5;
+  border-color: #53adb5;
 }
 
 .translucent {
   background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #53adb5;
+  border-color: #53adb5;
 }
 
 .succes {
   background-color: rgba(57, 179, 27, 0.4);
-  border: 1px solid #39b31b;
+  border-color: #39b31b;
+}
+
+.locked {
+  background-color: rgba(112, 112, 112, 0.4);
+  border-color: #707070;
 }

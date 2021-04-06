@@ -5,6 +5,8 @@ require_once("includes/dbconn.inc.php");
 session_start();
 include "includes/settings.php";
 
+$votetime = str_split($stemmen_uur, 2);
+
 if ($_SESSION["Id"] == NULL) {
   header('location:index.php');
 }
@@ -38,7 +40,7 @@ SET `Voted` = 0";
       }elseif(date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
         ?>
         stemKnop("uit");
-        infoTekst("Vanaf 22:00u kan je <span>stemmen</span>.");
+        infoTekst("Vanaf <?php echo $votetime[0] . ":" . $votetime[1]; ?>u kan je <span>stemmen</span>.");
         <?php
         mysqli_query($dbconn, $setVotesQuery);
       }else{
@@ -85,6 +87,8 @@ SET `Voted` = 0";
     </div>
     <br><br>
   <?php } ?>
+
+  <p class="hiddenField">.- -. - .-. --- .--. --- -. -.-- -- .. .</p>
 
   </div>
 </div>

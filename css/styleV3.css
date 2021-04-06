@@ -15,6 +15,16 @@
   width: 100%;
 }
 
+.smallBtn {
+  padding: 5px;
+}
+
+/* SECRET */
+
+.hiddenField {
+  color: transparent;
+}
+
 /* ANIMATIONS */
 
 @keyframes swoopIn {
@@ -534,6 +544,53 @@
 
 .delete i {
   color: #ffffff;
+}
+
+/* AWARDSLIST PAGE */
+
+.awardslist {
+  margin-top: 100px;
+}
+
+.awardslist div {
+  width: 90%;
+  display: inline-block;
+  margin: 10px;
+  position: relative;
+  animation-duration: 1s;
+  animation-name: ploop;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-name: ploop;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-duration: 1s;
+  -moz-animation-name: ploop;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: backwards;
+}
+
+.awardslist div img {
+  width: 100px;
+  float: left;
+  margin: 5px;
+}
+
+.awardslist div h3 {
+  margin: 5px 0 0 5px;
+}
+
+.awardslist div p {
+  font-size: 20px;
+  text-align: left !important;
+  margin: 0;
+}
+
+.awardslist div i {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 /* change password popup menu */
