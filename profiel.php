@@ -176,7 +176,7 @@ if ($user == null) {
   <p class="userInfo">Naam: <span><?php echo $_SESSION["Naam"]; ?></span></p>
   <?php } ?>
   <hr>
-  <h3>Awards <?php if ($user == null) { echo "- <a class='smallBtn info' href='awardslist.php'>Bekijk alle awards</a>"; } ?></h3>
+  <h3>Awards <?php if ($user == null) { echo "- <a class='smallBtn info' href='awardslist.php'>Overzicht</a>"; } ?></h3>
   <div class="awards">
     <?php
     if($result = mysqli_query($dbconn, $selectAwards)){
