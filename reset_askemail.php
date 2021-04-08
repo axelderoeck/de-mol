@@ -26,7 +26,7 @@ if (isset($_POST["sendMail"])){
   ";
   */
 
-  $message = "https://aksol.be/demol/reset_password.php?s=$randomGeneratedString";
+  $message = "https://aksol.be/demol/reset_password.php?s=" . $randomGeneratedString;
 
   $headers = "From: mail@aksol.be";
   $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
