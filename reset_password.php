@@ -11,21 +11,28 @@ include "includes/functions.php";
 $url_userKey = $_GET["s"];
 $url_userId = $_GET["u"];
 
+// get userkey from database
 $queryGetUserKey = $dbconn->query("SELECT UserKey
                 FROM table_Users
                 WHERE Id = '$url_userId'");
-
 $data = $queryGetUserKey->fetch_array();
 $userKey = ($data['UserKey']);
 
-if ($url_userId != null && $url_userKey != null) {
-  if ($url_userKey == $userKey) {
-    echo "matches";
-  }else{
-    echo "not matching";
+// if form submit
+if (isset($_POST["changePassword"])){
+  //get form values
+  $newWachtwoord = $_POST["Wachtwoord"];
+  $confirmWachtwoord = $_POST["confirmWachtwoord"];
+
+  //if passwords match set as new password
+  if($newWachtwoord == $confirmWachtwoord){
+    $hash = password_hash($newWachtwoord, PASSWORD_BCRYPT);
+    $dbconn->query("UPDATE table_Users
+    SET Wachtwoord = '$hash', UserKey = ''
+    WHERE Id = '$url_userId'");
   }
-}else{
-  echo "not matching";
+
+  header('location:index.php');
 }
 
 ?>
@@ -41,6 +48,24 @@ if ($url_userId != null && $url_userKey != null) {
     <div class="respContainer">
       <h1>Wachtwoord veranderen</h1>
 
+      <?php
+      // check if userkey is correct
+        if ($url_userId != null && $url_userKey != null) {
+          if ($url_userKey == $userKey) { ?>
+            <form name="formChangePassword" action="" method="post">
+                <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
+                <br>
+                <input placeholder="Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
+                <br>
+                <input type="submit" name="changePassword" id="changePassword" value="Verander">
+            </form> <?php
+          }else{
+            echo "<p class='example'>De sessie is vervallen of niet correct.</p>";
+          }
+        }else{
+          echo "<p class='example'>De sessie is vervallen of niet correct.</p>";
+        }
+      ?>
     </div>
   </div>
 
