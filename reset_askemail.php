@@ -28,7 +28,7 @@ if (isset($_POST["sendMail"])){
     // set a random unique key to the user
     $dbconn->query("UPDATE table_Users
     SET UserKey = '$randomGeneratedString'
-    WHERE Id = '$id'");
+    WHERE Id = $id");
 
     // set mail values
     $subject = "Wachtwoord reset";
