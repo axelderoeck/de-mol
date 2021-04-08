@@ -1,9 +1,5 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
 // get id and key from url
 $url_userKey = $_GET["s"];
 $url_userId = $_GET["u"];
