@@ -42,7 +42,7 @@ if (isset($_POST["sendMail"])){
     */
 
     // send the mail
-    mail($email,$subject,$message,$headers);
+    //mail($email,$subject,$message,$headers);
   }else{
     // user is not found
     echo "Email is niet in gebruik.";
