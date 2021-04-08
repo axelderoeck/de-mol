@@ -1,7 +1,11 @@
 <?php
 
-$sesId = $_GET["s"];
-if ($sesId==9) {
+$sessionId = $_GET["s"];
+$userId = $_GET["u"];
+if ($sessionId != $_SESSION["sessionString"]) {
+  echo "not matching";
+}else{
+  echo "matches";
 }
 
 ?>

@@ -8,21 +8,31 @@ include "includes/settings.php";
 include "includes/functions.php";
 
 if (isset($_POST["sendMail"])){
-  $randomGeneratedString = generateRandomString(10);
-
+  // get email from form
   $email = $_POST["email"];
-  $subject = "Wachtwoord reset";
-  $message = "https://aksol.be/demol/reset_password.php?s=$randomGeneratedString \n
-  Log-in en stel je nieuwe wachtwoord in op: \n
-  Profiel -> Account Acties -> Wachtwoord veranderen.";
 
-  $headers = "From: mail@aksol.be";
-  $status = mail($email,$subject,$message,$headers);
+  $sql = $dbconn->query("SELECT Id
+                  FROM table_Users
+                  WHERE Email = '$email'");
 
-  if ($status) {
-    echo "Yes";
+  if($sql->num_rows > 0) {
+    // IF user found -> set values
+    $data = $sql->fetch_array();
+    $id = ($data['Id']);
+
+    // set a random string as security measure
+    $randomGeneratedString = generateRandomString(15);
+    $_SESSION["sessionString"] = $randomGeneratedString;
+
+    // send mail
+    $subject = "Wachtwoord reset";
+    $message = "Klik op de onderstaande link om je wachtwoord opnieuw in te stellen. \n
+    https://aksol.be/demol/reset_password.php?u=$id?s=$randomGeneratedString";
+    $headers = "From: mail@aksol.be";
+    mail($email,$subject,$message,$headers);
   }else{
-    echo "No";
+    // user is not found
+    echo "Email is niet in gebruik.";
   }
 }
 
