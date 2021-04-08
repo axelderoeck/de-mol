@@ -27,6 +27,7 @@
 
 /* ANIMATIONS */
 
+/* swoopIn animation */
 @keyframes swoopIn {
   0% {
     transform: translateX(-400px);
@@ -52,6 +53,7 @@
   }
 }
 
+/* size animation */
 @keyframes size {
   0% {
     transform: scale(0);
@@ -63,7 +65,6 @@
     transform: scale(1);
   }
 }
-
 -webkit-@keyframes size {
   0% {
     transform: scale(0);
@@ -75,7 +76,6 @@
     transform: scale(1);
   }
 }
-
 -moz-@keyframes size {
   0% {
     transform: scale(0);
@@ -88,6 +88,7 @@
   }
 }
 
+/* ploop animation */
 @keyframes ploop {
   0% {
     transform: scale(0);
@@ -96,7 +97,6 @@
     transform: scale(1);
   }
 }
-
 -webkit-@keyframes ploop {
   0% {
     transform: scale(0);
@@ -105,7 +105,6 @@
     transform: scale(1);
   }
 }
-
 -moz-@keyframes ploop {
   0% {
     transform: scale(0);
@@ -259,6 +258,7 @@
 .div1 img {
   width: 100%;
   overflow: hidden;
+  transform: translateX(-11px);
 }
 
 .displayItemName {
@@ -309,9 +309,8 @@
 .rangItem {
   background-color: rgba(0, 0, 0, 0.4);
   width: 90%;
-  height: 70px;
-  margin: 50px auto;
-
+  height: 50px;
+  margin: 10px auto;
   animation-duration: 1.2s;
   animation-name: swoopIn;
   animation-timing-function: ease;
@@ -328,6 +327,7 @@
 
 .rangItem p {
   text-transform: capitalize;
+  margin: 0;
 }
 
 .rangitem p span {
@@ -336,46 +336,38 @@
   width: 100px !important;
   text-align: center;
   color: #ffffff;
+  transition: 1s;
 }
 
 .carousel .carousel-item {
   width: 100%;
 }
 
-.tabs .tab a {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 30px;
+/* TABS STYLING */
+
+.tabs {
+  text-align: center;
+}
+
+.tabs li {
+  float: none;
+  display: inline-block;
+  margin: 0 20px;
+  min-width: 100px;
 }
 
 .tabs .indicator {
-  width: 55%;
+  /* hide the lame indicator from materialize */
+  display: none;
+}
+
+.tabs #thecooler_indicator {
+  /* show the way cooler indicator instead */
+  width: 50%;
+  transform: translateX(0%);
+  transition: 0.4s;
   height: 2px;
   background-color: #53adb5;
-}
-
-.tabs .tab a:hover,
-.tabs .tab a.active {
-  background-color: transparent;
-  color: #ffffff;
-}
-
-.tabs .tab {
-  line-height: 48px;
-  height: 48px;
-  text-transform: uppercase;
-}
-
-.tabs {
-  position: relative;
-  overflow-x: hidden !important;
-  overflow-y: hidden;
-  background-color: transparent !important;
-  height: 48px;
-  width: 100%;
-  align-self: center;
-  white-space: nowrap;
-  align-content: center;
-  text-align: center;
 }
 
 /* LOGIN SCREEN */
@@ -544,6 +536,42 @@
 
 .delete i {
   color: #ffffff;
+}
+
+/* DEELNEMERS */
+
+.deelnemerItem {
+  margin: 5px auto !important;
+  position: relative;
+  animation-duration: 1s;
+  animation-name: ploop;
+  animation-timing-function: ease;
+  animation-fill-mode: backwards;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-name: ploop;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-duration: 1s;
+  -moz-animation-name: ploop;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: backwards;
+  transition: 0.2s;
+}
+
+.deelnemerItem:hover {
+  transform: scale(1.05);
+  transition: 0.2s;
+}
+
+.deelnemerItem i {
+  position: absolute;
+}
+
+.deelnemerItem .right {
+  right: 5px;
+}
+.deelnemerItem .left {
+  left: 5px;
 }
 
 /* AWARDSLIST PAGE */

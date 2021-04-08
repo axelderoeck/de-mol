@@ -1,3 +1,10 @@
+/* for the iPhone 4 plebs */
+@media screen and (max-width: 350px) {
+  .tabs li {
+    min-width: 70px;
+  }
+}
+
 @media screen and (min-width: 600px) {
   .popupStyle {
     width: 50%;
@@ -19,10 +26,5 @@
   }
   .navButton {
     display: none;
-  }
-
-  /* ranglist indicator style */
-  .tabs .indicator {
-    width: 25%;
   }
 }

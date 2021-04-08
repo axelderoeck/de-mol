@@ -95,3 +95,14 @@ $(document).ready(function() {
 		responsiveThreshold: 1920
 	});
 });
+
+/* Indicator swipe function */
+function setIndicator(direction) {
+	var percent;
+	if (direction == 'right') {
+		percent = 100;
+	} else if (direction == 'left') {
+		percent = 0;
+	}
+	document.getElementById('thecooler_indicator').style.transform = "translateX(" + percent + "%)";
+}

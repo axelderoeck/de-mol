@@ -45,8 +45,6 @@ ORDER BY table_Scores.score DESC";
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <!-- externe stylesheet maakt problemen -->
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css'>
     <?php include "includes/headinfo.php"; ?>
 
     <?php
@@ -62,6 +60,7 @@ ORDER BY table_Scores.score DESC";
     ?>
 </head>
 <body>
+  <?php include "includes/navigation.php"; ?>
 
    <div class="rangList" id="main">
      <div class="respContainer">
@@ -69,8 +68,9 @@ ORDER BY table_Scores.score DESC";
      <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
       <h1>Scores</h1>
       <ul id="tabs-swipe-demo" class="tabs">
-        <li class="tab col s3"><a class="active" href="#swipe-1">Volgend</a></li>
-        <li class="tab col s3"><a href="#swipe-2">Top <?php echo $top_aantal; ?></a></li>
+        <li class="tab col s3"><a class="active" onclick="setIndicator('left')" href="#swipe-1">Volgend</a></li>
+        <li class="tab col s3"><a onclick="setIndicator('right')" href="#swipe-2">Top <?php echo $top_aantal; ?></a></li>
+        <div id="thecooler_indicator"></div>
       </ul>
       <div class="slide-container">
         <div class="slide-wrapper">
@@ -123,11 +123,11 @@ mysqli_free_result($result);
        </div>
    </div>
 
-    <!-- JavaScript -->
-    <script type="text/javascript" src="js/scripts.js"></script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+   <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js'></script>
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js'></script>
+    <!-- JavaScript -->
+    <script type="text/javascript" src="js/scripts.js" defer></script>
 
     <?php mysqli_close($dbconn); ?>
 </body>
