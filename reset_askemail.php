@@ -19,11 +19,11 @@ if (isset($_POST["sendMail"])){
   // IF user found
   if($queryGetAccountEmail->num_rows > 0) {
     // set values
-    $data = $sql->fetch_array();
-    $id = ($data['Id']);
+    //$data = $sql->fetch_array();
+    //$id = ($data['Id']);
 
     // set a random string as security measure
-    $randomGeneratedString = generateRandomString(15);
+    //$randomGeneratedString = generateRandomString(15);
 
     // set a random unique key to the user
     /*
