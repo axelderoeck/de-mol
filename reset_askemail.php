@@ -27,7 +27,7 @@ if (isset($_POST["sendMail"])){
 
     // set a random unique key to the user
     $dbconn->query("UPDATE table_Users
-    SET UserKey = '$randomGeneratedString'
+    SET UserKey = $randomGeneratedString
     WHERE UserId = $id");
 
     // set mail values
