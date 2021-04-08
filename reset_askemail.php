@@ -11,24 +11,32 @@ if (isset($_POST["sendMail"])){
   // get email from form
   $email = $_POST["email"];
 
-  $sql = $dbconn->query("SELECT Id
+  // get account where email is attached to
+  $queryGetAccountEmail = $dbconn->query("SELECT Id
                   FROM table_Users
                   WHERE Email = '$email'");
 
-  if($sql->num_rows > 0) {
-    // IF user found -> set values
+  // IF user found
+  if($queryGetAccountEmail->num_rows > 0) {
+    // set values
     $data = $sql->fetch_array();
     $id = ($data['Id']);
 
     // set a random string as security measure
     $randomGeneratedString = generateRandomString(15);
-    $_SESSION["sessionString"] = $randomGeneratedString;
 
-    // send mail
+    // set a random unique key to the user
+    $dbconn->query("UPDATE table_Users
+    SET UserKey = '$randomGeneratedString'
+    WHERE UserId = $id");
+
+    // set mail values
     $subject = "Wachtwoord reset";
     $message = "Klik op de onderstaande link om je wachtwoord opnieuw in te stellen. \n
     https://aksol.be/demol/reset_password.php?u=$id&s=$randomGeneratedString";
     $headers = "From: mail@aksol.be";
+
+    // send the mail
     mail($email,$subject,$message,$headers);
   }else{
     // user is not found

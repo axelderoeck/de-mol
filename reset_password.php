@@ -1,8 +1,21 @@
 <?php
 
-$sessionId = $_GET["s"];
-$userId = $_GET["u"];
-if ($sessionId == $_SESSION["sessionString"]) {
+ob_start();
+require_once("includes/dbconn.inc.php");
+session_start();
+
+// get id and key from url
+$url_userKey = $_GET["s"];
+$url_userId = $_GET["u"];
+
+$queryGetUserKey = $dbconn->query("SELECT UserKey
+                FROM table_Users
+                WHERE Id = '$url_userId'");
+
+$data = $queryGetUserKey->fetch_array();
+$userKey = ($data['UserKey']);
+
+if ($url_userKey == $userKey) {
   echo "matches";
 }else{
   echo "not matching";
