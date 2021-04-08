@@ -12,6 +12,7 @@ if (isset($_POST["sendMail"])){
 
   $email = $_POST["email"];
   $subject = "Wachtwoord reset";
+  /*
   $message = "
   <html>
   <head>
@@ -23,6 +24,9 @@ if (isset($_POST["sendMail"])){
   </body>
   </html>
   ";
+  */
+
+  $message = "https://aksol.be/demol/reset_password.php?s=$randomGeneratedString";
 
   $headers = "From: mail@aksol.be";
   $headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
