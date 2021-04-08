@@ -2,14 +2,11 @@
 
 $sessionId = $_GET["s"];
 $userId = $_GET["u"];
-if ($sessionId != $_SESSION["sessionString"]) {
-  echo "not matching";
-}else{
+if ($sessionId == $_SESSION["sessionString"]) {
   echo "matches";
+}else{
+  echo "not matching";
 }
-
-echo $sessionId;
-echo $_SESSION["sessionString"];
 
 ?>
 

@@ -27,7 +27,7 @@ if (isset($_POST["sendMail"])){
     // send mail
     $subject = "Wachtwoord reset";
     $message = "Klik op de onderstaande link om je wachtwoord opnieuw in te stellen. \n
-    https://aksol.be/demol/reset_password.php?u=$id?s=$randomGeneratedString";
+    https://aksol.be/demol/reset_password.php?u=$id&s=$randomGeneratedString";
     $headers = "From: mail@aksol.be";
     mail($email,$subject,$message,$headers);
   }else{
