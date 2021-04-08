@@ -33,11 +33,13 @@ if (isset($_POST["sendMail"])){
     mysqli_query($dbconn, $queryGiveUserKey);
     */
 
+    /*
     // set mail values
     $subject = "Wachtwoord reset";
     $message = "Klik op de onderstaande link om je wachtwoord opnieuw in te stellen. \n
     https://aksol.be/demol/reset_password.php?u=$id&s=$randomGeneratedString";
     $headers = "From: mail@aksol.be";
+    */
 
     // send the mail
     mail($email,$subject,$message,$headers);

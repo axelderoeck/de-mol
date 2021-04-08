@@ -18,8 +18,12 @@ $queryGetUserKey = $dbconn->query("SELECT UserKey
 $data = $queryGetUserKey->fetch_array();
 $userKey = ($data['UserKey']);
 
-if ($url_userKey == $userKey) {
-  echo "matches";
+if ($url_userId != null && $url_userKey != null) {
+  if ($url_userKey == $userKey) {
+    echo "matches";
+  }else{
+    echo "not matching";
+  }
 }else{
   echo "not matching";
 }
