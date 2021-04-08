@@ -27,7 +27,7 @@ if (isset($_POST["sendMail"])){
 
     // set a random unique key to the user
     $queryGiveUserKey = "UPDATE table_Users
-    SET UserKey = '$randomGeneratedString'
+    SET UserKey = 'test'
     WHERE Id = $id";
     mysqli_query($dbconn, $queryGiveUserKey);
 
