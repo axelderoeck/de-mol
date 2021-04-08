@@ -39,7 +39,7 @@ if (isset($_POST["sendMail"])){
     <div class="respContainer">
       <h1>Wachtwoord vergeten</h1>
 
-      <form method="post" action="reset_send_link.php">
+      <form method="post" action="">
         <p>Geef je email waar jouw account aan verbonden is</p>
         <input placeholder="Email" type="text" name="email">
         <input value="Stuur" type="submit" name="sendMail" id="sendMail">
