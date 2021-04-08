@@ -5,14 +5,15 @@ require_once("includes/dbconn.inc.php");
 session_start();
 
 include "includes/settings.php";
+include "includes/functions.php";
 
-error_reporting( E_ALL );
-ini_set('display_errors', 1);
-set_error_handler("var_dump");
+$randomGeneratedString = generateRandomString(10);
 
 $email = "axelderoeck23@gmail.com";
 $subject = "Wachtwoord reset";
-$message = "Blabla";
+$message = "Jouw nieuwe wachtwoord is $randomGeneratedString.\n
+Log-in en stel je nieuwe wachtwoord in op: \n
+Profiel -> Account Acties -> Wachtwoord veranderen.";
 $headers = "From: mail@aksol.be";
 
 $status = mail($email,$subject,$message,$headers);
@@ -39,7 +40,7 @@ if ($status) {
       <form method="post" action="reset_send_link.php">
         <p>Geef je email waar jouw account aan verbonden is</p>
         <input placeholder="Email" type="text" name="email">
-        <input value="Verzend" type="submit" name="submit_email">
+        <input value="Stuur" type="submit" name="submit_email">
       </form>
     </div>
   </div>
