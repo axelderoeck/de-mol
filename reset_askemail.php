@@ -19,30 +19,25 @@ if (isset($_POST["sendMail"])){
   // IF user found
   if($queryGetAccountEmail->num_rows > 0) {
     // set values
-    //$data = $sql->fetch_array();
-    //$id = ($data['Id']);
+    $data = $queryGetAccountEmail->fetch_array();
+    $id = ($data['Id']);
 
     // set a random string as security measure
-    //$randomGeneratedString = generateRandomString(15);
+    $randomGeneratedString = generateRandomString(15);
 
     // set a random unique key to the user
-    /*
-    $queryGiveUserKey = "UPDATE table_Users
+    $dbconn->query("UPDATE table_Users
     SET UserKey = '$randomGeneratedString'
-    WHERE Id = '$id'";
-    mysqli_query($dbconn, $queryGiveUserKey);
-    */
+    WHERE Id = '$id'");
 
-    /*
     // set mail values
     $subject = "Wachtwoord reset";
     $message = "Klik op de onderstaande link om je wachtwoord opnieuw in te stellen. \n
     https://aksol.be/demol/reset_password.php?u=$id&s=$randomGeneratedString";
     $headers = "From: mail@aksol.be";
-    */
 
     // send the mail
-    //mail($email,$subject,$message,$headers);
+    mail($email,$subject,$message,$headers);
   }else{
     // user is not found
     echo "Email is niet in gebruik.";
