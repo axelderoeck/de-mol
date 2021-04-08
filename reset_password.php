@@ -8,6 +8,9 @@ if ($sessionId != $_SESSION["sessionString"]) {
   echo "matches";
 }
 
+echo $sessionId;
+echo $_SESSION["sessionString"];
+
 ?>
 
 <!DOCTYPE html>
