@@ -26,10 +26,12 @@ if (isset($_POST["sendMail"])){
     $randomGeneratedString = generateRandomString(15);
 
     // set a random unique key to the user
+    /*
     $queryGiveUserKey = "UPDATE table_Users
     SET UserKey = '$randomGeneratedString'
     WHERE Id = '$id'";
     mysqli_query($dbconn, $queryGiveUserKey);
+    */
 
     // set mail values
     $subject = "Wachtwoord reset";
