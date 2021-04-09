@@ -43,6 +43,11 @@ Veel succes met je opdracht en tot zo meteen.\n
 
     // send the mail
     mail($email,$subject,$message,$headers);
+
+    sleep(60);
+    $dbconn->query("UPDATE table_Users
+    SET UserKey = ''
+    WHERE Id = '$id'");
   }else{
     // user is not found
     $foutmelding = "Email is niet in gebruik";
