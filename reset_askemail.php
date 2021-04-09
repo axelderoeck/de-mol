@@ -32,8 +32,8 @@ if (isset($_POST["sendMail"])){
     WHERE Id = $id");
 
     // set mail values
-    $subject = "Wachtwoord reset";
-    $message = "Dag vergeetachtige mollenjager,\n\n
+    $subject = "De Mol: Wachtwoord Reset";
+    $message = "Dag (vergeetachtige) mollenjager,\n\n
 Jouw gebruikersnaam (moest je dat ook vergeten zijn) is: $gebruikersnaam\n\n
 Klik op de onderstaande link om je wachtwoord opnieuw in te stellen.\n
 https://aksol.be/demol/reset_password.php?u=$id&s=$randomGeneratedString\n\n
