@@ -48,7 +48,7 @@ if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVote
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Mollenjagers</h1>
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden. <br>
-    p.s. de <i class='fas fa-check-circle'></i> duid aan wie er al gestemd heeft.</p>
+    <i class='fas fa-check-circle'></i> duid aan wie er al gestemd heeft.</p>
 
     <div class="deelnemersList">
       <?php
