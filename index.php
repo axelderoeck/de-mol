@@ -29,7 +29,7 @@ if (isset($_POST["userLogin"])){
     $gebruikersnaam = $_POST["Naam"];
     $wachtwoord = $_POST["Wachtwoord"];
 
-    $sql = $dbconn->query("SELECT Id, Naam, Wachtwoord, Voted
+    $sql = $dbconn->query("SELECT Id, Naam, Wachtwoord, Voted, Email
                     FROM table_Users
                     WHERE Gebruikersnaam = '$gebruikersnaam'");
 
@@ -38,11 +38,13 @@ if (isset($_POST["userLogin"])){
           $id = ($data['Id']);
           $naam = ($data['Naam']);
           $hasVoted = ($data['Voted']);
+          $email = ($data['Email']);
           if(password_verify($wachtwoord, $data['Wachtwoord'])){
             $_SESSION["Id"] = $id;
             $_SESSION["Naam"] = $naam;
             $_SESSION["Gebruikersnaam"] = $gebruikersnaam;
             $_SESSION["Voted"] = $hasVoted;
+            $_SESSION["Email"] = $email;
             $foutmelding = "";
             if(in_array($id, $admins)){
               //admin is gevonden => aangemeld met rechten
@@ -149,6 +151,7 @@ if (isset($_POST["userRegister"])){
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
                 </form>
+                <a href="reset_askemail.php">wachtwoord vergeten?</a>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
             <div id="reg">

@@ -24,6 +24,7 @@ if ($user == null) {
   include "includes/account-actions/changepassword.php";
   include "includes/account-actions/deleteaccount.php";
   include "includes/account-actions/changefirstname.php";
+  include "includes/account-actions/addemail.php";
 
   $selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
   FROM table_UserAwards
@@ -144,6 +145,17 @@ if ($user == null) {
     </div>
   </div>
 
+  <div id="popUpAddEmail" class="popupStyle translucent">
+    <div class="box">
+      <a class="closeLink" href="javascript:showPopup('popUpAddEmail','hide');">&times;</a>
+      <form name="formAddEmail" action="" method="post">
+          <input placeholder="Email" name="emailvalue" id="emailvalue" type="text" required>
+          <br>
+          <input type="submit" name="addEmail" id="addEmail" value="Voeg toe">
+      </form>
+    </div>
+  </div>
+
   <div id="popUpChangeFirstName" class="popupStyle translucent">
     <div class="box">
       <a class="closeLink" href="javascript:showPopup('popUpChangeFirstName','hide');">&times;</a>
@@ -174,6 +186,12 @@ if ($user == null) {
   <h1>Mijn Profiel</h1>
   <p class="userInfo">Gebruikersnaam: <span><?php echo $_SESSION["Gebruikersnaam"]; ?></span></p>
   <p class="userInfo">Naam: <span><?php echo $_SESSION["Naam"]; ?></span></p>
+  <p class="userInfo">Email: <span><?php echo $_SESSION["Email"]; ?></span></p>
+  <?php } ?>
+  <?php if ($user == null && $_SESSION["Email"] == null) { ?>
+    <div class="bericht info">
+      <p>Je hebt nog geen email ingesteld. <br> Je kan dit doen hieronder bij: <br> Account Acties (scroll) -> Email Wijzigen</p>
+    </div>
   <?php } ?>
   <hr>
   <h3>Awards <?php if ($user == null) { echo "- <a class='smallBtn info' href='awardslist.php'>Overzicht</a>"; } ?></h3>
@@ -211,6 +229,7 @@ if ($user == null) {
     <ul>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeName','show');"> gebruikersnaam wijzigen</a></li>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeFirstName','show');"> voornaam wijzigen</a></li>
+      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpAddEmail','show');"> email wijzigen</a></li>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangePassword','show');"> wachtwoord wijzigen</a></li>
       <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="javascript:showPopup('popUpDeleteAccount','show');"> verwijder account</a></li>
     </ul>

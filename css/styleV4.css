@@ -421,7 +421,7 @@
   align-self: center;
   color: #ffffff;
   font-size: 30px;
-  padding-bottom: 10%;
+  padding-bottom: 0%;
   margin-bottom: 0;
   text-align: center !important;
 }
@@ -435,6 +435,11 @@
   color: #ffffff;
   font-size: 30px;
   color: #eb2626;
+}
+
+#log a {
+  margin: 0 !important;
+  font-size: 25px !important;
 }
 
 #log {

@@ -12,12 +12,21 @@ if (isset($_POST["addEmail"])){
   $id = $_SESSION["Id"];
   $newEmail = $_POST["emailvalue"];
 
-  $dbconn->query("UPDATE table_Users
-    SET Email = '$newEmail'
-    WHERE Id = '$id';
-    ");
+  $sql = $dbconn->query("SELECT Email
+                  FROM table_Users
+                  WHERE Email = '$newEmail'");
 
-  $_SESSION["Email"] = $newEmail;
+  if($sql->num_rows > 0){
+    $meldingSoort = "warning";
+    $foutmelding = "Deze email is al in gebruik.";
+  }else{
+    $dbconn->query("UPDATE table_Users
+      SET Email = '$newEmail'
+      WHERE Id = '$id';
+      ");
+
+    $_SESSION["Email"] = $newEmail;
+  }
 
 header('location:profiel.php');
 }
