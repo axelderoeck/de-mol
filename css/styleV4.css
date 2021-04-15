@@ -365,6 +365,8 @@
   /* show the way cooler indicator instead */
   width: 50%;
   transform: translateX(0%);
+  -webkit-transform: translateX(0%);
+  -ms-transform: translateX(0%);
   transition: 0.4s;
   height: 2px;
   background-color: #53adb5;

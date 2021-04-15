@@ -105,4 +105,7 @@ function setIndicator(direction) {
 		percent = 0;
 	}
 	document.getElementById('thecooler_indicator').style.transform = "translateX(" + percent + "%)";
+	document.getElementById('thecooler_indicator').style["-webkit-transform"] = "translateX(" + percent + "%)";
+	document.getElementById('thecooler_indicator').style["-ms-transform"] = "translateX(" + percent + "%)";
+
 }
