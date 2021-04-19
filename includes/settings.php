@@ -15,7 +15,7 @@
     $styleversion = 4; // versie van css als ik dit wil forceren te updaten bij iedereen
 
   // ALERT SETTINGS
-    $bericht = true;
+    $bericht = false;
     $melding = (object) [
       'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
       'tekst' => "Visgeheugen? <br/>Je kan nu je email instellen zodat je later gebruik kan maken van de 'wachtwoord vergeten' functie. <br/> <b>Profiel > Account Acties > Email Wijzigen</b>"
