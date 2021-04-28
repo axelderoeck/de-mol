@@ -15,32 +15,29 @@ $id = $_SESSION["Id"];
 
 $user = $_GET["user"];
 
+// check if the current profile is from the logged in user or not
 if ($user == $id) {
-  header('location:home.php');
+  $user_owns_account = true;
+}else{
+  $user_owns_account = false;
 }
 
-if ($user == null) {
+$selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
+FROM table_UserAwards
+LEFT JOIN table_Awards
+ON table_UserAwards.AwardId = table_Awards.Id
+WHERE table_UserAwards.UserId = '$user'
+";
+
+if ($user_owns_account == true) {
   include "includes/account-actions/changename.php";
   include "includes/account-actions/changepassword.php";
   include "includes/account-actions/deleteaccount.php";
   include "includes/account-actions/changefirstname.php";
   include "includes/account-actions/addemail.php";
 
-  $selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
-  FROM table_UserAwards
-  LEFT JOIN table_Awards
-  ON table_UserAwards.AwardId = table_Awards.Id
-  WHERE table_UserAwards.UserId = '$id'
-  ";
-
   $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
-}else{
-  $selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
-  FROM table_UserAwards
-  LEFT JOIN table_Awards
-  ON table_UserAwards.AwardId = table_Awards.Id
-  WHERE table_UserAwards.UserId = '$user'
-  ";
+} elseif ($user_owns_account == false){
 
   $selectUserName = "SELECT Gebruikersnaam, Naam
   FROM table_Users
@@ -113,11 +110,11 @@ if ($user == null) {
 <div id="main">
   <div class="respContainer">
 
-  <?php if ($user != null) { ?>
+  <?php if ($user_owns_account == false) { ?>
   <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
   <?php } ?>
 
-  <?php if ($user == null) { ?>
+  <?php if ($user_owns_account == true) { ?>
 
   <div id="popUpChangePassword" class="popupStyle translucent">
     <div class="box">
@@ -179,7 +176,7 @@ if ($user == null) {
 
   <?php } ?>
 
-  <?php if ($user != null) { ?>
+  <?php if ($user_owns_account == false) { ?>
   <h1><?php echo $profiel_gebruikersnaam; ?></h1>
   <p class="userInfo">Naam: <span><?php echo $profiel_naam; ?></span></p>
   <?php }else{ ?>
@@ -188,13 +185,13 @@ if ($user == null) {
   <p class="userInfo">Naam: <span><?php echo $_SESSION["Naam"]; ?></span></p>
   <p class="userInfo">Email: <span><?php echo $_SESSION["Email"]; ?></span></p>
   <?php } ?>
-  <?php if ($user == null && $_SESSION["Email"] == null) { ?>
+  <?php if ($user_owns_account == true && $_SESSION["Email"] == null) { ?>
     <div class="bericht info">
       <p>Je hebt nog geen email ingesteld. <br> Je kan dit doen hieronder bij: <br> Account Acties (scroll) -> Email Wijzigen</p>
     </div>
   <?php } ?>
   <hr>
-  <h3>Awards <?php if ($user == null) { echo "- <a class='smallBtn info' href='awardslist.php'>Overzicht</a>"; } ?></h3>
+  <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awardslist.php'>Overzicht</a>"; } ?></h3>
   <div class="awards">
     <?php
     if($result = mysqli_query($dbconn, $selectAwards)){
@@ -223,7 +220,7 @@ if ($user == null) {
     ?>
   </div>
   <hr>
-  <?php if($user == null) { ?>
+  <?php if($user_owns_account == true) { ?>
   <h3>Account Acties <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
   <div id="collapsible-content">
     <ul>
@@ -235,7 +232,7 @@ if ($user == null) {
     </ul>
   </div>
   <?php } ?>
-  <?php if($user != null) {?>
+  <?php if($user_owns_account == false) {?>
     <form action="" method="post">
       <input type="submit" name="deleteFromFollowing" id="deleteFromFollowing" value="Verwijder van lijst">
     </form>

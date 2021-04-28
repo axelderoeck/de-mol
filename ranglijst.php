@@ -25,7 +25,7 @@ if ($stmtSelectMol = mysqli_prepare($dbconn, $qrySelectMol)){
 
 mysqli_stmt_fetch($stmtSelectMol);
 
-$selectScoreList = "SELECT table_Users.Naam, table_Scores.Score
+$selectScoreList = "SELECT table_Users.Naam, table_Scores.Score, table_Users.Id
 FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
@@ -48,7 +48,7 @@ ORDER BY table_Scores.score DESC";
     <?php include "includes/headinfo.php"; ?>
 
     <?php
-    $selectScoreListAll = "SELECT table_Users.Gebruikersnaam, table_Scores.Score
+    $selectScoreListAll = "SELECT table_Users.Gebruikersnaam, table_Scores.Score, table_Users.Id
     FROM table_Users
     LEFT JOIN table_Scores
     ON table_Users.Id = table_Scores.UserId
@@ -80,14 +80,14 @@ if($result = mysqli_query($dbconn, $selectScoreList)){
 if(mysqli_num_rows($result) > 0){
 $i = 1;
 while($row = mysqli_fetch_array($result)){?>
-
-                            <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem">
-                              <p>
-                                <span class="rangItemScore"><?php echo $row['Score']; ?></span>
-                                <?php echo $row['Naam']; ?>
-                              </p>
-                            </div>
-
+<a href="profiel.php?user=<?php echo $row['Id']; ?>">
+  <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem <?php if($row['Id'] == $id){echo "selected";} ?>">
+    <p>
+      <span class="rangItemScore"><?php echo $row['Score']; ?></span>
+      <?php echo $row['Naam']; ?>
+    </p>
+  </div>
+</a>
 <?php
 $i++;
 }
@@ -102,14 +102,14 @@ if($result = mysqli_query($dbconn, $selectScoreListAll)){
 if(mysqli_num_rows($result) > 0){
 $i = 1;
 while($row = mysqli_fetch_array($result)){?>
-
-                            <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem">
-                              <p>
-                                <span><?php echo $row['Score']; ?></span>
-                                <?php echo $row['Gebruikersnaam']; ?>
-                              </p>
-                            </div>
-
+<a href="profiel.php?user=<?php echo $row['Id']; ?>">
+  <div style="animation-delay: <?php echo $i/4; ?>s;" class="rangItem <?php if($row['Id'] == $id){echo "selected";} ?>">
+    <p>
+      <span><?php echo $row['Score']; ?></span>
+      <?php echo $row['Gebruikersnaam']; ?>
+    </p>
+  </div>
+</a>
 <?php
 $i++;
 }

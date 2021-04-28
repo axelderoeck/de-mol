@@ -343,6 +343,10 @@
   width: 100%;
 }
 
+.selected {
+  background-color: rgba(83, 173, 181, 0.4) !important;
+}
+
 /* TABS STYLING */
 
 .tabs {
