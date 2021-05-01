@@ -46,7 +46,7 @@ WHERE Actief = 1;
 
   <div id="main">
     <div class="respContainer">
-    <a href="profiel.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+    <a href="profiel.php?user=<?php echo $_SESSION["Id"] ?>"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <div class="awardslist">
       <?php
       $delay = 0; //set animation delay value
