@@ -7,7 +7,7 @@
 
   // SPEL SETTINGS
     $seizoen_start = "03/21/2021"; // maand/dag/jaar   echte: 03/21/2021
-    $seizoen_eind = "05/23/2021"; // maand/dag/jaar    echte: 05/23/2021
+    $seizoen_eind = "05/09/2021"; // maand/dag/jaar    echte: 05/09/2021
     $aantal_kandidaten = 10; // hoeveel kandidaten in het spel
     $top_aantal = 20; // algemene ranglijst top ... tonen
 
@@ -15,10 +15,10 @@
     $styleversion = 4; // versie van css als ik dit wil forceren te updaten bij iedereen
 
   // ALERT SETTINGS
-    $bericht = false;
+    $bericht = true;
     $melding = (object) [
       'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
-      'tekst' => "Visgeheugen? <br/>Je kan nu je email instellen zodat je later gebruik kan maken van de 'wachtwoord vergeten' functie. <br/> <b>Profiel > Account Acties > Email Wijzigen</b>"
+      'tekst' => "Opgelet, het is de laatste keer dat je kan stemmen op jouw mol. <br> Kom volgende week terug na de finale voor het resultaat."
     ];
 
   // AWARDS SETTINGS
