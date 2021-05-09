@@ -18,7 +18,7 @@
     $bericht = true;
     $melding = (object) [
       'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
-      'tekst' => "Dat was het dan vrienden, bedankt om deel te nemen aan mijn website. Tot volgend jaar!"
+      'tekst' => "Dat was het dan vrienden, bedankt om deel te nemen aan mijn website. Volgend jaar kan u een meer uitgebreidere versie van mijn website verwachten. Tot volgend jaar!"
     ];
 
   // AWARDS SETTINGS
