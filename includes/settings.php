@@ -18,7 +18,7 @@
     $bericht = true;
     $melding = (object) [
       'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
-      'tekst' => "Opgelet, het is de laatste keer dat je kan stemmen op jouw mol. <br> Kom volgende week terug na de finale voor het resultaat."
+      'tekst' => "Dat was het dan vrienden, bedankt om deel te nemen aan mijn website. Tot volgend jaar!"
     ];
 
   // AWARDS SETTINGS
