@@ -14,6 +14,7 @@
 
 <!-- CSS -->
 
+<link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/theme<?php echo "V" . $styleversion; ?>.css">
 <link rel="stylesheet" href="css/style<?php echo "V" . $styleversion; ?>.css">
 <link rel="stylesheet" href="css/navigation<?php echo "V" . $styleversion; ?>.css">

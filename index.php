@@ -145,8 +145,10 @@ if (isset($_POST["userRegister"])){
   <div id="loginbox">
             <div id="log">
                 <form name="formLogin" action="" method="post">
+                    <label>Gebruikersnaam</label>
                     <input placeholder="Gebruikersnaam" name="Naam" id="Naam" required>
                     <br>
+                    <label>Wachtwoord</label>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">

@@ -1,0 +1,30 @@
+/* for the iPhone 4 plebs */
+@media screen and (max-width: 350px) {
+  .tabs li {
+    min-width: 70px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .popupStyle {
+    width: 50%;
+    padding: 1% 0;
+  }
+  #informationPopup {
+    width: 30%;
+  }
+}
+
+/* desktop styling */
+@media screen and (min-width: 850px) {
+  /* Force the side navigation menu to be open */
+  .sidenav {
+    width: 250px;
+  }
+  .sidenav .closebtn {
+    display: none;
+  }
+  .navButton {
+    display: none;
+  }
+}

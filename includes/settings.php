@@ -12,7 +12,7 @@
     $top_aantal = 20; // algemene ranglijst top ... tonen
 
   // STYLE VERSIES - CACHING
-    $styleversion = 4; // versie van css als ik dit wil forceren te updaten bij iedereen
+    $styleversion = 5; // versie van css als ik dit wil forceren te updaten bij iedereen
 
   // ALERT SETTINGS
     $bericht = true;
