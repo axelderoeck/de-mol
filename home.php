@@ -37,7 +37,7 @@ SET `Voted` = 0";
       }elseif($enddate < $now) {
         ?>
         stemKnop("uit");
-        infoTekst("Het <span>seizoen</span> is voorbij. <br> <button onclick='location.href = `ranglijst.php`;' class='styledBtn'>Bekijk de scores</button>");
+        infoTekst("Het <span>seizoen</span> is voorbij. <br> <button type='submit' onclick='location.href = `ranglijst.php`;'>Bekijk de scores</button>");
         <?php
       }elseif(date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
         ?>

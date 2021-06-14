@@ -146,21 +146,24 @@ if (isset($_POST["userRegister"])){
             <div id="log">
                 <form name="formLogin" action="" method="post">
                     <label>Gebruikersnaam</label>
-                    <input placeholder="Gebruikersnaam" name="Naam" id="Naam" required>
+                    <input placeholder="Gebruikersnaam" name="Naam" id="Naam" type="text" required>
                     <br>
                     <label>Wachtwoord</label>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
+                    <br>
+                    <input type="checkbox" name="rememberme" value="">
+                    <label>Onthoud Mij</label>
                 </form>
                 <a href="reset_askemail.php">wachtwoord vergeten?</a>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
             <div id="reg">
                 <form name="formRegister" action="" method="post">
-                    <input placeholder="Gebruikersnaam" name="Gebruikersnaam" id="Gebruikersnaam" required>
+                    <input placeholder="Gebruikersnaam" name="Gebruikersnaam" id="Gebruikersnaam" type="text" required>
                     <br>
-                    <input placeholder="Voornaam" name="Naam" id="Naam" required>
+                    <input placeholder="Voornaam" name="Naam" id="Naam" type="text" required>
                     <br>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>

@@ -83,7 +83,7 @@ if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVote
     </div>
 
     <hr>
-    <button onclick="location.href = 'followUser.php';" class="styledBtn" type="button" name="button">Voeg spelers toe</button>
+    <button onclick="location.href = 'followUser.php';" class="styledBtn" type="submit" name="button">Voeg spelers toe</button>
 </div>
   </div>
 

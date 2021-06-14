@@ -88,6 +88,7 @@ if (isset($_POST["submitUserToFollow"])){
     <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Voeg een speler toe</h1>
     <form action="" method="post">
+      <label>Gebruikersnaam</label>
       <input placeholder="Gebruikersnaam" type="text" id="userToAdd" name="userToAdd">
       <input type="submit" name="submitUserToFollow" id="submitUserToFollow" value="Voeg toe">
     </form>
