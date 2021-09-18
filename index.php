@@ -153,10 +153,8 @@ if (isset($_POST["userRegister"])){
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
                     <br>
-                    <!--
                     <input type="checkbox" name="rememberme" value="">
-                    <label>Onthoud Mij</label>
-                    -->
+                    <label>Onthoud Mij</label>                
                 </form>
                 <a href="reset_askemail.php">wachtwoord vergeten?</a>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
