@@ -1,7 +1,3 @@
-<!-- SETTINGS -->
-
-<?php include "includes/settings.php"; ?>
-
 <!-- FAVICON -->
 
 <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">

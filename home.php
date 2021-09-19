@@ -1,9 +1,11 @@
 <?php
 
 ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-include "includes/settings.php";
+//require_once("includes/dbconn.inc.php");
+require_once("includes/phpdefault.php");
+//session_start();
+
+//include "includes/settings.php";
 
 $votetime = str_split($stemmen_uur, 2);
 
