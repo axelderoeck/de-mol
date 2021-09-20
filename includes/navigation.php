@@ -14,7 +14,7 @@ $now = new DateTime();
   <?php if ($_SESSION["Admin"] == 1) { ?>
     <a href="adminpanel.php"><i class="fas fa-hammer"></i>Admin</a>
   <?php } ?>
-  <a href="index.php?code=9"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
+  <a href="index.php?logout=1"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
   <img src="img/assets/molLogo.png" alt="logo de mol">
 </div>
 

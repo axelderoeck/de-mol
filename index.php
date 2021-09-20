@@ -1,39 +1,34 @@
 <?php
 
-ob_start();
-//require_once("includes/dbconn.inc.php");
 require_once("includes/phpdefault.php");
-//session_start();
-
-//include "includes/settings.php";
 
 $meldingSoort = "succes";
 
-$code = $_GET["code"];
-if ($code==9) {
-    $_SESSION["Id"] = NULL;
-    $_SESSION["Naam"] = "";
-    $_SESSION["Voted"] = 0;
-    $_SESSION["Admin"] = 0;
-    session_destroy();
-    header('location:index.php');
-    //$meldingSoort = "succes";
-    //$foutmelding = "Je bent uitgelogd.";
-}
-
+// Active user id found -> send to home page
 if ($_SESSION["Id"] != NULL) {
   header('location:home.php');
 }
 
+// If logout is set to 1 -> destroy session
+if ($_GET["logout"] == 1) { 
+  $_SESSION['LoggedIn'] = FALSE;
+  $_SESSION["Id"] = NULL;
+  $_SESSION["Naam"] = "";
+  $_SESSION["Voted"] = 0;
+  $_SESSION["Admin"] = 0;
+  session_destroy();
+  header('location:index.php');
+}
+
+// User pressed login button
 if (isset($_POST["userLogin"])){
   // Check if the account exists
-  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Gebruikersnaam = ?');
-  $stmt->execute([ $_POST['Naam'] ]);
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Email = ? OR Gebruikersnaam = ?');
+  $stmt->execute([ $_POST['Email'], $_POST['Email'] ]);
   $account = $stmt->fetch(PDO::FETCH_ASSOC);
   // If account exists verify password
   if ($account && password_verify($_POST['Wachtwoord'], $account['Wachtwoord'])) {
     // User has logged in, create session data
-    //session_regenerate_id();
     $_SESSION['LoggedIn'] = TRUE;
     $_SESSION["Id"] = $account['Id'];
     $_SESSION["Naam"] = $account["Naam"];
@@ -49,79 +44,43 @@ if (isset($_POST["userLogin"])){
   }
 }
 
-// LOOK
-if (isset($_POST['register'], $_POST['email'], $_POST['password'], $_POST['cpassword']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+// User pressed register button
+if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST['confirmWachtwoord']) && filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)){
   // Check if the account exists
-  $stmt = $pdo->prepare('SELECT * FROM accounts WHERE email = ?');
-  $stmt->execute([ $_POST['email'] ]);
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Email = ?');
+  $stmt->execute([ $_POST['Email'] ]);
   $account = $stmt->fetch(PDO::FETCH_ASSOC);
   if ($account) {
-      // Account exists!
-      $register_error = "tekst";
-  } else if ($_POST['cpassword'] != $_POST['password']) {
-      $register_error = "tekst";
-  } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
-      // Password must be between 5 and 20 characters long.
-      $register_error = "tekst";
+    // Account already exists!
+    $register_error = "tekst";
+  } else if ($_POST['confirmWachtwoord'] != $_POST['Wachtwoord']) {
+    // Passwords do not match
+    $register_error = "tekst";
+  } else if (strlen($_POST['Wachtwoord']) > 20 || strlen($_POST['Wachtwoord']) < 3) {
+    // Password must be between 3 and 20 characters long.
+    $register_error = "tekst";
   } else {
-      // Account doesnt exist, create new account
-      $stmt = $pdo->prepare('INSERT INTO accounts (email, password, first_name, last_name, address_street, address_city, address_state, address_zip, address_country) VALUES (?,?,"","","","","","","")');
-      // Hash the password
-      $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-      $stmt->execute([ $_POST['email'], $password ]);
-      $account_id = $pdo->lastInsertId();
-      // Automatically login the user
-      $_SESSION['account_loggedin'] = TRUE;
-      $_SESSION['account_id'] = $account_id;
-      $_SESSION['account_admin'] = 0;
-  }
-}
-
-
-
-
-// OLD
-if (isset($_POST["userRegister"])){
-    //waardes uit het formulier in lokale var steken
-    $naam = $_POST["Naam"];
-    $gebruikersnaam = $_POST["Gebruikersnaam"];
-    $wachtwoord = $_POST["Wachtwoord"];
-    $confirmWachtwoord = $_POST["confirmWachtwoord"];
-
-    $sql = $dbconn->query("SELECT Gebruikersnaam
-                    FROM table_Users
-                    WHERE Gebruikersnaam = '$gebruikersnaam'");
-
-    if($wachtwoord != $confirmWachtwoord){
-      $meldingSoort = "warning";
-      $foutmelding = "Het wachtwoord is niet bevestigd.";
-    }elseif($sql->num_rows > 0){
-      $meldingSoort = "warning";
-      $foutmelding = "Deze gebruikersnaam is al in gebruik.";
-    }else{
-        $hash = password_hash($wachtwoord, PASSWORD_BCRYPT);
-        $dbconn->query("INSERT INTO table_Users (Gebruikersnaam, Naam, Wachtwoord)
-        VALUES ('$gebruikersnaam','$naam','$hash')");
-
-        $selectNewId = $dbconn->query("SELECT Id
-                        FROM table_Users
-                        WHERE Gebruikersnaam = '$gebruikersnaam' AND Wachtwoord = '$hash'");
-
-        $data = $selectNewId->fetch_array();
-        $newId = ($data['Id']);
-
-        for ($i=1; $i <= 10; $i++) {
-          $dbconn->query("INSERT INTO table_Scores (UserId, Identifier, Score)
-          VALUES ('$newId','person$i',0)");
-        }
-
-        $dbconn->query("INSERT INTO table_Followers (UserId, UserIsFollowingId)
-        VALUES ('$newId','$newId')");
-
-        //HIERE DA DING DOEN YES add id aan volgers volg zichzelf
-        $meldingSoort = "succes";
-        $foutmelding = "Account is aangemaakt.";
+    // Hash the password
+    $password = password_hash($_POST['Wachtwoord'], PASSWORD_DEFAULT);
+    // Account does not exist, create new account
+    $stmt = $pdo->prepare('INSERT INTO table_Users (Email, Naam, Wachtwoord) VALUES (?,?,?)');
+    $stmt->execute([ $_POST['Email'], $_POST['Naam'], $password ]);
+    $account_id = $pdo->lastInsertId();
+    // Automatically login the user
+    $_SESSION['LoggedIn'] = TRUE;
+    $_SESSION["Id"] = $account_id;
+    $_SESSION["Naam"] = $_POST["Naam"];
+    $_SESSION["Voted"] = 0;
+    $_SESSION["Email"] = $_POST["Email"];
+    $_SESSION["Admin"] = 0;
+    // Add 0 points to every candidate as new account's score
+    for ($i=1; $i <= 10; $i++) {
+      $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, Identifier, Score) VALUES (?,?,?)');
+      $stmt->execute([ $account_id, "person$i", 0 ]);
     }
+    // Send user to home page
+    header('location:home.php');
+  }
 }
 
 ?>
@@ -160,8 +119,8 @@ if (isset($_POST["userRegister"])){
   <div id="loginbox">
             <div id="log">
                 <form name="formLogin" action="" method="post">
-                    <label>Gebruikersnaam</label>
-                    <input placeholder="Gebruikersnaam" name="Naam" id="Naam" type="text" required>
+                    <label>Gebruikersnaam of Email</label>
+                    <input placeholder="Gebruikersnaam of Email" name="Email" id="Email" type="text" required>
                     <br>
                     <label>Wachtwoord</label>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
@@ -176,7 +135,7 @@ if (isset($_POST["userRegister"])){
             </div>
             <div id="reg">
                 <form name="formRegister" action="" method="post">
-                    <input placeholder="Gebruikersnaam" name="Gebruikersnaam" id="Gebruikersnaam" type="text" required>
+                    <input placeholder="Email" name="Email" id="Email" type="text" required>
                     <br>
                     <input placeholder="Voornaam" name="Naam" id="Naam" type="text" required>
                     <br>
