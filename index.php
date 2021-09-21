@@ -74,8 +74,8 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
     $_SESSION["Email"] = $_POST["Email"];
     $_SESSION["Admin"] = 0;
     // Add 0 points to every candidate as new account's score
+    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, Identifier, Score) VALUES (?,?,?)');
     for ($i=1; $i <= 10; $i++) {
-      $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, Identifier, Score) VALUES (?,?,?)');
       $stmt->execute([ $account_id, "person$i", 0 ]);
     }
     // Send user to home page
@@ -153,9 +153,7 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
   </div>
 
   <!-- JavaScript -->
-
   <script type="text/javascript" src="js/scripts.js"></script>
 
-<?php mysqli_close($dbconn); ?>
 </body>
 </html>

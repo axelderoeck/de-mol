@@ -1,3 +1,7 @@
+<?php
+    $styleversion = 5;
+?>
+
 <!-- FAVICON -->
 
 <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
