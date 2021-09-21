@@ -14,4 +14,9 @@ include 'includes/functions.php';
 // Connect to MySQL database
 $pdo = pdo_connect_mysql();
 
+// If user is not logged in -> send to index page
+if ($_SESSION["Id"] == NULL) {
+    header('location:index.php');
+}
+
 ?>

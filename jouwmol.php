@@ -33,10 +33,8 @@ if ($_SESSION["Id"] == NULL) {
                             ORDER BY table_Scores.score DESC');
       $stmt->execute([ $_SESSION["Id"] ]);
       $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
-      // Set iterable to 0
-      $i = 0; 
       // Loop through all scores
-      foreach($candidates as $candidate): ?>
+      $i = 0; foreach($candidates as $candidate): ?>
         <div style="animation-delay: <?=$i/4;?>s;" class="displayItem <?=$candidate['Visibility'] == 'out' ? 'isOut' : '';?>">
           <div class="wrapper">
             <div class="div1">

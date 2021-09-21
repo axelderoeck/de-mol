@@ -1,6 +1,17 @@
 <?php
 
-require_once("includes/phpdefault.php");
+ob_start();
+// Initialize a new session
+session_start();
+// these 2 need to be merged
+// Include the settings file
+include "includes/settings.php";
+// Include the configuration file
+include 'includes/config.php';
+// Include functions
+include 'includes/functions.php';
+// Connect to MySQL database
+$pdo = pdo_connect_mysql();
 
 $meldingSoort = "succes";
 

@@ -1,33 +1,31 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
+require_once("includes/phpdefault.php");
 
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
-
-include "includes/settings.php";
-include "includes/functions.php";
-
-$id = $_SESSION["Id"];
-
-$user = $_GET["user"];
+// Get the logged in and selected user id
+$session_id = $_SESSION["Id"];
+$user_id = $_GET["u"];
 
 // check if the current profile is from the logged in user or not
-if ($user == $id) {
+if ($user_id == $session_id) {
   $user_owns_account = true;
 }else{
   $user_owns_account = false;
 }
 
-$selectAwards = "SELECT AwardId, Naam, Beschrijving, Editie
-FROM table_UserAwards
-LEFT JOIN table_Awards
-ON table_UserAwards.AwardId = table_Awards.Id
-WHERE table_UserAwards.UserId = '$user'
-";
+// Select all the user info from the id from url
+$stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+$stmt->execute([ $user_id ]);
+$account = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Select all the awards the specified user has
+$stmt = $pdo->prepare('SELECT AwardId, Naam, Beschrijving, Editie
+                      FROM table_UserAwards
+                      LEFT JOIN table_Awards
+                      ON table_UserAwards.AwardId = table_Awards.Id
+                      WHERE table_UserAwards.UserId = ?');
+$stmt->execute([ $user_id ]);
+$awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if ($user_owns_account == true) {
   include "includes/account-actions/changename.php";
@@ -39,44 +37,11 @@ if ($user_owns_account == true) {
   $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
 } elseif ($user_owns_account == false){
 
-  $selectUserName = "SELECT Gebruikersnaam, Naam
-  FROM table_Users
-  WHERE Id = '$user'
-  ";
-
-  //statement aanmaken
-  if ($stmtSelectUserName = mysqli_prepare($dbconn, $selectUserName)){
-      //query uitvoeren
-      mysqli_stmt_execute($stmtSelectUserName);
-      //resultaat binden aan lokale variabelen
-      mysqli_stmt_bind_result($stmtSelectUserName, $profiel_gebruikersnaam, $profiel_naam);
-      //resultaten opslaan
-      mysqli_stmt_store_result($stmtSelectUserName);
-  }
-
-  mysqli_stmt_fetch($stmtSelectUserName);
-
   $geenAwardsMelding = "Deze gebruiker heeft nog geen <span>awards</span>.";
 
   if (isset($_POST["deleteFromFollowing"])){
-    $dbconn->query("DELETE FROM table_Followers
-      WHERE UserId = '$id' AND UserIsFollowingId = '$user';
-      ");
-
-    // AWARD_GILLES SECTION
-    // get how many people this person is following
-    $queryIf10Followed = $dbconn->query("SELECT COUNT(UserId) AS 'Count'
-    FROM table_Followers
-    WHERE UserId = '$id'
-    GROUP BY UserId");
-    $data = $queryIf10Followed->fetch_array();
-    // enter amount followed in a variable
-    $amountFollowed = ($data['Count']);
-
-    // IF user follows less than 10 -> delete award
-    if ($amountFollowed == 10) {
-      deleteAward($id, $award_gilles, $dbconn);
-    }
+    $stmt = $pdo->prepare('DELETE FROM table_Followers WHERE UserId = ? AND UserIsFollowingId = ?');
+    $stmt->execute([ $session_id, $user_id ]);
 
     header('location:deelnemers.php');
   }
@@ -176,49 +141,35 @@ if ($user_owns_account == true) {
 
   <?php } ?>
 
-  <?php if ($user_owns_account == false) { ?>
-  <h1><?php echo $profiel_gebruikersnaam; ?></h1>
-  <p class="userInfo">Naam: <span><?php echo $profiel_naam; ?></span></p>
-  <?php }else{ ?>
-  <h1>Mijn Profiel</h1>
-  <p class="userInfo">Gebruikersnaam: <span><?php echo $_SESSION["Gebruikersnaam"]; ?></span></p>
-  <p class="userInfo">Naam: <span><?php echo $_SESSION["Naam"]; ?></span></p>
-  <p class="userInfo">Email: <span><?php echo $_SESSION["Email"]; ?></span></p>
-  <?php } ?>
+  <!-- User info -->
+  <h1><?=$account["Naam"]?></h1>
+  <p class="userInfo">Placeholder: <span><?=$account["Voted"]?></span></p>
+  <?php if ($user_owns_account): ?>
+  <!-- Private user info -->
+  <p class="userInfo">Email: <span><?=$account["Email"]?></span></p>
+  <?php endif; ?>
+
   <?php if ($user_owns_account == true && $_SESSION["Email"] == null) { ?>
     <div class="bericht info">
       <p>Je hebt nog geen email ingesteld. <br> Je kan dit doen hieronder bij: <br> Account Acties (scroll) -> Email Wijzigen</p>
     </div>
   <?php } ?>
   <hr>
+
   <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awardslist.php'>Overzicht</a>"; } ?></h3>
   <div class="awards">
-    <?php
-    if($result = mysqli_query($dbconn, $selectAwards)){
-      if(mysqli_num_rows($result) > 0){
-        $i = 0;
-        while($row = mysqli_fetch_array($result)){
-          if ($row['Editie'] == "De Mol") {
-            $hideEditionName = "style='opacity: 0;'";
-          }else{
-            $hideEditionName = "";
-          }
-          ?>
-          <div style="animation-delay: <?php echo $i/4; ?>s;" >
-            <img src="img/awards/<?php echo $row['AwardId']; ?>.png" alt="award foto van <?php echo $row['Naam']; ?>">
-            <p><?php echo $row['Naam']; ?><br><span <?php echo $hideEditionName; ?> ><?php echo $row['Editie']; ?></span></p>
-          </div>
-          <?php
-          $i++;
-        }
-      }else{
-        ?>
-        <p style="text-align: center !important;"><?php echo $geenAwardsMelding; ?></p>
-        <?php
-      }
-    }
-    ?>
+    <?php if(!empty($awards)): ?>
+    <?php $i = 0; foreach($awards as $award): ?>
+      <div style="animation-delay: <?=$i/4?>s;" >
+        <img src="img/awards/<?=$award['AwardId']?>.png" alt="award foto van <?=$award['Naam']?>">
+        <p><?=$award['Naam']?><br><span style="<?=$award['Editie'] == 'De Mol' ? 'opacity: 0;' : ''?>" ><?php echo $award['Editie']; ?></span></p>
+      </div>
+    <?php $i++; endforeach; ?>
+    <?php else: ?>
+      <p style="text-align: center !important;"><?php echo $geenAwardsMelding; ?></p>
+    <?php endif; ?>
   </div>
+  
   <hr>
   <?php if($user_owns_account == true) { ?>
   <h3>Account Acties <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
@@ -243,6 +194,5 @@ if ($user_owns_account == true) {
   <!-- JavaScript -->
   <script type="text/javascript" src="js/scripts.js"></script>
 
-<?php mysqli_close($dbconn); ?>
 </body>
 </html>
