@@ -21,12 +21,12 @@ $password = "demolAdm1n";
 
 /* DATABASE SETTINGS */
 // Database hostname
-define('db_host',$servername);
+define('DB_HOST',$servername);
 // Database username
-define('db_user',$username);
+define('DB_USER',$username);
 // Database password
-define('db_pass',$password);
+define('DB_PASS',$password);
 // Database name
-define('db_name',$database);
+define('DB_NAME',$database);
 
 ?>
