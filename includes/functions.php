@@ -45,4 +45,14 @@ function generateRandomString($length) {
     return $randomString;
 }
 
+function generateRandomInt($length) {
+  $characters = '0123456789';
+  $charactersLength = strlen($characters);
+  $randomInt = '';
+  for ($i = 0; $i < $length; $i++) {
+      $randomInt .= $characters[rand(0, $charactersLength - 1)];
+  }
+  return $randomInt;
+}
+
 ?>

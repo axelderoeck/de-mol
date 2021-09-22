@@ -146,12 +146,13 @@ if ($user_owns_account == true) {
   <p class="userInfo">Placeholder: <span><?=$account["Voted"]?></span></p>
   <?php if ($user_owns_account): ?>
   <!-- Private user info -->
-  <p class="userInfo">Email: <span><?=$account["Email"]?></span></p>
+  <p class="userInfo">Email: <span><?=$account["Email"] ? $account["Email"] : "Geen"?></span></p>
+  <p class="userInfo">FriendCode: <span>#<?=$account["Friendcode"]?></span></p>
   <?php endif; ?>
 
-  <?php if ($user_owns_account == true && $_SESSION["Email"] == null) { ?>
+  <?php if ($user_owns_account && $account["Email"] == null) { ?>
     <div class="bericht info">
-      <p>Je hebt nog geen email ingesteld. <br> Je kan dit doen hieronder bij: <br> Account Acties (scroll) -> Email Wijzigen</p>
+      <p>U hebt nog geen email ingesteld. U kan nog steeds inloggen met uw gebruikersnaam.</p>
     </div>
   <?php } ?>
   <hr>

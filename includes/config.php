@@ -29,4 +29,6 @@ define('DB_PASS',$password);
 // Database name
 define('DB_NAME',$database);
 
+define('FRIENDCODE_LENGTH',8);
+
 ?>

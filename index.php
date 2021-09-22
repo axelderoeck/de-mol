@@ -16,6 +16,7 @@ $pdo = pdo_connect_mysql();
 $meldingSoort = "succes";
 
 // Active user id found -> send to home page
+
 if ($_SESSION["Id"] != NULL) {
   header('location:home.php');
 }
@@ -89,6 +90,24 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
     for ($i=1; $i <= 10; $i++) {
       $stmt->execute([ $account_id, "person$i", 0 ]);
     }
+
+    // Add unused friendcode to user
+    $inserted_friendcode = false;
+    $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ?');
+    while($inserted_friendcode == false) {
+      // Generate random friendcode
+      $friend_code = generateRandomInt(FRIENDCODE_LENGTH);
+      // Search for existing account with generated friendcode
+      $stmt->execute([ $friend_code ]);
+      $account = $stmt->fetch(PDO::FETCH_ASSOC);
+      if(!$account) {
+        // Account does not exist -> add friendcode
+        $stmt = $pdo->prepare('UPDATE table_Users SET Friendcode = ? WHERE Id = ?');
+        $stmt->execute([ $friend_code, $account_id ]);
+        $inserted_friendcode = true;
+      }
+    }
+
     // Send user to home page
     header('location:home.php');
   }
