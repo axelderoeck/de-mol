@@ -1,21 +1,18 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
+require_once("includes/phpdefault.php");
 
 $id = $_SESSION["Id"];
 
-$selectFollowedUsers = "SELECT Naam, Id
-FROM table_Users
-LEFT JOIN table_Followers
-ON table_Users.Id = table_Followers.UserIsFollowingId
-WHERE table_Followers.UserId = '$id'";
+$stmt = $pdo->prepare('SELECT Naam, Id
+                      FROM table_Users
+                      LEFT JOIN table_Followers
+                      ON table_Users.Id = table_Followers.UserIsFollowingId
+                      WHERE table_Followers.UserId = ?');
+$stmt->execute([ $_SESSION["Id"] ]);
+$followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// TODO
 // GET ALL FOLLOWED USERS THAT VOTED
 $selectFollowedUsersThatVoted = "SELECT Id
 FROM table_Users
@@ -51,35 +48,22 @@ if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVote
     <i class='fas fa-check-circle'></i> duid aan wie er al gestemd heeft.</p>
 
     <div class="deelnemersList">
-      <?php
-
-      if($result = mysqli_query($dbconn, $selectFollowedUsers)){
-          if(mysqli_num_rows($result) > 0){
-            $i = 1;
-              while($row = mysqli_fetch_array($result)){
-                  if ($row['Id'] != $id) { ?>
-                    <a class="deelnemerItem info" style="animation-delay: <?php echo $i/6; ?>s;" href="profiel.php?user=<?php echo $row['Id'];?>">
-                      <i class='fas fa-user left'></i>
-                        <?php echo $row['Naam']; ?>
-                        <?php if (in_array($row['Id'], $arrayVotedUsers)) {
-                          // IF this ID has voted -> display checkmark
-                          echo "<i class='fas fa-check-circle right'></i>";
-                        } ?>
-                    </a>
-                  <?php
-                  }
-                  $i++;
-              }
-              // Free result set
-              mysqli_free_result($result);
-          } else{
-              echo "<h2>Je hebt nog geen spelers toegevoegd.<br>Voeg er toe door op de knop hieronder te klikken.</h2>";
-          }
-      } else{
-          echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-      }
-
-      ?>
+      <?php if(!empty($followedUsers)): ?>
+      <?php $i = 0; foreach($followedUsers as $followedUser): ?>
+      <?php if($followedUser["Id"] != $_SESSION["Id"]): ?>
+      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="profiel.php?user=<?=$followedUser['Id']?>">
+        <i class='fas fa-user left'></i>
+          <?=$followedUser['Naam']?>
+          <?php if (in_array($followedUser['Id'], $arrayVotedUsers)) {
+            // IF this ID has voted -> display checkmark
+            echo "<i class='fas fa-check-circle right'></i>";
+          } ?>
+      </a>
+      <?php endif; ?>
+      <?php $i++; endforeach; ?>
+      <?php else: ?>
+      <h2>Je hebt nog geen spelers toegevoegd.<br>Voeg er toe door op de knop hieronder te klikken.</h2>
+      <?php endif; ?>
     </div>
 
     <hr>
