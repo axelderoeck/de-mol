@@ -7,7 +7,7 @@
 
   // SPEL SETTINGS
     $seizoen_start = "03/21/2021"; // maand/dag/jaar   echte: 03/21/2021
-    $seizoen_eind = "05/09/2021"; // maand/dag/jaar    echte: 05/09/2021
+    $seizoen_eind = "05/09/2022"; // maand/dag/jaar    echte: 05/09/2021
     $aantal_kandidaten = 10; // hoeveel kandidaten in het spel
     $top_aantal = 20; // algemene ranglijst top ... tonen
 
@@ -15,7 +15,7 @@
     $styleversion = 5; // versie van css als ik dit wil forceren te updaten bij iedereen
 
   // ALERT SETTINGS
-    $bericht = true;
+    $bericht = false;
     $melding = (object) [
       'soort' => 'info', // 'info' = blauw, 'succes' = groen, 'warning' = rood
       'tekst' => "Dat was het dan vrienden, bedankt om deel te nemen aan mijn website. Volgend jaar kan u een meer uitgebreidere versie van mijn website verwachten. Tot volgend jaar!"

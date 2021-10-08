@@ -12,22 +12,28 @@ $stmt = $pdo->prepare('SELECT Naam, Id
 $stmt->execute([ $_SESSION["Id"] ]);
 $followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// TODO
 // GET ALL FOLLOWED USERS THAT VOTED
-$selectFollowedUsersThatVoted = "SELECT Id
-FROM table_Users
-WHERE Voted = 1 AND Id IN
-(SELECT UserIsFollowingId
-FROM table_Followers
-WHERE UserId = '$id')";
+$stmt = $pdo->prepare('SELECT Id
+                      FROM table_Users
+                      WHERE Voted = 1 AND Id IN
+                      (SELECT UserIsFollowingId
+                      FROM table_Followers
+                      WHERE UserId = ?)');
+$stmt->execute([ $_SESSION["Id"] ]);
+$followedUsersVoted = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // INSERT RESULTS INTO ARRAY
 $arrayVotedUsers = array();
+foreach($followedUsersVoted as $user){
+  array_push($arrayVotedUsers, $user['Id']);
+}
+
+/*
 if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVoted)){
   while($row = mysqli_fetch_array($executeSelectVotedUsers)){
     array_push($arrayVotedUsers, $row['Id']);
   }
-}
+}*/
 
 ?>
 

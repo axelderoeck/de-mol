@@ -1,11 +1,6 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-include "includes/settings.php";
-include "includes/functions.php";
+require_once("includes/phpdefault.php");
 
 $id = $_SESSION["Id"];
 
@@ -21,6 +16,10 @@ if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
 
+$stmt = $pdo->prepare('SELECT * FROM table_Kandidaten');
+$stmt->execute();
+$candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 if (isset($_POST["formSubmitVote"])){
 
   $naam = $_SESSION["Naam"];
@@ -29,24 +28,26 @@ if (isset($_POST["formSubmitVote"])){
   for ($i=1; $i <= $aantal_kandidaten; $i++) {
     $score = $_POST["person$i"];
 
+    /* TEMP DISABLED
     // Check if user matches criteria for All-In award
     if ($score == 10) {
       giveAward($id, $award_allin, $dbconn);
     }
+    */
 
-    $query = "UPDATE `table_Scores`
-    SET `Score` = `Score` + $score
-    WHERE `UserId` = '$id' AND `Identifier` = 'person$i'";
-
-    mysqli_query($dbconn, $query);
+    $stmt = $pdo->prepare('UPDATE table_Scores
+    SET Score = Score + ?
+    WHERE UserId = ? AND Identifier = ?');
+    $stmt->execute([ $score, $id, 'person'.$i ]);
+    $update_scores = $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
-  $votedQuery = "UPDATE `table_Users`
-  SET `Voted` = 1
-  WHERE `Id` = '$id'";
-  mysqli_query($dbconn, $votedQuery);
+  $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1 WHERE Id = ?');
+  $stmt->execute([ $_SESSION["Id"] ]);
+  $set_voted = $stmt->fetch(PDO::FETCH_ASSOC);
   $_SESSION["Voted"] = 1;
 
+  /* TEMP DISABLED
   // AWARD SECTION
     // TUNNELVISIE
     $checkForTunnelvisieAward = "SELECT * FROM table_Scores WHERE UserId = '$id' AND Score > $award_tunnelvisie_amount";
@@ -58,6 +59,7 @@ if (isset($_POST["formSubmitVote"])){
     // DEELNEMER
     giveAward($id, $award_deelnemer, $dbconn);
 
+  */
   header('location:home.php');
 
 }
@@ -73,29 +75,25 @@ if (isset($_POST["formSubmitVote"])){
     window.addEventListener('load', function() {
       //PHP waardes in array steken
       let deelnemers = [
-        { id: 0, identifier: 'person0', naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Right' },
-      <?php
-        $sql = "SELECT * FROM table_Kandidaten";
-        if($result = mysqli_query($dbconn, $sql)){
-            if(mysqli_num_rows($result) > 0){
-                while($row = mysqli_fetch_array($result)){
+        { id: 0, 
+          identifier: 'person0', 
+          naam: 'dummy', 
+          leeftijd: 0, 
+          job: 'placeholder', 
+          visibility: 'hidden', 
+          direction: 'Right' },
 
-                  ?>
-                    { id: <?php echo $row['Id'] ?> , identifier: <?php echo "'" . $row['Identifier'] . "'"; ?>, naam: <?php echo "'" . $row['Naam'] . "'"; ?>, leeftijd: <?php echo $row['Leeftijd']; ?>, job: <?php echo "'" . $row['Job'] . "'"; ?>, visibility: <?php echo "'" . $row['Visibility'] . "'"; ?> },
-                  <?php
+        <?php $i = 0; foreach($candidates as $candidate): ?>
+          { id: <?php echo $candidate['Id'] ?>, 
+            identifier: <?= "'" . $candidate['Identifier'] . "'"; ?>, 
+            naam: <?= "'" . $candidate['Naam'] . "'"; ?>, 
+            leeftijd: <?= $candidate['Leeftijd']; ?>, 
+            job: <?= "'" . $candidate['Job'] . "'"; ?>, 
+            visibility: <?= "'" . $candidate['Visibility'] . "'"; ?> 
+          },
+        <?php $i++; endforeach; ?>
 
-                }
-                // Free result set
-                mysqli_free_result($result);
-            } else{
-                echo "No records matching your query were found.";
-            }
-        } else{
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-        }
-
-      ?>
-        { id: <?php echo $aantal_kandidaten+1; ?>, identifier: 'person<?php echo $aantal_kandidaten+1 . "'"; ?>, naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
+        { id: <?= $i+1; ?>, identifier: 'person<?= $i+1 . "'"; ?>, naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
       ]
 
       //Array waardes in een div card steken
@@ -235,7 +233,5 @@ if (isset($_POST["formSubmitVote"])){
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
 
-
-<?php mysqli_close($dbconn); ?>
 </body>
 </html>
