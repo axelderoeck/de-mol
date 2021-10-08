@@ -2,16 +2,13 @@
 
 require_once("includes/phpdefault.php");
 
-$id = $_SESSION["Id"];
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
+// Check if the time to vote is correct
 if(date('D') == "$stemmen_dag") {
   if (date('Hi') < "$stemmen_uur") {
     header('location:home.php');
   }
 }
+// Check if user has already voted
 if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
@@ -21,45 +18,39 @@ $stmt->execute();
 $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST["formSubmitVote"])){
-
-  $naam = $_SESSION["Naam"];
-  $id = $_SESSION["Id"];
-
   for ($i=1; $i <= $aantal_kandidaten; $i++) {
     $score = $_POST["person$i"];
 
-    /* TEMP DISABLED
     // Check if user matches criteria for All-In award
     if ($score == 10) {
-      giveAward($id, $award_allin, $dbconn);
+      giveAward($_SESSION["Id"], $award_allin);
     }
-    */
 
+    // Update the scores
     $stmt = $pdo->prepare('UPDATE table_Scores
     SET Score = Score + ?
     WHERE UserId = ? AND Identifier = ?');
-    $stmt->execute([ $score, $id, 'person'.$i ]);
+    $stmt->execute([ $score, $_SESSION["Id"], 'person'.$i ]);
     $update_scores = $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
+  // Specify that this user has voted
   $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1 WHERE Id = ?');
   $stmt->execute([ $_SESSION["Id"] ]);
   $set_voted = $stmt->fetch(PDO::FETCH_ASSOC);
   $_SESSION["Voted"] = 1;
-
-  /* TEMP DISABLED
+  
   // AWARD SECTION
-    // TUNNELVISIE
-    $checkForTunnelvisieAward = "SELECT * FROM table_Scores WHERE UserId = '$id' AND Score > $award_tunnelvisie_amount";
-    if($result = mysqli_query($dbconn, $checkForTunnelvisieAward)){
-      if(mysqli_num_rows($result) > 0){
-        giveAward($id, $award_tunnelvisie, $dbconn);
-      }
+    // Check if conditions for TUNNELVISIE match
+    $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ? AND Score > ?');
+    $stmt->execute([ $_SESSION["Id"], $award_tunnelvisie_amount ]);
+    $score_over_limit = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Give TUNNELVISIE award 
+    if(!empty($score_over_limit)){
+      giveAward($_SESSION["Id"], $award_tunnelvisie);
     }
-    // DEELNEMER
-    giveAward($id, $award_deelnemer, $dbconn);
-
-  */
+    // give DEELNEMER award to user
+    giveAward($_SESSION["Id"], $award_deelnemer);
   header('location:home.php');
 
 }

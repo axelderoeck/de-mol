@@ -1,8 +1,8 @@
 <?php 
 // Default PHP lines for every file
 
-ob_start();
 // Initialize a new session
+ob_start();
 session_start();
 // these 2 need to be merged
 // Include the settings file

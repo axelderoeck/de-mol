@@ -11,28 +11,31 @@ function pdo_connect_mysql() {
   }
 }
 
-function giveAward($accountId, $awardId, $dbconn){
-  // Query: check if user has award
-  $checkIfUserHasAward = $dbconn->query("SELECT *
+function giveAward($accountId, $awardId){
+  $pdo = pdo_connect_mysql();
+  // Check if user has this specific award
+  $stmt = $pdo->prepare('SELECT *
   FROM table_UserAwards
-  WHERE UserId = '$accountId' AND AwardId = $awardId");
-
-  // Query: give user the award
-  $giveUserAward = "INSERT INTO table_UserAwards (UserId, AwardId)
-  VALUES ($accountId, $awardId)";
+  WHERE UserId = ? AND AwardId = ?');
+  $stmt->execute([ $accountId, $awardId ]);
+  $has_award = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   // Action: IF user doesn't have award -> give award
-  if($checkIfUserHasAward->num_rows == 0) {
-    mysqli_query($dbconn, $giveUserAward);
+  if(empty($has_award)){
+    $stmt = $pdo->prepare('INSERT INTO table_UserAwards (UserId, AwardId)
+    VALUES (?, ?)');
+    $stmt->execute([ $accountId, $awardId ]);
+    $given_award = $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }
 
-function deleteAward($accountId, $awardId, $dbconn){
-  // Query: delete the award
-  $deleteUserAward = "DELETE FROM table_UserAwards
-  WHERE UserId = '$accountId' AND AwardId = '$awardId'";
-
-  mysqli_query($dbconn, $deleteUserAward);
+function deleteAward($accountId, $awardId){
+  $pdo = pdo_connect_mysql();
+  // Delete the award from user
+  $stmt = $pdo->prepare('DELETE FROM table_UserAwards
+  WHERE UserId = ? AND AwardId = ?');
+  $stmt->execute([ $accountId, $awardId ]);
+  $deleted_award = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 function generateRandomString($length) {
