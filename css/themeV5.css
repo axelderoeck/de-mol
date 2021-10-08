@@ -3,7 +3,7 @@
 /* Main Font */
 @font-face {
   font-family: Knockout;
-  src: url("../Knockout.otf") format("truetype");
+  src: url("../fonts/Knockout.otf") format("truetype");
 }
 
 /* Browser Text Highlight style */
