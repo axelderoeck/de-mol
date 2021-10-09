@@ -80,6 +80,5 @@ if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVote
   <!-- JavaScript -->
   <script type="text/javascript" src="js/scripts.js"></script>
 
-<?php mysqli_close($dbconn); ?>
 </body>
 </html>

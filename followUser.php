@@ -1,61 +1,51 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
+require_once("includes/phpdefault.php");
 
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
+/*
+$stmt = $pdo->prepare('');
+$stmt->execute([  ]);
+$followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+*/
 
-include "includes/settings.php";
-include "includes/functions.php";
+if (isset($_POST["submitFriendInvite"])){
 
-$id = $_SESSION["Id"];
+  // Search for an existing user
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ? OR Email = ?');
+  $stmt->execute([ $_POST["friendcode"], $_POST["friendcode"] ]);
+  $to_be_invited_user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (isset($_POST["submitUserToFollow"])){
-  $userToFollow = $_POST["userToAdd"];
-
-  $findUserToFollowId = "SELECT Id
-  FROM table_Users
-  WHERE Gebruikersnaam = '$userToFollow'
-  ";
-
-  //statement aanmaken
-  if ($stmtFindUserToFollowId = mysqli_prepare($dbconn, $findUserToFollowId)){
-      //query uitvoeren
-      mysqli_stmt_execute($stmtFindUserToFollowId);
-      //resultaat binden aan lokale variabelen
-      mysqli_stmt_bind_result($stmtFindUserToFollowId, $userToFollowId);
-      //resultaten opslaan
-      mysqli_stmt_store_result($stmtFindUserToFollowId);
-  }
-
-  mysqli_stmt_fetch($stmtFindUserToFollowId);
-
-  if ($userToFollowId != 0) {
-    $dbconn->query("INSERT INTO table_Followers (UserId, UserIsFollowingId)
-    VALUES ('$id','$userToFollowId')");
-    $foutmelding = "Gebruiker toegevoegd.";
+  // If the user exists -> send notification to user
+  if($to_be_invited_user){
+    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId) VALUES (0, ?, ?)');
+    $stmt->execute([ $_SESSION["Id"], $to_be_invited_user["Id"] ]);
+    $invited_user = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Notify user
+    $foutmelding = "Vriendschapsverzoek verzonden.";
     $meldingSoort = "succes";
   }else{
+    // Notify user
     $foutmelding = "Gebruiker niet gevonden.";
     $meldingSoort = "warning";
   }
 
+  ///////////////////////////////////////
+  // ADD LATER TO ACCEPTING FRIEND REQUEST FOR BOTH USERS
+  /*
   // AWARD_GILLES SECTION
   // get how many people this person is following
   $queryIf10Followed = $dbconn->query("SELECT COUNT(UserId) AS 'Count'
   FROM table_Followers
-  WHERE UserId = '$id'
+  WHERE UserId = ?
   GROUP BY UserId");
   $data = $queryIf10Followed->fetch_array();
   // enter amount followed in a variable
   $amountFollowed = ($data['Count']);
  // IF person follows 10 users -> give award
   if ($amountFollowed == 11) {
-    giveAward($id, $award_gilles, $dbconn);
+    giveAward($_SESSION["Id"], $award_gilles);
   }
+  */
 }
 
 ?>
@@ -88,9 +78,9 @@ if (isset($_POST["submitUserToFollow"])){
     <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Voeg een speler toe</h1>
     <form action="" method="post">
-      <label>Gebruikersnaam</label>
-      <input placeholder="Gebruikersnaam" type="text" id="userToAdd" name="userToAdd">
-      <input type="submit" name="submitUserToFollow" id="submitUserToFollow" value="Voeg toe">
+      <label>Friend code of email</label>
+      <input placeholder="Friendcode" type="text" id="friendcode" name="friendcode">
+      <input type="submit" name="submitFriendInvite" id="submitFriendInvite" value="Voeg toe">
     </form>
     <p class="example">
       Vul de gebruikersnaam in van de speler die je wil toevoegen in jouw mollenjacht. <br><br>
@@ -103,6 +93,5 @@ if (isset($_POST["submitUserToFollow"])){
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>
-  <?php mysqli_close($dbconn); ?>
 </body>
 </html>
