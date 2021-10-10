@@ -2,38 +2,14 @@
 
 require_once("includes/phpdefault.php");
 
-$id = $_SESSION["Id"];
-
-$stmt = $pdo->prepare('SELECT Naam, Id
+// Get all friends from user
+$stmt = $pdo->prepare('SELECT table_Users.Id, Naam, Friendcode, Voted, Highscore
                       FROM table_Users
-                      LEFT JOIN table_Followers
-                      ON table_Users.Id = table_Followers.UserIsFollowingId
-                      WHERE table_Followers.UserId = ?');
+                      LEFT JOIN table_Friends
+                      ON table_Users.Id = table_Friends.IsFriendsWithId
+                      WHERE table_Friends.Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
-$followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// GET ALL FOLLOWED USERS THAT VOTED
-$stmt = $pdo->prepare('SELECT Id
-                      FROM table_Users
-                      WHERE Voted = 1 AND Id IN
-                      (SELECT UserIsFollowingId
-                      FROM table_Followers
-                      WHERE UserId = ?)');
-$stmt->execute([ $_SESSION["Id"] ]);
-$followedUsersVoted = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// INSERT RESULTS INTO ARRAY
-$arrayVotedUsers = array();
-foreach($followedUsersVoted as $user){
-  array_push($arrayVotedUsers, $user['Id']);
-}
-
-/*
-if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVoted)){
-  while($row = mysqli_fetch_array($executeSelectVotedUsers)){
-    array_push($arrayVotedUsers, $row['Id']);
-  }
-}*/
+$friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -54,18 +30,13 @@ if($executeSelectVotedUsers = mysqli_query($dbconn, $selectFollowedUsersThatVote
     <i class='fas fa-check-circle'></i> duid aan wie er al gestemd heeft.</p>
 
     <div class="deelnemersList">
-      <?php if(!empty($followedUsers)): ?>
-      <?php $i = 0; foreach($followedUsers as $followedUser): ?>
-      <?php if($followedUser["Id"] != $_SESSION["Id"]): ?>
-      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="profiel.php?user=<?=$followedUser['Id']?>">
+      <?php if(!empty($friends)): ?>
+      <?php $i = 0; foreach($friends as $friend): ?>
+      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="profiel.php?u=<?=$friend['Id']?>">
         <i class='fas fa-user left'></i>
-          <?=$followedUser['Naam']?>
-          <?php if (in_array($followedUser['Id'], $arrayVotedUsers)) {
-            // IF this ID has voted -> display checkmark
-            echo "<i class='fas fa-check-circle right'></i>";
-          } ?>
+          <?=$friend["Naam"]?>
+          <?php if($friend["Voted"] == 1) {echo "<i class='fas fa-check-circle right'></i>";}?>
       </a>
-      <?php endif; ?>
       <?php $i++; endforeach; ?>
       <?php else: ?>
       <h2>Je hebt nog geen spelers toegevoegd.<br>Voeg er toe door op de knop hieronder te klikken.</h2>

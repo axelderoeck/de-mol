@@ -1,6 +1,11 @@
 <?php
 $enddate = new DateTime($seizoen_eind);
 $now = new DateTime();
+
+// Get all notifications for logged in user
+$stmt = $pdo->prepare('SELECT COUNT(*) AS Amount FROM table_Notifications WHERE InvitedId = ?');
+$stmt->execute([ $_SESSION["Id"] ]);
+$amount_notifications = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <div id="mySidenav" class="sidenav">
@@ -11,7 +16,7 @@ $now = new DateTime();
   <a href="profiel.php?u=<?=$_SESSION['Id']?>"><i class="fas fa-user"></i>Profiel</a>
   <a href="deelnemers.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Mollenjagers</a>
   <a href="status.php"><i class="fas fa-chart-bar"></i>Statistieken</a>
-  <a href="notifications.php"><i class="fas fa-bell"></i>Meldingen</a>
+  <a href="notifications.php"><i class="fas fa-bell"><span><?=$amount_notifications["Amount"]?></span></i>Meldingen</a>
   <?php if ($_SESSION["Admin"] == 1): ?>
     <a href="adminpanel.php"><i class="fas fa-hammer"></i>Admin</a>
   <?php endif; ?>

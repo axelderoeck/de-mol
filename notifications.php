@@ -7,18 +7,44 @@ $stmt = $pdo->prepare('');
 $stmt->execute([  ]);
 $followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 */
-
-/*
-SELECT * FROM table_Notifications 
-LEFT JOIN table_Users 
-ON table_Notifications.InviterId = table_Users.Id
-WHERE InvitedId = 5
-*/
-
 // Get all notifications for logged in user
 $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE InvitedId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (isset($_POST["confirmInvite"])){
+  // Insert friendship to table
+  $stmt = $pdo->prepare('INSERT INTO table_Friends (Id, IsFriendsWithId) VALUES (?, ?)');
+  $stmt->execute([ $_POST["userId"], $_SESSION["Id"] ]);
+  $stmt->execute([ $_SESSION["Id"], $_POST["userId"] ]);
+  // Remove notification
+  $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND InviterId = ?');
+  $stmt->execute([ $_SESSION["Id"], $_POST["userId"] ]);
+  // Notify user
+  $foutmelding = "Je bent nu bevriend met " . $_POST["userName"] . ".";
+  $meldingSoort = "succes";
+  
+  // AWARD_GILLES SECTION
+  // Get how many friends a user has
+  $stmt = $pdo->prepare('SELECT COUNT(UserId) AS Count
+  FROM table_Friends
+  WHERE Id = ?
+  GROUP BY Id');
+
+  // User 1: If more than 10 friends -> Give award
+  $stmt->execute([ $_POST["userId"] ]);
+  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($amount_friends["Count"] > 10) {
+    giveAward($_POST["userId"], $award_gilles);
+  }
+
+  // User 2: If more than 10 friends -> Give award
+  $stmt->execute([ $_SESSION["Id"] ]);
+  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($amount_friends["Count"] > 10) {
+    giveAward($_SESSION["Id"], $award_gilles);
+  }
+}
 
 ?>
 
@@ -60,6 +86,11 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $user = $stmt->fetch(PDO::FETCH_ASSOC); 
         ?>
         <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Naam"]?></p>
+        <form action="" method="post">
+          <input type="hidden" name="userName" id="userName" value="<?=$user["Naam"]?>">
+          <input type="hidden" name="userId" id="userId" value="<?=$user["Id"]?>">
+          <input type="submit" name="confirmInvite" id="confirmInvite" value="Accepteer">
+        </form>
       <?php elseif($notification["NotificationType"] == 1): ?>
         <?php
         // Get all info from inviting group

@@ -9,7 +9,6 @@ $followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 */
 
 if (isset($_POST["submitFriendInvite"])){
-
   // Search for an existing user
   $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ? OR Email = ?');
   $stmt->execute([ $_POST["friendcode"], $_POST["friendcode"] ]);
@@ -28,24 +27,6 @@ if (isset($_POST["submitFriendInvite"])){
     $foutmelding = "Gebruiker niet gevonden.";
     $meldingSoort = "warning";
   }
-
-  ///////////////////////////////////////
-  // ADD LATER TO ACCEPTING FRIEND REQUEST FOR BOTH USERS
-  /*
-  // AWARD_GILLES SECTION
-  // get how many people this person is following
-  $queryIf10Followed = $dbconn->query("SELECT COUNT(UserId) AS 'Count'
-  FROM table_Followers
-  WHERE UserId = ?
-  GROUP BY UserId");
-  $data = $queryIf10Followed->fetch_array();
-  // enter amount followed in a variable
-  $amountFollowed = ($data['Count']);
- // IF person follows 10 users -> give award
-  if ($amountFollowed == 11) {
-    giveAward($_SESSION["Id"], $award_gilles);
-  }
-  */
 }
 
 ?>
