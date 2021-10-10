@@ -2,12 +2,6 @@
 
 require_once("includes/phpdefault.php");
 
-/*
-$stmt = $pdo->prepare('');
-$stmt->execute([  ]);
-$followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-*/
-
 if (isset($_POST["submitFriendInvite"])){
   // Search for an existing user
   $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ? OR Email = ?');
@@ -21,7 +15,7 @@ if (isset($_POST["submitFriendInvite"])){
     $invited_user = $stmt->fetch(PDO::FETCH_ASSOC);
     // Notify user
     $foutmelding = "Vriendschapsverzoek verzonden.";
-    $meldingSoort = "succes";
+    $meldingSoort = "success";
   }else{
     // Notify user
     $foutmelding = "Gebruiker niet gevonden.";

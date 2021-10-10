@@ -1,34 +1,31 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
+// try uncommenting when this doesnt work future me also for other actions
+//require_once("includes/phpdefault.php");
 
 if (isset($_POST["addEmail"])){
-  $id = $_SESSION["Id"];
-  $newEmail = $_POST["emailvalue"];
 
-  $sql = $dbconn->query("SELECT Email
-                  FROM table_Users
-                  WHERE Email = '$newEmail'");
+  // Search for user with this email
+  $stmt = $pdo->prepare('SELECT Email FROM table_Users WHERE Email = ?');
+  $stmt->execute([ $_POST["emailvalue"] ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  if($sql->num_rows > 0){
+  // Check if user exists
+  if($user){
+    // Notify user
     $meldingSoort = "warning";
     $foutmelding = "Deze email is al in gebruik.";
   }else{
-    $dbconn->query("UPDATE table_Users
-      SET Email = '$newEmail'
-      WHERE Id = '$id';
-      ");
-
-    $_SESSION["Email"] = $newEmail;
+    // Update user with new email
+    $stmt = $pdo->prepare('UPDATE table_Users SET Email = ? WHERE Id = ?');
+    $stmt->execute([ $_POST["emailvalue"], $_SESSION["Id"] ]);
+    $_SESSION["Email"] = $_POST["emailvalue"];
+    // Notify user
+    $meldingSoort = "success";
+    $foutmelding = "Email is aangepast.";
   }
 
-header('location:profiel.php');
+  header('location:profiel.php');
 }
 
 

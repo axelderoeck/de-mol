@@ -1,38 +1,34 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
-
 if (isset($_POST["changePassword"])){
-  $id = $_SESSION["Id"];
-  $gebruikersnaam = $_SESSION["gebruikersnaam"];
-  $wachtwoord = $_POST["oudWachtwoord"];
-  $newWachtwoord = $_POST["Wachtwoord"];
-  $confirmWachtwoord = $_POST["confirmWachtwoord"];
+  // Select user that initiated change password
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+  $stmt->execute([ $_SESSION["Id"] ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $sql = $dbconn->query("SELECT Id, Wachtwoord
-                  FROM table_Users
-                  WHERE Id = '$id'");
-
-  if($sql->num_rows > 0) {
-    $data = $sql->fetch_array();
-    if(password_verify($wachtwoord, $data['Wachtwoord'])){
-      if($newWachtwoord == $confirmWachtwoord){
-        $hash = password_hash($newWachtwoord, PASSWORD_BCRYPT);
-        $dbconn->query("UPDATE table_Users
-        SET Wachtwoord = '$hash'
-        WHERE Id = '$id'");
-      }
+  // Check if user exists and password is correct
+  if($user && password_verify($_POST['oudWachtwoord'], $user['Wachtwoord'])){
+    if($_POST["Wachtwoord"] == $_POST["confirmWachtwoord"]){
+      // Hash the password
+      $password = password_hash($_POST['Wachtwoord'], PASSWORD_DEFAULT);
+      // Update password from user
+      $stmt = $pdo->prepare('UPDATE table_Users SET Wachtwoord = ? WHERE Id = ?');
+      $stmt->execute([ $password, $_SESSION["Id"] ]);
+      // Notify user
+      $meldingSoort = "success";
+      $foutmelding = "Wachtwoord is aangepast.";
+    }else{
+      // Notify user
+      $meldingSoort = "warning";
+      $foutmelding = "Wachtwoorden komen niet overeen.";
     }
-    header('location:profiel.php');
+  }else{
+    // Notify user
+    $meldingSoort = "warning";
+    $foutmelding = "Verkeerd wachtwoord.";
   }
-header('location:profiel.php');
-}
 
+  header('location:profiel.php');
+}
 
 ?>
