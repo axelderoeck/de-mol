@@ -70,7 +70,7 @@ SET `Voted` = 0";
 <div class="homeScreen" id="main">
   <div class="respContainer">
 
-  <h1>Dag <?php echo $_SESSION["Naam"]; ?></h1>
+  <h1>Dag <?=$_SESSION["Gebruikersnaam"]?></h1>
 
   <div class="buttonsDiv">
     <a href="jouwmol.php"><i class="fas fa-fingerprint translucent"></i></a>

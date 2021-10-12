@@ -31,5 +31,7 @@ define('DB_NAME',$database);
 
 // Length of the random generated friendcode
 define('FRIENDCODE_LENGTH', 6);
+// Maximum amount of users in the top list
+define('LIMIT_TOPLIST', 20);
 
 ?>
