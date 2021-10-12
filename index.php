@@ -43,7 +43,6 @@ if (isset($_POST["userLogin"])){
     // User has logged in, create session data
     $_SESSION['LoggedIn'] = TRUE;
     $_SESSION["Id"] = $account['Id'];
-    $_SESSION["Naam"] = $account["Naam"];
     $_SESSION["Gebruikersnaam"] = $account["Gebruikersnaam"];
     $_SESSION["Voted"] = $account["Voted"];
     $_SESSION["Email"] = $account["Email"];
@@ -75,13 +74,13 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
     // Hash the password
     $password = password_hash($_POST['Wachtwoord'], PASSWORD_DEFAULT);
     // Account does not exist, create new account
-    $stmt = $pdo->prepare('INSERT INTO table_Users (Email, Naam, Wachtwoord) VALUES (?,?,?)');
-    $stmt->execute([ $_POST['Email'], $_POST['Naam'], $password ]);
+    $stmt = $pdo->prepare('INSERT INTO table_Users (Email, Gebruikersnaam, Wachtwoord) VALUES (?,?,?)');
+    $stmt->execute([ $_POST['Email'], $_POST['Gebruikersnaam'], $password ]);
     $account_id = $pdo->lastInsertId();
     // Automatically login the user
     $_SESSION['LoggedIn'] = TRUE;
     $_SESSION["Id"] = $account_id;
-    $_SESSION["Naam"] = $_POST["Naam"];
+    $_SESSION["Gebruikersnaam"] = $_POST["Gebruikersnaam"];
     $_SESSION["Voted"] = 0;
     $_SESSION["Email"] = $_POST["Email"];
     $_SESSION["Admin"] = 0;
@@ -167,7 +166,7 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
                 <form name="formRegister" action="" method="post">
                     <input placeholder="Email" name="Email" id="Email" type="text" required>
                     <br>
-                    <input placeholder="Voornaam" name="Naam" id="Naam" type="text" required>
+                    <input placeholder="Gebruikersnaam" name="Gebruikersnaam" id="Gebruikersnaam" type="text" required>
                     <br>
                     <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                     <br>

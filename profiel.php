@@ -31,7 +31,6 @@ if ($user_owns_account == true) {
   include "includes/account-actions/changename.php";
   include "includes/account-actions/changepassword.php";
   include "includes/account-actions/deleteaccount.php";
-  include "includes/account-actions/changefirstname.php";
   include "includes/account-actions/addemail.php";
 
   $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
@@ -142,7 +141,7 @@ if ($user_owns_account == true) {
   <?php } ?>
 
   <!-- User info -->
-  <h1><?=$account["Naam"]?></h1>
+  <h1><?=$account["Gebruikersnaam"]?></h1>
   <p class="userInfo">Placeholder: <span><?=$account["Voted"]?></span></p>
   <?php if ($user_owns_account): ?>
   <!-- Private user info -->

@@ -1,14 +1,14 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
+require_once("includes/phpdefault.php");
 
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
+/*
+$stmt = $pdo->prepare('');
+$stmt->execute([  ]);
+$followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+*/
 
-$id = $_SESSION["Id"];
+//$_SESSION["Id"];
 
 $qrySelectMol = "SELECT demol
 FROM table_Mol";

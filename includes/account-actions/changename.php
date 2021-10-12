@@ -1,33 +1,22 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
-
 if (isset($_POST["changeName"])){
-  $id = $_SESSION["Id"];
-  $newName = $_POST["nieuweNaam"];
+  // Search user with given name
+  $stmt = $pdo->prepare('SELECT Gebruikersnaam FROM table_Users WHERE Gebruikersnaam = ?');
+  $stmt->execute([ $_POST["nieuweNaam"] ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  $sql = $dbconn->query("SELECT Gebruikersnaam
-                  FROM table_Users
-                  WHERE Gebruikersnaam = '$newName'");
-
-  if($sql->num_rows > 0){
+  // User with name doesn't exist -> change name
+  if(!$user){
+    $stmt = $pdo->prepare('UPDATE table_Users SET Gebruikersnaam = ? WHERE Id = ?');
+    $stmt->execute([ $_POST["nieuweNaam"], $_SESSION["Id"] ]);
+    $_SESSION["Gebruikersnaam"] = $_POST["nieuweNaam"];
+  }else{
     $meldingSoort = "warning";
     $foutmelding = "Deze gebruikersnaam is al in gebruik.";
-  }else{
-    $dbconn->query("UPDATE table_Users
-      SET Gebruikersnaam = '$newName'
-      WHERE Id = '$id';
-      ");
-
-    $_SESSION["Gebruikersnaam"] = $newName;
   }
-header('location:profiel.php');
+
+  header('location:profiel.php');
 }
 
 

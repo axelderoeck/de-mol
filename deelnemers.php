@@ -3,7 +3,7 @@
 require_once("includes/phpdefault.php");
 
 // Get all friends from user
-$stmt = $pdo->prepare('SELECT table_Users.Id, Naam, Friendcode, Voted, Highscore
+$stmt = $pdo->prepare('SELECT table_Users.Id, Gebruikersnaam, Friendcode, Voted, Highscore
                       FROM table_Users
                       LEFT JOIN table_Friends
                       ON table_Users.Id = table_Friends.IsFriendsWithId
@@ -34,7 +34,7 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <?php $i = 0; foreach($friends as $friend): ?>
       <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="profiel.php?u=<?=$friend['Id']?>">
         <i class='fas fa-user left'></i>
-          <?=$friend["Naam"]?>
+          <?=$friend["Gebruikersnaam"]?>
           <?php if($friend["Voted"] == 1) {echo "<i class='fas fa-check-circle right'></i>";}?>
       </a>
       <?php $i++; endforeach; ?>

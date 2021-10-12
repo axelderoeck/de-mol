@@ -2,11 +2,6 @@
 
 require_once("includes/phpdefault.php");
 
-/*
-$stmt = $pdo->prepare('');
-$stmt->execute([  ]);
-$followedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-*/
 // Get all notifications for logged in user
 $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE InvitedId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
@@ -85,9 +80,9 @@ if (isset($_POST["confirmInvite"])){
         $stmt->execute([ $notification["InviterId"] ]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC); 
         ?>
-        <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Naam"]?></p>
+        <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Gebruikersnaam"]?></p>
         <form action="" method="post">
-          <input type="hidden" name="userName" id="userName" value="<?=$user["Naam"]?>">
+          <input type="hidden" name="userName" id="userName" value="<?=$user["Gebruikersnaam"]?>">
           <input type="hidden" name="userId" id="userId" value="<?=$user["Id"]?>">
           <input type="submit" name="confirmInvite" id="confirmInvite" value="Accepteer">
         </form>
