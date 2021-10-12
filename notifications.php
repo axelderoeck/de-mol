@@ -39,6 +39,8 @@ if (isset($_POST["confirmInvite"])){
   if ($amount_friends["Count"] > 10) {
     giveAward($_SESSION["Id"], $award_gilles);
   }
+
+  header('location:notifications.php');
 }
 
 ?>

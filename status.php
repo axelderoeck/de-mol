@@ -1,55 +1,43 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
+require_once("includes/phpdefault.php");
 
-$id = $_SESSION["Id"];
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
-
-$getMostVoted = "SELECT Naam, SUM(Score), Visibility
+// Get all scores
+$stmt = $pdo->prepare('SELECT Naam, SUM(Score) AS TotalScore, Visibility
 FROM table_Scores
 LEFT JOIN table_Kandidaten
 ON table_Scores.Identifier = table_Kandidaten.Identifier
 GROUP BY table_Scores.Identifier
-ORDER BY SUM(Score) DESC";
+ORDER BY SUM(Score) DESC');
+$stmt->execute();
+$scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$getMostVotedFollowers = "SELECT Naam, SUM(Score), Visibility
+// Get the total voted points (for calculating percentages)
+$stmt = $pdo->prepare('SELECT DISTINCT SUM(Score) FROM table_Scores');
+$stmt->execute();
+$total_voted_all = $stmt->fetchColumn(0);
+
+// Get friends scores
+$stmt = $pdo->prepare('SELECT Naam, SUM(Score) AS TotalScore, Visibility
 FROM table_Scores
 LEFT JOIN table_Kandidaten
 ON table_Scores.Identifier = table_Kandidaten.Identifier
-WHERE UserId IN (SELECT UserIsFollowingId FROM table_Followers WHERE UserId = '$id')
+WHERE UserId IN (SELECT IsFriendsWithId FROM table_Friends WHERE Id = ?)
 GROUP BY table_Scores.Identifier
-ORDER BY SUM(Score) DESC";
+ORDER BY SUM(Score) DESC');
+$stmt->execute([ $_SESSION["Id"] ]);
+$scores_friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$getAmountVoted = "SELECT COUNT(Id) FROM table_Users WHERE Voted = 1";
-if ($stmtGetAmountVoted = mysqli_prepare($dbconn, $getAmountVoted)){
-    mysqli_stmt_execute($stmtGetAmountVoted);
-    mysqli_stmt_bind_result($stmtGetAmountVoted, $amountVoted);
-    mysqli_stmt_store_result($stmtGetAmountVoted);
-}
-mysqli_stmt_fetch($stmtGetAmountVoted);
+// Get the total voted points from friends (for calculating percentages)
+$stmt = $pdo->prepare('SELECT DISTINCT SUM(Score) FROM table_Scores
+WHERE UserId IN (SELECT IsFriendsWithId FROM table_Friends WHERE Id = ?)');
+$stmt->execute([ $_SESSION["Id"] ]);
+$total_voted_friends = $stmt->fetchColumn(0);
 
-$getTotalVoted = "SELECT DISTINCT SUM(Score) FROM table_Scores";
-if ($stmtGetTotalVoted = mysqli_prepare($dbconn, $getTotalVoted)){
-    mysqli_stmt_execute($stmtGetTotalVoted);
-    mysqli_stmt_bind_result($stmtGetTotalVoted, $totalVoted);
-    mysqli_stmt_store_result($stmtGetTotalVoted);
-}
-mysqli_stmt_fetch($stmtGetTotalVoted);
-
-$getTotalVotedFollowers = "SELECT DISTINCT SUM(Score) FROM table_Scores
-WHERE UserId IN (SELECT UserIsFollowingId FROM table_Followers WHERE UserId = '$id')
-";
-if ($stmtGetTotalVotedFollowers = mysqli_prepare($dbconn, $getTotalVotedFollowers)){
-    mysqli_stmt_execute($stmtGetTotalVotedFollowers);
-    mysqli_stmt_bind_result($stmtGetTotalVotedFollowers, $totalVotedFollowers);
-    mysqli_stmt_store_result($stmtGetTotalVotedFollowers);
-}
-mysqli_stmt_fetch($stmtGetTotalVotedFollowers);
+// Get the amount of users that voted
+$stmt = $pdo->prepare('SELECT COUNT(Id) FROM table_Users WHERE Voted = 1');
+$stmt->execute();
+$users_voted = $stmt->fetchColumn(0);
 
 ?>
 
@@ -80,99 +68,86 @@ mysqli_stmt_fetch($stmtGetTotalVotedFollowers);
       <div class="slide-wrapper">
         <!-- STATISTICS FOLLOWED USERS -->
         <div id="swipe-1">
-          <?php
-              if($result = mysqli_query($dbconn, $getMostVotedFollowers)){
-                  if(mysqli_num_rows($result) > 0){
-                      while($row = mysqli_fetch_array($result)){
-                        if ($row['Visibility'] != 'out') {
-                          $percentCalc = round(($row['SUM(Score)'] / $totalVotedFollowers) * 100, 2);
-                          $percentScore = explode(".", $percentCalc);
-                          ?>
-                          <div class="status">
-                            <p><?php echo $row['Naam']; ?> - <span class="percent"><?php echo $percentScore[0]; ?><span class="smaller">.<?php echo $percentScore[1]; ?></span>%</span></p>
-                          </div>
-                          <div class="meter">
-                            <span style="width: <?php echo $percentScore[0]; ?>%"></span>
-                          </div>
-                          <?php
-                        }
-                      }
-                      // Free result set
-                      mysqli_free_result($result);
-                  }
+          <?php if(!empty($scores_friends)): ?>
+            <?php $i = 0; foreach($scores_friends as $score): ?>
+              <?php 
+              if ($score['Visibility'] != 'out') {
+                $percentCalc = round(($score["TotalScore"] / $total_voted_friends) * 100, 2);
+                $percentScore = explode(".", $percentCalc);
+                ?>
+                <div class="status">
+                  <p><?php echo $score['Naam']; ?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                </div>
+                <div class="meter">
+                  <span style="width: <?=$percentScore[0]; ?>%"></span>
+                </div>
+                <?php
               }
-              if($result = mysqli_query($dbconn, $getMostVotedFollowers)){
-                  if(mysqli_num_rows($result) > 0){
-                      while($row = mysqli_fetch_array($result)){
-                        if ($row['Visibility'] == 'out') {
-                          $percentCalc = round(($row['SUM(Score)'] / $totalVotedFollowers) * 100, 2);
-                          $percentScore = explode(".", $percentCalc);
-                          ?>
-                          <div class="status">
-                            <p><?php echo $row['Naam']; ?> - <span class="percent isOut2"><?php echo $percentScore[0]; ?><span class="smaller isOut2">.<?php echo $percentScore[1]; ?></span>%</span></p>
-                          </div>
-                          <div class="meter">
-                            <span class="isOut" style="width: <?php echo $percentScore[0]; ?>%"></span>
-                          </div>
-                          <?php
-                        }
-                      }
-                      // Free result set
-                      mysqli_free_result($result);
-                  }
+              ?>
+            <?php $i++; endforeach; ?>
+
+            <?php $i = 0; foreach($scores_friends as $score): ?>
+              <?php 
+              if ($score['Visibility'] == 'out') {
+                $percentCalc = round(($score["TotalScore"] / $total_voted_friends) * 100, 2);
+                $percentScore = explode(".", $percentCalc);
+                ?>
+                <div class="status">
+                  <p><?php echo $score['Naam']; ?> - <span class="percent isOut2"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                </div>
+                <div class="meter">
+                  <span style="width: <?=$percentScore[0]; ?>%"></span>
+                </div>
+                <?php
               }
-          ?>
+              ?>
+            <?php $i++; endforeach; ?>
+          <?php else: ?>
+          <h2>Je hebt nog geen vrienden toegevoegd.</h2>
+          <?php endif; ?>
         </div>
         
         <!-- STATISTICS ALL USERS -->
         <div id="swipe-2">
-          <?php
-              if($result = mysqli_query($dbconn, $getMostVoted)){
-                  if(mysqli_num_rows($result) > 0){
-                      while($row = mysqli_fetch_array($result)){
-                        if ($row['Visibility'] != 'out') {
-                          $percentCalc = round(($row['SUM(Score)'] / $totalVoted) * 100, 2);
-                          $percentScore = explode(".", $percentCalc);
-                          ?>
-                          <div class="status">
-                            <p><?php echo $row['Naam']; ?> - <span class="percent"><?php echo $percentScore[0]; ?><span class="smaller">.<?php echo $percentScore[1]; ?></span>%</span></p>
-                          </div>
-                          <div class="meter">
-                            <span style="width: <?php echo $percentScore[0]; ?>%"></span>
-                          </div>
-                          <?php
-                        }
-                      }
-                      // Free result set
-                      mysqli_free_result($result);
-                  }
+
+        <?php $i = 0; foreach($scores_all as $score): ?>
+              <?php 
+              if ($score['Visibility'] != 'out') {
+                $percentCalc = round(($score["TotalScore"] / $total_voted_all) * 100, 2);
+                $percentScore = explode(".", $percentCalc);
+                ?>
+                <div class="status">
+                  <p><?php echo $score['Naam']; ?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                </div>
+                <div class="meter">
+                  <span style="width: <?=$percentScore[0]; ?>%"></span>
+                </div>
+                <?php
               }
-              if($result = mysqli_query($dbconn, $getMostVoted)){
-                  if(mysqli_num_rows($result) > 0){
-                      while($row = mysqli_fetch_array($result)){
-                        if ($row['Visibility'] == 'out') {
-                          $percentCalc = round(($row['SUM(Score)'] / $totalVoted) * 100, 2);
-                          $percentScore = explode(".", $percentCalc);
-                          ?>
-                          <div class="status">
-                            <p><?php echo $row['Naam']; ?> - <span class="percent isOut2"><?php echo $percentScore[0]; ?><span class="smaller isOut2">.<?php echo $percentScore[1]; ?></span>%</span></p>
-                          </div>
-                          <div class="meter">
-                            <span class="isOut" style="width: <?php echo $percentScore[0]; ?>%"></span>
-                          </div>
-                          <?php
-                        }
-                      }
-                      // Free result set
-                      mysqli_free_result($result);
-                  }
+              ?>
+            <?php $i++; endforeach; ?>
+            
+            <?php $i = 0; foreach($scores_all as $score): ?>
+              <?php 
+              if ($score['Visibility'] == 'out') {
+                $percentCalc = round(($score['SUM(Score)'] / $total_voted_all) * 100, 2);
+                $percentScore = explode(".", $percentCalc);
+                ?>
+                <div class="status">
+                  <p><?php echo $score['Naam']; ?> - <span class="percent isOut2"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                </div>
+                <div class="meter">
+                  <span style="width: <?=$percentScore[0]; ?>%"></span>
+                </div>
+                <?php
               }
-          ?>
+              ?>
+            <?php $i++; endforeach; ?>
         </div>
 
       </div>
     </div>
-      <p class="example"><?php echo $amountVoted; ?> <?php if ($amountVoted == 1) {echo "mollenjager heeft";}else{echo "mollenjagers hebben";} ?>  gestemd deze week.</p>
+      <p class="example"><?=$users_voted?> <?php if ($users_voted == 1) {echo "mollenjager heeft";}else{echo "mollenjagers hebben";} ?>  gestemd deze week.</p>
 
     </div>
   </div>
@@ -182,6 +157,5 @@ mysqli_stmt_fetch($stmtGetTotalVotedFollowers);
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
   <script src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js'></script>
 
-  <?php mysqli_close($dbconn); ?>
 </body>
 </html>
