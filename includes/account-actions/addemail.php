@@ -1,10 +1,6 @@
 <?php
 
-// try uncommenting when this doesnt work future me also for other actions
-//require_once("includes/phpdefault.php");
-
 if (isset($_POST["addEmail"])){
-
   // Search for user with this email
   $stmt = $pdo->prepare('SELECT Email FROM table_Users WHERE Email = ?');
   $stmt->execute([ $_POST["emailvalue"] ]);
@@ -25,7 +21,7 @@ if (isset($_POST["addEmail"])){
     $foutmelding = "Email is aangepast.";
   }
 
-  header('location:profiel.php');
+  header('location:profiel.php?u=' . $_SESSION["Id"]);
 }
 
 
