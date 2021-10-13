@@ -1,55 +1,43 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-include "includes/settings.php";
-include "includes/functions.php";
+require_once("includes/phpdefault.php");
 
 if (isset($_POST["sendMail"])){
-  // get email from form
-  $email = $_POST["email"];
 
   // get account where email is attached to
-  $queryGetAccountEmail = $dbconn->query("SELECT Id, Gebruikersnaam
-                  FROM table_Users
-                  WHERE Email = '$email'");
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Email = ?');
+  $stmt->execute([ $_POST["email"] ]);
+  $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // IF user found
-  if($queryGetAccountEmail->num_rows > 0) {
-    // set values
-    $data = $queryGetAccountEmail->fetch_array();
-    $id = ($data['Id']);
-    $gebruikersnaam = ($data['Gebruikersnaam']);
+  // Account exists -> create key and send mail
+  if($account){
+    // Set a random string as security measure
+    $random = generateRandomString(15);
+    $username = $account["Gebruikersnaam"];
+    $id = $account["Id"];
+    $email = $account["Email"];
 
-    // set a random string as security measure
-    $randomGeneratedString = generateRandomString(15);
+    // Link random string with user
+    $stmt = $pdo->prepare('UPDATE table_Users SET UserKey = ? WHERE Id = ?');
+    $stmt->execute([ $random, $id ]);
 
-    // set a random unique key to the user
-    $dbconn->query("UPDATE table_Users
-    SET UserKey = '$randomGeneratedString'
-    WHERE Id = $id");
-
-    // set mail values
+    // Set mail values
     $subject = "De Mol: Wachtwoord Reset";
     $message = "Dag (vergeetachtige) mollenjager,\n\n
-Jouw gebruikersnaam (moest je dat ook vergeten zijn) is: $gebruikersnaam\n\n
-Klik op de onderstaande link om je wachtwoord opnieuw in te stellen.\n
-https://aksol.be/demol/reset_password.php?u=$id&s=$randomGeneratedString\n\n
-Veel succes met je opdracht en tot zo meteen.\n
-*Heb jij dit niet aangevraagd? Geen probleem, dan kan je dit bericht gewoon negeren.";
+    Jouw gebruikersnaam (moest je dat ook vergeten zijn) is: $username\n\n
+    Klik op de onderstaande link om je wachtwoord opnieuw in te stellen.\n
+    https://aksol.be/demol/reset_password.php?u=$id&s=$random\n\n
+    *Heb jij dit niet aangevraagd? Geen probleem, dan kan je dit bericht gewoon negeren.";
     $headers = "From: mail@aksol.be";
 
-    // send the mail
+    // Send the mail
     mail($email,$subject,$message,$headers);
 
-    // reset but doesnt work yet
-    //$dbconn->query("UPDATE table_Users
-    //SET UserKey = ''
-    //WHERE Id = '$id'");
+    // Notify user
+    $foutmelding = "Email is verzonden";
+    $meldingSoort = "success";
   }else{
-    // user is not found
+    // Notify user
     $foutmelding = "Email is niet in gebruik";
     $meldingSoort = "warning";
   }
@@ -96,6 +84,5 @@ Veel succes met je opdracht en tot zo meteen.\n
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>
-  <?php mysqli_close($dbconn); ?>
 </body>
 </html>

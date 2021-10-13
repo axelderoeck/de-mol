@@ -1,35 +1,37 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-include "includes/settings.php";
-include "includes/functions.php";
+require_once("includes/phpdefault.php");
 
 // get id and key from url
 $url_userKey = $_GET["s"];
 $url_userId = $_GET["u"];
 
 // get userkey from database
-$queryGetUserKey = $dbconn->query("SELECT UserKey
-                FROM table_Users
-                WHERE Id = '$url_userId'");
-$data = $queryGetUserKey->fetch_array();
-$userKey = ($data['UserKey']);
+$stmt = $pdo->prepare('SELECT UserKey FROM table_Users WHERE Id = ?');
+$stmt->execute([ $_GET["u"] ]);
+$key = $stmt->fetchColumn(0);
 
 // if form submit
 if (isset($_POST["changePassword"])){
-  //get form values
-  $newWachtwoord = $_POST["Wachtwoord"];
-  $confirmWachtwoord = $_POST["confirmWachtwoord"];
 
-  //if passwords match set as new password
-  if($newWachtwoord == $confirmWachtwoord){
-    $hash = password_hash($newWachtwoord, PASSWORD_BCRYPT);
-    $dbconn->query("UPDATE table_Users
-    SET Wachtwoord = '$hash', UserKey = ''
-    WHERE Id = '$url_userId'");
+  // Check if passwords match
+  if($_POST["Wachtwoord"] == $_POST["confirmWachtwoord"]){
+    // Hash the password
+    $password = password_hash($_POST["Wachtwoord"], PASSWORD_DEFAULT);
+    // Update password from user
+    $stmt = $pdo->prepare('UPDATE table_Users SET Wachtwoord = ? WHERE Id = ?');
+    $stmt->execute([ $password, $_GET["u"] ]);
+    // Notify user
+    $meldingSoort = "success";
+    $foutmelding = "Wachtwoord is aangepast.";
+
+    // Reset key
+    $stmt = $pdo->prepare('UPDATE table_Users SET UserKey = "" WHERE Id = ?');
+    $stmt->execute([ $_GET["u"] ]);
+  }else{
+    // Notify user
+    $meldingSoort = "warning";
+    $foutmelding = "Wachtwoorden komen niet overeen.";
   }
 
   header('location:index.php');
@@ -50,8 +52,8 @@ if (isset($_POST["changePassword"])){
 
       <?php
       // check if userkey is correct
-        if ($url_userId != null && $url_userKey != null) {
-          if ($url_userKey == $userKey) { ?>
+        if ($_GET["u"] != null && $_GET["s"] != null) {
+          if ($_GET["s"] == $key) { ?>
             <form name="formChangePassword" action="" method="post">
                 <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
                 <br>
@@ -70,6 +72,5 @@ if (isset($_POST["changePassword"])){
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>
-  <?php mysqli_close($dbconn); ?>
 </body>
 </html>
