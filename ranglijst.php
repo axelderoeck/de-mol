@@ -96,7 +96,5 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- JavaScript -->
     <script type="text/javascript" src="js/scripts.js" defer></script>
-
-    <?php mysqli_close($dbconn); ?>
 </body>
 </html>

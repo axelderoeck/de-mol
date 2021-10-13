@@ -1,19 +1,8 @@
 <?php
 
-//require_once("includes/dbconn.inc.php");
 require_once("includes/phpdefault.php");
-//session_start();
-
-//include "includes/settings.php";
 
 $votetime = str_split($stemmen_uur, 2);
-
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
-
-$setVotesQuery = "UPDATE `table_Users`
-SET `Voted` = 0";
 
 ?>
 
@@ -45,7 +34,9 @@ SET `Voted` = 0";
         stemKnop("uit");
         infoTekst("Vanaf <?php echo $votetime[0] . ":" . $votetime[1]; ?>u kan je <span>stemmen</span>.");
         <?php
-        mysqli_query($dbconn, $setVotesQuery);
+        // Reset has voted
+        $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0');
+        $stmt->execute();
       }else{
         if($_SESSION["Voted"] == 0) {
           ?>
@@ -85,8 +76,8 @@ SET `Voted` = 0";
   <h2 id="infoTekst"></h2>
 
   <?php if ($bericht == true) { ?>
-    <div class="bericht <?php echo $melding->soort; ?>">
-      <p><?php echo $melding->tekst; ?></p>
+    <div class="bericht <?=$melding->soort; ?>">
+      <p><?=$melding->tekst; ?></p>
     </div>
     <br><br>
   <?php } ?>
@@ -101,6 +92,5 @@ SET `Voted` = 0";
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
 
-<?php mysqli_close($dbconn); ?>
 </body>
 </html>

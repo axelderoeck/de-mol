@@ -1,16 +1,9 @@
 <?php
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-include "includes/settings.php";
+require_once("includes/phpdefault.php");
 
 $votetime = str_split($stemmen_uur, 2);
 
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
 ?>
 
 <!DOCTYPE html>
@@ -62,6 +55,5 @@ if ($_SESSION["Id"] == NULL) {
   </div>
 
   <script type="text/javascript" src="js/scripts.js"></script>
-  <?php mysqli_close($dbconn); ?>
 </body>
 </html>

@@ -2,10 +2,6 @@
 
 require_once("includes/phpdefault.php");
 
-if ($_SESSION["Id"] == NULL) {
-  header('location:index.php');
-}
-
 ?>
 
 <!DOCTYPE html>
