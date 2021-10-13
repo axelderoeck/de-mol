@@ -32,7 +32,7 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="deelnemersList">
       <?php if(!empty($friends)): ?>
       <?php $i = 0; foreach($friends as $friend): ?>
-      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="profiel.php?u=<?=$friend['Id']?>">
+      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="profile.php?u=<?=$friend['Id']?>">
         <i class='fas fa-user left'></i>
           <?=$friend["Gebruikersnaam"]?>
           <?php if($friend["Voted"] == 1) {echo "<i class='fas fa-check-circle right'></i>";}?>
@@ -44,7 +44,7 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <hr>
-    <button onclick="location.href = 'followUser.php';" class="styledBtn" type="submit" name="button">Voeg spelers toe</button>
+    <button onclick="location.href = 'adduser.php';" class="styledBtn" type="submit" name="button">Voeg spelers toe</button>
 </div>
   </div>
 

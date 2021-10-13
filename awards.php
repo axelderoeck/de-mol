@@ -33,7 +33,7 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <div id="main">
     <div class="respContainer">
-    <a href="profiel.php?user=<?=$_SESSION["Id"] ?>"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+    <a href="profile.php?u=<?=$_SESSION["Id"] ?>"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <div class="awardslist">
       <?php $delay = 0; /* Animation delay value */ ?>
 
@@ -59,7 +59,7 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <p style="color: #707070;"><?=$award['Beschrijving']; ?></p>
             <?php
               // if this record is the secret award -> set hidden code
-              if ($award['Secret'] == 1) {echo "<p class='hiddenField'>" . $award_secret_mol_randomcode . "</p>";}
+              if ($award['Secret'] == 1) {echo "<p class='hiddenField'>" . AWARD_SECRET_MOL_CODE . "</p>";}
             ?>
             <i style="color: #707070;" class="fas fa-lock"></i>
           </div>

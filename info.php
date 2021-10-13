@@ -2,7 +2,7 @@
 
 require_once("includes/phpdefault.php");
 
-$votetime = str_split($stemmen_uur, 2);
+$votetime = str_split(VOTE_HOUR, 2);
 
 ?>
 

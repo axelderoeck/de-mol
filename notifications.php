@@ -26,18 +26,18 @@ if (isset($_POST["confirmInvite"])){
   WHERE Id = ?
   GROUP BY Id');
 
-  // User 1: If more than 10 friends -> Give award
+  // User 1: If 10 friends -> Give award
   $stmt->execute([ $_POST["userId"] ]);
   $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($amount_friends["Count"] > 10) {
-    giveAward($_POST["userId"], $award_gilles);
+  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
+    giveAward($_POST["userId"], AWARD_GILLES);
   }
 
-  // User 2: If more than 10 friends -> Give award
+  // User 2: If 10 friends -> Give award
   $stmt->execute([ $_SESSION["Id"] ]);
   $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($amount_friends["Count"] > 10) {
-    giveAward($_SESSION["Id"], $award_gilles);
+  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
+    giveAward($_SESSION["Id"], AWARD_GILLES);
   }
 
   header('location:notifications.php');
@@ -70,7 +70,7 @@ if (isset($_POST["confirmInvite"])){
   <div id="main">
     <div class="respContainer">
 
-    <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+    <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Meldingen</h1>
 
     <?php if(!empty($notifications)): ?>

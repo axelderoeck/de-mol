@@ -28,10 +28,10 @@ $stmt->execute([ $user_id ]);
 $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if ($user_owns_account == true) {
-  include "includes/account-actions/changename.php";
-  include "includes/account-actions/changepassword.php";
-  include "includes/account-actions/deleteaccount.php";
-  include "includes/account-actions/addemail.php";
+  include "includes/scripts/changename.php";
+  include "includes/scripts/changepassword.php";
+  include "includes/scripts/deleteaccount.php";
+  include "includes/scripts/changemail.php";
 
   $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
 } elseif ($user_owns_account == false){
@@ -42,7 +42,7 @@ if ($user_owns_account == true) {
     $stmt = $pdo->prepare('DELETE FROM table_Followers WHERE UserId = ? AND UserIsFollowingId = ?');
     $stmt->execute([ $session_id, $user_id ]);
 
-    header('location:deelnemers.php');
+    header('location:friends.php');
   }
 
 }
@@ -75,7 +75,7 @@ if ($user_owns_account == true) {
   <div class="respContainer">
 
   <?php if ($user_owns_account == false) { ?>
-  <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+  <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
   <?php } ?>
 
   <?php if ($user_owns_account == true) { ?>
@@ -156,7 +156,7 @@ if ($user_owns_account == true) {
   <?php } ?>
   <hr>
 
-  <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awardslist.php'>Overzicht</a>"; } ?></h3>
+  <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awards.php'>Overzicht</a>"; } ?></h3>
   <div class="awards">
     <?php if(!empty($awards)): ?>
     <?php $i = 0; foreach($awards as $award): ?>

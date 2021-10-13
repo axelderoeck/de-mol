@@ -50,7 +50,7 @@ if (isset($_POST["submitFriendInvite"])){
   <div id="main">
     <div class="respContainer">
 
-    <a href="deelnemers.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+    <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Voeg een speler toe</h1>
     <form action="" method="post">
       <label>Friend code of email</label>

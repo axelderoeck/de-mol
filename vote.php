@@ -3,8 +3,8 @@
 require_once("includes/phpdefault.php");
 
 // Check if the time to vote is correct
-if(date('D') == "$stemmen_dag") {
-  if (date('Hi') < "$stemmen_uur") {
+if(date('D') == VOTE_DAY) {
+  if (date('Hi') < VOTE_HOUR) {
     header('location:home.php');
   }
 }
@@ -18,12 +18,12 @@ $stmt->execute();
 $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST["formSubmitVote"])){
-  for ($i=1; $i <= $aantal_kandidaten; $i++) {
+  for ($i=1; $i <= CANDIDATES_AMOUNT; $i++) {
     $score = $_POST["person$i"];
 
     // Check if user matches criteria for All-In award
-    if ($score == 10) {
-      giveAward($_SESSION["Id"], $award_allin);
+    if ($score == AWARD_ALL_IN_AMOUNT) {
+      giveAward($_SESSION["Id"], AWARD_ALL_IN);
     }
 
     // Update the scores
@@ -43,14 +43,14 @@ if (isset($_POST["formSubmitVote"])){
   // AWARD SECTION
     // Check if conditions for TUNNELVISIE match
     $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ? AND Score > ?');
-    $stmt->execute([ $_SESSION["Id"], $award_tunnelvisie_amount ]);
+    $stmt->execute([ $_SESSION["Id"], AWARD_TUNNELVISIE_AMOUNT ]);
     $score_over_limit = $stmt->fetch(PDO::FETCH_ASSOC);
     // Give TUNNELVISIE award 
     if(!empty($score_over_limit)){
-      giveAward($_SESSION["Id"], $award_tunnelvisie);
+      giveAward($_SESSION["Id"], AWARD_TUNNELVISIE);
     }
     // give DEELNEMER award to user
-    giveAward($_SESSION["Id"], $award_deelnemer);
+    giveAward($_SESSION["Id"], AWARD_DEELNEMER);
   header('location:home.php');
 
 }
@@ -60,7 +60,7 @@ if (isset($_POST["formSubmitVote"])){
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <link rel="stylesheet" href="css/stemmen<?php echo "V" . $styleversion; ?>.css">
+  <link rel="stylesheet" href="css/stemmen<?php echo "V" . STYLE_VERSION; ?>.css">
   <?php include "includes/headinfo.php"; ?>
   <script>
     window.addEventListener('load', function() {

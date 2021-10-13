@@ -3,9 +3,7 @@
 ob_start();
 // Initialize a new session
 session_start();
-// these 2 need to be merged
-// Include the settings file
-include "includes/settings.php";
+
 // Include the configuration file
 include 'includes/config.php';
 // Include functions
@@ -159,7 +157,7 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
                     <input type="checkbox" name="rememberme" value="">
                     <label>Onthoud Mij</label>                
                 </form>
-                <a href="reset_askemail.php">wachtwoord vergeten?</a>
+                <a href="forgotpassword.php">wachtwoord vergeten?</a>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
             <div id="reg">

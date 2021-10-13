@@ -21,7 +21,7 @@ if (isset($_POST["addEmail"])){
     $foutmelding = "Email is aangepast.";
   }
 
-  header('location:profiel.php?u=' . $_SESSION["Id"]);
+  header('location:profile.php?u=' . $_SESSION["Id"]);
 }
 
 

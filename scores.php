@@ -56,7 +56,7 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div id="swipe-1">
             <?php if(!empty($scores_friends)): ?>
               <?php $i = 1; foreach($scores_friends as $score): ?>
-                <a href="profiel.php?u=<?=$score['Id']?>">
+                <a href="profile.php?u=<?=$score['Id']?>">
                   <div style="animation-delay: <?=$i/4; ?>s;" class="rangItem <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
                     <p>
                       <span class="rangItemScore"><?=$score['Score']?></span>
@@ -73,7 +73,7 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div id="swipe-2">
             <?php if(!empty($scores_all)): ?>
               <?php $i = 1; foreach($scores_all as $score): ?>
-                <a href="profiel.php?u=<?=$score['Id']?>">
+                <a href="profile.php?u=<?=$score['Id']?>">
                   <div style="animation-delay: <?=$i/4; ?>s;" class="rangItem <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
                     <p>
                       <span class="rangItemScore"><?=$score['Score']?></span>

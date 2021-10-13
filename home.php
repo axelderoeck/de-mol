@@ -2,7 +2,7 @@
 
 require_once("includes/phpdefault.php");
 
-$votetime = str_split($stemmen_uur, 2);
+$votetime = str_split(VOTE_HOUR, 2);
 
 ?>
 
@@ -15,8 +15,8 @@ $votetime = str_split($stemmen_uur, 2);
   <script>
     window.addEventListener('load', function() {
       <?php
-      $begindate = new DateTime($seizoen_start);
-      $enddate = new DateTime($seizoen_eind);
+      $begindate = new DateTime(SEASON_START);
+      $enddate = new DateTime(SEASON_END);
       $now = new DateTime();
 
       if($begindate > $now) {
@@ -27,9 +27,9 @@ $votetime = str_split($stemmen_uur, 2);
       }elseif($enddate < $now) {
         ?>
         stemKnop("uit");
-        infoTekst("Het <span>seizoen</span> is voorbij. <br> <button type='submit' onclick='location.href = `ranglijst.php`;'>Bekijk de scores</button>");
+        infoTekst("Het <span>seizoen</span> is voorbij. <br> <button type='submit' onclick='location.href = `scores.php`;'>Bekijk de scores</button>");
         <?php
-      }elseif(date('D') == "$stemmen_dag" && date('Hi') < "$stemmen_uur") {
+      }elseif(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
         ?>
         stemKnop("uit");
         infoTekst("Vanaf <?php echo $votetime[0] . ":" . $votetime[1]; ?>u kan je <span>stemmen</span>.");
@@ -64,23 +64,16 @@ $votetime = str_split($stemmen_uur, 2);
   <h1>Dag <?=$_SESSION["Gebruikersnaam"]?></h1>
 
   <div class="buttonsDiv">
-    <a href="jouwmol.php"><i class="fas fa-fingerprint translucent"></i></a>
-    <a href="uitleg.php"><i class="fas fa-question-circle translucent"></i></a>
-    <a href="deelnemers.php"><i class="fas fa-users translucent"></i></a>
+    <a href="molboek.php"><i class="fas fa-fingerprint translucent"></i></a>
+    <a href="info.php"><i class="fas fa-question-circle translucent"></i></a>
+    <a href="friends.php"><i class="fas fa-users translucent"></i></a>
   </div>
 
   <div class="submitDiv">
-    <button onclick="location.href = 'stemmen.php';" id="stemKnop" class="styledBtn" type="submit">Stemmen</button>
+    <button onclick="location.href = 'vote.php';" id="stemKnop" class="styledBtn" type="submit">Stemmen</button>
   </div>
 
   <h2 id="infoTekst"></h2>
-
-  <?php if ($bericht == true) { ?>
-    <div class="bericht <?=$melding->soort; ?>">
-      <p><?=$melding->tekst; ?></p>
-    </div>
-    <br><br>
-  <?php } ?>
 
   <p class="hiddenField">.- -. - .-. --- .--. --- -. -.-- -- .. .</p>
 

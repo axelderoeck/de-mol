@@ -16,7 +16,7 @@ if (isset($_POST["changeName"])){
     $foutmelding = "Deze gebruikersnaam is al in gebruik.";
   }
 
-  header('location:profiel.php');
+  header('location:profile.php?u=' . $_SESSION["Id"]);
 }
 
 

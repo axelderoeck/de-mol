@@ -4,9 +4,7 @@
 // Initialize a new session
 ob_start();
 session_start();
-// these 2 need to be merged
-// Include the settings file
-include "includes/settings.php";
+
 // Include the configuration file
 include 'includes/config.php';
 // Include functions

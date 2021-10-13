@@ -28,7 +28,7 @@ if (isset($_POST["changePassword"])){
     $foutmelding = "Verkeerd wachtwoord.";
   }
 
-  header('location:profiel.php');
+  header('location:profile.php?u=' . $_SESSION["Id"]);
 }
 
 ?>

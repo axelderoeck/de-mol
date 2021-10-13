@@ -26,7 +26,7 @@ if (isset($_POST["sendMail"])){
     $message = "Dag (vergeetachtige) mollenjager,\n\n
     Jouw gebruikersnaam (moest je dat ook vergeten zijn) is: $username\n\n
     Klik op de onderstaande link om je wachtwoord opnieuw in te stellen.\n
-    https://aksol.be/demol/reset_password.php?u=$id&s=$random\n\n
+    https://aksol.be/demol/resetpassword.php?u=$id&s=$random\n\n
     *Heb jij dit niet aangevraagd? Geen probleem, dan kan je dit bericht gewoon negeren.";
     $headers = "From: mail@aksol.be";
 
