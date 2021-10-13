@@ -12,11 +12,11 @@ function pdo_connect_mysql() {
 }
 
 function giveAward($accountId, $awardId){
+  // DB connection
   $pdo = pdo_connect_mysql();
+
   // Check if user has this specific award
-  $stmt = $pdo->prepare('SELECT *
-  FROM table_UserAwards
-  WHERE UserId = ? AND AwardId = ?');
+  $stmt = $pdo->prepare('SELECT * FROM table_UserAwards WHERE UserId = ? AND AwardId = ?');
   $stmt->execute([ $accountId, $awardId ]);
   $has_award = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -25,17 +25,49 @@ function giveAward($accountId, $awardId){
     $stmt = $pdo->prepare('INSERT INTO table_UserAwards (UserId, AwardId)
     VALUES (?, ?)');
     $stmt->execute([ $accountId, $awardId ]);
-    $given_award = $stmt->fetch(PDO::FETCH_ASSOC);
   }
 }
 
 function deleteAward($accountId, $awardId){
+  // DB connection
   $pdo = pdo_connect_mysql();
+
   // Delete the award from user
-  $stmt = $pdo->prepare('DELETE FROM table_UserAwards
-  WHERE UserId = ? AND AwardId = ?');
+  $stmt = $pdo->prepare('DELETE FROM table_UserAwards WHERE UserId = ? AND AwardId = ?');
   $stmt->execute([ $accountId, $awardId ]);
-  $deleted_award = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function changePassword($id, $old, $new, $confirm){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Select user that initiated change password
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+  $stmt->execute([ $id ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Check if user exists and password is correct
+  if($user && password_verify($old, $user['Wachtwoord'])){
+    if($new == $confirm){
+      // Hash the password
+      $password = password_hash($new, PASSWORD_DEFAULT);
+      // Update password from user
+      $stmt = $pdo->prepare('UPDATE table_Users SET Wachtwoord = ? WHERE Id = ?');
+      $stmt->execute([ $password, $id ]);
+      // Notify user
+      $meldingSoort = "success";
+      $foutmelding = "Wachtwoord is aangepast.";
+    }else{
+      // Notify user
+      $meldingSoort = "warning";
+      $foutmelding = "Wachtwoorden komen niet overeen.";
+    }
+  }else{
+    // Notify user
+    $meldingSoort = "warning";
+    $foutmelding = "Verkeerd wachtwoord.";
+  }
+
 }
 
 function generateRandomString($length) {
