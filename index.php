@@ -23,7 +23,7 @@ if ($_SESSION["Id"] != NULL) {
 if ($_GET["logout"] == 1) { 
   $_SESSION['LoggedIn'] = FALSE;
   $_SESSION["Id"] = NULL;
-  $_SESSION["Naam"] = "";
+  $_SESSION["Username"] = "";
   $_SESSION["Voted"] = 0;
   $_SESSION["Admin"] = 0;
   session_destroy();
@@ -33,15 +33,15 @@ if ($_GET["logout"] == 1) {
 // User pressed login button
 if (isset($_POST["userLogin"])){
   // Check if the account exists
-  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Email = ? OR Gebruikersnaam = ?');
-  $stmt->execute([ $_POST['Email'], $_POST['Email'] ]);
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Email = ? OR Username = ?');
+  $stmt->execute([ $_POST['email'], $_POST['email'] ]);
   $account = $stmt->fetch(PDO::FETCH_ASSOC);
   // If account exists verify password
-  if ($account && password_verify($_POST['Wachtwoord'], $account['Wachtwoord'])) {
+  if ($account && password_verify($_POST['password'], $account['Password'])) {
     // User has logged in, create session data
     $_SESSION['LoggedIn'] = TRUE;
     $_SESSION["Id"] = $account['Id'];
-    $_SESSION["Gebruikersnaam"] = $account["Gebruikersnaam"];
+    $_SESSION["Username"] = $account["Username"];
     $_SESSION["Voted"] = $account["Voted"];
     $_SESSION["Email"] = $account["Email"];
     $_SESSION["Admin"] = $account["Admin"];
@@ -54,33 +54,33 @@ if (isset($_POST["userLogin"])){
 }
 
 // User pressed register button
-if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST['confirmWachtwoord']) && filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)){
+if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['confirmPassword']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
   // Check if the account exists
   $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Email = ?');
-  $stmt->execute([ $_POST['Email'] ]);
+  $stmt->execute([ $_POST['email'] ]);
   $account = $stmt->fetch(PDO::FETCH_ASSOC);
   if ($account) {
     // Account already exists!
     $register_error = "tekst";
-  } else if ($_POST['confirmWachtwoord'] != $_POST['Wachtwoord']) {
+  } else if ($_POST['confirmPassword'] != $_POST['password']) {
     // Passwords do not match
     $register_error = "tekst";
-  } else if (strlen($_POST['Wachtwoord']) > 20 || strlen($_POST['Wachtwoord']) < 3) {
+  } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 3) {
     // Password must be between 3 and 20 characters long.
     $register_error = "tekst";
   } else {
     // Hash the password
-    $password = password_hash($_POST['Wachtwoord'], PASSWORD_DEFAULT);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     // Account does not exist, create new account
-    $stmt = $pdo->prepare('INSERT INTO table_Users (Email, Gebruikersnaam, Wachtwoord) VALUES (?,?,?)');
-    $stmt->execute([ $_POST['Email'], $_POST['Gebruikersnaam'], $password ]);
+    $stmt = $pdo->prepare('INSERT INTO table_Users (Email, Username, Password) VALUES (?,?,?)');
+    $stmt->execute([ $_POST['email'], $_POST['username'], $password ]);
     $account_id = $pdo->lastInsertId();
     // Automatically login the user
     $_SESSION['LoggedIn'] = TRUE;
     $_SESSION["Id"] = $account_id;
-    $_SESSION["Gebruikersnaam"] = $_POST["Gebruikersnaam"];
+    $_SESSION["Username"] = $_POST["username"];
     $_SESSION["Voted"] = 0;
-    $_SESSION["Email"] = $_POST["Email"];
+    $_SESSION["Email"] = $_POST["email"];
     $_SESSION["Admin"] = 0;
     // Add 0 points to every candidate as new account's score
     $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, Identifier, Score) VALUES (?,?,?)');
@@ -147,14 +147,14 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
             <div id="log">
                 <form name="formLogin" action="" method="post">
                     <label>Gebruikersnaam of Email</label>
-                    <input placeholder="Gebruikersnaam of Email" name="Email" id="Email" type="text" required>
+                    <input placeholder="Gebruikersnaam of Email" name="email" id="email" type="text" required>
                     <br>
                     <label>Wachtwoord</label>
-                    <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
+                    <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
                     <br>
-                    <input type="checkbox" name="rememberme" value="">
+                    <input type="checkbox" name="remember" id="remember" value="">
                     <label>Onthoud Mij</label>                
                 </form>
                 <a href="forgotpassword.php">wachtwoord vergeten?</a>
@@ -162,13 +162,13 @@ if (isset($_POST["userRegister"], $_POST['Email'], $_POST['Wachtwoord'], $_POST[
             </div>
             <div id="reg">
                 <form name="formRegister" action="" method="post">
-                    <input placeholder="Email" name="Email" id="Email" type="text" required>
+                    <input placeholder="Email" name="email" id="email" type="text" required>
                     <br>
-                    <input placeholder="Gebruikersnaam" name="Gebruikersnaam" id="Gebruikersnaam" type="text" required>
+                    <input placeholder="Gebruikersnaam" name="username" id="username" type="text" required>
                     <br>
-                    <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
+                    <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
                     <br>
-                    <input placeholder="Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
+                    <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
                     <br>
                     <input type="submit" name="userRegister" id="userRegister" value="Register">
                     <br>

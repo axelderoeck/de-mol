@@ -15,11 +15,11 @@ $key = $stmt->fetchColumn(0);
 if (isset($_POST["changePassword"])){
 
   // Check if passwords match
-  if($_POST["Wachtwoord"] == $_POST["confirmWachtwoord"]){
+  if($_POST["password"] == $_POST["confirmPassword"]){
     // Hash the password
-    $password = password_hash($_POST["Wachtwoord"], PASSWORD_DEFAULT);
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
     // Update password from user
-    $stmt = $pdo->prepare('UPDATE table_Users SET Wachtwoord = ? WHERE Id = ?');
+    $stmt = $pdo->prepare('UPDATE table_Users SET Password = ? WHERE Id = ?');
     $stmt->execute([ $password, $_GET["u"] ]);
     // Notify user
     $meldingSoort = "success";
@@ -55,9 +55,9 @@ if (isset($_POST["changePassword"])){
         if ($_GET["u"] != null && $_GET["s"] != null) {
           if ($_GET["s"] == $key) { ?>
             <form name="formChangePassword" action="" method="post">
-                <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
+                <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
                 <br>
-                <input placeholder="Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
+                <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
                 <br>
                 <input type="submit" name="changePassword" id="changePassword" value="Verander">
             </form> <?php

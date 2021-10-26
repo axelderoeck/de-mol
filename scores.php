@@ -2,30 +2,30 @@
 
 require_once("includes/phpdefault.php");
 
-$stmt = $pdo->prepare('SELECT table_Users.Gebruikersnaam, table_Scores.Score, table_Users.Id
+$stmt = $pdo->prepare('SELECT table_Users.Username, table_Scores.Score, table_Users.Id
 FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
-RIGHT JOIN table_Kandidaten
-ON table_Kandidaten.Identifier = table_Scores.Identifier
-WHERE table_Kandidaten.Mol = 1
+RIGHT JOIN table_Candidates
+ON table_Candidates.Identifier = table_Scores.Identifier
+WHERE table_Candidates.Mol = 1
 AND table_Users.Id IN
 (SELECT table_Users.Id
     FROM table_Users
     LEFT JOIN table_Friends
     ON table_Users.Id = table_Friends.IsFriendsWithId
-    WHERE table_Friends.Id = ?)
+    WHERE table_Friends.Id = ? OR table_Friends.IsFriendsWithId = ?)
 ORDER BY table_Scores.Score DESC');
-$stmt->execute([ $_SESSION["Id"] ]);
+$stmt->execute([ $_SESSION["Id"], $_SESSION["Id"] ]);
 $scores_friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare('SELECT table_Users.Gebruikersnaam, table_Scores.Score, table_Users.Id
+$stmt = $pdo->prepare('SELECT table_Users.Username, table_Scores.Score, table_Users.Id
 FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
-LEFT JOIN table_Kandidaten
-ON table_Kandidaten.Identifier = table_Scores.Identifier
-WHERE table_Kandidaten.Mol = 1
+LEFT JOIN table_Candidates
+ON table_Candidates.Identifier = table_Scores.Identifier
+WHERE table_Candidates.Mol = 1
 ORDER BY table_Scores.Score DESC
 LIMIT 20'); // TODO: variable in prepared statement
 $stmt->execute();
@@ -48,7 +48,7 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <h1>Scores</h1>
       <ul id="tabs-swipe-demo" class="tabs">
         <li class="tab col s3"><a class="active" onclick="setIndicator('left')" href="#swipe-1">Volgend</a></li>
-        <li class="tab col s3"><a onclick="setIndicator('right')" href="#swipe-2">Top <?php echo $top_aantal; ?></a></li>
+        <li class="tab col s3"><a onclick="setIndicator('right')" href="#swipe-2">Top <?=LIMIT_TOPLIST?></a></li>
         <div id="thecooler_indicator"></div>
       </ul>
       <div class="slide-container">
@@ -60,7 +60,7 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <div style="animation-delay: <?=$i/4; ?>s;" class="rangItem <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
                     <p>
                       <span class="rangItemScore"><?=$score['Score']?></span>
-                      <?=$score['Gebruikersnaam']; ?>
+                      <?=$score['Username']; ?>
                     </p>
                   </div>
                 </a>
@@ -77,7 +77,7 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
                   <div style="animation-delay: <?=$i/4; ?>s;" class="rangItem <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
                     <p>
                       <span class="rangItemScore"><?=$score['Score']?></span>
-                      <?=$score['Gebruikersnaam']; ?>
+                      <?=$score['Username']; ?>
                     </p>
                   </div>
                 </a>

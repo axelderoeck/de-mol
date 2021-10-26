@@ -3,10 +3,10 @@
 require_once("includes/phpdefault.php");
 
 // Get all scores
-$stmt = $pdo->prepare('SELECT Naam, SUM(Score) AS TotalScore, Visibility
+$stmt = $pdo->prepare('SELECT Name, SUM(Score) AS TotalScore, Visibility
 FROM table_Scores
-LEFT JOIN table_Kandidaten
-ON table_Scores.Identifier = table_Kandidaten.Identifier
+LEFT JOIN table_Candidates
+ON table_Scores.Identifier = table_Candidates.Identifier
 GROUP BY table_Scores.Identifier
 ORDER BY SUM(Score) DESC');
 $stmt->execute();
@@ -18,10 +18,10 @@ $stmt->execute();
 $total_voted_all = $stmt->fetchColumn(0);
 
 // Get friends scores
-$stmt = $pdo->prepare('SELECT Naam, SUM(Score) AS TotalScore, Visibility
+$stmt = $pdo->prepare('SELECT Name, SUM(Score) AS TotalScore, Visibility
 FROM table_Scores
-LEFT JOIN table_Kandidaten
-ON table_Scores.Identifier = table_Kandidaten.Identifier
+LEFT JOIN table_Candidates
+ON table_Scores.Identifier = table_Candidates.Identifier
 WHERE UserId IN (SELECT IsFriendsWithId FROM table_Friends WHERE Id = ?)
 GROUP BY table_Scores.Identifier
 ORDER BY SUM(Score) DESC');
@@ -76,7 +76,7 @@ $users_voted = $stmt->fetchColumn(0);
                 $percentScore = explode(".", $percentCalc);
                 ?>
                 <div class="status">
-                  <p><?php echo $score['Naam']; ?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                  <p><?php echo $score['Name']; ?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
                 </div>
                 <div class="meter">
                   <span style="width: <?=$percentScore[0]; ?>%"></span>
@@ -93,7 +93,7 @@ $users_voted = $stmt->fetchColumn(0);
                 $percentScore = explode(".", $percentCalc);
                 ?>
                 <div class="status">
-                  <p><?php echo $score['Naam']; ?> - <span class="percent isOut2"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                  <p><?php echo $score['Name']; ?> - <span class="percent isOut2"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
                 </div>
                 <div class="meter">
                   <span style="width: <?=$percentScore[0]; ?>%"></span>
@@ -117,7 +117,7 @@ $users_voted = $stmt->fetchColumn(0);
                 $percentScore = explode(".", $percentCalc);
                 ?>
                 <div class="status">
-                  <p><?php echo $score['Naam']; ?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                  <p><?php echo $score['Name']; ?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
                 </div>
                 <div class="meter">
                   <span style="width: <?=$percentScore[0]; ?>%"></span>
@@ -134,7 +134,7 @@ $users_voted = $stmt->fetchColumn(0);
                 $percentScore = explode(".", $percentCalc);
                 ?>
                 <div class="status">
-                  <p><?php echo $score['Naam']; ?> - <span class="percent isOut2"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+                  <p><?php echo $score['Name']; ?> - <span class="percent isOut2"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
                 </div>
                 <div class="meter">
                   <span style="width: <?=$percentScore[0]; ?>%"></span>

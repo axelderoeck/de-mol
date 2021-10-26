@@ -61,7 +61,7 @@ $votetime = str_split(VOTE_HOUR, 2);
 <div class="homeScreen" id="main">
   <div class="respContainer">
 
-  <h1>Dag <?=$_SESSION["Gebruikersnaam"]?></h1>
+  <h1>Dag <?=$_SESSION["Username"]?></h1>
 
   <div class="buttonsDiv">
     <a href="molboek.php"><i class="fas fa-fingerprint translucent"></i></a>

@@ -19,7 +19,7 @@ $stmt->execute([ $user_id ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Select all the awards the specified user has
-$stmt = $pdo->prepare('SELECT AwardId, Naam, Beschrijving, Editie
+$stmt = $pdo->prepare('SELECT *
                       FROM table_UserAwards
                       LEFT JOIN table_Awards
                       ON table_UserAwards.AwardId = table_Awards.Id
@@ -141,7 +141,7 @@ if ($user_owns_account == true) {
   <?php } ?>
 
   <!-- User info -->
-  <h1><?=$account["Gebruikersnaam"]?></h1>
+  <h1><?=$account["Username"]?></h1>
   <p class="userInfo">Placeholder: <span><?=$account["Voted"]?></span></p>
   <?php if ($user_owns_account): ?>
   <!-- Private user info -->
@@ -161,8 +161,8 @@ if ($user_owns_account == true) {
     <?php if(!empty($awards)): ?>
     <?php $i = 0; foreach($awards as $award): ?>
       <div style="animation-delay: <?=$i/4?>s;" >
-        <img src="img/awards/<?=$award['AwardId']?>.png" alt="award foto van <?=$award['Naam']?>">
-        <p><?=$award['Naam']?><br><span style="<?=$award['Editie'] == 'De Mol' ? 'opacity: 0;' : ''?>" ><?php echo $award['Editie']; ?></span></p>
+        <img src="img/awards/<?=$award['AwardId']?>.png" alt="award foto van <?=$award['Name']?>">
+        <p><?=$award['Name']?><br><span style="<?=$award['Edition'] == 'De Mol' ? 'opacity: 0;' : ''?>" ><?php echo $award['Edition']; ?></span></p>
       </div>
     <?php $i++; endforeach; ?>
     <?php else: ?>

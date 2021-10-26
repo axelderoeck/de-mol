@@ -16,7 +16,7 @@ if (isset($_POST["confirmInvite"])){
   $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND InviterId = ?');
   $stmt->execute([ $_SESSION["Id"], $_POST["userId"] ]);
   // Notify user
-  $foutmelding = "Je bent nu bevriend met " . $_POST["userName"] . ".";
+  $foutmelding = "Je bent nu bevriend met " . $_POST["username"] . ".";
   $meldingSoort = "succes";
   
   // AWARD_GILLES SECTION
@@ -82,9 +82,9 @@ if (isset($_POST["confirmInvite"])){
         $stmt->execute([ $notification["InviterId"] ]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC); 
         ?>
-        <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Gebruikersnaam"]?></p>
+        <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Username"]?></p>
         <form action="" method="post">
-          <input type="hidden" name="userName" id="userName" value="<?=$user["Gebruikersnaam"]?>">
+          <input type="hidden" name="username" id="username" value="<?=$user["Username"]?>">
           <input type="hidden" name="userId" id="userId" value="<?=$user["Id"]?>">
           <input type="submit" name="confirmInvite" id="confirmInvite" value="Accepteer">
         </form>

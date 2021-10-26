@@ -13,7 +13,7 @@ if (isset($_POST["sendMail"])){
   if($account){
     // Set a random string as security measure
     $random = generateRandomString(15);
-    $username = $account["Gebruikersnaam"];
+    $username = $account["Username"];
     $id = $account["Id"];
     $email = $account["Email"];
 

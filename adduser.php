@@ -4,8 +4,8 @@ require_once("includes/phpdefault.php");
 
 if (isset($_POST["submitFriendInvite"])){
   // Search for an existing user
-  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ? OR Email = ?');
-  $stmt->execute([ $_POST["friendcode"], $_POST["friendcode"] ]);
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ? OR Email = ? OR Username = ?');
+  $stmt->execute([ $_POST["friendcode"], $_POST["friendcode"], $_POST["friendcode"] ]);
   $to_be_invited_user = $stmt->fetch(PDO::FETCH_ASSOC);
 
   // If the user exists -> send notification to user

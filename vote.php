@@ -13,11 +13,24 @@ if ($_SESSION["Voted"] == 1 ) {
   header('location:home.php');
 }
 
-$stmt = $pdo->prepare('SELECT * FROM table_Kandidaten');
+$stmt = $pdo->prepare('SELECT * FROM table_Candidates');
 $stmt->execute();
 $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST["formSubmitVote"])){
+
+  /*  
+  TODO: CODE IDEA MAKE VOTE SIMPLER
+  REPLACE FOR LOOP UNDER THIS FOREACH
+
+  $i = 1; 
+  foreach($candidates as $candidate){
+
+    $i++;
+  }
+
+  */
+
   for ($i=1; $i <= CANDIDATES_AMOUNT; $i++) {
     $score = $_POST["person$i"];
 
@@ -68,8 +81,8 @@ if (isset($_POST["formSubmitVote"])){
       let deelnemers = [
         { id: 0, 
           identifier: 'person0', 
-          naam: 'dummy', 
-          leeftijd: 0, 
+          name: 'dummy', 
+          age: 0, 
           job: 'placeholder', 
           visibility: 'hidden', 
           direction: 'Right' },
@@ -77,14 +90,14 @@ if (isset($_POST["formSubmitVote"])){
         <?php $i = 0; foreach($candidates as $candidate): ?>
           { id: <?php echo $candidate['Id'] ?>, 
             identifier: <?= "'" . $candidate['Identifier'] . "'"; ?>, 
-            naam: <?= "'" . $candidate['Naam'] . "'"; ?>, 
-            leeftijd: <?= $candidate['Leeftijd']; ?>, 
+            name: <?= "'" . $candidate['Name'] . "'"; ?>, 
+            age: <?= $candidate['Age']; ?>, 
             job: <?= "'" . $candidate['Job'] . "'"; ?>, 
             visibility: <?= "'" . $candidate['Visibility'] . "'"; ?> 
           },
         <?php $i++; endforeach; ?>
 
-        { id: <?= $i+1; ?>, identifier: 'person<?= $i+1 . "'"; ?>, naam: 'dummy', leeftijd: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
+        { id: <?= $i+1; ?>, identifier: 'person<?= $i+1 . "'"; ?>, name: 'dummy', age: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
       ]
 
       //Array waardes in een div card steken
@@ -100,26 +113,26 @@ if (isset($_POST["formSubmitVote"])){
                   <div style="display: none;">
                     <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
                   </div>
-                  <img class="cardImage" ${imgSrc} alt="foto van ${deelnemer.naam}" />
+                  <img class="cardImage" ${imgSrc} alt="foto van ${deelnemer.name}" />
             </div>`;
         }else if(deelnemer.visibility == 'out') {
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
                   <div class="cardNameBG">
-                  <p class="cardName">${deelnemer.naam}</p>
+                  <p class="cardName">${deelnemer.name}</p>
                   </div>
-                  <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+                  <p class="cardInfo">${deelnemer.age} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
 
                   <div style="display: none;">
                     <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
                   </div>
-                  <div class="disabledPerson"><img class="cardImage" src="img/kandidaten/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" /></div>
+                  <div class="disabledPerson"><img class="cardImage" src="img/kandidaten/${deelnemer.name}.jpg" alt="foto van ${deelnemer.name}" /></div>
             </div>`;
         } else {
           html += `<div class='swiper-slide' id='${deelnemer.id}'>
                   <div class="cardNameBG">
-                  <p class="cardName">${deelnemer.naam}</p>
+                  <p class="cardName">${deelnemer.name}</p>
                   </div>
-                  <p class="cardInfo">${deelnemer.leeftijd} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+                  <p class="cardInfo">${deelnemer.age} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
 
                   <div class="cardBottom">
                     <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
@@ -128,7 +141,7 @@ if (isset($_POST["formSubmitVote"])){
                     <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
                     <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
                   </div>
-                  <img class="cardImage" src="img/kandidaten/${deelnemer.naam}.jpg" alt="foto van ${deelnemer.naam}" />
+                  <img class="cardImage" src="img/kandidaten/${deelnemer.name}.jpg" alt="foto van ${deelnemer.name}" />
             </div>`;
         }
       });

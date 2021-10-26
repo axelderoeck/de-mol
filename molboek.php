@@ -19,25 +19,25 @@ require_once("includes/phpdefault.php");
       <h2>Jouw meest gespendeerde punten:</h2>
       <?php
       // Select all the scores the user has on the candidates and sort them from high to low
-      $stmt = $pdo->prepare('SELECT table_Scores.Score, table_Kandidaten.Naam, table_Kandidaten.Visibility
+      $stmt = $pdo->prepare('SELECT table_Scores.Score, table_Candidates.Name, table_Candidates.Status
                             FROM table_Users
                             LEFT JOIN table_Scores
                             ON table_Users.Id = table_Scores.UserId
-                            LEFT JOIN table_Kandidaten
-                            ON table_Kandidaten.Identifier = table_Scores.Identifier
+                            LEFT JOIN table_Candidates
+                            ON table_Candidates.Identifier = table_Scores.Identifier
                             WHERE table_Users.Id = ?
                             ORDER BY table_Scores.score DESC');
       $stmt->execute([ $_SESSION["Id"] ]);
       $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
       // Loop through all scores
       $i = 0; foreach($candidates as $candidate): ?>
-        <div style="animation-delay: <?=$i/4;?>s;" class="displayItem <?=$candidate['Visibility'] == 'out' ? 'isOut' : '';?>">
+        <div style="animation-delay: <?=$i/4;?>s;" class="displayItem <?=$candidate['Status'] == 0 ? 'isOut' : '';?>">
           <div class="wrapper">
             <div class="div1">
-              <img src="img/kandidaten/small/<?=$candidate['Naam'];?>.jpg" alt="">
+              <img src="img/kandidaten/small/<?=$candidate['Name'];?>.jpg" alt="">
             </div>
             <div class="div2">
-              <span class="displayItemName"><?=$candidate['Naam'];?></span>
+              <span class="displayItemName"><?=$candidate['Name'];?></span>
               <br>
               <br>
               <br>
