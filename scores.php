@@ -7,7 +7,7 @@ FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
 RIGHT JOIN table_Candidates
-ON table_Candidates.Identifier = table_Scores.Identifier
+ON table_Candidates.Id = table_Scores.CandidateId
 WHERE table_Candidates.Mol = 1
 AND table_Users.Id IN
 (SELECT table_Users.Id
@@ -24,7 +24,7 @@ FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
 LEFT JOIN table_Candidates
-ON table_Candidates.Identifier = table_Scores.Identifier
+ON table_Candidates.Id = table_Scores.CandidateId
 WHERE table_Candidates.Mol = 1
 ORDER BY table_Scores.Score DESC
 LIMIT 20'); // TODO: variable in prepared statement

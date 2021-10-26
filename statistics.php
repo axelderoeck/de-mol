@@ -3,11 +3,11 @@
 require_once("includes/phpdefault.php");
 
 // Get all scores
-$stmt = $pdo->prepare('SELECT Name, SUM(Score) AS TotalScore, Visibility
+$stmt = $pdo->prepare('SELECT Name, SUM(Score) AS TotalScore, Status
 FROM table_Scores
 LEFT JOIN table_Candidates
-ON table_Scores.Identifier = table_Candidates.Identifier
-GROUP BY table_Scores.Identifier
+ON table_Scores.CandidateId = table_Candidates.Id
+GROUP BY table_Scores.CandidateId
 ORDER BY SUM(Score) DESC');
 $stmt->execute();
 $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -18,12 +18,12 @@ $stmt->execute();
 $total_voted_all = $stmt->fetchColumn(0);
 
 // Get friends scores
-$stmt = $pdo->prepare('SELECT Name, SUM(Score) AS TotalScore, Visibility
+$stmt = $pdo->prepare('SELECT Name, SUM(Score) AS TotalScore, Status
 FROM table_Scores
 LEFT JOIN table_Candidates
-ON table_Scores.Identifier = table_Candidates.Identifier
+ON table_Scores.CandidateId = table_Candidates.Id
 WHERE UserId IN (SELECT IsFriendsWithId FROM table_Friends WHERE Id = ?)
-GROUP BY table_Scores.Identifier
+GROUP BY table_Scores.CandidateId
 ORDER BY SUM(Score) DESC');
 $stmt->execute([ $_SESSION["Id"] ]);
 $scores_friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -60,7 +60,7 @@ $users_voted = $stmt->fetchColumn(0);
     <h1>Statistieken</h1>
     <h2>Verdenkingen</h2>
     <ul id="tabs-swipe-demo" class="tabs">
-      <li class="tab col s3"><a class="active" onclick="setIndicator('left')" href="#swipe-1">Volgend</a></li>
+      <li class="tab col s3"><a class="active" onclick="setIndicator('left')" href="#swipe-1">Vrienden</a></li>
       <li class="tab col s3"><a onclick="setIndicator('right')" href="#swipe-2">Iedereen</a></li>
       <div id="thecooler_indicator"></div>
     </ul>
@@ -71,7 +71,7 @@ $users_voted = $stmt->fetchColumn(0);
           <?php if(!empty($scores_friends)): ?>
             <?php $i = 0; foreach($scores_friends as $score): ?>
               <?php 
-              if ($score['Visibility'] != 'out') {
+              if ($score['Status'] == 1) {
                 $percentCalc = round(($score["TotalScore"] / $total_voted_friends) * 100, 2);
                 $percentScore = explode(".", $percentCalc);
                 ?>
@@ -88,7 +88,7 @@ $users_voted = $stmt->fetchColumn(0);
 
             <?php $i = 0; foreach($scores_friends as $score): ?>
               <?php 
-              if ($score['Visibility'] == 'out') {
+              if ($score['Status'] == 0) {
                 $percentCalc = round(($score["TotalScore"] / $total_voted_friends) * 100, 2);
                 $percentScore = explode(".", $percentCalc);
                 ?>
@@ -103,7 +103,7 @@ $users_voted = $stmt->fetchColumn(0);
               ?>
             <?php $i++; endforeach; ?>
           <?php else: ?>
-          <h2>Je hebt nog geen vrienden toegevoegd.</h2>
+          <h2>Er zijn nog geen vrienden die hebben gestemd.</h2>
           <?php endif; ?>
         </div>
         
@@ -112,7 +112,7 @@ $users_voted = $stmt->fetchColumn(0);
 
         <?php $i = 0; foreach($scores_all as $score): ?>
               <?php 
-              if ($score['Visibility'] != 'out') {
+              if ($score['Status'] == 1) {
                 $percentCalc = round(($score["TotalScore"] / $total_voted_all) * 100, 2);
                 $percentScore = explode(".", $percentCalc);
                 ?>
@@ -129,7 +129,7 @@ $users_voted = $stmt->fetchColumn(0);
             
             <?php $i = 0; foreach($scores_all as $score): ?>
               <?php 
-              if ($score['Visibility'] == 'out') {
+              if ($score['Status'] == 0) {
                 $percentCalc = round(($score['SUM(Score)'] / $total_voted_all) * 100, 2);
                 $percentScore = explode(".", $percentCalc);
                 ?>

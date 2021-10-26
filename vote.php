@@ -18,33 +18,34 @@ $stmt->execute();
 $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST["formSubmitVote"])){
+  // Check if user has voting records
+  $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ?');
+  $stmt->execute([ $_SESSION["Id"] ]);
+  $hasvoted = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-  /*  
-  TODO: CODE IDEA MAKE VOTE SIMPLER
-  REPLACE FOR LOOP UNDER THIS FOREACH
-
-  $i = 1; 
-  foreach($candidates as $candidate){
-
-    $i++;
+  // If user has no voting records -> add them
+  if(empty($hasvoted)){
+    // Add 0 points to every candidate as new account's score
+    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, CandidateId, Score) VALUES (?,?,?)');
+    foreach ($candidates as $candidate) {
+      $stmt->execute([ $_SESSION["Id"], $candidate["Id"], 0 ]);
+    }
   }
 
-  */
+  // Prepare the statement for updating scores
+  $stmt = $pdo->prepare('UPDATE table_Scores SET Score = Score + ? WHERE UserId = ? AND CandidateId = ?');
 
-  for ($i=1; $i <= CANDIDATES_AMOUNT; $i++) {
-    $score = $_POST["person$i"];
+  foreach($candidates as $candidate){
+    // Get the score from form on this candidate
+    $score = $_POST["candidate_" . $candidate["Id"]];
 
     // Check if user matches criteria for All-In award
     if ($score == AWARD_ALL_IN_AMOUNT) {
       giveAward($_SESSION["Id"], AWARD_ALL_IN);
     }
 
-    // Update the scores
-    $stmt = $pdo->prepare('UPDATE table_Scores
-    SET Score = Score + ?
-    WHERE UserId = ? AND Identifier = ?');
-    $stmt->execute([ $score, $_SESSION["Id"], 'person'.$i ]);
-    $update_scores = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Add score
+    $stmt->execute([ $score, $_SESSION["Id"], $candidate["Id"] ]);
   }
 
   // Specify that this user has voted
@@ -78,70 +79,68 @@ if (isset($_POST["formSubmitVote"])){
   <script>
     window.addEventListener('load', function() {
       //PHP waardes in array steken
-      let deelnemers = [
+      let candidates = [
         { id: 0, 
-          identifier: 'person0', 
           name: 'dummy', 
           age: 0, 
           job: 'placeholder', 
-          visibility: 'hidden', 
+          status: 'hidden', 
           direction: 'Right' },
 
-        <?php $i = 0; foreach($candidates as $candidate): ?>
-          { id: <?php echo $candidate['Id'] ?>, 
-            identifier: <?= "'" . $candidate['Identifier'] . "'"; ?>, 
+        <?php $i = 1; foreach($candidates as $candidate): ?>
+          { id: <?= $candidate['Id'] ?>,  
             name: <?= "'" . $candidate['Name'] . "'"; ?>, 
             age: <?= $candidate['Age']; ?>, 
             job: <?= "'" . $candidate['Job'] . "'"; ?>, 
-            visibility: <?= "'" . $candidate['Visibility'] . "'"; ?> 
+            status: <?= "'" . $candidate['Status'] . "'"; ?> 
           },
         <?php $i++; endforeach; ?>
 
-        { id: <?= $i+1; ?>, identifier: 'person<?= $i+1 . "'"; ?>, name: 'dummy', age: 0, job: 'placeholder', visibility: 'hidden', direction: 'Left' }
+        { id: <?= $i+1; ?>, name: 'dummy', age: 0, job: 'placeholder', status: 'hidden', direction: 'Left' }
       ]
 
       //Array waardes in een div card steken
       var html = "";
-      deelnemers.forEach(deelnemer => {
-        if (deelnemer.visibility == 'hidden') {
-          if (deelnemer.direction == "Left") {
+      candidates.forEach(candidate => {
+        if (candidate.status == "hidden") {
+          if (candidate.direction == "Left") {
             var imgSrc = "src='img/assets/dummyLeft.jpg'";
-          } else if (deelnemer.direction == "Right") {
+          } else if (candidate.direction == "Right") {
             var imgSrc = "src='img/assets/dummyRight.jpg'";
           }
-          html += `<div class='swiper-slide' id='${deelnemer.id}'>
+          html += `<div class='swiper-slide' id='${candidate.id}'>
                   <div style="display: none;">
-                    <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
+                    <input form="deMolForm" type="text" class="btnValue" name="${candidate.id}" id="${candidate.id}" value="0" readonly/>
                   </div>
-                  <img class="cardImage" ${imgSrc} alt="foto van ${deelnemer.name}" />
+                  <img class="cardImage" ${imgSrc} alt="foto van ${candidate.name}" />
             </div>`;
-        }else if(deelnemer.visibility == 'out') {
-          html += `<div class='swiper-slide' id='${deelnemer.id}'>
+        }else if(candidate.status == 0) {
+          html += `<div class='swiper-slide' id='${candidate.id}'>
                   <div class="cardNameBG">
-                  <p class="cardName">${deelnemer.name}</p>
+                  <p class="cardName">${candidate.name}</p>
                   </div>
-                  <p class="cardInfo">${deelnemer.age} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+                  <p class="cardInfo">${candidate.age} <span style="color: #53adb5; font-weight: 800">//</span> ${candidate.job}</p>
 
                   <div style="display: none;">
-                    <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/>
+                    <input form="deMolForm" type="text" class="btnValue" name="${candidate.id}" id="${candidate.id}" value="0" readonly/>
                   </div>
-                  <div class="disabledPerson"><img class="cardImage" src="img/kandidaten/${deelnemer.name}.jpg" alt="foto van ${deelnemer.name}" /></div>
+                  <div class="disabledPerson"><img class="cardImage" src="img/kandidaten/${candidate.name}.jpg" alt="foto van ${candidate.name}" /></div>
             </div>`;
         } else {
-          html += `<div class='swiper-slide' id='${deelnemer.id}'>
+          html += `<div class='swiper-slide' id='${candidate.id}'>
                   <div class="cardNameBG">
-                  <p class="cardName">${deelnemer.name}</p>
+                  <p class="cardName">${candidate.name}</p>
                   </div>
-                  <p class="cardInfo">${deelnemer.age} <span style="color: #53adb5; font-weight: 800">//</span> ${deelnemer.job}</p>
+                  <p class="cardInfo">${candidate.age} <span style="color: #53adb5; font-weight: 800">//</span> ${candidate.job}</p>
 
                   <div class="cardBottom">
-                    <input form="deMolForm" type="hidden" name="${deelnemer.identifier}_id" id="${deelnemer.identifier}_id" value="${deelnemer.identifier}" />
+                    <input form="deMolForm" type="hidden" name="${candidate.id}_id" id="${candidate.id}_id" value="${candidate.id}" />
                     <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
-                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="${deelnemer.identifier}" id="${deelnemer.identifier}" value="0" readonly/></p>
-                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
-                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('${deelnemer.identifier}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
+                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="candidate_${candidate.id}" id="candidate_${candidate.id}" value="0" readonly/></p>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('candidate_${candidate.id}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('candidate_${candidate.id}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
                   </div>
-                  <img class="cardImage" src="img/kandidaten/${deelnemer.name}.jpg" alt="foto van ${deelnemer.name}" />
+                  <img class="cardImage" src="img/kandidaten/${candidate.name}.jpg" alt="foto van ${candidate.name}" />
             </div>`;
         }
       });
@@ -158,16 +157,16 @@ if (isset($_POST["formSubmitVote"])){
           },
       });
 
-      submitKnop("uit");
-
+      submitKnop("aan");
+      
       //Punten Bereken functies
       window.isOverValue = function(value)
       {
         var total = 0;
-        deelnemers.forEach(deelnemer => {
-            total += parseInt(document.getElementById(deelnemer.identifier).value, 10);
+        candidates.forEach(candidate => {
+            total += parseInt(document.getElementById('candidate_' + candidate.id).value, 10);
         });
-        if( total < value ){
+        if(total < value){
           return false;
         }
         return true;
@@ -175,10 +174,10 @@ if (isset($_POST["formSubmitVote"])){
 
     }) //Einde Event Listener
 
-      function incrementValue(id)
-      {
+      function incrementValue(id){
         var value = parseInt(document.getElementById(id).value, 10);
         value = isNaN(value) ? 0 : value;
+        /*
         if (isOverValue(9) == true) {
           submitKnop("aan");
         }
@@ -187,19 +186,23 @@ if (isset($_POST["formSubmitVote"])){
         }else {
           alert("Je kan niet meer dan 10 punten inzetten.")
         }
+        */
+        value++;
         document.getElementById(id).defaultValue = value;
       }
 
-      function decrementValue(id)
-      {
+      function decrementValue(id){
         var value = parseInt(document.getElementById(id).value, 10);
         value = isNaN(value) ? 0 : value;
+        /*
         if (isOverValue(9) == true) {
           submitKnop("uit");
         }
         if(value > 0) {
           value--;
         }
+        */
+        value--;
         document.getElementById(id).defaultValue = value;
       }
 

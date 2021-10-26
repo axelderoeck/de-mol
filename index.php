@@ -82,11 +82,6 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
     $_SESSION["Voted"] = 0;
     $_SESSION["Email"] = $_POST["email"];
     $_SESSION["Admin"] = 0;
-    // Add 0 points to every candidate as new account's score
-    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, Identifier, Score) VALUES (?,?,?)');
-    for ($i=1; $i <= 10; $i++) {
-      $stmt->execute([ $account_id, "person$i", 0 ]);
-    }
 
     // Add unused friendcode to user
     $inserted_friendcode = false;

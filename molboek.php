@@ -24,28 +24,34 @@ require_once("includes/phpdefault.php");
                             LEFT JOIN table_Scores
                             ON table_Users.Id = table_Scores.UserId
                             LEFT JOIN table_Candidates
-                            ON table_Candidates.Identifier = table_Scores.Identifier
+                            ON table_Candidates.Id = table_Scores.CandidateId
                             WHERE table_Users.Id = ?
                             ORDER BY table_Scores.score DESC');
       $stmt->execute([ $_SESSION["Id"] ]);
       $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
       // Loop through all scores
-      $i = 0; foreach($candidates as $candidate): ?>
-        <div style="animation-delay: <?=$i/4;?>s;" class="displayItem <?=$candidate['Status'] == 0 ? 'isOut' : '';?>">
-          <div class="wrapper">
-            <div class="div1">
-              <img src="img/kandidaten/small/<?=$candidate['Name'];?>.jpg" alt="">
-            </div>
-            <div class="div2">
-              <span class="displayItemName"><?=$candidate['Name'];?></span>
-              <br>
-              <br>
-              <br>
-              <span class="displayItemNumber"><?=$candidate['Score'];?></span>
+      if(!empty($candidates)):
+        $i = 0; foreach($candidates as $candidate): ?>
+          <div style="animation-delay: <?=$i/4;?>s;" class="displayItem <?=$candidate['Status'] == 0 ? 'isOut' : '';?>">
+            <div class="wrapper">
+              <div class="div1">
+                <img src="img/kandidaten/small/<?=$candidate['Name'];?>.jpg" alt="">
+              </div>
+              <div class="div2">
+                <span class="displayItemName"><?=$candidate['Name'];?></span>
+                <br>
+                <br>
+                <br>
+                <span class="displayItemNumber"><?=$candidate['Score'];?></span>
+              </div>
             </div>
           </div>
-        </div>
-      <?php $i++; endforeach; ?>
+        <?php $i++; endforeach; ?>
+      <?php else: ?>
+        <h2>Je hebt nog niet gestemd.</h2>  
+      <?php endif; ?>
+      
     </div>
  </div>
 
