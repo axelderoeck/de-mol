@@ -33,6 +33,8 @@ define('FRIENDCODE_LENGTH', 5);
 define('LIMIT_TOPLIST', 20);
 // Amount of candidates
 define('CANDIDATES_AMOUNT', 10);
+// Days untill remember me cookie expires
+define('REMEMBER_ME_EXPIRE_DAYS', 30);
 
 /* AWARDS */
 // Award Jij weet niets id

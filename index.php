@@ -19,15 +19,45 @@ if ($_SESSION["Id"] != NULL) {
   header('location:home.php');
 }
 
-// If logout is set to 1 -> destroy session
+// If logout is set to 1 -> destroy everything no mercy
 if ($_GET["logout"] == 1) { 
+  // Reset session values to be sure
   $_SESSION['LoggedIn'] = FALSE;
   $_SESSION["Id"] = NULL;
   $_SESSION["Username"] = "";
   $_SESSION["Voted"] = 0;
   $_SESSION["Admin"] = 0;
+  // Remove cookie variable
+  setcookie ("rememberme","", 1);
+  // Destroy session
   session_destroy();
+  // Redirect user to index page
   header('location:index.php');
+}
+
+// Check if the remember me cookie exists
+if(isset($_COOKIE['rememberme'])){
+  // Decrypt cookie variable value
+  $userId = decryptCookie($_COOKIE['rememberme']);
+
+  // Check if the account exists
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+  $stmt->execute([ $userId ]);
+  $account = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // account exists -> login
+  if($account){
+      // User has logged in, create session data
+      $_SESSION['LoggedIn'] = TRUE;
+      $_SESSION["Id"] = $account["Id"];
+      $_SESSION["Username"] = $account["Username"];
+      $_SESSION["Voted"] = $account["Voted"];
+      $_SESSION["Email"] = $account["Email"];
+      $_SESSION["Admin"] = $account["Admin"];
+      // Redirect user
+      $foutmelding = "";
+      header('location:home.php');
+  }
 }
 
 // User pressed login button
@@ -40,11 +70,17 @@ if (isset($_POST["userLogin"])){
   if ($account && password_verify($_POST['password'], $account['Password'])) {
     // User has logged in, create session data
     $_SESSION['LoggedIn'] = TRUE;
-    $_SESSION["Id"] = $account['Id'];
+    $_SESSION["Id"] = $account["Id"];
     $_SESSION["Username"] = $account["Username"];
     $_SESSION["Voted"] = $account["Voted"];
     $_SESSION["Email"] = $account["Email"];
     $_SESSION["Admin"] = $account["Admin"];
+    // If remember me is checked -> set cookie
+    if (isset($_POST['remember'])){
+      // Set cookie variables
+      $value = encryptCookie($account["Id"]);
+      setcookie("rememberme", $value, strtotime('+' . REMEMBER_ME_EXPIRE_DAYS .' days'));
+    }
     $foutmelding = "";
     header('location:home.php');
   } else {
@@ -149,7 +185,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
                     <br>
                     <input type="submit" name="userLogin" id="userLogin" value="Login">
                     <br>
-                    <input type="checkbox" name="remember" id="remember" value="">
+                    <input type="checkbox" name="remember" id="remember" value="1">
                     <label>Onthoud Mij</label>                
                 </form>
                 <a href="forgotpassword.php">wachtwoord vergeten?</a>
