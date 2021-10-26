@@ -12,6 +12,23 @@ if ($user_id == $session_id) {
 }else{
   $user_owns_account = false;
 }
+// Change password
+if (isset($_POST["changePassword"])){
+  $notification = changePassword($_SESSION["Id"], $_POST["oldPassword"], $_POST["password"], $_POST["confirmPassword"]);
+}
+// Change email
+if (isset($_POST["changeEmail"])){
+  $notification = changeEmail($_SESSION["Id"], $_POST["email"]);
+}
+// Change username
+if (isset($_POST["changeUsername"])){
+  $notification = changeUsername($_SESSION["Id"], $_POST["username"]);
+}
+// Delete account
+if (isset($_POST["deleteAccount"])){
+  $notification = deleteAccount($_SESSION["Id"]);
+  header('location:index.php?logout=1');
+}
 
 // Select all the user info from the id from url
 $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
@@ -28,11 +45,6 @@ $stmt->execute([ $user_id ]);
 $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if ($user_owns_account == true) {
-  include "includes/scripts/changename.php";
-  include "includes/scripts/changepassword.php";
-  include "includes/scripts/deleteaccount.php";
-  include "includes/scripts/changemail.php";
-
   $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
 } elseif ($user_owns_account == false){
 
@@ -58,7 +70,7 @@ if ($user_owns_account == true) {
     <?php
       $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
       if($pageRefreshed == 1){
-        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
+        echo "showNotification('$notification->message','$notification->type');"; //message + color style
       }
     ?>
   })
@@ -84,11 +96,11 @@ if ($user_owns_account == true) {
     <div class="box">
       <a class="closeLink" href="javascript:showPopup('popUpChangePassword','hide');">&times;</a>
       <form name="formChangePassword" action="" method="post">
-          <input placeholder="Oud wachtwoord" name="oudWachtwoord" id="oudWachtwoord" type="password" required>
+          <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
           <br>
-          <input placeholder="Wachtwoord" name="Wachtwoord" id="Wachtwoord" type="password" required>
+          <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
           <br>
-          <input placeholder="Wachtwoord" name="confirmWachtwoord" id="confirmWachtwoord" type="password" required>
+          <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
           <br>
           <input type="submit" name="changePassword" id="changePassword" value="Verander">
       </form>
@@ -99,9 +111,9 @@ if ($user_owns_account == true) {
     <div class="box">
       <a class="closeLink" href="javascript:showPopup('popUpChangeName','hide');">&times;</a>
       <form name="formChangeName" action="" method="post">
-          <input placeholder="Nieuwe Naam" name="nieuweNaam" id="nieuweNaam" type="text" required>
+          <input placeholder="Nieuwe gebruikersnaam" name="username" id="username" type="text" required>
           <br>
-          <input type="submit" name="changeName" id="changeName" value="Verander">
+          <input type="submit" name="changeUsername" id="changeUsername" value="Verander">
       </form>
     </div>
   </div>
@@ -110,20 +122,9 @@ if ($user_owns_account == true) {
     <div class="box">
       <a class="closeLink" href="javascript:showPopup('popUpAddEmail','hide');">&times;</a>
       <form name="formAddEmail" action="" method="post">
-          <input placeholder="Email" name="emailvalue" id="emailvalue" type="text" required>
+          <input placeholder="Email" name="email" id="email" type="text" required>
           <br>
-          <input type="submit" name="addEmail" id="addEmail" value="Voeg toe">
-      </form>
-    </div>
-  </div>
-
-  <div id="popUpChangeFirstName" class="popupStyle translucent">
-    <div class="box">
-      <a class="closeLink" href="javascript:showPopup('popUpChangeFirstName','hide');">&times;</a>
-      <form name="formChangeFirstName" action="" method="post">
-          <input placeholder="Nieuwe Voornaam" name="nieuweVoornaam" id="nieuweVoornaam" type="text" required>
-          <br>
-          <input type="submit" name="changeFirstName" id="changeFirstName" value="Verander">
+          <input type="submit" name="changeEmail" id="changeEmail" value="Verander">
       </form>
     </div>
   </div>
@@ -176,7 +177,6 @@ if ($user_owns_account == true) {
   <div id="collapsible-content">
     <ul>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeName','show');"> gebruikersnaam wijzigen</a></li>
-      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeFirstName','show');"> voornaam wijzigen</a></li>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpAddEmail','show');"> email wijzigen</a></li>
       <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangePassword','show');"> wachtwoord wijzigen</a></li>
       <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="javascript:showPopup('popUpDeleteAccount','show');"> verwijder account</a></li>
