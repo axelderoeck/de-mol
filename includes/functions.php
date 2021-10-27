@@ -330,6 +330,36 @@ function deleteGroup($adminId, $groupId){
   ];
 }
 
+function changeGroupName($groupId, $name){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function changeGroupDescription($groupId, $description){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function changeGroupPrivacy($groupId, $private){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
 function confirmFriendInvite($inviterId, $invitedId){
   // DB connection
   $pdo = pdo_connect_mysql();
@@ -370,9 +400,21 @@ function joinGroup($id, $groupId){
   ];
 }
 
+function kickFromGroup($groupId, $kickUserId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
 function leaveGroup($id, $groupId){
   // DB connection
   $pdo = pdo_connect_mysql();
+
+  // check if ID is admin -> pass to next member (if no members left -> delete group)
   
   return (object)[
     'type' => $type,
