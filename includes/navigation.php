@@ -15,6 +15,7 @@ $amount_notifications = $stmt->fetchColumn(0);
   <a href="info.php"><i class="fas fa-question-circle"></i>Uitleg</a>
   <a href="profile.php?u=<?=$_SESSION['Id']?>"><i class="fas fa-user"></i>Profiel</a>
   <a href="friends.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Vrienden</a>
+  <a href="groups.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Groepen</a>
   <a href="statistics.php"><i class="fas fa-chart-bar"></i>Statistieken</a>
   <a href="notifications.php"><i class="fas fa-bell"><span><?=$amount_notifications?></span></i>Meldingen</a>
   <?php if ($_SESSION["Admin"] == 1): ?>

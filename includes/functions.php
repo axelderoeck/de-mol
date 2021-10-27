@@ -253,11 +253,144 @@ function deleteAccount($id){
   $stmt = $pdo->prepare('DELETE FROM table_Friends WHERE Id = ? OR IsFriendsWithId = ?');
   $stmt->execute([ $id, $id ]);
 
+  // Delete the user from groups
+  $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE UserId = ?');
+  $stmt->execute([ $id ]);
+
   return (object)[
     'type' => 'success',
     'message' => 'Gebruiker is verwijderd'
   ];
 }
+
+function createGroup($adminId, $name, $description, $private){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Search for a group with name
+  $stmt = $pdo->prepare('SELECT Name FROM table_Groups WHERE Name = ?');
+  $stmt->execute([ $name ]);
+  $group = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Group doesn't exist -> create group
+  if(!$group){
+    $stmt = $pdo->prepare('INSERT INTO table_Groups (AdminId, Name, Description, Private) VALUES (?,?,?,?)');
+    $stmt->execute([ $adminId, $name, $description, $private ]);
+    // Notify User
+    $type = 'success';
+    $message = 'Groep is aangemaakt.';
+  }else{
+    // Notify User
+    $type = 'warning';
+    $message = 'Deze groep naam is al in gebruik.';
+  }
+
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function deleteGroup($adminId, $groupId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Search for a group with specified id
+  $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
+  $stmt->execute([ $groupId ]);
+  $group = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Group exists
+  if($group){
+    // Check if initiating user is an admin of the group
+    if($adminId == $group["AdminId"]){
+      // Delete the group
+      $stmt = $pdo->prepare('DELETE FROM table_Groups WHERE Id = ?');
+      $stmt->execute([ $groupId ]);
+      // Delete all the group relationship records
+      $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE GroupId = ?');
+      $stmt->execute([ $groupId ]);
+      // Notify User
+      $type = 'success';
+      $message = 'De groep is verwijderd.';
+    }else{
+      // Notify User
+      $type = 'warning';
+      $message = 'Je hebt geen rechten om deze groep te verwijderen.';
+    }
+  }else{
+    // Notify User
+    $type = 'warning';
+    $message = 'Kan de groep niet vinden.';
+  }
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function confirmFriendInvite($inviterId, $invitedId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function deleteFriend($id, $friendId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+    
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function confirmGroupInvite($id, $groupId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function joinGroup($id, $groupId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function leaveGroup($id, $groupId){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+/*
+function name($variable){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+*/
 
 // OTHER FUNCTIONS
 
