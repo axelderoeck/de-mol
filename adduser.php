@@ -3,24 +3,7 @@
 require_once("includes/phpdefault.php");
 
 if (isset($_POST["submitFriendInvite"])){
-  // Search for an existing user
-  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ? OR Email = ? OR Username = ?');
-  $stmt->execute([ $_POST["friendcode"], $_POST["friendcode"], $_POST["friendcode"] ]);
-  $to_be_invited_user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-  // If the user exists -> send notification to user
-  if($to_be_invited_user){
-    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId) VALUES (0, ?, ?)');
-    $stmt->execute([ $_SESSION["Id"], $to_be_invited_user["Id"] ]);
-    $invited_user = $stmt->fetch(PDO::FETCH_ASSOC);
-    // Notify user
-    $foutmelding = "Vriendschapsverzoek verzonden.";
-    $meldingSoort = "success";
-  }else{
-    // Notify user
-    $foutmelding = "Gebruiker niet gevonden.";
-    $meldingSoort = "warning";
-  }
+  $notification = sendInvite(0, $_SESSION["Id"], $_POST["friendcode"]);
 }
 
 ?>
@@ -34,7 +17,7 @@ if (isset($_POST["submitFriendInvite"])){
     <?php
       $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
       if($pageRefreshed == 1){
-        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
+        echo "showNotification('$notification->message','$notification->type');"; //message + color style
       }
     ?>
   })

@@ -182,8 +182,8 @@ function changeFriendcode($id, $friendcode){
   ];
 }
 
-function sendInvite($inviteType, $inviterId, $friendcode, $message = ""){
-  // $inviteType, 0 = Friend Invite, 1 = Group Invite, 2 = Message
+function sendInvite($inviteType, $inviterId, $friendcode){
+  // $inviteType, 0 = Friend Invite, 1 = Group Invite
 
   // DB connection
   $pdo = pdo_connect_mysql();
@@ -195,8 +195,16 @@ function sendInvite($inviteType, $inviterId, $friendcode, $message = ""){
 
   // If the user exists -> send notification to user
   if($invitedId){
-    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId, Message) VALUES (?, ?, ?)');
-    $stmt->execute([ $inviteType, $inviterId, $invitedId, $message ]);
+    /*
+    nog een issue: dit is specifiek voor friend invite niet group invite FIX THIS GVD
+    // Search for an existing pending invite
+    $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE NotificationType = ? AND InviterId = ? AND InvitedId = ?');
+    $stmt->execute([ $inviteType, $inviterId, $invitedId ]);
+    $notification = $stmt->fetch(PDO::FETCH_ASSOC);
+    */
+
+    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId) VALUES (?, ?, ?)');
+    $stmt->execute([ $inviteType, $inviterId, $invitedId ]);
 
     // Notify user
     $type = "success";
