@@ -115,7 +115,6 @@ function changeEmail($id, $email){
     // Update user with new email
     $stmt = $pdo->prepare('UPDATE table_Users SET Email = ? WHERE Id = ?');
     $stmt->execute([ $email, $id ]);
-    $_SESSION["Email"] = $email;
     // Notify user
     $type = "success";
     $message = "Je e-mailadres is aangepast.";
@@ -140,7 +139,6 @@ function changeUsername($id, $username){
   if(!$user){
     $stmt = $pdo->prepare('UPDATE table_Users SET Username = ? WHERE Id = ?');
     $stmt->execute([ $username, $id ]);
-    $_SESSION["Username"] = $username;
     // Notify user
     $type = "success";
     $message = "Gebruikersnaam is gewijzigd.";
@@ -176,6 +174,49 @@ function changeFriendcode($id, $friendcode){
     // Notify user
     $type = "warning";
     $message = "Deze friendcode is al in gebruik.";
+  }
+
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function sendInvite($inviteType, $inviterId, $friendcode, $message = ""){
+  // $inviteType, 0 = Friend Invite, 1 = Group Invite, 2 = Message
+
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Search for an existing user
+  $stmt = $pdo->prepare('SELECT Id FROM table_Users WHERE Friendcode = ?');
+  $stmt->execute([ $friendcode ]);
+  $invitedId = $stmt->fetchColumn(0);
+
+  // If the user exists -> send notification to user
+  if($invitedId){
+    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId, Message) VALUES (?, ?, ?)');
+    $stmt->execute([ $inviteType, $inviterId, $invitedId, $message ]);
+
+    // Notify user
+    $type = "success";
+    switch($inviteType){
+      case 0:
+        $message = "Vriendschapsverzoek verzonden.";
+        break;
+      case 1:
+        $message = "Groepsverzoek verzonden.";
+        break;
+      case 2:
+        $message = "Bericht verzonden.";
+        break;
+      default:
+        $message = "Verzoek verzonden.";
+    }  
+  }else{
+    // Notify user
+    $message = "Gebruiker niet gevonden.";
+    $type = "warning";
   }
 
   return (object)[
