@@ -182,9 +182,34 @@ function changeFriendcode($id, $friendcode){
   ];
 }
 
-function sendInvite($inviteType, $inviterId, $friendcode){
-  // $inviteType, 0 = Friend Invite, 1 = Group Invite
+function sendFriendInvite($inviterId, $friendcode){
+  // DB connection
+  $pdo = pdo_connect_mysql();
 
+  // Search for an existing user
+  $stmt = $pdo->prepare('SELECT Id FROM table_Users WHERE Friendcode = ?');
+  $stmt->execute([ $friendcode ]);
+  $invitedId = $stmt->fetchColumn(0);
+  // If user exists -> invite
+  if($invitedId){
+    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId) VALUES (?, ?, ?)');
+    $stmt->execute([ 0, $inviterId, $invitedId ]);
+    // Notify user
+    $message = "Vriendschapsverzoek verzonden.";
+    $type = "success";
+  }else{
+    // Notify user
+    $message = "Gebruiker niet gevonden.";
+    $type = "warning";
+  }
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function sendGroupInvite($groupId, $friendcode){
   // DB connection
   $pdo = pdo_connect_mysql();
 
@@ -193,40 +218,19 @@ function sendInvite($inviteType, $inviterId, $friendcode){
   $stmt->execute([ $friendcode ]);
   $invitedId = $stmt->fetchColumn(0);
 
-  // If the user exists -> send notification to user
+  // If user exists -> invite
   if($invitedId){
-    /*
-    nog een issue: dit is specifiek voor friend invite niet group invite FIX THIS GVD
-    // Search for an existing pending invite
-    $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE NotificationType = ? AND InviterId = ? AND InvitedId = ?');
-    $stmt->execute([ $inviteType, $inviterId, $invitedId ]);
-    $notification = $stmt->fetch(PDO::FETCH_ASSOC);
-    */
-
-    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, InviterId, InvitedId) VALUES (?, ?, ?)');
-    $stmt->execute([ $inviteType, $inviterId, $invitedId ]);
-
+    $stmt = $pdo->prepare('INSERT INTO table_Notifications (NotificationType, GroupId, InvitedId) VALUES (?, ?, ?)');
+    $stmt->execute([ 1, $groupId, $invitedId ]);
     // Notify user
+    $message = "Groepsverzoek verzonden.";
     $type = "success";
-    switch($inviteType){
-      case 0:
-        $message = "Vriendschapsverzoek verzonden.";
-        break;
-      case 1:
-        $message = "Groepsverzoek verzonden.";
-        break;
-      case 2:
-        $message = "Bericht verzonden.";
-        break;
-      default:
-        $message = "Verzoek verzonden.";
-    }  
   }else{
     // Notify user
     $message = "Gebruiker niet gevonden.";
     $type = "warning";
   }
-
+  
   return (object)[
     'type' => $type,
     'message' => $message
@@ -237,29 +241,40 @@ function deleteAccount($id){
   // DB connection
   $pdo = pdo_connect_mysql();
 
-  // Delete the user
-  $stmt = $pdo->prepare('DELETE FROM table_Users WHERE Id = ?');
+  // Search for user
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
   $stmt->execute([ $id ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // Delete the scores from user
-  $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');
-  $stmt->execute([ $id ]);
-
-  // Delete the awards from user
-  $stmt = $pdo->prepare('DELETE FROM table_UserAwards WHERE UserId = ?');
-  $stmt->execute([ $id ]);
-
-  // Delete the user from friends list
-  $stmt = $pdo->prepare('DELETE FROM table_Friends WHERE Id = ? OR IsFriendsWithId = ?');
-  $stmt->execute([ $id, $id ]);
-
-  // Delete the user from groups
-  $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE UserId = ?');
-  $stmt->execute([ $id ]);
+  // User exists -> delete
+  if($user){
+    // Delete the user
+    $stmt = $pdo->prepare('DELETE FROM table_Users WHERE Id = ?');
+    $stmt->execute([ $id ]);
+    // Delete the scores from user
+    $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');
+    $stmt->execute([ $id ]);
+    // Delete the awards from user
+    $stmt = $pdo->prepare('DELETE FROM table_UserAwards WHERE UserId = ?');
+    $stmt->execute([ $id ]);
+    // Delete the user from friends list
+    $stmt = $pdo->prepare('DELETE FROM table_Friends WHERE Id = ? OR IsFriendsWithId = ?');
+    $stmt->execute([ $id, $id ]);
+    // Delete the user from groups
+    $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE UserId = ?');
+    $stmt->execute([ $id ]);
+    // Notify User
+    $type = 'success';
+    $message = 'Gebruiker is verwijderd.';
+  }else{
+    // Notify User
+    $type = 'warning';
+    $message = 'Gebruiker niet gevonden.';
+  }
 
   return (object)[
-    'type' => 'success',
-    'message' => 'Gebruiker is verwijderd'
+    'type' => $type,
+    'message' => $message
   ];
 }
 
@@ -291,7 +306,7 @@ function createGroup($adminId, $name, $description, $private){
   ];
 }
 
-function deleteGroup($adminId, $groupId){
+function deleteGroup($groupId){
   // DB connection
   $pdo = pdo_connect_mysql();
 
@@ -302,26 +317,19 @@ function deleteGroup($adminId, $groupId){
 
   // Group exists
   if($group){
-    // Check if initiating user is an admin of the group
-    if($adminId == $group["AdminId"]){
-      // Delete the group
-      $stmt = $pdo->prepare('DELETE FROM table_Groups WHERE Id = ?');
-      $stmt->execute([ $groupId ]);
-      // Delete all the group relationship records
-      $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE GroupId = ?');
-      $stmt->execute([ $groupId ]);
-      // Notify User
-      $type = 'success';
-      $message = 'De groep is verwijderd.';
-    }else{
-      // Notify User
-      $type = 'warning';
-      $message = 'Je hebt geen rechten om deze groep te verwijderen.';
-    }
+    // Delete the group
+    $stmt = $pdo->prepare('DELETE FROM table_Groups WHERE Id = ?');
+    $stmt->execute([ $groupId ]);
+    // Delete all the group relationship records
+    $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE GroupId = ?');
+    $stmt->execute([ $groupId ]);
+    // Notify User
+    $type = 'success';
+    $message = 'De groep is verwijderd.';
   }else{
     // Notify User
     $type = 'warning';
-    $message = 'Kan de groep niet vinden.';
+    $message = 'Groep niet gevonden.';
   }
   
   return (object)[
@@ -333,6 +341,34 @@ function deleteGroup($adminId, $groupId){
 function changeGroupName($groupId, $name){
   // DB connection
   $pdo = pdo_connect_mysql();
+
+  // Search group
+  $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
+  $stmt->execute([ $groupId ]);
+  $mygroup = $stmt->fetch(PDO::FETCH_ASSOC);
+  // If group exists
+  if($mygroup){
+    // Search group with given name
+    $stmt = $pdo->prepare('SELECT Name FROM table_Groups WHERE Name = ?');
+    $stmt->execute([ $name ]);
+    $group = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Group with name doesn't exist -> change name
+    if(!$group){
+      $stmt = $pdo->prepare('UPDATE table_Groups SET Name = ? WHERE Id = ?');
+      $stmt->execute([ $name, $groupId ]);
+      // Notify user
+      $type = "success";
+      $message = "Groepsnaam is gewijzigd.";
+    }else{
+      // Notify user
+      $type = "warning";
+      $message = "Deze groepsnaam is al in gebruik.";
+    }
+  }else{
+    // Notify user
+    $type = "warning";
+    $message = "Groep niet gevonden.";
+  }
   
   return (object)[
     'type' => $type,
@@ -343,6 +379,23 @@ function changeGroupName($groupId, $name){
 function changeGroupDescription($groupId, $description){
   // DB connection
   $pdo = pdo_connect_mysql();
+
+  // Search group
+  $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
+  $stmt->execute([ $groupId ]);
+  $group = $stmt->fetch(PDO::FETCH_ASSOC);
+  // If group exists
+  if($group){
+    // Update the description
+    $stmt = $pdo->prepare('UPDATE table_Groups SET Description = ? WHERE Id = ?');
+    $stmt->execute([ $description, $groupId ]);
+    // Notify user
+    $type = "success";
+    $message = "Beschrijving is gewijzigd.";
+  }else{
+    $type = "warning";
+    $message = "Groep niet gevonden.";
+  }
   
   return (object)[
     'type' => $type,
@@ -353,6 +406,27 @@ function changeGroupDescription($groupId, $description){
 function changeGroupPrivacy($groupId, $private){
   // DB connection
   $pdo = pdo_connect_mysql();
+ 
+  // Search group
+  $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
+  $stmt->execute([ $groupId ]);
+  $group = $stmt->fetch(PDO::FETCH_ASSOC);
+  // If group exists
+  if($group){
+    // Update the description
+    $stmt = $pdo->prepare('UPDATE table_Groups SET Private = ? WHERE Id = ?');
+    $stmt->execute([ $private, $groupId ]);
+    // Notify user
+    $type = "success";
+    if($private == 0){
+      $message = "Groep is publiek gemaakt.";
+    }elseif($private == 1){
+      $message = "Groep is privé gemaakt.";
+    }
+  }else{
+    $type = "warning";
+    $message = "Groep niet gevonden.";
+  }
   
   return (object)[
     'type' => $type,
@@ -363,6 +437,38 @@ function changeGroupPrivacy($groupId, $private){
 function confirmFriendInvite($inviterId, $invitedId){
   // DB connection
   $pdo = pdo_connect_mysql();
+
+  // Insert friendship to table
+  $stmt = $pdo->prepare('INSERT INTO table_Friends (Id, IsFriendsWithId) VALUES (?, ?)');
+  $stmt->execute([ $inviterId, $invitedId ]);
+  $stmt->execute([ $invitedId, $inviterId ]);
+  // Remove notification
+  $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND InviterId = ?');
+  $stmt->execute([ $invitedId, $inviterId ]);
+  // Notify user
+  $message = "Vriendschapsverzoek aanvaard.";
+  $type = "success";
+  
+  // AWARD_GILLES SECTION
+  // Get how many friends a user has
+  $stmt = $pdo->prepare('SELECT COUNT(UserId) AS Count
+  FROM table_Friends
+  WHERE Id = ?
+  GROUP BY Id');
+
+  // User 1: If 10 friends -> Give award
+  $stmt->execute([ $inviterId ]);
+  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
+    giveAward($inviterId, AWARD_GILLES);
+  }
+
+  // User 2: If 10 friends -> Give award
+  $stmt->execute([ $invitedId ]);
+  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
+    giveAward($invitedId, AWARD_GILLES);
+  }
   
   return (object)[
     'type' => $type,
@@ -373,6 +479,26 @@ function confirmFriendInvite($inviterId, $invitedId){
 function deleteFriend($id, $friendId){
   // DB connection
   $pdo = pdo_connect_mysql();
+
+  // Search friendship
+  $stmt = $pdo->prepare('SELECT * FROM table_Friends WHERE Id = ? AND IsFriendsWithId = ?');
+  $stmt->execute([ $id, $friendId ]);
+  $friendship = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Friendship exists -> delete
+  if($friendship){
+    // Remove friendship
+    $stmt = $pdo->prepare('DELETE FROM table_Friends WHERE Id = ? AND IsFriendsWithId = ?');
+    $stmt->execute([ $id, $friendId ]);
+    $stmt->execute([ $friendId, $id ]);
+    // Notify user
+    $message = "Vriend verwijderd.";
+    $type = "success";
+  }else{
+    // Notify user
+    $message = "Vriend niet gevonden om te verwijderen.";
+    $type = "warning";
+  }
     
   return (object)[
     'type' => $type,
@@ -380,9 +506,27 @@ function deleteFriend($id, $friendId){
   ];
 }
 
-function confirmGroupInvite($id, $groupId){
+function addUserToGroup($id, $groupId){
   // DB connection
   $pdo = pdo_connect_mysql();
+
+  // Search group
+  $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
+  $stmt->execute([ $groupId ]);
+  $group = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Group exists
+  if($group){
+    // Insert user to group
+    $stmt = $pdo->prepare('INSERT INTO table_UsersInGroup (UserId, GroupId) VALUES (?, ?)');
+    $stmt->execute([ $id, $groupId ]);
+    // Notify user
+    $message = "Toegevoegd aan groep.";
+    $type = "success";
+  }
+  // Notify user
+  $message = "Groep niet gevonden.";
+  $type = "warning";
   
   return (object)[
     'type' => $type,
@@ -390,31 +534,52 @@ function confirmGroupInvite($id, $groupId){
   ];
 }
 
-function joinGroup($id, $groupId){
-  // DB connection
-  $pdo = pdo_connect_mysql();
-  
-  return (object)[
-    'type' => $type,
-    'message' => $message
-  ];
-}
-
-function kickFromGroup($groupId, $kickUserId){
-  // DB connection
-  $pdo = pdo_connect_mysql();
-  
-  return (object)[
-    'type' => $type,
-    'message' => $message
-  ];
-}
-
-function leaveGroup($id, $groupId){
+function deleteUserFromGroup($id, $groupId){
   // DB connection
   $pdo = pdo_connect_mysql();
 
-  // check if ID is admin -> pass to next member (if no members left -> delete group)
+  // Search the user
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+  $stmt->execute([ $id ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Search the group
+  $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
+  $stmt->execute([ $groupId ]);
+  $group = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Remove user from group
+  $stmt = $pdo->prepare('DELETE FROM table_UsersInGroup WHERE UserId = ? AND GroupId = ?');
+  $stmt->execute([ $id, $groupId ]);
+  // Notify user
+  $message = "Groep verlaten.";
+  $type = "success";
+
+  // If user is the admin of the group
+  if($user["Id"] == $group["AdminId"]){
+    // Get the amount of members
+    $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_UsersInGroup WHERE GroupId = ?');
+    $stmt->execute([ $groupId ]);
+    $members_count = $stmt->fetchColumn(0);
+    // If there are members -> assign a new admin
+    if($members_count > 0){
+      // Search members
+      $stmt = $pdo->prepare('SELECT UserId FROM table_UsersInGroup WHERE GroupId = ?');
+      $stmt->execute([ $groupId ]);
+      $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      $i = 0;
+      foreach($members as $member){
+        if($i == 0){
+          // Assign new admin to first member in loop
+          $group["AdminId"] = $member["Id"];
+          $i++;
+        }
+      }
+    }else{
+      // No members left -> delete group
+      deleteGroup($groupId);
+    }    
+  }
   
   return (object)[
     'type' => $type,

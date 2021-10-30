@@ -7,40 +7,8 @@ $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE InvitedId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST["confirmInvite"])){
-  // Insert friendship to table
-  $stmt = $pdo->prepare('INSERT INTO table_Friends (Id, IsFriendsWithId) VALUES (?, ?)');
-  $stmt->execute([ $_POST["userId"], $_SESSION["Id"] ]);
-  $stmt->execute([ $_SESSION["Id"], $_POST["userId"] ]);
-  // Remove notification
-  $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND InviterId = ?');
-  $stmt->execute([ $_SESSION["Id"], $_POST["userId"] ]);
-  // Notify user
-  $foutmelding = "Je bent nu bevriend met " . $_POST["username"] . ".";
-  $meldingSoort = "succes";
-  
-  // AWARD_GILLES SECTION
-  // Get how many friends a user has
-  $stmt = $pdo->prepare('SELECT COUNT(UserId) AS Count
-  FROM table_Friends
-  WHERE Id = ?
-  GROUP BY Id');
-
-  // User 1: If 10 friends -> Give award
-  $stmt->execute([ $_POST["userId"] ]);
-  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
-    giveAward($_POST["userId"], AWARD_GILLES);
-  }
-
-  // User 2: If 10 friends -> Give award
-  $stmt->execute([ $_SESSION["Id"] ]);
-  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
-    giveAward($_SESSION["Id"], AWARD_GILLES);
-  }
-
-  header('location:notifications.php');
+if (isset($_POST["confirmFriendInvite"])){
+  $notification = confirmFriendInvite($_POST["userId"], $_SESSION["Id"]);
 }
 
 ?>
@@ -54,7 +22,7 @@ if (isset($_POST["confirmInvite"])){
     <?php
       $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
       if($pageRefreshed == 1){
-        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
+        echo "showNotification('$notification->message','$notification->type');"; //message + color style
       }
     ?>
   })
@@ -84,9 +52,8 @@ if (isset($_POST["confirmInvite"])){
         ?>
         <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Username"]?></p>
         <form action="" method="post">
-          <input type="hidden" name="username" id="username" value="<?=$user["Username"]?>">
           <input type="hidden" name="userId" id="userId" value="<?=$user["Id"]?>">
-          <input type="submit" name="confirmInvite" id="confirmInvite" value="Accepteer">
+          <input type="submit" name="confirmFriendInvite" id="confirmFriendInvite" value="Accepteer">
         </form>
       <?php elseif($notification["NotificationType"] == 1): ?>
         <?php
