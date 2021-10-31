@@ -16,6 +16,8 @@ foreach($user_awards as $award){
   array_push($user_awards_id, $award['AwardId']);
 }
 
+// TODO FIX ACTIVE AWARD ISSUE
+
 // Get all available awards
 $stmt = $pdo->prepare('SELECT * FROM table_Awards WHERE Active = 1 ORDER BY Name');
 $stmt->execute();
