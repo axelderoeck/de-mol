@@ -3,7 +3,13 @@
 require_once("includes/phpdefault.php");
 
 // Get all groups from user
-$stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Private = 0');
+$stmt = $pdo->prepare('SELECT COUNT(GroupId) AS Members, table_Groups.* 
+FROM table_Groups
+LEFT JOIN table_UsersInGroups 
+ON table_Groups.Id = table_UsersInGroups.GroupId
+WHERE Private = 0
+GROUP BY GroupId
+ORDER BY Members DESC');
 $stmt->execute();
 $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -18,7 +24,7 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <?php if(!empty($groups)): ?>
       <?php $i = 0; foreach($groups as $group): ?>
       <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="group.php?g=<?=$group["Id"]?>">
-        <i class='fas fa-users left'></i>
+        <i class='fas fa-users left'><?=$group["Members"]?></i>
           <?=$group["Name"]?>
       </a>
       <?php $i++; endforeach; ?>

@@ -201,7 +201,7 @@ table td {
 .warning,
 .info,
 .translucent,
-.succes,
+.success,
 .locked {
   border-radius: 10px;
   border-width: 1px;
@@ -223,7 +223,7 @@ table td {
   border-color: #53adb5;
 }
 
-.succes {
+.success {
   background-color: rgba(57, 179, 27, 0.4);
   border-color: #39b31b;
 }

@@ -526,7 +526,7 @@ function addUserToGroup($id, $groupId){
     $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND GroupId = ?');
     $stmt->execute([ $id, $groupId ]);
     // Notify user
-    $message = "Toegevoegd aan groep.";
+    $message = "Aangesloten bij groep.";
     $type = "success";
   }else{
     // Notify user
@@ -564,7 +564,7 @@ function deleteUserFromGroup($id, $groupId){
   // If user is the admin of the group
   if($user["Id"] == $group["AdminId"]){
     // Get the amount of members
-    $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_UsersInGroups WHERE GroupId = ?');
+    $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_UsersInGroups WHERE GroupId = ? GROUP BY GroupId');
     $stmt->execute([ $groupId ]);
     $members_count = $stmt->fetchColumn(0);
     // If there are members -> assign a new admin
@@ -577,8 +577,12 @@ function deleteUserFromGroup($id, $groupId){
       foreach($members as $member){
         if($i == 0){
           // Assign new admin to first member in loop
-          $group["AdminId"] = $member["Id"];
+          $stmt = $pdo->prepare('UPDATE table_Groups SET AdminId = ? WHERE Id = ?');
+          $stmt->execute([ $member["UserId"], $group["Id"] ]);
           $i++;
+        }else{
+          // Stop the loop
+          break;
         }
       }
     }else{
