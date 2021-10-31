@@ -10,6 +10,9 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if (isset($_POST["confirmFriendInvite"])){
   $notification = confirmFriendInvite($_POST["userId"], $_SESSION["Id"]);
 }
+if (isset($_POST["confirmGroupInvite"])){
+  $notification = addUserToGroup($_SESSION["Id"], $_POST["groupId"]);
+}
 
 ?>
 
@@ -59,12 +62,14 @@ if (isset($_POST["confirmFriendInvite"])){
         <?php
         // Get all info from inviting group
         $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
-        $stmt->execute([ $notification["InviterId"] ]);
+        $stmt->execute([ $notification["GroupId"] ]);
         $group = $stmt->fetch(PDO::FETCH_ASSOC); 
         ?>
         <p>U hebt een groepsuitnodiging ontvangen voor de groep: <?=$group["Name"]?></p>
-      <?php elseif($notification["NotificationType"] == 2): ?>
-        <p><?=$notification["Message"]?></p>
+        <form action="" method="post">
+          <input type="hidden" name="groupId" id="groupId" value="<?=$group["Id"]?>">
+          <input type="submit" name="confirmGroupInvite" id="confirmGroupInvite" value="Accepteer">
+        </form>
       <?php endif; ?>
     <?php endforeach; ?>
     <?php else: ?>

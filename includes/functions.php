@@ -291,6 +291,8 @@ function createGroup($adminId, $name, $description, $private){
   if(!$group){
     $stmt = $pdo->prepare('INSERT INTO table_Groups (AdminId, Name, Description, Private) VALUES (?,?,?,?)');
     $stmt->execute([ $adminId, $name, $description, $private ]);
+    $group_id = $pdo->lastInsertId();
+    addUserToGroup($adminId, $group_id);
     // Notify User
     $type = 'success';
     $message = 'Groep is aangemaakt.';
@@ -518,15 +520,19 @@ function addUserToGroup($id, $groupId){
   // Group exists
   if($group){
     // Insert user to group
-    $stmt = $pdo->prepare('INSERT INTO table_UsersInGroup (UserId, GroupId) VALUES (?, ?)');
+    $stmt = $pdo->prepare('INSERT INTO table_UsersInGroups (UserId, GroupId) VALUES (?, ?)');
+    $stmt->execute([ $id, $groupId ]);
+    // Remove notification
+    $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND GroupId = ?');
     $stmt->execute([ $id, $groupId ]);
     // Notify user
     $message = "Toegevoegd aan groep.";
     $type = "success";
+  }else{
+    // Notify user
+    $message = "Groep niet gevonden.";
+    $type = "warning";
   }
-  // Notify user
-  $message = "Groep niet gevonden.";
-  $type = "warning";
   
   return (object)[
     'type' => $type,
@@ -549,7 +555,7 @@ function deleteUserFromGroup($id, $groupId){
   $group = $stmt->fetch(PDO::FETCH_ASSOC);
 
   // Remove user from group
-  $stmt = $pdo->prepare('DELETE FROM table_UsersInGroup WHERE UserId = ? AND GroupId = ?');
+  $stmt = $pdo->prepare('DELETE FROM table_UsersInGroups WHERE UserId = ? AND GroupId = ?');
   $stmt->execute([ $id, $groupId ]);
   // Notify user
   $message = "Groep verlaten.";
@@ -558,13 +564,13 @@ function deleteUserFromGroup($id, $groupId){
   // If user is the admin of the group
   if($user["Id"] == $group["AdminId"]){
     // Get the amount of members
-    $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_UsersInGroup WHERE GroupId = ?');
+    $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_UsersInGroups WHERE GroupId = ?');
     $stmt->execute([ $groupId ]);
     $members_count = $stmt->fetchColumn(0);
     // If there are members -> assign a new admin
     if($members_count > 0){
       // Search members
-      $stmt = $pdo->prepare('SELECT UserId FROM table_UsersInGroup WHERE GroupId = ?');
+      $stmt = $pdo->prepare('SELECT UserId FROM table_UsersInGroups WHERE GroupId = ?');
       $stmt->execute([ $groupId ]);
       $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
       $i = 0;

@@ -2,8 +2,8 @@
 
 require_once("includes/phpdefault.php");
 
-if (isset($_POST["submitFriendInvite"])){
-  $notification = sendFriendInvite($_SESSION["Id"], $_POST["friendcode"]);
+if (isset($_POST["submitGroupInvite"])){
+  $notification = sendGroupInvite($_GET["g"], $_POST["friendcode"]);
 }
 
 ?>
@@ -34,14 +34,15 @@ if (isset($_POST["submitFriendInvite"])){
     <div class="respContainer">
 
     <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-    <h1>Voeg een speler toe</h1>
+    <h1>Nodig een speler uit</h1>
     <form action="" method="post">
       <label>Friend code</label>
       <input placeholder="Friendcode" type="text" id="friendcode" name="friendcode">
-      <input type="submit" name="submitFriendInvite" id="submitFriendInvite" value="Voeg toe">
+      <input type="submit" name="submitGroupInvite" id="submitGroupInvite" value="Nodig uit">
     </form>
     <p class="example">
-      Vul de friendcode in van de speler die je wil toevoegen in jouw mollenjacht. <br><br>
+      Vul de gebruikersnaam in van de speler die je wil toevoegen in jouw mollenjacht. <br><br>
+      Let op: Het is belangrijk dat je de gebruikersnaam invult en niet de voornaam.
     </p>
     <h2>Voor wat dient dit?</h2>
     <p>Als je jouw vrienden en/of familie hier <span>toevoegt</span>, spelen jullie tegen elkaar in de <span>mollenjacht</span>. <br><br>

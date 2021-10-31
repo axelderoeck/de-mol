@@ -2,8 +2,8 @@
 
 require_once("includes/phpdefault.php");
 
-if (isset($_POST["submitFriendInvite"])){
-  $notification = sendFriendInvite($_SESSION["Id"], $_POST["friendcode"]);
+if (isset($_POST["createGroup"])){
+  $notification = createGroup($_SESSION["Id"], $_POST["name"], $_POST["description"], $_POST["private"]);
 }
 
 ?>
@@ -34,18 +34,19 @@ if (isset($_POST["submitFriendInvite"])){
     <div class="respContainer">
 
     <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-    <h1>Voeg een speler toe</h1>
+    <h1>Maak een groep aan</h1>
     <form action="" method="post">
-      <label>Friend code</label>
-      <input placeholder="Friendcode" type="text" id="friendcode" name="friendcode">
-      <input type="submit" name="submitFriendInvite" id="submitFriendInvite" value="Voeg toe">
+      <input placeholder="Naam" type="text" id="name" name="name">
+      <input placeholder="Beschrijving" type="text" id="description" name="description">
+      <input type="hidden" id="private" name="private" value="0">
+      <input type="checkbox" id="private" name="private" value="1">
+      <label for="private">Privé groep</label>
+      <br>
+      <input type="submit" name="createGroup" id="createGroup" value="Maak groep">
     </form>
     <p class="example">
-      Vul de friendcode in van de speler die je wil toevoegen in jouw mollenjacht. <br><br>
+      Maak een groep aan
     </p>
-    <h2>Voor wat dient dit?</h2>
-    <p>Als je jouw vrienden en/of familie hier <span>toevoegt</span>, spelen jullie tegen elkaar in de <span>mollenjacht</span>. <br><br>
-    Wanneer de <span>mol</span> bekend is zal er een <span>ranglijst</span> te zien zijn die jullie vertelt wie de beste <span>mollenjager</span> is.</p>
     </div>
   </div>
 

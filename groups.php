@@ -3,7 +3,7 @@
 require_once("includes/phpdefault.php");
 
 // Get all groups from user
-$stmt = $pdo->prepare('SELECT table_Groups.Name
+$stmt = $pdo->prepare('SELECT DISTINCT table_Groups.Id, table_Groups.Name
                       FROM table_Groups
                       LEFT JOIN table_UsersInGroups
                       ON table_Groups.Id = table_UsersInGroups.GroupId
@@ -30,8 +30,8 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <div class="deelnemersList">
       <?php if(!empty($groups)): ?>
       <?php $i = 0; foreach($groups as $group): ?>
-      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="group.php?g=<?=$group['Id']?>">
-        <i class='fas fa-user left'></i>
+      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="group.php?g=<?=$group["Id"]?>">
+        <i class='fas fa-users left'></i>
           <?=$group["Name"]?>
       </a>
       <?php $i++; endforeach; ?>
@@ -41,7 +41,8 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <hr>
-    <button onclick="location.href = 'addgroup.php';" class="styledBtn" type="submit" name="button">Zoek groepen</button>
+    <button onclick="location.href = 'creategroup.php';" class="styledBtn" type="submit" name="button">Maak een groep</button>
+    <button onclick="location.href = 'findgroups.php';" class="styledBtn" type="submit" name="button">Zoek groepen</button>
 </div>
   </div>
 
