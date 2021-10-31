@@ -45,44 +45,20 @@ if (isset($_POST["sendMail"])){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-  <script type="text/javascript">
-  window.addEventListener('load', function() {
-    <?php
-      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
-      if($pageRefreshed == 1){
-        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
-      }
-    ?>
-  })
-  </script>
-</head>
-<body>
-
-  <div id="informationPopup">
-    <!-- Dynamische info -->
-  </div>
+<?php include "includes/header.php"; ?>
 
   <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
-  <div id="main">
-    <div class="respContainer">
-      <h1>Wachtwoord vergeten</h1>
-      <h2>We vergeten allemaal wel eens.</h2>
+  <h1>Wachtwoord vergeten</h1>
+  <h2>We vergeten allemaal wel eens.</h2>
 
-      <form method="post" action="">
-        <p>Geef je email waar jouw account aan verbonden is.</p>
-        <input placeholder="Email" type="text" name="email">
-        <input value="Stuur" type="submit" name="sendMail" id="sendMail">
-      </form>
-      <p class="example">Als je geen email hebt toegevoegd aan je account zal je hier geen gebruik van kunnen maken.</p>
-      <p class="example">Komt de email niet aan? Check zeker je spam folder eens na. Probeer opnieuw als het na een paar minuten nog steeds niet is aangekomen.</p>
-    </div>
-  </div>
+  <form method="post" action="">
+    <p>Geef je email waar jouw account aan verbonden is.</p>
+    <input placeholder="Email" type="text" name="email">
+    <input value="Stuur" type="submit" name="sendMail" id="sendMail">
+  </form>
+  
+  <p class="example">Als je geen email hebt toegevoegd aan je account zal je hier geen gebruik van kunnen maken.</p>
+  <p class="example">Komt de email niet aan? Check zeker je spam folder eens na. Probeer opnieuw als het na een paar minuten nog steeds niet is aangekomen.</p>
 
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

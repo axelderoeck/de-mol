@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-
-<div id="main">
-  <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
   <a href="index.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
@@ -19,12 +11,4 @@
   <h2>Contact</h2>
   <p>U kan mij altijd contacteren op <span>mail@aksol.be</span></p>
 
-</div>
-</div>
-
-  <!-- JavaScript -->
-
-  <script type="text/javascript" src="js/scripts.js"></script>
-
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

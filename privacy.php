@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-
-<div id="main">
-  <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
   <a href="index.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
@@ -21,12 +13,4 @@
   <p>Deze site maakt gebruik van sessie <span>cookies</span>. Deze cookies onthouden wie je bent tot je weer <span>uitlogt</span> of te lang <span>inactief</span> bent.
     Zonder dit kan deze site <span>niet</span> functioneren. <br> Als u registreert gaat u <span>akkoord</span> met het gebruik deze <span>cookies</span>. </p>
 
-</div>
-</div>
-
-  <!-- JavaScript -->
-
-  <script type="text/javascript" src="js/scripts.js"></script>
-
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

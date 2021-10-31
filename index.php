@@ -11,7 +11,7 @@ include 'includes/functions.php';
 // Connect to MySQL database
 $pdo = pdo_connect_mysql();
 
-$meldingSoort = "succes";
+$meldingSoort = "success";
 
 // Active user id found -> send to home page
 
@@ -104,6 +104,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
   } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 3) {
     // Password must be between 3 and 20 characters long.
     $register_error = "tekst";
+    // same thing me username doen
   } else {
     // Hash the password
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);

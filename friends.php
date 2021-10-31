@@ -13,16 +13,7 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-  <div id="main">
-    <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Mollenjagers</h1>
@@ -45,11 +36,5 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <hr>
     <button onclick="location.href = 'adduser.php';" class="styledBtn" type="submit" name="button">Voeg spelers toe</button>
-</div>
-  </div>
-
-  <!-- JavaScript -->
-  <script type="text/javascript" src="js/scripts.js"></script>
-
-</body>
-</html>
+    
+<?php include "includes/footer.php"; ?>

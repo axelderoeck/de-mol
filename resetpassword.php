@@ -39,15 +39,8 @@ if (isset($_POST["changePassword"])){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
+<?php include "includes/header.php"; ?>
 
-  <div id="main">
-    <div class="respContainer">
       <h1>Wachtwoord veranderen</h1>
 
       <?php
@@ -68,9 +61,5 @@ if (isset($_POST["changePassword"])){
           echo "<p class='example'>De sessie is vervallen of niet correct.</p>";
         }
       ?>
-    </div>
-  </div>
 
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

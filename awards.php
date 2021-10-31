@@ -23,16 +23,8 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
+<?php include "includes/header.php"; ?>
 
-  <div id="main">
-    <div class="respContainer">
     <a href="profile.php?u=<?=$_SESSION["Id"] ?>"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <div class="awardslist">
       <?php $delay = 0; /* Animation delay value */ ?>
@@ -66,11 +58,6 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <?php $delay++; ?>
         <?php endif; ?>
       <?php endforeach; ?>
-
     </div>
-    </div>
-  </div>
 
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

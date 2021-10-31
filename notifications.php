@@ -9,37 +9,16 @@ $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_POST["confirmFriendInvite"])){
   $notification = confirmFriendInvite($_POST["userId"], $_SESSION["Id"]);
+  header('location: notifications.php');
 }
 if (isset($_POST["confirmGroupInvite"])){
   $notification = addUserToGroup($_SESSION["Id"], $_POST["groupId"]);
+  header('location: notifications.php');
 }
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-  <script>
-  window.addEventListener('load', function() {
-    <?php
-      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
-      if($pageRefreshed == 1){
-        echo "showNotification('$notification->message','$notification->type');"; //message + color style
-      }
-    ?>
-  })
-  </script>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-  <div id="informationPopup">
-    <!-- Dynamische info -->
-  </div>
-
-  <div id="main">
-    <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
     <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Meldingen</h1>
@@ -73,11 +52,7 @@ if (isset($_POST["confirmGroupInvite"])){
       <?php endif; ?>
     <?php endforeach; ?>
     <?php else: ?>
-      <p>U hebt momenteel geen meldingen</p>
+      <p>U heeft momenteel geen meldingen</p>
     <?php endif; ?>
-   
-  </div>
 
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

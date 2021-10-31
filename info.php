@@ -6,16 +6,7 @@ $votetime = str_split(VOTE_HOUR, 2);
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-  <div id="main">
-    <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
@@ -51,9 +42,6 @@ $votetime = str_split(VOTE_HOUR, 2);
 
     <h2>Ranglijst</h2>
     <p>Wanneer de <span>mol</span> bekend is zal deze pagina verschijnen en alle gebruikers hun punten <span>vergelijken</span>. Degene met de <span>meeste</span> punten op de juiste <span>mol</span> wint!</p>
-    </div>
-  </div>
 
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>
+

@@ -32,30 +32,7 @@ if ($group["AdminId"] == $_SESSION["Id"]) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-  <script>
-  window.addEventListener('load', function() {
-    <?php
-      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
-      if($pageRefreshed == 1){
-        echo "showNotification('$notification->message','$notification->type');"; //message + color style
-      }
-    ?>
-  })
-  </script>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-  <div id="informationPopup">
-    <!-- Dynamische info -->
-  </div>
-
-<div id="main">
-  <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
   <!-- User info -->
   <h1><?=$group["Name"]?></h1>
@@ -78,11 +55,4 @@ if ($group["AdminId"] == $_SESSION["Id"]) {
     <button onclick="location.href = 'addusertogroup.php?g=<?=$group["Id"]?>';" class="styledBtn" type="submit" name="button">Nodig spelers uit</button>
   <?php } ?>
 
-  </div>
-</div>
-
-  <!-- JavaScript -->
-  <script type="text/javascript" src="js/scripts.js"></script>
-
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

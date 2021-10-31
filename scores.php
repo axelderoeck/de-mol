@@ -33,16 +33,7 @@ $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-   <div class="rangList" id="main">
-     <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
      <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
       <h1>Scores</h1>

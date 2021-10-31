@@ -4,16 +4,8 @@ require_once("includes/phpdefault.php");
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
+<?php include "includes/header.php"; ?>
 
-  <div class="displayList" id="main">
-    <div class="respContainer">
       <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
       <h1>Mijn Molboek</h1>
       <h2>Jouw meest gespendeerde punten:</h2>
@@ -51,11 +43,5 @@ require_once("includes/phpdefault.php");
       <?php else: ?>
         <h2>Je hebt nog niet gestemd.</h2>  
       <?php endif; ?>
-      
-    </div>
- </div>
 
-  <!-- JavaScript -->
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

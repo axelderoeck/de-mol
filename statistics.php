@@ -41,19 +41,7 @@ $users_voted = $stmt->fetchColumn(0);
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <!--
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css'>
-  -->
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-  <div id="main">
-    <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
