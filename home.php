@@ -60,6 +60,14 @@ $votetime = str_split(VOTE_HOUR, 2);
 
 <div class="homeScreen" id="main">
   <div class="respContainer">
+  
+  <a href="profile.php?u=<?=$_SESSION["Id"]?>">
+    <div class="userBox info">
+      <span><?=$_SESSION["Username"]?> <i class="fas fa-user"></i></span>
+      <br>
+      <span><?=$_SESSION["Voted"]?> <i class="fas fa-coins"></i> <?=$_SESSION["Voted"]?> <i class="fas fa-fingerprint"></i></span>
+    </div>
+  </a>
 
   <h1>Dag <?=$_SESSION["Username"]?></h1>
 
