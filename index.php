@@ -101,11 +101,11 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
   } else if ($_POST['confirmPassword'] != $_POST['password']) {
     // Passwords do not match
     $register_error = "tekst";
-  } else if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 3) {
-    // Password must be between 3 and 20 characters long.
-    $register_error = "tekst";
-    // same thing me username doen
-  } else {
+  } else if (strlen($_POST['username']) > MAX_CHAR_USERNAME || strlen($_POST['username']) < MIN_CHAR_USERNAME) {
+    $register_error = "Gebruikersnaam moet tussen " . MIN_CHAR_USERNAME . " en " . MAX_CHAR_USERNAME . " karakters zijn.";
+  }else if (strlen($_POST['password']) > MAX_CHAR_PASSWORD || strlen($_POST['password']) < MIN_CHAR_PASSWORD) {
+    $register_error = "Wachtwoord moet tussen " . MIN_CHAR_PASSWORD . " en " . MAX_CHAR_PASSWORD . " karakters zijn.";
+  }else{
     // Hash the password
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     // Account does not exist, create new account

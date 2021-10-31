@@ -16,6 +16,16 @@ define('DB_PASS', $password);
 // Database name
 define('DB_NAME', $database);
 
+/* REGISTER SETTINGS */
+// Minimum characters username
+define('MIN_CHAR_USERNAME', 3);
+// Maximum characters username
+define('MAX_CHAR_USERNAME', 20);
+// Minimum characters password
+define('MIN_CHAR_PASSWORD', 3);
+// Maximum characters password
+define('MAX_CHAR_PASSWORD', 20);
+
 /* TIME SETTINGS */
 // Start of the season date
 define('SEASON_START', "03/21/2021"); // format: MM/DD/YYYY
