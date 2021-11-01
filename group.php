@@ -68,6 +68,14 @@ if (isset($_POST["leaveGroup"])){
 
 <?php include "includes/header.php"; ?>
 
+  <?php if($user_is_admin): ?>
+  <a href="javascript:editMode('editscreen', true);">
+    <div class="editbutton">
+        <i class="fas fa-edit"></i>
+    </div>
+  </a>
+  <?php endif; ?>
+
   <!-- User info -->
   <h1><?=$group["Name"]?></h1>
   <p><?=$group["Description"]?></p>
@@ -107,18 +115,22 @@ if (isset($_POST["leaveGroup"])){
   <?php if($user_is_admin): ?>
     <button onclick="location.href = 'addusertogroup.php?g=<?=$group["Id"]?>';" class="styledBtn" type="submit" name="button">Nodig spelers uit</button>
 
-    <form action="" method="post">
-      <label>Wijzig naam</label>
-      <input type="text" id="name" name="name" value="<?=$group["Name"]?>">
+    <div id="editscreen" class="editmenu">
+      <a href="javascript:editMode('editscreen', false);">&times;</a>
+      <form action="" method="post">
+        <label>Wijzig naam</label>
+        <input type="text" id="name" name="name" value="<?=$group["Name"]?>">
+        <br>
+        <label>Wijzig beschrijving</label>
+        <input type="text" id="description" name="description" value="<?=$group["Description"]?>">
 
-      <label>Wijzig beschrijving</label>
-      <input type="text" id="description" name="description" value="<?=$group["Description"]?>">
-
-      <input type="hidden" name="private" value="0">
-      <input <?php if($group['Private'] == 1) {echo 'checked';}; ?> type="checkbox" id="private" name="private" value="1" />
-      <label>Wijzig privacy</label>
-      <input type="submit" name="saveGroupSettings" id="saveGroupSettings" value="Opslaan">
-    </form>
+        <input type="hidden" name="private" value="0">
+        <input <?php if($group['Private'] == 1) {echo 'checked';}; ?> type="checkbox" id="private" name="private" value="1" />
+        <label>Wijzig privacy</label>
+        <br>
+        <input type="submit" name="saveGroupSettings" id="saveGroupSettings" value="Opslaan">
+      </form>
+    </div>
   <?php endif; ?>
 
 <?php include "includes/footer.php"; ?>

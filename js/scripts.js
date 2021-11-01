@@ -107,5 +107,16 @@ function setIndicator(direction) {
 	document.getElementById('thecooler_indicator').style.transform = "translateX(" + percent + "%)";
 	document.getElementById('thecooler_indicator').style["-webkit-transform"] = "translateX(" + percent + "%)";
 	document.getElementById('thecooler_indicator').style["-ms-transform"] = "translateX(" + percent + "%)";
+}
 
+function editMode(id, visible){
+	if(visible == true){
+		document.getElementById(id).style.transform = "translateX(0%)";
+		document.getElementById(id).style["-webkit-transform"] = "translateX(0%)";
+		document.getElementById(id).style["-ms-transform"] = "translateX(0%)";
+	}else if(visible == false){
+		document.getElementById(id).style.transform = "translateX(100%)";
+		document.getElementById(id).style["-webkit-transform"] = "translateX(100%)";
+		document.getElementById(id).style["-ms-transform"] = "translateX(100%)";
+	}
 }

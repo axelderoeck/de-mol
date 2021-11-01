@@ -59,9 +59,34 @@ if ($user_owns_account == true) {
 
 }
 
+if (isset($_POST["saveUserSettings"])){
+  // Check if something changed before executing function
+  if($_POST["username"] != $account["Username"]){
+    $notification = changeUsername($account["Id"], $_POST["username"]);
+  }
+  if($_POST["email"] != $account["Email"]){
+    $notification = changeEmail($account["Id"], $_POST["email"]);
+  }
+  // If no errors -> set general success message
+  if($notification->type != 'warning'){
+    $notification->type = "success";
+    $notification->message = "Gegevens opgeslagen";
+    // Refresh after 1 second to show the updated info
+    header('Refresh:1');
+  }
+}
+
 ?>
 
 <?php include "includes/header.php"; ?>
+
+  <?php if($user_owns_account): ?>
+  <a href="javascript:editMode('editscreen', true);">
+    <div class="editbutton">
+        <i class="fas fa-edit"></i>
+    </div>
+  </a>
+  <?php endif; ?>
 
   <?php if ($user_owns_account == false) { ?>
   <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
@@ -165,5 +190,31 @@ if ($user_owns_account == true) {
       <input type="submit" name="deleteFromFollowing" id="deleteFromFollowing" value="Verwijder van lijst">
     </form>
   <?php } ?>
+
+  <?php if($user_owns_account): ?>
+  <div id="editscreen" class="editmenu">
+    <a href="javascript:editMode('editscreen', false);">&times;</a>
+
+    <form action="" method="post">
+      <label>Gebruikersnaam</label>
+      <input name="username" id="username" type="text" value="<?=$account["Username"]?>">
+      <br>
+      <label>Email</label>
+      <input name="email" id="email" type="text" value="<?=$account["Email"]?>">
+      <br>
+      <input type="submit" name="saveUserSettings" id="saveUserSettings" value="Opslaan">
+    </form>
+
+      <form name="formChangePassword" action="" method="post">
+          <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
+          <br>
+          <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
+          <br>
+          <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
+          <br>
+          <input type="submit" name="changePassword" id="changePassword" value="Verander">
+      </form>
+  </div>
+  <?php endif; ?>
 
 <?php include "includes/footer.php"; ?>
