@@ -76,10 +76,86 @@ if (isset($_POST["formSubmitVote"])){
 <head>
   <link rel="stylesheet" href="css/stemmen<?php echo "V" . STYLE_VERSION; ?>.css">
   <?php include "includes/headinfo.php"; ?>
-  <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-
   <script>
     window.addEventListener('load', function() {
+      //PHP waardes in array steken
+      let candidates = [
+        { id: 0, 
+          name: 'dummy', 
+          age: 0, 
+          job: 'placeholder', 
+          status: 'hidden', 
+          direction: 'Right' },
+
+        <?php $i = 1; foreach($candidates as $candidate): ?>
+          { id: <?= $candidate['Id'] ?>,  
+            name: <?= "'" . $candidate['Name'] . "'"; ?>, 
+            age: <?= $candidate['Age']; ?>, 
+            job: <?= "'" . $candidate['Job'] . "'"; ?>, 
+            status: <?= "'" . $candidate['Status'] . "'"; ?> 
+          },
+        <?php $i++; endforeach; ?>
+
+        { id: <?= $i+1; ?>, name: 'dummy', age: 0, job: 'placeholder', status: 'hidden', direction: 'Left' }
+      ]
+
+      //Array waardes in een div card steken
+      var html = "";
+      candidates.forEach(candidate => {
+        if (candidate.status == "hidden") {
+          if (candidate.direction == "Left") {
+            var imgSrc = "src='img/assets/dummyLeft.jpg'";
+          } else if (candidate.direction == "Right") {
+            var imgSrc = "src='img/assets/dummyRight.jpg'";
+          }
+          html += `<div class='swiper-slide' id='${candidate.id}'>
+                  <div style="display: none;">
+                    <input form="deMolForm" type="text" class="btnValue" name="${candidate.id}" id="${candidate.id}" value="0" readonly/>
+                  </div>
+                  <img class="cardImage" ${imgSrc} alt="foto van ${candidate.name}" />
+            </div>`;
+        }else if(candidate.status == 0) {
+          html += `<div class='swiper-slide' id='${candidate.id}'>
+                  <div class="cardNameBG">
+                  <p class="cardName">${candidate.name}</p>
+                  </div>
+                  <p class="cardInfo">${candidate.age} <span style="color: #53adb5; font-weight: 800">//</span> ${candidate.job}</p>
+
+                  <div style="display: none;">
+                    <input form="deMolForm" type="text" class="btnValue" name="${candidate.id}" id="${candidate.id}" value="0" readonly/>
+                  </div>
+                  <div class="disabledPerson"><img class="cardImage" src="img/kandidaten/${candidate.name}.jpg" alt="foto van ${candidate.name}" /></div>
+            </div>`;
+        } else {
+          html += `<div class='swiper-slide' id='${candidate.id}'>
+                  <div class="cardNameBG">
+                  <p class="cardName">${candidate.name}</p>
+                  </div>
+                  <p class="cardInfo">${candidate.age} <span style="color: #53adb5; font-weight: 800">//</span> ${candidate.job}</p>
+
+                  <div class="cardBottom">
+                    <input form="deMolForm" type="hidden" name="${candidate.id}_id" id="${candidate.id}_id" value="${candidate.id}" />
+                    <img class="cardLogo" src="img/assets/molLogo.png" alt="mol logo" />
+                    <p>Inzet: <input form="deMolForm" type="text" class="btnValue" name="candidate_${candidate.id}" id="candidate_${candidate.id}" value="0" readonly/></p>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="decrementValue('candidate_${candidate.id}')"><img class="btnValueChange" src="img/assets/ButtonMin.png"/></button>
+                    <button style="background-color: rgba(0,0,0,0); border: 0;" type="button" onclick="incrementValue('candidate_${candidate.id}')"><img class="btnValueChange" src="img/assets/ButtonPlus.png"/></button>
+                  </div>
+                  <img class="cardImage" src="img/kandidaten/${candidate.name}.jpg" alt="foto van ${candidate.name}" />
+            </div>`;
+        }
+      });
+      document.getElementById("carousel").innerHTML += html;
+
+      //Carousel aanmaken
+      var swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+          loop: false,
+          spaceBetween: 0,
+          initialSlide: 1,
+          pagination: {
+            el: '.swiper-pagination',
+          },
+      });
 
       submitKnop("aan");
       
@@ -144,25 +220,12 @@ if (isset($_POST["formSubmitVote"])){
 
   <form id="deMolForm" method="POST" action="">
 
-  <!-- form carousel -->
-  <div class="slider-for">
-    <?php foreach($candidates as $candidate): ?>
-      <div class="candidateInfo">
-        <p><?=$candidate['Name']?> 
-        <br> <?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
-        <input type="range" min="1" max="100" value="0" class="slider" id="myRange">
-      </div>
-    <?php endforeach; ?>
-  </div>
+  <div class="swiper-container">
+    <div id="carousel" class="swiper-wrapper">
 
-  <div class="arrow-down"></div>
-  <!-- select carousel -->
-  <div class="slider-nav">
-    <?php foreach($candidates as $candidate): ?>
-      <div class='candidate' id='candidate<?=$candidate['Id']?>'>
-        <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
-      </div>
-    <?php endforeach; ?>
+      <!-- dynamische items -->
+
+    </div>
   </div>
 
   <div class="submitDiv">
@@ -172,37 +235,10 @@ if (isset($_POST["formSubmitVote"])){
   </div>
 </div>
 
-  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script type="text/javascript" src="slick/slick.min.js"></script>
   <!-- JavaScript -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('.slider-for').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        fade: true,
-        asNavFor: '.slider-nav',
-        swipe: false,
-        draggable: false
-      });
-      $('.slider-nav').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        asNavFor: '.slider-for',
-        dots: false,
-        arrows: false,
-        centerMode: true,
-        centerPadding: '5%',
-        focusOnSelect: true,
-        draggable: true,
-        mobileFirst: true,
-      });
-    });
-  </script>
 
 </body>
 </html>

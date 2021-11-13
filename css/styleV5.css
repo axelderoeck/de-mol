@@ -11,6 +11,19 @@
   font-size: 20px;
 }
 
+.userBox span {
+  margin: 0;
+  padding: 0;
+}
+
+.userBox .friendcode{
+  font-size: 16px;
+  text-align: right;
+  color: #ccc;
+  padding: 0;
+  margin: 0;
+}
+
 .editbutton {
   position: absolute;
   right: 0;

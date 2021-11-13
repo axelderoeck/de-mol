@@ -4,6 +4,10 @@ require_once("includes/phpdefault.php");
 
 $votetime = str_split(VOTE_HOUR, 2);
 
+$stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+$stmt->execute([ $_SESSION["Id"] ]);
+$account = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +67,13 @@ $votetime = str_split(VOTE_HOUR, 2);
   
   <a href="profile.php?u=<?=$_SESSION["Id"]?>">
     <div class="userBox info">
-      <span><?=$_SESSION["Username"]?> <i class="fas fa-user"></i></span>
-      <br>
-      <span><?=$_SESSION["Voted"]?> <i class="fas fa-coins"></i> <?=$_SESSION["Voted"]?> <i class="fas fa-fingerprint"></i></span>
+      <span><?=$account["Username"]?></span><br>
+      <span class="friendcode">#<?=$account["Friendcode"]?></span><br>
+      <span><?=$account["Highscore"]?> <i class="fas fa-coins"></i> <?=$account["Highscore"]?> <i class="fas fa-fingerprint"></i></span>
     </div>
   </a>
 
-  <h1>Dag <?=$_SESSION["Username"]?></h1>
+  <h1>Dag <?=$account["Username"]?></h1>
 
   <div class="buttonsDiv">
     <a href="molboek.php"><i class="fas fa-fingerprint translucent"></i></a>
