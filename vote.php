@@ -150,7 +150,7 @@ if (isset($_POST["formSubmitVote"])){
       <div class="candidateInfo">
         <p><?=$candidate['Name']?> 
         <br> <?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
-        <input type="range" min="1" max="100" value="0" class="slider" id="myRange">
+        <input type="range" min="1" max="11" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
       </div>
     <?php endforeach; ?>
   </div>
@@ -172,19 +172,21 @@ if (isset($_POST["formSubmitVote"])){
   </div>
 </div>
 
+  <!-- JavaScript -->
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script type="text/javascript" src="slick/slick.min.js"></script>
-  <!-- JavaScript -->
   <script type="text/javascript" src="js/scripts.js"></script>
 
+  <!-- Slick Settings -->
   <script type="text/javascript">
     $(document).ready(function(){
       $('.slider-for').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
-        fade: true,
+        fade: false,
+        speed: 0,
         asNavFor: '.slider-nav',
         swipe: false,
         draggable: false
@@ -201,6 +203,43 @@ if (isset($_POST["formSubmitVote"])){
         draggable: true,
         mobileFirst: true,
       });
+      $(".demolslider").on("change", function(){
+        
+        // Get the current total voted points
+        var totalVoted = 0;
+        <?php foreach($candidates as $candidate): ?>
+        totalVoted += parseInt($('#slider<?=$candidate['Id']?>').val() -1);
+        <?php endforeach; ?>
+        console.log('totalVoted: ' + totalVoted);
+        /*
+        // Check for max available points
+        if(totalVoted >= 24){ // 24 test number
+          alert('Je hebt alle beschikbare punten ingezet.');
+        }*/
+
+      });
+
+      <?php foreach($candidates as $candidate): ?>
+        
+        $("#slider<?=$candidate['Id']?>").on("change", function(){
+          /*
+          // Get the current total voted points
+          var totalVoted = 0;
+          <?php foreach($candidates as $candidate): ?>
+          totalVoted += parseInt($('#slider<?=$candidate['Id']?>').val() -1);
+          <?php endforeach; ?>
+          console.log('totalVoted: ' + totalVoted);
+          */
+
+          // Check for max available points
+          if(totalVoted > 24){ // 24 test number
+            //alert('Je hebt alle beschikbare punten ingezet.');
+            document.getElementById('slider<?=$candidate['Id']?>').value = 0;
+            //$('#slider<?=$candidate['Id']?>').val(0);
+          }
+          
+        });
+      <?php endforeach; ?>
     });
   </script>
 

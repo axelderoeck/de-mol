@@ -123,10 +123,10 @@ if (isset($_POST["leaveGroup"])){
         <br>
         <label>Wijzig beschrijving</label>
         <input type="text" id="description" name="description" value="<?=$group["Description"]?>">
-
+        <br>
+        <label>Privé groep</label>
         <input type="hidden" name="private" value="0">
         <input <?php if($group['Private'] == 1) {echo 'checked';}; ?> type="checkbox" id="private" name="private" value="1" />
-        <label>Wijzig privacy</label>
         <br>
         <input type="submit" name="saveGroupSettings" id="saveGroupSettings" value="Opslaan">
       </form>

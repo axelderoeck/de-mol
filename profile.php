@@ -205,15 +205,20 @@ if (isset($_POST["saveUserSettings"])){
       <input type="submit" name="saveUserSettings" id="saveUserSettings" value="Opslaan">
     </form>
 
-      <form name="formChangePassword" action="" method="post">
-          <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
-          <br>
-          <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
-          <br>
-          <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
-          <br>
-          <input type="submit" name="changePassword" id="changePassword" value="Verander">
-      </form>
+    <h3>Wachtwoord wijzigen</h3>
+    <form name="formChangePassword" action="" method="post">
+      <label>Oud wachtwoord</label>
+      <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
+      <br>
+      <label>Wachtwoord</label>
+      <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
+      <br>
+      <label>Wachtwoord</label>
+      <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
+      <br>
+      <input type="submit" name="changePassword" id="changePassword" value="Wijzig">
+    </form>
+
   </div>
   <?php endif; ?>
 
