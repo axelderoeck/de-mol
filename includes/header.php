@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
+    <!-- Slick -->
+    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+
     <!-- FONTAWESOME -->
     <script src="https://kit.fontawesome.com/90f9e5d42f.js" crossorigin="anonymous"></script>
 

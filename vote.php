@@ -75,24 +75,8 @@ if (isset($_POST["formSubmitVote"])){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <link rel="stylesheet" href="css/stemmen<?php echo "V" . STYLE_VERSION; ?>.css">
-  <?php include "includes/headinfo.php"; ?>
-  <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+<?php include "includes/header.php"; ?>
 
-  <script>
-    window.addEventListener('load', function() {
-      submitKnop("aan");   
-    })
-  </script>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-<div class="votePage" id="main">
- <div class="respContainer">
   <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
 
   <h1>WIE IS DE <span>MOL</span> ?</h1>
@@ -100,34 +84,36 @@ if (isset($_POST["formSubmitVote"])){
 
   <form id="deMolForm" method="POST" action="">
 
-  <!-- form carousel -->
-  <div class="slider-for">
-    <?php foreach($candidates as $candidate): ?>
-      <div class="candidateInfo">
-        <p><?=$candidate['Name']?> 
-        <br> <?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
-        <p class="userPointsLeft"><?=$account['Score']?></p>
-        <p id="pointsCandidate<?=$candidate['Id']?>">0</p>
-        <input type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
-      </div>
-    <?php endforeach; ?>
-  </div>
+    <!-- form carousel -->
+    <div class="slider-for">
+      <?php foreach($candidates as $candidate): ?>
+        <div class="candidateInfo">
+          <p><?=$candidate['Name']?> 
+          <br><?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
+          <p class="userPointsLeft"><?=$account['Score']?></p>
+          <p id="pointsCandidate<?=$candidate['Id']?>">0</p>
+          <input type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
+        </div>
+      <?php endforeach; ?>
+    </div>
 
-  <div class="arrow-down"></div>
-  <!-- select carousel -->
-  <div class="slider-nav">
-    <?php foreach($candidates as $candidate): ?>
-      <div class='candidate' id='candidate<?=$candidate['Id']?>'>
-        <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
-      </div>
-    <?php endforeach; ?>
-  </div>
+    <div class="arrow-down"></div>
+    <!-- select carousel -->
+    <div class="slider-nav">
+      <?php foreach($candidates as $candidate): ?>
+        <div class='candidate' id='candidate<?=$candidate['Id']?>'>
+          <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
+        </div>
+      <?php endforeach; ?>
+    </div>
 
-  <div class="submitDiv">
-    <input style="margin-bottom: 20%;" form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
-  </div>
+    <div class="submitDiv">
+      <input style="margin-bottom: 20%;" form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
+    </div>
+
   </form>
-  </div>
+
+</div>
 </div>
 
   <!-- JavaScript -->
@@ -164,6 +150,7 @@ if (isset($_POST["formSubmitVote"])){
         mobileFirst: true,
       });
       <?php foreach($candidates as $candidate): ?>
+      // If slider value is changed ->
       $("#slider<?=$candidate['Id']?>").on("input", function(){
         // Get the current total voted points
         var totalVoted = 0;

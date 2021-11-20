@@ -833,3 +833,71 @@
   overflow: hidden;
   color: #ffffff !important;
 }
+
+/* Vote page */
+
+.candidate {
+  margin: 0 2px;
+}
+
+.candidateInfo {
+  text-transform: capitalize;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+.candidateInfo input[type=range]{
+  margin: 30px auto;
+  width: 80%;
+}
+
+.arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 30px solid #53adb5;
+  position: absolute;
+  transform: translateY(-10px);
+  z-index: 1001;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.candidate img {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.disabledPerson{
+  position: relative;
+}
+
+.disabledPerson:after{
+  -webkit-position: absolute; content: ''; display: block; top: 0; left: 0; height: 100%; width: 100%;
+  -webkit-background: rgba(235, 38, 38, 0.99);
+  -webkit-mix-blend-mode: color;
+  -moz-position: absolute; content: ''; display: block; top: 0; left: 0; height: 100%; width: 100%;
+  -moz-background: rgba(235, 38, 38, 0.99);
+  -moz-mix-blend-mode: color;
+  position: absolute; content: ''; display: block; top: 0; left: 0; height: 100%; width: 100%;
+  background: rgba(235, 38, 38, 0.99);
+  mix-blend-mode: color;
+}
+
+
+.btnValue {
+  background-color: rgba(0,0,0,0);
+  color: #ffffff;
+  font-size: 40px;
+  font-weight: 600;
+  font-family: 'Knockout';
+  border: none;
+  display: inline;
+  width: 120px;
+  text-align: left;
+}
