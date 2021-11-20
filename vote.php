@@ -17,6 +17,10 @@ $stmt = $pdo->prepare('SELECT * FROM table_Candidates');
 $stmt->execute();
 $candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+$stmt->execute([ $_SESSION["Id"] ]);
+$account = $stmt->fetch(PDO::FETCH_ASSOC);
+
 if (isset($_POST["formSubmitVote"])){
   // Check if user has voting records
   $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ?');
@@ -80,56 +84,8 @@ if (isset($_POST["formSubmitVote"])){
 
   <script>
     window.addEventListener('load', function() {
-
-      submitKnop("aan");
-      
-      //Punten Bereken functies
-      window.isOverValue = function(value)
-      {
-        var total = 0;
-        candidates.forEach(candidate => {
-            total += parseInt(document.getElementById('candidate_' + candidate.id).value, 10);
-        });
-        if(total < value){
-          return false;
-        }
-        return true;
-      }
-
-    }) //Einde Event Listener
-
-      function incrementValue(id){
-        var value = parseInt(document.getElementById(id).value, 10);
-        value = isNaN(value) ? 0 : value;
-        /*
-        if (isOverValue(9) == true) {
-          submitKnop("aan");
-        }
-        if (isOverValue(10) == false){
-          value++;
-        }else {
-          alert("Je kan niet meer dan 10 punten inzetten.")
-        }
-        */
-        value++;
-        document.getElementById(id).defaultValue = value;
-      }
-
-      function decrementValue(id){
-        var value = parseInt(document.getElementById(id).value, 10);
-        value = isNaN(value) ? 0 : value;
-        /*
-        if (isOverValue(9) == true) {
-          submitKnop("uit");
-        }
-        if(value > 0) {
-          value--;
-        }
-        */
-        value--;
-        document.getElementById(id).defaultValue = value;
-      }
-
+      submitKnop("aan");   
+    })
   </script>
 </head>
 <body>
@@ -150,7 +106,9 @@ if (isset($_POST["formSubmitVote"])){
       <div class="candidateInfo">
         <p><?=$candidate['Name']?> 
         <br> <?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
-        <input type="range" min="1" max="11" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
+        <p class="userPointsLeft"><?=$account['Score']?></p>
+        <p id="pointsCandidate<?=$candidate['Id']?>">0</p>
+        <input type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
       </div>
     <?php endforeach; ?>
   </div>
@@ -181,6 +139,7 @@ if (isset($_POST["formSubmitVote"])){
   <!-- Slick Settings -->
   <script type="text/javascript">
     $(document).ready(function(){
+      // Slick settings for voting system
       $('.slider-for').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -191,6 +150,7 @@ if (isset($_POST["formSubmitVote"])){
         swipe: false,
         draggable: false
       });
+      // Slick settings for candidate list
       $('.slider-nav').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -203,42 +163,33 @@ if (isset($_POST["formSubmitVote"])){
         draggable: true,
         mobileFirst: true,
       });
-      $(".demolslider").on("change", function(){
-        
+      <?php foreach($candidates as $candidate): ?>
+      $("#slider<?=$candidate['Id']?>").on("input", function(){
         // Get the current total voted points
         var totalVoted = 0;
-        <?php foreach($candidates as $candidate): ?>
-        totalVoted += parseInt($('#slider<?=$candidate['Id']?>').val() -1);
+        <?php foreach($candidates as $candidateVoted): ?>
+        totalVoted += parseInt($('#slider<?=$candidateVoted['Id']?>').val());
         <?php endforeach; ?>
-        console.log('totalVoted: ' + totalVoted);
-        /*
-        // Check for max available points
-        if(totalVoted >= 24){ // 24 test number
-          alert('Je hebt alle beschikbare punten ingezet.');
-        }*/
-
-      });
-
-      <?php foreach($candidates as $candidate): ?>
         
-        $("#slider<?=$candidate['Id']?>").on("change", function(){
-          /*
-          // Get the current total voted points
-          var totalVoted = 0;
-          <?php foreach($candidates as $candidate): ?>
-          totalVoted += parseInt($('#slider<?=$candidate['Id']?>').val() -1);
-          <?php endforeach; ?>
-          console.log('totalVoted: ' + totalVoted);
-          */
+        // Check for max available points
+        if(totalVoted > <?=$account["Score"]?>){
+          // Get the current selected value
+          let selectedValue = $('#slider<?=$candidate['Id']?>').val();
+          // Calculate the new value correctly with set limit
+          let newSelectedValue = selectedValue - (totalVoted - <?=$account["Score"]?>);
+          // Change display values
+          $('#slider<?=$candidate['Id']?>').val(newSelectedValue);
+          $("#pointsCandidate<?=$candidate['Id']?>").text(newSelectedValue);
+          // Correct the total points left to 0
+          $(".userPointsLeft").text(0);
+        }else{
+          // Change the total points display
+          $(".userPointsLeft").text(<?=$account["Score"]?> - totalVoted);
+        }
 
-          // Check for max available points
-          if(totalVoted > 24){ // 24 test number
-            //alert('Je hebt alle beschikbare punten ingezet.');
-            document.getElementById('slider<?=$candidate['Id']?>').value = 0;
-            //$('#slider<?=$candidate['Id']?>').val(0);
-          }
-          
-        });
+        // Change the displayed value
+        $("#pointsCandidate<?=$candidate['Id']?>").text($('#slider<?=$candidate['Id']?>').val());
+      });
       <?php endforeach; ?>
     });
   </script>
