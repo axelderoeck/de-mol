@@ -21,7 +21,73 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
+function submitVote($id, $candidates, $maxScore){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Calculate the total points voted
+  $totalScore = 0;
+  foreach($candidates as $candidate){
+    // Get the score from form on this candidate
+    $totalScore += $_POST["candidate" . $candidate["Id"]];
+    echo $_POST["candidate" . $candidate["Id"]];
+  }
+  echo "total: " . $totalScore;
+
+  // Check if the score is correct
+  if($totalScore > $maxScore){
+    $type = "warning";
+    $message = "Er zijn meer punten ingezet dan je hebt.";
+  }else if($totalScore == 0){
+    $type = "warning";
+    $message = "Je hebt geen punten ingezet.";
+  }else{
+    // Score is ok -> execute vote
+
+    // Prepare the statement for updating scores
+    $stmt = $pdo->prepare('UPDATE table_Scores SET Score = ? WHERE UserId = ? AND CandidateId = ?');
+
+    foreach($candidates as $candidate){
+      // Get the score from form on this candidate
+      $score = $_POST["candidate" . $candidate["Id"]];
+      // Add score
+      $stmt->execute([ $score, $id, $candidate["Id"] ]);
+    }
+
+    // Specify that this user has voted
+    $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1 WHERE Id = ?');
+    $stmt->execute([ $id ]);
+    $_SESSION["Voted"] = 1;
+
+    // AWARD SECTION TODO
+    /*
+    // Check if conditions for TUNNELVISIE match
+    $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ? AND Score > ?');
+    $stmt->execute([ $_SESSION["Id"], AWARD_TUNNELVISIE_AMOUNT ]);
+    $score_over_limit = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Give TUNNELVISIE award 
+    if(!empty($score_over_limit)){
+      giveAward($_SESSION["Id"], AWARD_TUNNELVISIE);
+    }
+    */
+
+    // give DEELNEMER award to user
+    giveAward($id, AWARD_DEELNEMER);
+
+    $type = "success";
+    $message = "Bedankt om te stemmen.";
+
+    header('location:home.php');
+  }
+
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
 if (isset($_POST["formSubmitVote"])){
+  
   // Check if user has voting records
   $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ?');
   $stmt->execute([ $_SESSION["Id"] ]);
@@ -36,40 +102,20 @@ if (isset($_POST["formSubmitVote"])){
     }
   }
 
-  // Prepare the statement for updating scores
-  $stmt = $pdo->prepare('UPDATE table_Scores SET Score = Score + ? WHERE UserId = ? AND CandidateId = ?');
-
+  // Calculate the total points voted
+  //$totalScore = 0;
+  /*
   foreach($candidates as $candidate){
     // Get the score from form on this candidate
-    $score = $_POST["candidate_" . $candidate["Id"]];
+    $score = $_POST["candidate" . $candidate["Id"]];
+    //$totalScore += $score;
+    echo "candidate" . $candidate["Id"] . ": " . $score;
+    echo "<br>";
+  }*/
+  //echo "total: " . $totalScore;
 
-    // Check if user matches criteria for All-In award
-    if ($score == AWARD_ALL_IN_AMOUNT) {
-      giveAward($_SESSION["Id"], AWARD_ALL_IN);
-    }
-
-    // Add score
-    $stmt->execute([ $score, $_SESSION["Id"], $candidate["Id"] ]);
-  }
-
-  // Specify that this user has voted
-  $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1 WHERE Id = ?');
-  $stmt->execute([ $_SESSION["Id"] ]);
-  $set_voted = $stmt->fetch(PDO::FETCH_ASSOC);
-  $_SESSION["Voted"] = 1;
-  
-  // AWARD SECTION
-    // Check if conditions for TUNNELVISIE match
-    $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ? AND Score > ?');
-    $stmt->execute([ $_SESSION["Id"], AWARD_TUNNELVISIE_AMOUNT ]);
-    $score_over_limit = $stmt->fetch(PDO::FETCH_ASSOC);
-    // Give TUNNELVISIE award 
-    if(!empty($score_over_limit)){
-      giveAward($_SESSION["Id"], AWARD_TUNNELVISIE);
-    }
-    // give DEELNEMER award to user
-    giveAward($_SESSION["Id"], AWARD_DEELNEMER);
-  header('location:home.php');
+  // Execute vote
+  $notification = submitVote($_SESSION["Id"], $candidates, $account["Score"]);
 
 }
 
@@ -82,7 +128,7 @@ if (isset($_POST["formSubmitVote"])){
   <h1>WIE IS DE <span>MOL</span> ?</h1>
   <h2><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</h2>
 
-  <form id="deMolForm" method="POST" action="">
+  <form id="deMolForm" method="POST" action=""></form>
 
     <!-- form carousel -->
     <div class="slider-for">
@@ -92,6 +138,7 @@ if (isset($_POST["formSubmitVote"])){
           <br><?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
           <p class="userPointsLeft"><?=$account['Score']?></p>
           <p id="pointsCandidate<?=$candidate['Id']?>">0</p>
+          <input form="deMolForm" type="text" value="0" name="candidate<?=$candidate['Id']?>" id="candidate<?=$candidate['Id']?>" readonly>
           <input type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
         </div>
       <?php endforeach; ?>
@@ -110,8 +157,6 @@ if (isset($_POST["formSubmitVote"])){
     <div class="submitDiv">
       <input style="margin-bottom: 20%;" form="deMolForm" name="formSubmitVote" id="formSubmitVote" class="formSubmitBtn" type="submit" value="Inzenden" />
     </div>
-
-  </form>
 
 </div>
 </div>
@@ -173,7 +218,8 @@ if (isset($_POST["formSubmitVote"])){
           // Change the total points display
           $(".userPointsLeft").text(<?=$account["Score"]?> - totalVoted);
         }
-
+        
+        document.getElementById("candidate<?=$candidate['Id']?>").defaultValue = $('#slider<?=$candidate['Id']?>').val();
         // Change the displayed value
         $("#pointsCandidate<?=$candidate['Id']?>").text($('#slider<?=$candidate['Id']?>').val());
       });

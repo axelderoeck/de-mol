@@ -889,15 +889,3 @@
   mix-blend-mode: color;
 }
 
-
-.btnValue {
-  background-color: rgba(0,0,0,0);
-  color: #ffffff;
-  font-size: 40px;
-  font-weight: 600;
-  font-family: 'Knockout';
-  border: none;
-  display: inline;
-  width: 120px;
-  text-align: left;
-}

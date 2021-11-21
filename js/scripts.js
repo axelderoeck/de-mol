@@ -71,14 +71,16 @@ function collapse(contentId, buttonId) {
 	}
 }
 
-function showNotification(message, type) {
-	var notification = document.getElementById('informationPopup')
-	notification.classList.add(type);
-	notification.innerHTML = "<p>" + message + "</p>";
-	notification.style.top = "20px";
-	setTimeout(function() {
-		notification.style.top = "-50px";
-	}, 4000); //wait 4 seconds before closing again
+function showNotification(message = "", type = "warning") {
+	var notification = document.getElementById('informationPopup');
+	if(type != ""){
+		notification.classList.add(type);
+		notification.innerHTML = "<p>" + message + "</p>";
+		notification.style.top = "20px";
+		setTimeout(function() {
+			notification.style.top = "-50px";
+		}, 4000); //wait 4 seconds before closing again
+	}
 }
 
 function showPopup(id, showhide) {
