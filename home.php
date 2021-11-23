@@ -13,7 +13,7 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="aksol" data-description="Support me on Buy me a coffee!" data-message="Ben je tevreden met mijn werk en wil je me steunen?" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+  <!-- <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="aksol" data-description="Support me on Buy me a coffee!" data-message="Ben je tevreden met mijn werk en wil je me steunen?" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script> -->
 
   <?php include "includes/headinfo.php"; ?>
   <script>
@@ -69,7 +69,7 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="userBox info">
       <span><?=$account["Username"]?></span><br>
       <span class="friendcode">#<?=$account["Friendcode"]?></span><br>
-      <span><?=$account["Highscore"]?> <i class="fas fa-coins"></i> <?=$account["Highscore"]?> <i class="fas fa-fingerprint"></i></span>
+      <span><?=$account["Score"]?> <i class="fas fa-coins"></i> <?=$account["Score"]?> <i class="fas fa-fingerprint"></i></span>
     </div>
   </a>
 

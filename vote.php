@@ -25,14 +25,27 @@ function submitVote($id, $candidates, $maxScore){
   // DB connection
   $pdo = pdo_connect_mysql();
 
+  // NOTE: maybe create a better check -> what if user has 5 vote records instead of 10?
+  // Check if user has voting records
+  $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ?');
+  $stmt->execute([ $id ]);
+  $hasvoted = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  // If user has no voting records -> add them
+  if(empty($hasvoted)){
+    // Add 0 points to every candidate as default score
+    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, CandidateId, Score) VALUES (?,?,?)');
+    foreach ($candidates as $candidate) {
+      $stmt->execute([ $id, $candidate["Id"], 0 ]);
+    }
+  }
+
   // Calculate the total points voted
   $totalScore = 0;
   foreach($candidates as $candidate){
     // Get the score from form on this candidate
-    $totalScore += $_POST["candidate" . $candidate["Id"]];
-    echo $_POST["candidate" . $candidate["Id"]];
+    $totalScore += $_POST["slider" . $candidate["Id"]];
   }
-  echo "total: " . $totalScore;
 
   // Check if the score is correct
   if($totalScore > $maxScore){
@@ -49,14 +62,18 @@ function submitVote($id, $candidates, $maxScore){
 
     foreach($candidates as $candidate){
       // Get the score from form on this candidate
-      $score = $_POST["candidate" . $candidate["Id"]];
+      $score = $_POST["slider" . $candidate["Id"]];
       // Add score
       $stmt->execute([ $score, $id, $candidate["Id"] ]);
     }
 
-    // Specify that this user has voted
-    $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1 WHERE Id = ?');
-    $stmt->execute([ $id ]);
+    // Calculate new score
+    $newScore = $maxScore - $totalScore;
+    // IDEA: Give 10 points for voting
+    //$newScore += 10;
+    // Specify that this user has voted and subtract score
+    $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1, Score = ? WHERE Id = ?');
+    $stmt->execute([ $newScore, $id ]);
     $_SESSION["Voted"] = 1;
 
     // AWARD SECTION TODO
@@ -87,36 +104,8 @@ function submitVote($id, $candidates, $maxScore){
 }
 
 if (isset($_POST["formSubmitVote"])){
-  
-  // Check if user has voting records
-  $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ?');
-  $stmt->execute([ $_SESSION["Id"] ]);
-  $hasvoted = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  // If user has no voting records -> add them
-  if(empty($hasvoted)){
-    // Add 0 points to every candidate as new account's score
-    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, CandidateId, Score) VALUES (?,?,?)');
-    foreach ($candidates as $candidate) {
-      $stmt->execute([ $_SESSION["Id"], $candidate["Id"], 0 ]);
-    }
-  }
-
-  // Calculate the total points voted
-  //$totalScore = 0;
-  /*
-  foreach($candidates as $candidate){
-    // Get the score from form on this candidate
-    $score = $_POST["candidate" . $candidate["Id"]];
-    //$totalScore += $score;
-    echo "candidate" . $candidate["Id"] . ": " . $score;
-    echo "<br>";
-  }*/
-  //echo "total: " . $totalScore;
-
   // Execute vote
   $notification = submitVote($_SESSION["Id"], $candidates, $account["Score"]);
-
 }
 
 ?>
@@ -128,8 +117,8 @@ if (isset($_POST["formSubmitVote"])){
   <h1>WIE IS DE <span>MOL</span> ?</h1>
   <h2><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</h2>
 
-  <form id="deMolForm" method="POST" action=""></form>
-
+  
+    <form id="deMolForm" method="POST" action=""></form>
     <!-- form carousel -->
     <div class="slider-for">
       <?php foreach($candidates as $candidate): ?>
@@ -137,9 +126,8 @@ if (isset($_POST["formSubmitVote"])){
           <p><?=$candidate['Name']?> 
           <br><?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
           <p class="userPointsLeft"><?=$account['Score']?></p>
-          <p id="pointsCandidate<?=$candidate['Id']?>">0</p>
-          <input form="deMolForm" type="text" value="0" name="candidate<?=$candidate['Id']?>" id="candidate<?=$candidate['Id']?>" readonly>
-          <input type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" id="slider<?=$candidate['Id']?>">
+          <p class="pointsCandidate<?=$candidate['Id']?>">0</p>
+          <input form="deMolForm" type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" name="slider<?=$candidate['Id']?>" id="slider<?=$candidate['Id']?>" oninput="checkScore('<?=$candidate['Id']?>')">
         </div>
       <?php endforeach; ?>
     </div>
@@ -169,6 +157,31 @@ if (isset($_POST["formSubmitVote"])){
 
   <!-- Slick Settings -->
   <script type="text/javascript">
+    function checkScore(candidateId){
+        // Get the current total voted points
+        var totalVoted = 0;
+        <?php foreach($candidates as $candidate): ?>
+        totalVoted += parseInt($('#slider<?=$candidate['Id']?>').val());
+        <?php endforeach; ?>
+
+        // Check for max available points
+        if(totalVoted > <?=$account["Score"]?>){
+          // Get the current selected value
+          let selectedValue = $('#slider' + candidateId).val();
+          // Calculate the new value correctly with set limit
+          let newSelectedValue = selectedValue - (totalVoted - <?=$account["Score"]?>);
+          // Change actual values
+          $('#slider' + candidateId).val(newSelectedValue);
+          // Change display values
+          $(".pointsCandidate" + candidateId).text(newSelectedValue);
+          $(".userPointsLeft").text(0);
+        }else{
+          // Change display values
+          $(".userPointsLeft").text(<?=$account["Score"]?> - totalVoted);
+        }
+        // Change display values
+        $(".pointsCandidate" + candidateId).text($('#slider' + candidateId).val());
+    };
     $(document).ready(function(){
       // Slick settings for voting system
       $('.slider-for').slick({
@@ -179,7 +192,8 @@ if (isset($_POST["formSubmitVote"])){
         speed: 0,
         asNavFor: '.slider-nav',
         swipe: false,
-        draggable: false
+        draggable: false,
+        infinite: false,
       });
       // Slick settings for candidate list
       $('.slider-nav').slick({
@@ -193,37 +207,8 @@ if (isset($_POST["formSubmitVote"])){
         focusOnSelect: true,
         draggable: true,
         mobileFirst: true,
+        infinite: false
       });
-      <?php foreach($candidates as $candidate): ?>
-      // If slider value is changed ->
-      $("#slider<?=$candidate['Id']?>").on("input", function(){
-        // Get the current total voted points
-        var totalVoted = 0;
-        <?php foreach($candidates as $candidateVoted): ?>
-        totalVoted += parseInt($('#slider<?=$candidateVoted['Id']?>').val());
-        <?php endforeach; ?>
-        
-        // Check for max available points
-        if(totalVoted > <?=$account["Score"]?>){
-          // Get the current selected value
-          let selectedValue = $('#slider<?=$candidate['Id']?>').val();
-          // Calculate the new value correctly with set limit
-          let newSelectedValue = selectedValue - (totalVoted - <?=$account["Score"]?>);
-          // Change display values
-          $('#slider<?=$candidate['Id']?>').val(newSelectedValue);
-          $("#pointsCandidate<?=$candidate['Id']?>").text(newSelectedValue);
-          // Correct the total points left to 0
-          $(".userPointsLeft").text(0);
-        }else{
-          // Change the total points display
-          $(".userPointsLeft").text(<?=$account["Score"]?> - totalVoted);
-        }
-        
-        document.getElementById("candidate<?=$candidate['Id']?>").defaultValue = $('#slider<?=$candidate['Id']?>').val();
-        // Change the displayed value
-        $("#pointsCandidate<?=$candidate['Id']?>").text($('#slider<?=$candidate['Id']?>').val());
-      });
-      <?php endforeach; ?>
     });
   </script>
 
