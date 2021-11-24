@@ -122,3 +122,17 @@ function editMode(id, visible){
 		document.getElementById(id).style["-ms-transform"] = "translateX(100%)";
 	}
 }
+
+function sendToScreen(status) {
+	if (status == "red") {
+		$("#screenRed").css({
+			"animation": "showScreen 1s backwards",
+			"opacity": "1"
+		});
+	}else if(status == "green"){
+		$("#screenGreen").css({
+			"animation": "showScreen 1s backwards",
+			"opacity": "1"
+		});
+	}
+}

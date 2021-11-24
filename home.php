@@ -8,6 +8,25 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
+$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
+$stmt->execute([ $_SESSION["Id"] ]);
+$votedPoints = $stmt->fetchColumn(0);
+
+$stmt = $pdo->prepare('SELECT * FROM table_Scores
+LEFT JOIN table_Candidates
+ON table_Scores.CandidateId = table_Candidates.Id
+WHERE UserId = ?');
+$stmt->execute([ $_SESSION["Id"] ]);
+$scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// DEV - DELETE ON PROD
+if (isset($_POST["resetVote"])){
+  $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0 WHERE Id = ?');
+  $stmt->execute([ $_SESSION["Id"] ]);
+
+  $_SESSION["Voted"] = 0;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -42,12 +61,17 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0');
         $stmt->execute();
       }else{
-        if($_SESSION["Voted"] == 0) {
+        if($account["SeenResults"] == 0){
+          ?>
+          sendToScreen('red');
+          <?php
+        }
+        if($account["Voted"] == 0) {
           ?>
           stemKnop("aan");
           infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i class='fas fa-clock'></i>");
           <?php
-        }elseif($_SESSION["Voted"] == 1) {
+        }elseif($account["Voted"] == 1) {
           ?>
           stemKnop("uit");
           infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i><br>Kom terug na de volgende aflevering!");
@@ -62,14 +86,34 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
 <body>
   <?php include "includes/navigation.php"; ?>
 
+<!-- <img id="screenGreen" src="img/assets/scherm_groen.png" alt="groen scherm van de mol">
+<img id="screenRed" src="img/assets/scherm_rood.png" alt="rood scherm van de mol"> -->
+
 <div class="homeScreen" id="main">
+
+  <form name="userSeenResultsConfirm" method="post"></form>
+
+  <div id="screenGreen" class="screen">
+    <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="groen logo van de mol">
+    <h2>Resultaat</h2>
+    <p>Je bent nog op het juiste spoor.</p>
+    <input form="userSeenResultsConfirm" type="submit" name="confirmSeenResults" value="Ga door">
+  </div>
+
+  <div id="screenRed" class="screen">
+    <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="rood logo van de mol">
+    <h2>Resultaat</h2>
+    <p>Helaas zit je op het verkeerde spoor en ben je punten verloren.</p>
+    <input form="userSeenResultsConfirm" type="submit" name="confirmSeenResults" value="Ga door">
+  </div>
+
   <div class="respContainer">
   
   <a href="profile.php?u=<?=$_SESSION["Id"]?>">
     <div class="userBox info">
       <span><?=$account["Username"]?></span><br>
       <span class="friendcode">#<?=$account["Friendcode"]?></span><br>
-      <span><?=$account["Score"]?> <i class="fas fa-coins"></i> <?=$account["Score"]?> <i class="fas fa-fingerprint"></i></span>
+      <span><?=$votedPoints + $account["Score"]?> <i class="fas fa-fingerprint"></i></span>
     </div>
   </a>
 
@@ -85,6 +129,11 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
     <button onclick="location.href = 'vote.php';" id="stemKnop" class="styledBtn" type="submit">Stemmen</button>
   </div>
 
+  <!-- DEV - DELETE ON PROD -->
+  <form name="resetVoteForm" method="POST" action="">
+    <input type="submit" name="resetVote" value="(dev) Reset Vote status">
+  </form>
+
   <h2 id="infoTekst"></h2>
 
   <p class="hiddenField">.- -. - .-. --- .--. --- -. -.-- -- .. .</p>
@@ -93,6 +142,8 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
 </div>
 
   <!-- JavaScript -->
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>

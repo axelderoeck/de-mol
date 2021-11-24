@@ -889,3 +889,60 @@
   mix-blend-mode: color;
 }
 
+@keyframes showScreen {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  15% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.screen {
+  height: 100%;
+  width: 100%;
+  z-index: 100 !important;
+  position: absolute;
+}
+
+.screen img {
+  padding: 30px 0 0 0;
+  width: 60%;
+  margin: 0 auto;
+}
+
+#screenGreen,
+#screenRed {
+  opacity: 0;
+  transition: 0.5s;
+}
+
+#screenGreen{
+  background-color: rgba(57, 179, 27, 0.8);
+  border-color: #39b31b;
+}
+
+#screenRed{
+  background-color: rgba(255, 0, 0, 0.8);
+  border-color: #eb2626;
+}
+
+/*
+#screenRed,
+#screenGreen {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  z-index: 100 !important;
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+  transition: 0.5s;
+}
+*/
