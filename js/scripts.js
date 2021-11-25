@@ -123,13 +123,13 @@ function editMode(id, visible){
 	}
 }
 
-function sendToScreen(status) {
-	if (status == "red") {
+function showScreen(color) {
+	if (color == "red") {
 		$("#screenRed").css({
 			"animation": "showScreen 1s backwards",
 			"opacity": "1"
 		});
-	}else if(status == "green"){
+	}else if(color == "green"){
 		$("#screenGreen").css({
 			"animation": "showScreen 1s backwards",
 			"opacity": "1"

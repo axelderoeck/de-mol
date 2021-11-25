@@ -12,12 +12,25 @@ $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROU
 $stmt->execute([ $_SESSION["Id"] ]);
 $votedPoints = $stmt->fetchColumn(0);
 
+$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores
+LEFT JOIN table_Candidates
+ON table_Scores.CandidateId = table_Candidates.Id
+WHERE table_Candidates.Status = ? AND UserId = ?
+GROUP BY UserId');
+$stmt->execute([ 0, $_SESSION["Id"] ]);
+$lostPoints = $stmt->fetchColumn(0);
+
 $stmt = $pdo->prepare('SELECT * FROM table_Scores
 LEFT JOIN table_Candidates
 ON table_Scores.CandidateId = table_Candidates.Id
 WHERE UserId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get the total voted points (for calculating percentages)
+$stmt = $pdo->prepare('SELECT DISTINCT SUM(Score) FROM table_Scores');
+$stmt->execute();
+$total_voted_all = $stmt->fetchColumn(0);
 
 // DEV - DELETE ON PROD
 if (isset($_POST["resetVote"])){
@@ -61,11 +74,21 @@ if (isset($_POST["resetVote"])){
         $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0');
         $stmt->execute();
       }else{
-        if($account["SeenResults"] == 0){
-          ?>
-          sendToScreen('red');
-          <?php
-        }
+        if($account["SeenResults"] == 0):
+          // Check if user has red screen
+          $redScreen = false;
+          foreach($scores as $score){
+            if($score["Status"] == 0 && $score["Score"] > 0){
+              $redScreen = true;
+              break;
+            }
+          }
+          if($redScreen == true): ?>
+            showScreen('red');
+          <?php else: ?>
+            showScreen('green');
+          <?php endif; ?>
+        <?php endif;
         if($account["Voted"] == 0) {
           ?>
           stemKnop("aan");
@@ -93,17 +116,54 @@ if (isset($_POST["resetVote"])){
 
   <form name="userSeenResultsConfirm" method="post"></form>
 
-  <div id="screenGreen" class="screen">
-    <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="groen logo van de mol">
-    <h2>Resultaat</h2>
-    <p>Je bent nog op het juiste spoor.</p>
-    <input form="userSeenResultsConfirm" type="submit" name="confirmSeenResults" value="Ga door">
-  </div>
+  <?php
+  // IDEA: later
+  //$file = "demol_logo_geen_tekst_rood.png";
+  //$file = "demol_logo_geen_tekst_groen.png";
+  // replace
+  ?>
 
+  <?php if($redScreen == true): ?>
   <div id="screenRed" class="screen">
     <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="rood logo van de mol">
+  <?php else: ?>
+  <div id="screenGreen" class="screen">
+    <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="groen logo van de mol">
+  <?php endif; ?>
     <h2>Resultaat</h2>
-    <p>Helaas zit je op het verkeerde spoor en ben je punten verloren.</p>
+    <p>Tekst.</p>
+    <?php if($account["Score"] > 0): ?>
+    <p>Niet gebruikte punten: <?=$account["Score"]?></p>
+    <?php endif; ?>
+    <?php if($redScreen == true): ?>
+    <p>- <?=$lostPoints?></p>
+    <?php endif; ?>
+    <table>
+    <?php $newScore = $account["Score"]; ?>
+    <?php foreach($scores as $score): ?>
+      <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
+        <?php 
+          $newScore += ($score["Score"] *2); 
+          $percentCalc = round(($score["TotalScore"] / $total_voted_all) * 100, 2);
+          $percentScore = explode(".", $percentCalc);
+          $percentScore[0];
+          $multiplier = 2;
+        ?>
+        <tr>
+          <td><?=$score["Name"]?></td>
+          <td><?=$score["Score"]?></td>
+          <td>*<?=$multiplier?></td>
+          <td>= <?=$score["Score"] *2?></td>
+        </tr>
+      <?php endif; ?>
+    <?php endforeach; ?>
+        <tr>
+          <td>Nieuwe score</td>
+          <td></td>
+          <td></td>
+          <td><?=$newScore?></td>
+        </tr>
+    </table>
     <input form="userSeenResultsConfirm" type="submit" name="confirmSeenResults" value="Ga door">
   </div>
 
