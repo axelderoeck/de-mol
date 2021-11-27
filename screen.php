@@ -56,9 +56,8 @@ if($account["SeenResults"] == 0){
       //$newScore -= $score["Score"];
     }
   }
-
-  /*
   
+  /*
   // Set new user score
   $stmt = $pdo->prepare('UPDATE table_Users SET Score = ? WHERE Id = ?');
   $stmt->execute([ $newScore, $account["Id"] ]);
@@ -70,7 +69,7 @@ if($account["SeenResults"] == 0){
   // Set "SeenResults" to 1 after the query so it will only execute once
   $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = ? WHERE Id = ?');
   $stmt->execute([ 1, $account["Id"] ]);
-  */
+*/
 }
 
 
@@ -95,6 +94,17 @@ if($account["SeenResults"] == 0){
         <?php if($account["Score"] > 0): ?>
         <p>Niet gebruikte punten: <?=$account["Score"]?></p>
         <?php endif; ?>
+        <div class="results">
+          <?php foreach($scores as $score): ?>
+            <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
+              <img src="img/kandidaten/<?=$score['Name']?>.jpg" alt="foto van <?=$score['Name']?>" />
+            <?php endif; ?>
+            <?php if($score["Status"] == 0 && $score["Score"] > 0): ?>
+              <img class="candidateOut" src="img/kandidaten/<?=$score['Name']?>.jpg" alt="foto van <?=$score['Name']?>" />
+            <?php endif; ?>
+          <?php endforeach; ?>
+        </div>
+
         <table>
         <?php foreach($scores as $score): ?>
           <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
@@ -118,7 +128,8 @@ if($account["SeenResults"] == 0){
         <button onclick="location.href = 'home.php';" class="styledBtn" type="submit">Ga door</button>
       </div>
 
-      <input type="text" value="<?=$account["Username"]?>">
+      <input id="typingName" type="text" value="" readonly>
+      <p id="demo"></p>
 
     <?php 
       }else{
@@ -132,6 +143,8 @@ if($account["SeenResults"] == 0){
   <!-- JavaScript -->
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script type="text/javascript" src="slick/slick.min.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
@@ -139,12 +152,31 @@ if($account["SeenResults"] == 0){
   <script type="text/javascript">
     $(document).ready(function(){
       <?php if($account["SeenResults"] == 0):
+          if($account["Name"] != null){
+            $firstname = $account["Name"];
+          }else{
+            $firstname = $account["Username"];
+          } ?>
+          typeWriter('<?=$firstname?>');
+          <?php
           if($redScreen == true): ?>
-            showScreen('red');
+            //showScreen('red');
           <?php else: ?>
-            showScreen('green');
+            //showScreen('green');
           <?php endif; ?>
       <?php endif; ?>
+      $('.results').slick({
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        dots: false,
+        arrows: false,
+        centerMode: true,
+        centerPadding: '5%',
+        focusOnSelect: true,
+        draggable: true,
+        mobileFirst: true,
+        infinite: false
+      });
     });
   </script>
 

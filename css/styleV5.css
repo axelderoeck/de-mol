@@ -899,6 +899,12 @@
   15% {
     opacity: 0;
   }
+  20% {
+    opacity: 0.5;
+  }
+  25% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
   }
@@ -933,16 +939,15 @@
   border-color: #eb2626;
 }
 
-/*
-#screenRed,
-#screenGreen {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  z-index: 100 !important;
-  opacity: 0;
-  position: absolute;
-  pointer-events: none;
-  transition: 0.5s;
+.results img {
+  margin: 0 2px;
 }
-*/
+
+.candidateOut {
+  position: relative;
+  filter: grayscale(100%);
+}
+
+.candidateIn {
+
+}

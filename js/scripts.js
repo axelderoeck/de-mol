@@ -136,3 +136,24 @@ function showScreen(color) {
 		});
 	}
 }
+
+const timer = ms => new Promise(res => setTimeout(res, ms))
+async function fillInName(name){
+	const nameArray = name.split("");
+	let word = "";
+	for (let i = 0; i < nameArray.length; i++) {
+		word += nameArray[i];
+		$("#typingName").val(word);
+		await timer(1000);
+	}
+}
+
+var i = 0;
+function typeWriter(txt) {
+	var speed = 50; 
+	if (i < txt.length) {
+	  document.getElementById("demo").innerHTML += txt.charAt(i);
+	  i++;
+	  setTimeout(typeWriter, speed);
+	}
+}
