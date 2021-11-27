@@ -20,6 +20,13 @@ if (isset($_POST["resetVote"])){
   $_SESSION["Voted"] = 0;
 }
 
+if (isset($_POST["resetSeenResults"])){
+  $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = 0 WHERE Id = ?');
+  $stmt->execute([ $_SESSION["Id"] ]);
+
+  $_SESSION["Voted"] = 0;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -104,6 +111,9 @@ if (isset($_POST["resetVote"])){
   <!-- DEV - DELETE ON PROD -->
   <form name="resetVoteForm" method="POST" action="">
     <input type="submit" name="resetVote" value="(dev) Reset Vote status">
+  </form>
+  <form name="resetSeenResultsForm" method="POST" action="">
+    <input type="submit" name="resetSeenResults" value="(dev) Reset SeenResults status">
   </form>
 
   <h2 id="infoTekst"></h2>

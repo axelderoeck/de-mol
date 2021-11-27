@@ -25,24 +25,54 @@ WHERE UserId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Calculate the new score
-$newScore = $account["Score"];
-foreach($scores as $score){
-  if($score["Status"] == 1 && $score["Score"] > 0){
-    $multiplier = 2;
-    $newScore += ($score["Score"] * $multiplier); 
-  }
-  if($score["Status"] == 0 && $score["Score"] > 0){
-    $newScore -= $score["Score"];
-  }
-}
-
-// Only execute update score query if it's users first time opening the screen
+// Check if user has seen results
 if($account["SeenResults"] == 0){
+  // Check if user has red screen
+  $redScreen = false;
+  foreach($scores as $score){
+    if($score["Status"] == 0 && $score["Score"] > 0){
+      $redScreen = true;
+      break;
+    }
+  }
 
+  if($redScreen == true){
+    $file_name = "demol_logo_geen_tekst_rood.png";
+    $idname = "screenRed";
+  }else{
+    $file_name = "demol_logo_geen_tekst_groen.png";
+    $idname = "screenGreen";
+  }
+
+  // Calculate the new score
+  $newScore = $account["Score"];
+  foreach($scores as $score){
+    if($score["Status"] == 1 && $score["Score"] > 0){
+      $multiplier = 2;
+      $newScore += ($score["Score"] * $multiplier); 
+    }
+    if($score["Status"] == 0 && $score["Score"] > 0){
+      // possible issue
+      //$newScore -= $score["Score"];
+    }
+  }
+
+  /*
+  
+  // Set new user score
+  $stmt = $pdo->prepare('UPDATE table_Users SET Score = ? WHERE Id = ?');
+  $stmt->execute([ $newScore, $account["Id"] ]);
+
+  // Reset score table
+  $stmt = $pdo->prepare('UPDATE table_Scores SET Score = ? WHERE UserId = ?');
+  $stmt->execute([ 0, $account["Id"] ]);
 
   // Set "SeenResults" to 1 after the query so it will only execute once
+  $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = ? WHERE Id = ?');
+  $stmt->execute([ 1, $account["Id"] ]);
+  */
 }
+
 
 ?>
 
@@ -50,86 +80,54 @@ if($account["SeenResults"] == 0){
 <html lang="nl">
 <head>
   <?php include "includes/headinfo.php"; ?>
-  <script>
-    window.addEventListener('load', function() {
-        <?php 
-          if($account["SeenResults"] == 0):
-          // Check if user has red screen
-          $redScreen = false;
-          foreach($scores as $score){
-            if($score["Status"] == 0 && $score["Score"] > 0){
-              $redScreen = true;
-              break;
-            }
-          }
-          if($redScreen == true): ?>
-            showScreen('red');
-          <?php else: ?>
-            showScreen('green');
-          <?php endif; ?>
-        <?php endif; ?>
-    });
-  </script>
 </head>
+
 <body>
+  <div class="homeScreen" id="main">
+    <div class="respContainer" style="height: 100%;">
 
-<div class="homeScreen" id="main">
+    <?php if($account["SeenResults"] == 0){ ?>
 
-  <?php
-  // IDEA: later
-  //$file = "demol_logo_geen_tekst_rood.png";
-  //$file = "demol_logo_geen_tekst_groen.png";
-  // replace
-  ?>
+      <div id="<?=$idname?>" class="screen">
+        <img src="img/assets/<?=$file_name?>" alt="logo van de mol">
+        <h2>Resultaat</h2>
+        <p>Tekst.</p>
+        <?php if($account["Score"] > 0): ?>
+        <p>Niet gebruikte punten: <?=$account["Score"]?></p>
+        <?php endif; ?>
+        <table>
+        <?php foreach($scores as $score): ?>
+          <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
+            <tr>
+              <td><?=$score["Name"]?></td>
+              <td><i class="fas fa-fingerprint color-success"></i></td>
+            </tr>
+          <?php endif; ?>
+          <?php if($score["Status"] == 0 && $score["Score"] > 0): ?>
+            <tr>
+              <td><?=$score["Name"]?></td>
+              <td><i class="fas fa-fingerprint color-warning"></i></td>
+            </tr>
+          <?php endif; ?>
+        <?php endforeach; ?>
+            <tr>
+              <td>Score</td>
+              <td><?=$newScore?></td>
+            </tr>
+        </table>
+        <button onclick="location.href = 'home.php';" class="styledBtn" type="submit">Ga door</button>
+      </div>
 
-  <div class="respContainer" style="height: 100%;">
+      <input type="text" value="<?=$account["Username"]?>">
 
-  <form name="userSeenResultsConfirm" method="post"></form>
+    <?php 
+      }else{
+        header('location: home.php');
+      }
+    ?>
 
-  <?php if($redScreen == true): ?>
-  <div id="screenRed" class="screen">
-    <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="rood logo van de mol">
-  <?php else: ?>
-  <div id="screenGreen" class="screen">
-    <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="groen logo van de mol">
-  <?php endif; ?>
-    <h2>Resultaat</h2>
-    <p>Tekst.</p>
-    <?php if($account["Score"] > 0): ?>
-    <p>Niet gebruikte punten: <?=$account["Score"]?></p>
-    <?php endif; ?>
-    <table>
-    <?php foreach($scores as $score): ?>
-      <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
-        <tr>
-          <td><?=$score["Name"]?></td>
-          <td><?=$score["Score"]?></td>
-          <td>*<?=$multiplier?></td>
-          <td>= <?=$score["Score"] *2?></td>
-        </tr>
-      <?php endif; ?>
-      <?php if($score["Status"] == 0 && $score["Score"] > 0): ?>
-        <tr>
-          <td><?=$score["Name"]?></td>
-          <td><?=$score["Score"]?></td>
-          <td>-<?=$score["Score"]?></td>
-          <td>= <?=$score["Score"] - $score["Score"]?></td>
-        </tr>
-      <?php endif; ?>
-    <?php endforeach; ?>
-        <tr>
-          <td>Score</td>
-          <td></td>
-          <td></td>
-          <td><?=$newScore?></td>
-        </tr>
-    </table>
-    <input form="userSeenResultsConfirm" type="submit" name="confirmSeenResults" value="Ga door">
+    </div>
   </div>
-
-    <input type="text" value="<?=$account["Username"]?>">
-  </div>
-</div>
 
   <!-- JavaScript -->
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -137,6 +135,18 @@ if($account["SeenResults"] == 0){
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      <?php if($account["SeenResults"] == 0):
+          if($redScreen == true): ?>
+            showScreen('red');
+          <?php else: ?>
+            showScreen('green');
+          <?php endif; ?>
+      <?php endif; ?>
+    });
+  </script>
 
 </body>
 </html>
