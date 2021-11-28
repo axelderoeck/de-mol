@@ -1,0 +1,29 @@
+@keyframes showScreen {
+    0% {
+      filter: brightness(0%);
+    }
+    15% {
+      filter: brightness(20%);
+    }
+    25% {
+      filter: brightness(120%);
+    }
+    100% {
+      filter: brightness(100%);
+    }
+}
+
+/* @keyframes showScreen {
+    0% {
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.2;
+    }
+    25% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+} */

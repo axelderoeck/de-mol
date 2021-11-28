@@ -36,12 +36,20 @@ if($account["SeenResults"] == 0){
     }
   }
 
+  // Set variables based on result
   if($redScreen == true){
     $file_name = "demol_logo_geen_tekst_rood.png";
-    $idname = "screenRed";
+    $color = "red";
   }else{
     $file_name = "demol_logo_geen_tekst_groen.png";
-    $idname = "screenGreen";
+    $color = "green";
+  }
+
+  // Get name to type out in animation
+  if($account["Name"] != null){
+    $firstname = $account["Name"];
+  }else{
+    $firstname = $account["Username"];
   }
 
   // Calculate the new score
@@ -81,13 +89,13 @@ if($account["SeenResults"] == 0){
   <?php include "includes/headinfo.php"; ?>
 </head>
 
-<body>
-  <div class="homeScreen" id="main">
-    <div class="respContainer" style="height: 100%;">
+<body class="voteScreen">
+    <!-- <div class="respContainer" style="height: 100%;"> -->
 
     <?php if($account["SeenResults"] == 0){ ?>
-
-      <div id="<?=$idname?>" class="screen">
+      <!-- <div class="screenContainer"></div> -->
+      <div id="screen_<?=$color?>" class="screen">
+        <div class="respContainer" style="height: 100%;">
         <img src="img/assets/<?=$file_name?>" alt="logo van de mol">
         <h2>Resultaat</h2>
         <p>Tekst.</p>
@@ -126,13 +134,13 @@ if($account["SeenResults"] == 0){
             </tr>
         </table>
         <button onclick="location.href = 'home.php';" class="styledBtn" type="submit">Ga door</button>
+        </div>
       </div>
-
-      <div class="screenNameType">
-        <p id="textfield"></p>
+      
+      <div id="screenPage">
+        <img src="img/assets/molLogo.png" alt="logo de mol">
+        <div id="textfield"></div>  
       </div>
-      <input id="typingName" type="text" value="" readonly>
-     
 
     <?php 
       }else{
@@ -140,35 +148,19 @@ if($account["SeenResults"] == 0){
       }
     ?>
 
-    </div>
-  </div>
-
   <!-- JavaScript -->
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script type="text/javascript" src="slick/slick.min.js"></script>
-  <script type="text/javascript" src="js/scripts.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
-  <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+  <!-- Slick.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Typewriter.js -->
+  <script type="text/javascript" src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function(){
-      <?php 
-      if($account["SeenResults"] == 0){
-        if($account["Name"] != null){
-          $firstname = $account["Name"];
-        }else{
-          $firstname = $account["Username"];
-        }
-        if($redScreen == true){
-          $color = 'red';
-        }else{
-          $color = 'green';
-        } 
-      } 
-      ?>
       screenAnimation('textfield','<?=$firstname?>','<?=$color?>');
       $('.results').slick({
         slidesToShow: 3,

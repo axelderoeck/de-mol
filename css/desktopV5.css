@@ -27,4 +27,7 @@
   .navButton {
     display: none;
   }
+  #textfield {
+    width: 40%;
+  }
 }

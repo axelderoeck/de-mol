@@ -123,33 +123,28 @@ function editMode(id, visible){
 	}
 }
 
-function showScreen(color) {
-	if (color == "red") {
-		$("#screenRed").css({
-			"animation": "showScreen 1s backwards",
-			"opacity": "1"
-		});
-	}else if(color == "green"){
-		$("#screenGreen").css({
-			"animation": "showScreen 1s backwards",
-			"opacity": "1"
-		});
-	}
-	$("").css({
-		"opacity": "0"
-	})
-}
-
-function screenAnimation(textid, name, color){
-	var textfield = document.getElementById(textid);
+function screenAnimation(textid, name, color) {
+	// Get the element to start the typewriter animation on
+	var textfield = document.querySelector("#"+textid);
+	// Initiate typewriter object
 	var typewriter = new Typewriter(textfield, {
 		loop: false,
 		delay: 300,
 	});
+	// Start typewriter animation
 	typewriter.typeString(name)
 	.pauseFor(1000)
+	// Typing completed ->
 	.callFunction(() => {
-		showScreen(color);
+		// Hide all elements from page
+		$("#screenPage").css({
+			"opacity": "0"
+		})
+		// Set screen to correct color
+		$("#screen_"+color).css({
+			"animation": "showScreen 1s backwards",
+			"opacity": "1"
+		});
 	})
 	.start();
 }
