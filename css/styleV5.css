@@ -948,6 +948,11 @@
   filter: grayscale(100%);
 }
 
-.candidateIn {
+#textfield {
+  margin: 0 auto;
+}
 
+.screenNameType{
+  position: relative;
+  text-align: center;
 }

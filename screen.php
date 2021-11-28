@@ -128,8 +128,11 @@ if($account["SeenResults"] == 0){
         <button onclick="location.href = 'home.php';" class="styledBtn" type="submit">Ga door</button>
       </div>
 
+      <div class="screenNameType">
+        <p id="textfield"></p>
+      </div>
       <input id="typingName" type="text" value="" readonly>
-      <p id="demo"></p>
+     
 
     <?php 
       }else{
@@ -148,23 +151,25 @@ if($account["SeenResults"] == 0){
   <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
+  <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
 
   <script type="text/javascript">
     $(document).ready(function(){
-      <?php if($account["SeenResults"] == 0):
-          if($account["Name"] != null){
-            $firstname = $account["Name"];
-          }else{
-            $firstname = $account["Username"];
-          } ?>
-          typeWriter('<?=$firstname?>');
-          <?php
-          if($redScreen == true): ?>
-            //showScreen('red');
-          <?php else: ?>
-            //showScreen('green');
-          <?php endif; ?>
-      <?php endif; ?>
+      <?php 
+      if($account["SeenResults"] == 0){
+        if($account["Name"] != null){
+          $firstname = $account["Name"];
+        }else{
+          $firstname = $account["Username"];
+        }
+        if($redScreen == true){
+          $color = 'red';
+        }else{
+          $color = 'green';
+        } 
+      } 
+      ?>
+      screenAnimation('textfield','<?=$firstname?>','<?=$color?>');
       $('.results').slick({
         slidesToShow: 3,
         slidesToScroll: 1,

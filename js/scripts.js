@@ -135,25 +135,21 @@ function showScreen(color) {
 			"opacity": "1"
 		});
 	}
+	$("").css({
+		"opacity": "0"
+	})
 }
 
-const timer = ms => new Promise(res => setTimeout(res, ms))
-async function fillInName(name){
-	const nameArray = name.split("");
-	let word = "";
-	for (let i = 0; i < nameArray.length; i++) {
-		word += nameArray[i];
-		$("#typingName").val(word);
-		await timer(1000);
-	}
-}
-
-var i = 0;
-function typeWriter(txt) {
-	var speed = 50; 
-	if (i < txt.length) {
-	  document.getElementById("demo").innerHTML += txt.charAt(i);
-	  i++;
-	  setTimeout(typeWriter, speed);
-	}
+function screenAnimation(textid, name, color){
+	var textfield = document.getElementById(textid);
+	var typewriter = new Typewriter(textfield, {
+		loop: false,
+		delay: 300,
+	});
+	typewriter.typeString(name)
+	.pauseFor(1000)
+	.callFunction(() => {
+		showScreen(color);
+	})
+	.start();
 }
