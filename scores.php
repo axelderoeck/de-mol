@@ -13,7 +13,7 @@ WHERE table_Users.Id IN
     ON table_Users.Id = table_Friends.IsFriendsWithId
     WHERE table_Friends.Id = ? OR table_Friends.IsFriendsWithId = ?)
 GROUP BY table_Users.Id
-ORDER BY table_Scores.Score DESC');
+ORDER BY TotalScore DESC');
 $stmt->execute([ $_SESSION["Id"], $_SESSION["Id"] ]);
 $scores_friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -22,7 +22,7 @@ FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
 GROUP BY table_Users.Id
-ORDER BY table_Scores.Score DESC
+ORDER BY TotalScore DESC
 LIMIT 20'); // TODO: variable in prepared statement
 $stmt->execute();
 $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -36,6 +36,7 @@ WHERE table_UsersInGroups.UserId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Prepare group scores statement
 $stmt_group = $pdo->prepare('SELECT table_Users.Id, Username, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
 FROM table_Users
 LEFT JOIN table_Scores
@@ -47,7 +48,7 @@ WHERE table_Users.Id IN
     ON table_Users.Id = table_UsersInGroups.UserId
     WHERE table_UsersInGroups.GroupId = ?)
 GROUP BY table_Users.Id
-ORDER BY table_Scores.Score DESC');
+ORDER BY TotalScore DESC');
 
 ?>
 
