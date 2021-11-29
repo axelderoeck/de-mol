@@ -32,7 +32,7 @@ define('SEASON_START', "03/21/2021"); // format: MM/DD/YYYY
 // End of the season date
 define('SEASON_END', "05/09/2022"); // format: MM/DD/YYYY
 // Day of the episode
-define('VOTE_DAY', "Mon"); // format: Mon, Tue, Wed, Thu, Fri, Sat, Sun
+define('VOTE_DAY', "Sun"); // format: Mon, Tue, Wed, Thu, Fri, Sat, Sun
 // Vote hour
 define('VOTE_HOUR', "2200"); // format: HHMM
 

@@ -71,8 +71,8 @@ function submitVote($id, $candidates, $maxScore){
     $newScore = $maxScore - $totalScore;
     // IDEA: Give 10 points for voting
     //$newScore += 10;
-    // Specify that this user has voted and subtract score
-    $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1, Score = ? WHERE Id = ?');
+    // Specify that this user has voted and seenresults is 0 and subtract score
+    $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1, SeenResults = 0, Score = ? WHERE Id = ?');
     $stmt->execute([ $newScore, $id ]);
     $_SESSION["Voted"] = 1;
 

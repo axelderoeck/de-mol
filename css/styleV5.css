@@ -910,6 +910,7 @@
   width: 100%;
   z-index: 100 !important;
   position: absolute;
+  overflow-y: hidden;
 }
 
 .screen img {

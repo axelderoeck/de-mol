@@ -61,7 +61,7 @@ if (isset($_POST["resetSeenResults"])){
         $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0');
         $stmt->execute();
       }else{
-        if($account["SeenResults"] == 0){
+        if($account["SeenResults"] == 0 && $account["Voted"] == 0){
           header('location: screen.php');
         }
         if($account["Voted"] == 0) {
