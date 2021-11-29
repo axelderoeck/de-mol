@@ -37,7 +37,7 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Get voted points
 $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-$stmt->execute([ $_SESSION["Id"] ]);
+$stmt->execute([ $user_id ]);
 $votedPoints = $stmt->fetchColumn(0);
 
 // Get firstname if exists
