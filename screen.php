@@ -85,17 +85,22 @@ if($account["SeenResults"] == 0 && $account["Voted"] == 0){
   //Award IDEA: Name -> IF user voted on 10 candidates
   //Award IDEA: Name -> IF lost more than .... points
 
+  // If user has less than 10 points set it back to 10
+  if($newScore < 10){
+    $newScore = 10;
+  }
+
   if($bonus == true){
     $newScore += $bonusScore;
   }
-  
+    
   // Set new user score
   $stmt = $pdo->prepare('UPDATE table_Users SET Score = ? WHERE Id = ?');
   $stmt->execute([ $newScore, $account["Id"] ]);
 
-  // Reset score table
-  $stmt = $pdo->prepare('UPDATE table_Scores SET Score = ? WHERE UserId = ?');
-  $stmt->execute([ 0, $account["Id"] ]);
+  // Delete score table
+  $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');
+  $stmt->execute([ $account["Id"] ]);
 
   // Set "SeenResults" to 1 after the query so it will only execute once
   $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = ? WHERE Id = ?');

@@ -25,21 +25,6 @@ function submitVote($id, $candidates, $maxScore){
   // DB connection
   $pdo = pdo_connect_mysql();
 
-  // NOTE: maybe create a better check -> what if user has 5 vote records instead of 10?
-  // Check if user has voting records
-  $stmt = $pdo->prepare('SELECT * FROM table_Scores WHERE UserId = ?');
-  $stmt->execute([ $id ]);
-  $hasvoted = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-  // If user has no voting records -> add them
-  if(empty($hasvoted)){
-    // Add 0 points to every candidate as default score
-    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, CandidateId, Score) VALUES (?,?,?)');
-    foreach ($candidates as $candidate) {
-      $stmt->execute([ $id, $candidate["Id"], 0 ]);
-    }
-  }
-
   // Calculate the total points voted
   $totalScore = 0;
   foreach($candidates as $candidate){
@@ -57,20 +42,20 @@ function submitVote($id, $candidates, $maxScore){
   }else{
     // Score is ok -> execute vote
 
-    // Prepare the statement for updating scores
-    $stmt = $pdo->prepare('UPDATE table_Scores SET Score = ? WHERE UserId = ? AND CandidateId = ?');
+    // Prepare the statement for inserting scores
+    $stmt = $pdo->prepare('INSERT INTO table_Scores (UserId, CandidateId, Score) VALUES (?,?,?)');
 
+    // Insert each candidate score
     foreach($candidates as $candidate){
       // Get the score from form on this candidate
       $score = $_POST["slider" . $candidate["Id"]];
       // Add score
-      $stmt->execute([ $score, $id, $candidate["Id"] ]);
+      $stmt->execute([ $id, $candidate["Id"], $score ]);
     }
 
     // Calculate new score
     $newScore = $maxScore - $totalScore;
-    // IDEA: Give 10 points for voting
-    //$newScore += 10;
+
     // Specify that this user has voted and seenresults is 0 and subtract score
     $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 1, SeenResults = 0, Score = ? WHERE Id = ?');
     $stmt->execute([ $newScore, $id ]);
