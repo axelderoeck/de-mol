@@ -1,206 +1,187 @@
-<?php
+<?php include("includes/header.php") ?>
 
-ob_start();
-require_once("includes/dbconn.inc.php");
-session_start();
-
-if ($_SESSION["Admin"] != 1) {
-  header('location:home.php');
-}
-
-if (isset($_POST["deleteUser"])){
-  $deleteId = $_POST["idToDelete"];
-
-  $dbconn->query("DELETE FROM table_Users
-    WHERE Id = '$deleteId';
-    ");
-
-  $dbconn->query("DELETE FROM table_Scores
-    WHERE UserId = '$deleteId';
-    ");
-
-  $dbconn->query("DELETE FROM table_UserAwards
-    WHERE UserId = '$deleteId';
-    ");
-
-    $dbconn->query("DELETE FROM table_Followers
-      WHERE UserId = '$deleteId';
-    ");
-
-    $dbconn->query("DELETE FROM table_Followers
-      WHERE UserIsFollowingId = '$deleteId';
-    ");
-}
-
-if(isset($_POST["resetScores"])) {
-  $qryReset = "UPDATE `table_Scores`
-  SET `Score` = 0";
-
-  mysqli_query($dbconn, $qryReset);
-}
-
-if(isset($_POST["resetVotes"])) {
-  $query = "UPDATE `table_Users`
-  SET `Voted` = 0";
-
-  mysqli_query($dbconn, $query);
-}
-
-
-if (isset($_POST["setOutBtn"])){
-    $identifierOut = $_POST["identifier"];
-
-    $qrySetOut = "UPDATE `table_Kandidaten`
-    SET `Visibility` = 'out'
-    WHERE `Identifier` = '$identifierOut'";
-
-    mysqli_query($dbconn, $qrySetOut);
-}
-
-if (isset($_POST["setInBtn"])){
-    $identifierIn = $_POST["identifier"];
-
-    $qrySetIn = "UPDATE `table_Kandidaten`
-    SET `Visibility` = 'visible'
-    WHERE `Identifier` = '$identifierIn'";
-
-    mysqli_query($dbconn, $qrySetIn);
-}
-
-if (isset($_POST["setMolBtn"])){
-    $demol = $_POST["demol"];
-
-    $qrySetMol = "UPDATE `table_Mol`
-    SET `demol` = '$demol'";
-
-    mysqli_query($dbconn, $qrySetMol);
-}
-
-//query ledenoverzicht
-$qrySelectAll = "SELECT Naam, Identifier, Visibility
-FROM table_Kandidaten";
-
-//statement aanmaken
-if ($stmtSelectAll = mysqli_prepare($dbconn, $qrySelectAll)){
-    //query uitvoeren
-    mysqli_stmt_execute($stmtSelectAll);
-    //resultaat binden aan lokale variabelen
-    mysqli_stmt_bind_result($stmtSelectAll, $naam, $identifier, $visibility);
-    //resultaten opslaan
-    mysqli_stmt_store_result($stmtSelectAll);
-}
-
-$qryCountAllUsers = "SELECT COUNT(Id) FROM table_Users";
-if ($stmtCountAllUsers = mysqli_prepare($dbconn, $qryCountAllUsers)){
-    mysqli_stmt_execute($stmtCountAllUsers);
-    mysqli_stmt_bind_result($stmtCountAllUsers, $totalUsers);
-    mysqli_stmt_store_result($stmtCountAllUsers);
-}
-mysqli_stmt_fetch($stmtCountAllUsers);
-
-?>
-
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-    <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-    <?php include "includes/navigation.php"; ?>
-
-    <div class="adminPanel" id="main">
-      <div class="respContainer">
-
-      <h1>Admin Panel</h1>
-
-        <div class="info">
-          <h2>Info:</h2>
-          <p>Aantal Accounts: <?php echo $totalUsers; ?></p>
-        </div>
-
-        <hr>
-
-        <h2>Delete een account</h2>
-        <div class="box">
-          <form method="post">
-            <input type="text" name="idToDelete" id="idToDelete" placeholder="Id">
-            <input type="submit" name="deleteUser" value="Delete">
-          </form>
-        </div>
-        <hr>
-
-        <h3>Update Kandidaten <button onclick="collapse('collapsible-content2','collapsible2');" type="button" id="collapsible2"><i class="fas fa-chevron-down"></i></button></h3>
-        <div id="collapsible-content2">
-          <h2>De Kandidaten</h2>
-          <table>
-              <tr>
-                  <th>Naam</th>
-                  <th>Identifier</th>
-                  <th>Visibility</th>
-              </tr>
-              <?php
-              $i = 1;
-              while(mysqli_stmt_fetch($stmtSelectAll)){
-              echo
-              "<tr>
-              <td> " . $naam . " </td>
-              <td> " . $identifier . " </td>
-              <td> " . $visibility . " </td>
-              </tr>";
-              $i++;
-              }   ?>
-          </table>
-
-          <h2>Hup der uit jong</h2>
-          <div class="box">
-          <form id="setOutForm" class="setOutForm" method="post">
-            <input placeholder="identifier" type="text" name="identifier">
-            <input type="submit" name="setOutBtn">
-          </form>
+  <!-- Number blocks -->
+  <div class="row">  
+    <div class="col-md-6 col-xl-4">
+      <div class="card mb-3 widget-content">
+        <div class="widget-content-outer">
+          <div class="widget-content-wrapper">
+            <div class="widget-content-left">
+              <div class="widget-heading">Accounts</div>
+            </div>
+            <div class="widget-content-right">
+              <div class="widget-numbers text-success">1896</div>
+            </div>
           </div>
-          <hr>
-
-          <h2>Oops foutje komt ma terug</h2>
-          <div class="box">
-          <form id="setInForm" class="setInForm" method="post">
-            <input placeholder="identifier" type="text" name="identifier">
-            <input type="submit" name="setInBtn">
-          </form>
-          </div>
-          <hr>
-
-          <h2>De Mol is... *tromgeroffel*</h2>
-          <div class="box">
-            <form id="setMolForm" class="setMolForm" method="post">
-              <input placeholder="identifier" type="text" id="demol" name="demol">
-              <input type="submit" name="setMolBtn">
-            </form>
-            <p class="example">onbekend of person1,person2,...</p>
-          </div>
-          <hr>
-        </div>
-
-        <h3>Danger Zone <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
-        <div id="collapsible-content">
-          <h2>Reset heeft gestemd</h2>
-          <div class="box">
-          <form id="resetVoteForm" method="post">
-            <input class="warning" type="submit" name="resetVotes" value="Reset" />
-          </form>
-          </div>
-          <hr>
-
-          <h2>Reset alle scores</h2>
-          <div class="box">
-            <form method="post">
-              <input type="submit" name="resetScores" value="Reset">
-            </form>
-          </div>
-        </div>
-
         </div>
       </div>
-      <script type="text/javascript" src="js/scripts.js"></script>
-    <?php mysqli_close($dbconn); ?>
-</body>
-</html>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card mb-3 widget-content">
+        <div class="widget-content-outer">
+          <div class="widget-content-wrapper">
+            <div class="widget-content-left">
+              <div class="widget-heading">Gestemd</div>
+            </div>
+            <div class="widget-content-right">
+              <div class="widget-numbers text-warning">520</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-xl-4">
+      <div class="card mb-3 widget-content">
+        <div class="widget-content-outer">
+          <div class="widget-content-wrapper">
+            <div class="widget-content-left">
+              <div class="widget-heading">Scherm Gezien</div>
+            </div>
+            <div class="widget-content-right">
+              <div class="widget-numbers text-danger">456</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Table -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-header">Active Users</div>
+        <div class="table-responsive">
+          <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">#</th>
+                <th>Name</th>
+                <th class="text-center">City</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center text-muted">#345</td>
+                <td>
+                  <div class="widget-content p-0">
+                    <div class="widget-content-wrapper">
+                      <div class="widget-content-left mr-3">
+                        <div class="widget-content-left">
+                          <img width="40" class="rounded-circle" src="assets/images/avatars/4.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="widget-content-left flex2">
+                        <div class="widget-heading">John Doe</div>
+                        <div class="widget-subheading opacity-7">Web Developer</div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">Madrid</td>
+                <td class="text-center">
+                  <div class="badge badge-warning">Pending</div>
+                </td>
+                <td class="text-center">
+                  <button type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">Details</button>
+                </td>
+              </tr>                               
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Percent blocks -->
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="card-shadow-danger mb-3 widget-chart widget-chart2 text-left card">
+        <div class="widget-content">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left pr-2 fsize-1">
+                <div class="widget-numbers mt-0 fsize-3 text-danger">71%</div>
+              </div>
+              <div class="widget-content-right w-100">
+                <div class="progress-bar-xs progress">
+                  <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100" style="width: 71%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="widget-content-left fsize-1">
+              <div class="text-muted opacity-6">Income Target</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="card-shadow-success mb-3 widget-chart widget-chart2 text-left card">
+        <div class="widget-content">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left pr-2 fsize-1">
+                <div class="widget-numbers mt-0 fsize-3 text-success">54%</div>
+              </div>
+              <div class="widget-content-right w-100">
+                <div class="progress-bar-xs progress">
+                  <div class="progress-bar bg-success" role="progressbar" aria-valuenow="54" aria-valuemin="0" aria-valuemax="100" style="width: 54%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="widget-content-left fsize-1">
+              <div class="text-muted opacity-6">Expenses Target</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="card-shadow-warning mb-3 widget-chart widget-chart2 text-left card">
+        <div class="widget-content">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left pr-2 fsize-1">
+                <div class="widget-numbers mt-0 fsize-3 text-warning">32%</div>
+              </div>
+              <div class="widget-content-right w-100">
+                <div class="progress-bar-xs progress">
+                  <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="32" aria-valuemin="0" aria-valuemax="100" style="width: 32%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="widget-content-left fsize-1">
+              <div class="text-muted opacity-6">Spendings Target</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="card-shadow-info mb-3 widget-chart widget-chart2 text-left card">
+        <div class="widget-content">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left pr-2 fsize-1">
+                <div class="widget-numbers mt-0 fsize-3 text-info">89%</div>
+              </div>
+              <div class="widget-content-right w-100">
+                <div class="progress-bar-xs progress">
+                  <div class="progress-bar bg-info" role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100" style="width: 89%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="widget-content-left fsize-1">
+              <div class="text-muted opacity-6">Totals Target</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<?php include("includes/footer.php") ?>
+
