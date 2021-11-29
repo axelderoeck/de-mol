@@ -55,10 +55,11 @@ if (isset($_POST["resetSeenResults"])){
       }elseif(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
         ?>
         stemKnop("uit");
-        infoTekst("Vanaf <?php echo $votetime[0] . ":" . $votetime[1]; ?>u kan je <span>stemmen</span>.");
+        infoTekst("Vanaf <?=$votetime[0] . ":" . $votetime[1]?>u kan je <span>stemmen</span>.");
         <?php
         // Reset has voted
-        $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0');
+        // IF screen stops working -> remove seenresult reset here and add it back to vote function
+        $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0, SeenResults = 0');
         $stmt->execute();
       }else{
         if($account["SeenResults"] == 0 && $account["Voted"] == 0){

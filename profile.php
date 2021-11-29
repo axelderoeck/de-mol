@@ -37,7 +37,7 @@ $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Get voted points
 $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-$stmt->execute([ $user_id ]);
+$stmt->execute([ $account["Id"] ]);
 $votedPoints = $stmt->fetchColumn(0);
 
 // Get firstname if exists
@@ -56,10 +56,9 @@ $stmt = $pdo->prepare('SELECT *
 $stmt->execute([ $user_id ]);
 $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($user_owns_account == true) {
+if ($user_owns_account) {
   $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
-} elseif ($user_owns_account == false){
-
+}else{
   $geenAwardsMelding = "Deze gebruiker heeft nog geen <span>awards</span>.";
 
   if (isset($_POST["deleteFromFollowing"])){
@@ -68,7 +67,6 @@ if ($user_owns_account == true) {
 
     header('location:friends.php');
   }
-
 }
 
 if (isset($_POST["saveUserSettings"])){
