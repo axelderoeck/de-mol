@@ -46,7 +46,7 @@ if($account["SeenResults"] == 0 && $account["Voted"] == 0){
   }
 
   // Get name to type out in animation
-  if($account["Name"] != null){
+  if($account["Name"] != null || $account["Name"] != ""){
     $firstname = $account["Name"];
   }else{
     $firstname = $account["Username"];

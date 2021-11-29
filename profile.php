@@ -35,6 +35,18 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $user_id ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Get voted points
+$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
+$stmt->execute([ $_SESSION["Id"] ]);
+$votedPoints = $stmt->fetchColumn(0);
+
+// Get firstname if exists
+if($account["Name"] != null || $account["Name"] != ""){
+  $firstname = $account["Name"];
+}else{
+  $firstname = $account["Username"];
+}
+
 // Select all the awards the specified user has
 $stmt = $pdo->prepare('SELECT *
                       FROM table_UserAwards
@@ -144,8 +156,12 @@ if (isset($_POST["saveUserSettings"])){
   <?php } ?>
 
   <!-- User info -->
-  <h1><?=$account["Username"]?></h1>
-  <p class="userInfo">Placeholder: <span><?=$account["Voted"]?></span></p>
+  <div class="profileFingerprint">
+    <img src="img/assets/demol_logo_geen_tekst.png" alt="logo van de mol">
+    <h1><?=$firstname?></h1>
+  </div>
+  <hr>
+  <p class="userInfo">Score: <span><?=$votedPoints + $account["Score"]?></span> <i class="fas fa-fingerprint"></i></p>
   <?php if ($user_owns_account): ?>
   <!-- Private user info -->
   <p class="userInfo">Email: <span><?=$account["Email"] ? $account["Email"] : "Geen"?></span></p>

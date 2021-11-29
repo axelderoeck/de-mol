@@ -625,6 +625,35 @@
   color: #ffffff;
 }
 
+.profileFingerprint {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  text-align: center;
+  margin: 100px 0 50px 0;
+}
+
+.profileFingerprint img {
+  position: absolute;
+  width: 40%;
+  z-index: 1;
+  top: 0;
+  left: 0; 
+  right: 30%; 
+  margin-left: auto; 
+  margin-right: auto; 
+}
+
+.profileFingerprint h1 {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 20px;
+  z-index: 2 !important;
+  text-shadow: -2px 2px 2px rgba(0,0,0,0.47);
+}
+
 /* DEELNEMERS */
 
 .deelnemerItem {
