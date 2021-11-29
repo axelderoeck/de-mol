@@ -172,7 +172,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
   <div class="respContainer">
 
   <div style="text-align: center; margin: 10% 0;">
-    <img class="loginImg" src="img/assets/molLogo.png" alt="logo">
+    <img class="loginImg" src="img/assets/demol_logo.png" alt="logo">
   </div>
 
   <div id="loginbox">

@@ -22,7 +22,7 @@ $amount_notifications = $stmt->fetchColumn(0);
     <a href="admin/index.php"><i class="fas fa-hammer"></i>Admin</a>
   <?php endif; ?>
   <a href="index.php?logout=1"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
-  <img src="img/assets/molLogo.png" alt="logo de mol">
+  <img src="img/assets/demol_logo.png" alt="logo de mol">
 </div>
 
 <span class="navButton" onclick="openNav()"><i class="fas fa-stream"></i></span>
