@@ -426,35 +426,6 @@
   background-color: rgba(83, 173, 181, 0.4) !important;
 }
 
-/* TABS STYLING */
-
-.tabs {
-  text-align: center;
-}
-
-.tabs li {
-  float: none;
-  display: inline-block;
-  margin: 0 20px;
-  min-width: 100px;
-}
-
-.tabs .indicator {
-  /* hide the lame indicator from materialize */
-  display: none;
-}
-
-.tabs #thecooler_indicator {
-  /* show the way cooler indicator instead */
-  width: 50%;
-  transform: translateX(0%);
-  -webkit-transform: translateX(0%);
-  -ms-transform: translateX(0%);
-  transition: 0.4s;
-  height: 2px;
-  background-color: #53adb5;
-}
-
 /* LOGIN SCREEN */
 
 /* information popup */
