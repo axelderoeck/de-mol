@@ -49,8 +49,10 @@ function submitVote($id, $candidates, $maxScore){
     foreach($candidates as $candidate){
       // Get the score from form on this candidate
       $score = $_POST["slider" . $candidate["Id"]];
-      // Add score
-      $stmt->execute([ $id, $candidate["Id"], $score ]);
+      if($score > 0){
+        // Add score
+        $stmt->execute([ $id, $candidate["Id"], $score ]);
+      }
     }
 
     // Calculate new score

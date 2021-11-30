@@ -116,20 +116,30 @@ if (isset($_POST["leaveGroup"])){
     <button onclick="location.href = 'addusertogroup.php?g=<?=$group["Id"]?>';" class="styledBtn" type="submit" name="button">Nodig spelers uit</button>
 
     <div id="editscreen" class="editmenu">
-      <a href="javascript:editMode('editscreen', false);">&times;</a>
-      <form action="" method="post">
-        <label>Wijzig naam</label>
-        <input type="text" id="name" name="name" value="<?=$group["Name"]?>">
-        <br>
-        <label>Wijzig beschrijving</label>
-        <input type="text" id="description" name="description" value="<?=$group["Description"]?>">
-        <br>
-        <label>Privé groep</label>
-        <input type="hidden" name="private" value="0">
-        <input <?php if($group['Private'] == 1) {echo 'checked';}; ?> type="checkbox" id="private" name="private" value="1" />
-        <br>
-        <input type="submit" name="saveGroupSettings" id="saveGroupSettings" value="Opslaan">
-      </form>
+
+      <div class="paper">
+        <div class="lines">
+          <a href="javascript:editMode('editscreen', false);">&times;</a>
+          <div class="text">
+
+            <form action="" method="post">
+              <label>Naam</label>
+              <input type="text" id="name" name="name" value="<?=$group["Name"]?>">
+              <br>
+              <label>Beschrijving</label>
+              <input type="text" id="description" name="description" value="<?=$group["Description"]?>">
+              <br>
+              <label>Privé groep</label>
+              <input type="hidden" name="private" value="0">
+              <input <?php if($group['Private'] == 1) {echo 'checked';}; ?> type="checkbox" id="private" name="private" value="1" />
+              <br>
+              <input type="submit" name="saveGroupSettings" id="saveGroupSettings" value="Opslaan">
+            </form>
+            
+          </div>
+        </div>
+      </div>
+
     </div>
   <?php endif; ?>
 

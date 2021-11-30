@@ -158,22 +158,36 @@ if (isset($_POST["saveUserSettings"])){
     <img src="img/assets/demol_logo_geen_tekst.png" alt="logo van de mol">
     <h1><?=$firstname?></h1>
   </div>
-  <hr>
-  <p class="userInfo">Score: <span><?=$votedPoints + $account["Score"]?></span> <i class="fas fa-fingerprint"></i></p>
-  <?php if ($user_owns_account): ?>
-  <!-- Private user info -->
-  <p class="userInfo">Email: <span><?=$account["Email"] ? $account["Email"] : "Geen"?></span></p>
-  <p class="userInfo">FriendCode: <span>#<?=$account["Friendcode"]?></span></p>
-  <?php endif; ?>
 
-  <?php if ($user_owns_account && $account["Email"] == null) { ?>
-    <div class="bericht info">
-      <p>U hebt nog geen email ingesteld. U kan nog steeds inloggen met uw gebruikersnaam.</p>
+  <h3 style="margin: 30px 0 0 0;">Awards</h3>
+  <div class="profileAwards">
+    <?php $count_awards = 0; foreach($awards as $award): ?>
+      <img src="img/awards/<?=$award['AwardId']?>.png" alt="award foto van <?=$award['Name']?>">
+    <?php $count_awards++; endforeach; ?>
+  </div>
+
+  <div class="profileInfo">
+    <div class="paper">
+      <div class="lines">
+        <div class="text">
+          <span>Dossier <?=$firstname?></span><br /><br />
+          <span>Score:</span> <?=$votedPoints + $account["Score"]?> <br>
+          <span>Gebruikersnaam:</span> <?=$account["Username"]?> <br>
+          <?php if ($user_owns_account): ?>
+          <span>Email:</span> <?=$account["Email"] ? $account["Email"] : "Geen"?> <br>
+          <?php else: ?>
+          <span style="text-decoration: line-through;">Email:</span> <span style="text-decoration: line-through; color:#000;"><?=$account["Username"]?>@mol.be</span> <br>
+          <?php endif; ?>
+          <span>FriendCode:</span> #<?=$account["Friendcode"]?>
+        </div>
+      </div>
+      <img src="img/assets/demol_logo_classified.png" alt="">
     </div>
-  <?php } ?>
-  <hr>
+  </div>
 
-  <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awards.php'>Overzicht</a>"; } ?></h3>
+  
+  <!-- <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awards.php'>Overzicht</a>"; } ?></h3>
+  <span class="awardsTitle">Awards</span>
   <div class="awards">
     <?php if(!empty($awards)): ?>
     <?php $i = 0; foreach($awards as $award): ?>
@@ -185,20 +199,8 @@ if (isset($_POST["saveUserSettings"])){
     <?php else: ?>
       <p style="text-align: center !important;"><?php echo $geenAwardsMelding; ?></p>
     <?php endif; ?>
-  </div>
-  
-  <hr>
-  <?php if($user_owns_account == true) { ?>
-  <h3>Account Acties <button onclick="collapse('collapsible-content','collapsible');" type="button" id="collapsible"><i class="fas fa-chevron-down"></i></button></h3>
-  <div id="collapsible-content">
-    <ul>
-      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangeName','show');"> gebruikersnaam wijzigen</a></li>
-      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpAddEmail','show');"> email wijzigen</a></li>
-      <li><i class="fas fa-edit"></i><a href="javascript:showPopup('popUpChangePassword','show');"> wachtwoord wijzigen</a></li>
-      <li class="delete warning"><i class="fas fa-trash-alt"></i><a href="javascript:showPopup('popUpDeleteAccount','show');"> verwijder account</a></li>
-    </ul>
-  </div>
-  <?php } ?>
+  </div> -->
+
   <?php if($user_owns_account == false) {?>
     <form action="" method="post">
       <input type="submit" name="deleteFromFollowing" id="deleteFromFollowing" value="Verwijder van lijst">
@@ -207,33 +209,71 @@ if (isset($_POST["saveUserSettings"])){
 
   <?php if($user_owns_account): ?>
   <div id="editscreen" class="editmenu">
-    <a href="javascript:editMode('editscreen', false);">&times;</a>
 
-    <form action="" method="post">
-      <label>Gebruikersnaam</label>
-      <input name="username" id="username" type="text" value="<?=$account["Username"]?>">
-      <br>
-      <label>Email</label>
-      <input name="email" id="email" type="text" value="<?=$account["Email"]?>">
-      <br>
-      <input type="submit" name="saveUserSettings" id="saveUserSettings" value="Opslaan">
-    </form>
+    <div class="paper">
+      <div class="lines">
+        <a href="javascript:editMode('editscreen', false);">&times;</a>
+        <div class="text">
 
-    <h3>Wachtwoord wijzigen</h3>
-    <form name="formChangePassword" action="" method="post">
-      <label>Oud wachtwoord</label>
-      <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
-      <br>
-      <label>Wachtwoord</label>
-      <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
-      <br>
-      <label>Wachtwoord</label>
-      <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
-      <br>
-      <input type="submit" name="changePassword" id="changePassword" value="Wijzig">
-    </form>
+          <form action="" method="post">
+            <label>Gebruikersnaam</label>
+            <input name="username" id="username" type="text" value="<?=$account["Username"]?>">
+            <br>
+            <label>Email</label>
+            <input name="email" id="email" type="text" value="<?=$account["Email"]?>">
+            <br>
+            <input type="submit" name="saveUserSettings" id="saveUserSettings" value="Opslaan">
+          </form>
+
+          <h3>Wachtwoord wijzigen</h3>
+          <form name="formChangePassword" action="" method="post">
+            <label>Oud wachtwoord</label>
+            <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
+            <br>
+            <label>Wachtwoord</label>
+            <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
+            <br>
+            <label>Wachtwoord</label>
+            <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
+            <br>
+            <input type="submit" name="changePassword" id="changePassword" value="Wijzig">
+          </form>
+
+        </div>
+      </div>
+    </div>
 
   </div>
   <?php endif; ?>
 
-<?php include "includes/footer.php"; ?>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script type="text/javascript" src="js/scripts.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      // Slick settings for candidate list
+      $('.profileAwards').slick({
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        dots: false,
+        arrows: false,
+        centerMode: true,
+        centerPadding: '5%',
+        focusOnSelect: true,
+        draggable: true,
+        mobileFirst: true,
+        infinite: false,
+        swipe: true,
+        initialSlide: <?=round($count_awards/2)?>
+      });
+    });
+  </script>
+
+</body>
+</html>
