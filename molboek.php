@@ -27,18 +27,11 @@ require_once("includes/phpdefault.php");
       if(!empty($candidates)):
         $i = 0; foreach($candidates as $candidate): ?>
           <div style="animation-delay: <?=$i/4;?>s;" class="displayItem">
-            <div class="wrapper">
-              <div class="div1">
-                <img src="img/kandidaten/<?=$candidate['Name'];?>.jpg" alt="">
-              </div>
-              <div class="div2">
-                <span class="displayItemName"><?=$candidate['Name'];?></span>
-                <br>
-                <br>
-                <br>
-                <span class="displayItemNumber"><?=$candidate['Score'];?></span>
-              </div>
+            <div>
+              <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate["Name"]?>">
             </div>
+            <span><?=$candidate['Name']?></span>
+            <span><?=$candidate['Score']?></span>
           </div>
         <?php $i++; endforeach; ?>
       <?php else: ?>

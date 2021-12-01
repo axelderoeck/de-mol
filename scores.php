@@ -146,7 +146,6 @@ ORDER BY TotalScore DESC');
   <!-- Slick Settings -->
   <script type="text/javascript">
     $(document).ready(function(){
-      // Slick settings for voting system
       $('.slider-for').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -160,9 +159,8 @@ ORDER BY TotalScore DESC');
         speed: 500,
         swipe: true,
         centerMode: true,
-        centerPadding: '5%',
+        centerPadding: '0%',
       });
-      // Slick settings for candidate list
       $('.slider-nav').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
