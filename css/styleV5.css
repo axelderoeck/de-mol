@@ -765,6 +765,66 @@
   color: #ffffff !important;
 }
 
+/* Notification page*/
+
+.notification {
+  width: 100%;
+  margin: 0 0 30px 0;
+}
+
+.notification div {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 90%;
+  margin: 0 auto 10px auto;
+  position: relative;
+  color: #fff;
+  font-size: 30px;
+  padding: 20px 10px 10px 10px;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box; 
+  box-sizing: border-box; 
+}
+
+.notification div span {
+  position: absolute;
+  top: -10%;
+  left: 5px;
+  color: #fff;
+  background-color: #53adb5;
+  font-size: 25px;
+  padding: 0 5px;
+  text-align: left;
+}
+
+.notification form {
+  margin: 0 auto;
+  padding: 0;
+  display: inline;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.notification form input[type="submit"]{
+  margin: 0;
+  display: inline;
+  width: 40%;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 25px;
+}
+
+.notification form input[type="submit"]:nth-child(1){
+  background-color: rgba(255, 0, 0, 0.4);
+  border-color: #eb2626;
+}
+
+.notification form input[type="submit"]:nth-child(2){
+  background-color: rgba(57, 179, 27, 0.4);
+  border-color: #39b31b;
+}
+
 /* Vote page */
 
 .candidate {

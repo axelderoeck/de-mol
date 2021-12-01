@@ -7,14 +7,35 @@ $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE InvitedId = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST["confirmFriendInvite"])){
-  $notification = confirmFriendInvite($_POST["userId"], $_SESSION["Id"]);
-  header('location: notifications.php');
+foreach($notifications as $notification){
+
+  if (isset($_POST["confirmInvite" . $notification["NotificationType"] . $notification["InviterId"]])){
+    if($_POST["notificationType"] == 0){
+      $notification = confirmFriendInvite($_POST["inviterId"], $_SESSION["Id"]);
+    }else{
+      $notification = addUserToGroup($_SESSION["Id"], $_POST["inviterId"]);
+    }
+    header('location: notifications.php');
+  }
+
+  if (isset($_POST["deleteNotification" . $notification["NotificationType"] . $notification["InviterId"]])){
+    if($_POST["notificationType"] == 0){
+      // TODO
+    }else{
+      // TODO
+    }
+    header('location: notifications.php');
+  }
 }
-if (isset($_POST["confirmGroupInvite"])){
-  $notification = addUserToGroup($_SESSION["Id"], $_POST["groupId"]);
-  header('location: notifications.php');
-}
+
+// if (isset($_POST["confirmFriendInvite"])){
+//   $notification = confirmFriendInvite($_POST["userId"], $_SESSION["Id"]);
+//   header('location: notifications.php');
+// }
+// if (isset($_POST["confirmGroupInvite"])){
+//   $notification = addUserToGroup($_SESSION["Id"], $_POST["groupId"]);
+//   header('location: notifications.php');
+// }
 
 ?>
 
@@ -24,33 +45,47 @@ if (isset($_POST["confirmGroupInvite"])){
     <h1>Meldingen</h1>
 
     <?php if(!empty($notifications)): ?>
-    <?php foreach($notifications as $notification): ?>
-      <?php if($notification["NotificationType"] == 0): ?>
-        <?php
-        // Get all info from user that initiated invite
-        $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
-        $stmt->execute([ $notification["InviterId"] ]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC); 
+      <?php foreach($notifications as $notification): ?>
+        <?php 
+          // Get the correct info for notification
+          if($notification["NotificationType"] == 0){
+            // Get username from inviting user
+            $stmt = $pdo->prepare('SELECT Username FROM table_Users WHERE Id = ?');
+            $stmt->execute([ $notification["InviterId"] ]);
+
+            // Set variables
+            $notification_inviter_info = $stmt->fetchColumn(0);
+            $notification_type = "Vriendverzoek";
+            $notification_href_link = "profile.php?u=" . $notification["InviterId"];
+          }else{
+            // Get name from inviting group
+            $stmt = $pdo->prepare('SELECT Name FROM table_Groups WHERE Id = ?');
+            $stmt->execute([ $notification["InviterId"] ]);
+
+            // Set variables
+            $notification_inviter_info = $stmt->fetchColumn(0);
+            $notification_type = "Groepsverzoek";
+            $notification_href_link = "group.php?g=" . $notification["InviterId"];
+          }
         ?>
-        <p>U hebt een vriendschapsverzoek ontvangen van <?=$user["Username"]?></p>
-        <form action="" method="post">
-          <input type="hidden" name="userId" id="userId" value="<?=$user["Id"]?>">
-          <input type="submit" name="confirmFriendInvite" id="confirmFriendInvite" value="Accepteer">
-        </form>
-      <?php elseif($notification["NotificationType"] == 1): ?>
-        <?php
-        // Get all info from inviting group
-        $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
-        $stmt->execute([ $notification["GroupId"] ]);
-        $group = $stmt->fetch(PDO::FETCH_ASSOC); 
-        ?>
-        <p>U hebt een groepsuitnodiging ontvangen voor de groep: <?=$group["Name"]?></p>
-        <form action="" method="post">
-          <input type="hidden" name="groupId" id="groupId" value="<?=$group["Id"]?>">
-          <input type="submit" name="confirmGroupInvite" id="confirmGroupInvite" value="Accepteer">
-        </form>
-      <?php endif; ?>
-    <?php endforeach; ?>
+
+        <div class="notification">
+          <a href="<?=$notification_href_link?>">
+            <div>
+              <span><?=$notification_type?></span>
+              <?=$notification_inviter_info?>
+            </div>
+          </a>
+          <!-- POSSIBLE ISSUE: all forms have same name /submitting all? -->
+          <form name="notificationForm<?=$notification["NotificationType"] . $notification["InviterId"]?>" action="" method="post">
+            <input type="submit" name="deleteNotification<?=$notification["NotificationType"] . $notification["InviterId"]?>" value="Weiger">
+            <input type="submit" name="confirmInvite<?=$notification["NotificationType"] . $notification["InviterId"]?>" value="Accepteer">
+          </form>
+          <input form="notificationForm<?=$notification["NotificationType"] . $notification["InviterId"]?>" type="hidden" name="notificationType" value="<?=$notification["NotificationType"]?>">
+          <input form="notificationForm<?=$notification["NotificationType"] . $notification["InviterId"]?>" type="hidden" name="inviterId" value="<?=$notification["InviterId"]?>">
+        </div>
+      
+      <?php endforeach; ?>
     <?php else: ?>
       <p>U heeft momenteel geen meldingen</p>
     <?php endif; ?>
