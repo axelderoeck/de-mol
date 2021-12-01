@@ -1,5 +1,9 @@
 /* GENERAL */
 
+.slick-track {
+  display: flex;
+}
+
 .userBox {
   position: absolute;
   top: 5%;
@@ -765,6 +769,41 @@
 
 .candidate {
   margin: 0 2px;
+  padding: 0;
+  height: 100%;
+  position: relative;
+}
+
+.candidate .red {
+  position: absolute;
+  background-color: rgba(236, 106, 89, 0.3);
+  top: 0;
+  left: 0;
+}
+
+.candidate .green {
+  position: absolute;
+  background-color: rgba(75, 221, 141, 0.3);
+  top: 0;
+  left: 0;
+}
+
+.candidate span {
+  position: absolute;
+  color: #fff;
+  font-size: 30px;
+  right: 5px;
+  bottom: 5px;
+  text-align: right;
+}
+
+.candidate img {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  object-fit: contain;
+  overflow: hidden;
 }
 
 .candidateInfo {
@@ -792,12 +831,6 @@
   right: 0; 
   margin-left: auto; 
   margin-right: auto; 
-}
-
-.candidate img {
-  width: 100%;
-  margin: 0;
-  padding: 0;
 }
 
 .disabledPerson{
@@ -840,19 +873,10 @@
   overflow-y: hidden;
 }
 
-.screen img {
+.screen .mainImage {
   padding: 30px 0 0 0;
   width: 60%;
   margin: 0 auto;
-}
-
-.results img {
-  margin: 0 2px;
-}
-
-.candidateOut {
-  position: relative;
-  filter: grayscale(100%);
 }
 
 .voteScreen {

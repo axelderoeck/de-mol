@@ -110,11 +110,11 @@ if (isset($_POST["formSubmitVote"])){
     <div class="slider-for">
       <?php foreach($candidates as $candidate): ?>
         <div class="candidateInfo">
-          <p><?=$candidate['Name']?> 
+          <p><?=$candidate['Name']?>
           <br><?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
           <p class="userPointsLeft"><?=$account['Score']?></p>
           <p class="pointsCandidate<?=$candidate['Id']?>">0</p>
-          <input form="deMolForm" type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" name="slider<?=$candidate['Id']?>" id="slider<?=$candidate['Id']?>" oninput="checkScore('<?=$candidate['Id']?>')">
+          <input <?php if($candidate["Status"] == 0){echo "disabled";} ?> form="deMolForm" type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" name="slider<?=$candidate['Id']?>" id="slider<?=$candidate['Id']?>" oninput="checkScore('<?=$candidate['Id']?>')">
         </div>
       <?php endforeach; ?>
     </div>
@@ -124,6 +124,9 @@ if (isset($_POST["formSubmitVote"])){
     <div class="slider-nav">
       <?php foreach($candidates as $candidate): ?>
         <div class='candidate' id='candidate<?=$candidate['Id']?>'>
+          <?php if($candidate["Status"] == 0): ?>
+          <img class="red" src="img/assets/demol_logo_geen_tekst_rood.png" alt="logo de mol rood">
+          <?php endif; ?>
           <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
         </div>
       <?php endforeach; ?>

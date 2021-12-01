@@ -45,9 +45,11 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     if($redScreen == true){
       $file_name = "demol_logo_geen_tekst_rood.png";
       $color = "red";
+      $text = "Tekst rood scherm";
     }else{
       $file_name = "demol_logo_geen_tekst_groen.png";
       $color = "green";
+      $text = "Tekst groen scherm";
     }
 
     // Get name to type out in animation
@@ -98,7 +100,7 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     if($bonus == true){
       $newScore += $bonusScore;
     }
-      
+    
     // Set new user score
     $stmt = $pdo->prepare('UPDATE table_Users SET Score = ? WHERE Id = ?');
     $stmt->execute([ $newScore, $account["Id"] ]);
@@ -128,38 +130,28 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
   <?php if($account["SeenResults"] == 0 && $account["Voted"] == 0): ?>
     <div id="screen_<?=$color?>" class="screen">
       <div class="respContainer" style="height: 100%;">
-        <img src="img/assets/<?=$file_name?>" alt="logo van de mol">
+        <img class="mainImage" src="img/assets/<?=$file_name?>" alt="logo van de mol">
         <h2>Resultaat</h2>
-        <p>Tekst.</p>
+        <p><?=$text?></p>
         <?php if($account["Score"] > 0): ?>
         <p>Niet gebruikte punten: <?=$account["Score"]?></p>
         <?php endif; ?>
-        <div class="results">
+        <div class="slider-nav">
           <?php foreach($scores as $score): ?>
-            <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
+            <div class='candidate' id='candidate<?=$score['Id']?>'>
+              <?php if($score["Status"] == 0): ?>
+                <img class="red" src="img/assets/demol_logo_geen_tekst_rood.png" alt="logo de mol rood">
+                <span>-<?=$score["Score"]?></span>
+              <?php else: ?>
+                <img class="green" src="img/assets/demol_logo_geen_tekst_groen.png" alt="logo de mol groen">
+                <span>+<?=round($score["Score"]*$multiplier)?></span> 
+              <?php endif; ?>
               <img src="img/kandidaten/<?=$score['Name']?>.jpg" alt="foto van <?=$score['Name']?>" />
-            <?php endif; ?>
-            <?php if($score["Status"] == 0 && $score["Score"] > 0): ?>
-              <img class="candidateOut" src="img/kandidaten/<?=$score['Name']?>.jpg" alt="foto van <?=$score['Name']?>" />
-            <?php endif; ?>
+            </div>
           <?php endforeach; ?>
         </div>
 
         <table>
-        <?php foreach($scores as $score): ?>
-          <?php if($score["Status"] == 1 && $score["Score"] > 0): ?>
-            <tr>
-              <td><?=$score["Name"]?></td>
-              <td><i class="fas fa-fingerprint color-success"></i> +<?=round($score["Score"]*$multiplier)?></td>
-            </tr>
-          <?php endif; ?>
-          <?php if($score["Status"] == 0 && $score["Score"] > 0): ?>
-            <tr>
-              <td><?=$score["Name"]?></td>
-              <td><i class="fas fa-fingerprint color-warning"></i> -<?=$score["Score"]?></td>
-            </tr>
-          <?php endif; ?>
-        <?php endforeach; ?>
           <?php if($bonus == true): ?>
             <tr>
               <td>Bonus</td>
@@ -196,8 +188,8 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     $(document).ready(function(){
       // Start the screen animation
       screenAnimation('textfield','<?=$firstname?>','<?=$color?>');
-      // Initialize slick slider
-      $('.results').slick({
+      // Slick settings for candidate list
+      $('.slider-nav').slick({
         slidesToShow: 3,
         slidesToScroll: 1,
         dots: false,
