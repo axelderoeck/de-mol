@@ -184,7 +184,6 @@ if (isset($_POST["saveUserSettings"])){
       <img src="img/assets/demol_logo_classified.png" alt="">
     </div>
   </div>
-
   
   <!-- <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awards.php'>Overzicht</a>"; } ?></h3>
   <span class="awardsTitle">Awards</span>
@@ -273,7 +272,7 @@ if (isset($_POST["saveUserSettings"])){
         initialSlide: <?=round($count_awards/2)?>
       });
     });
-  </script>
+</script>
 
 </body>
 </html>

@@ -55,20 +55,20 @@ if (isset($_POST["deleteNotification"])){
           }
         ?>
         <form action="" method="post">
-        <div class="notification">
-          <a href="<?=$notification_href_link?>">
-            <div>
-              <span><?=$notification_type?></span>
-              <?=$notification_inviter_name?>
+          <div class="notification">
+            <a href="<?=$notification_href_link?>">
+              <div>
+                <span><?=$notification_type?></span>
+                <?=$notification_inviter_name?>
+              </div>
+            </a>
+            <div class="buttons">
+              <input type="submit" name="deleteNotification" value="Weiger">
+              <input type="submit" name="confirmNotification" value="Accepteer">
             </div>
-          </a>
-          <div class="buttons">
-            <input type="submit" name="deleteNotification" value="Weiger">
-            <input type="submit" name="confirmNotification" value="Accepteer">
+            <input type="hidden" name="notificationType" value="<?=$notification["NotificationType"]?>">
+            <input type="hidden" name="inviterId" value="<?=$notification["InviterId"]?>">
           </div>
-          <input type="hidden" name="notificationType" value="<?=$notification["NotificationType"]?>">
-          <input type="hidden" name="inviterId" value="<?=$notification["InviterId"]?>">
-        </div>
         </form>
       <?php endforeach; ?>
     <?php else: ?>

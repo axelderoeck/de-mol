@@ -20,6 +20,15 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden. <br>
     <i class='fas fa-check-circle'></i> duid aan wie er al gestemd heeft.</p>
 
+    <div class="friends">
+      <?php $i = 0; foreach($friends as $friend): ?>
+      <div class="friend">
+        <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
+        <span><?=$friend["Username"]?></span>
+      </div>
+      <?php $i++; endforeach; ?>
+    </div>
+
     <div class="deelnemersList">
       <?php if(!empty($friends)): ?>
       <?php $i = 0; foreach($friends as $friend): ?>

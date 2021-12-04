@@ -677,6 +677,34 @@
   cursor: pointer;
 }
 
+/* Friends page */
+
+.friends {
+  height: 100%;
+}
+
+.friend {
+  margin: 0 2px;
+  padding: 0;
+  height: 200px;
+  position: relative;
+}
+
+.friend span {
+  position: absolute;
+  color: #fff;
+  bottom: 10%;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.friend img {
+  margin: 0 auto;
+  width: 80%;
+  height: 100%;
+}
+
 /* deelnemers list */
 
 .deelnemersList {
