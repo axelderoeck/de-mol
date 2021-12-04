@@ -33,7 +33,7 @@ $users_voted = $stmt->fetchColumn(0);
       <h2>Verdenkingen</h2>
       
       <div>
-        <?php $i = 0; foreach($scores as $score): ?>
+        <?php foreach($scores as $score): ?>
           <?php 
             $percentCalc = round(($score["TotalScore"] / $total_voted) * 100, 2);
             $percentScore = explode(".", $percentCalc);
@@ -44,9 +44,7 @@ $users_voted = $stmt->fetchColumn(0);
             <div class="meter">
               <span style="width: <?=$percentScore[0]; ?>%"></span>
             </div>
-        <?php $i++; endforeach; ?>
+        <?php endforeach; ?>
       </div>
-      
-      <p class="example"><?=$users_voted?> <?php if ($users_voted == 1) {echo "mollenjager heeft";}else{echo "mollenjagers hebben";} ?>  gestemd deze week.</p>
-    
+          
 <?php include "includes/footer.php"; ?>

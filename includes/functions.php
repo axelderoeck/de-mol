@@ -440,36 +440,77 @@ function confirmFriendInvite($inviterId, $invitedId){
   // DB connection
   $pdo = pdo_connect_mysql();
 
-  // Insert friendship to table
-  $stmt = $pdo->prepare('INSERT INTO table_Friends (Id, IsFriendsWithId) VALUES (?, ?)');
-  $stmt->execute([ $inviterId, $invitedId ]);
-  $stmt->execute([ $invitedId, $inviterId ]);
-  // Remove notification
-  $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND InviterId = ?');
-  $stmt->execute([ $invitedId, $inviterId ]);
-  // Notify user
-  $message = "Vriendschapsverzoek aanvaard.";
-  $type = "success";
-  
-  // AWARD_GILLES SECTION
-  // Get how many friends a user has
-  $stmt = $pdo->prepare('SELECT COUNT(UserId) AS Count
-  FROM table_Friends
-  WHERE Id = ?
-  GROUP BY Id');
+  // Search friendship
+  $stmt = $pdo->prepare('SELECT * FROM table_Friends 
+  WHERE Id = ? AND IsFriendsWithId = ?
+  OR Id = ? AND IsFriendsWithId = ?');
+  $stmt->execute([ $inviterId, $invitedId, $invitedId, $inviterId ]);
+  $friendship = $stmt->fetch(PDO::FETCH_ASSOC);
 
-  // User 1: If 10 friends -> Give award
-  $stmt->execute([ $inviterId ]);
-  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
-    giveAward($inviterId, AWARD_GILLES);
+  // Friendship doesn't exist -> add
+  if(!$friendship){
+    // Insert friendship to table
+    $stmt = $pdo->prepare('INSERT INTO table_Friends (Id, IsFriendsWithId) VALUES (?, ?)');
+    $stmt->execute([ $inviterId, $invitedId ]);
+    $stmt->execute([ $invitedId, $inviterId ]);
+    // Remove notification
+    deleteNotification($invitedId, $inviterId, 0);
+    // Notify user
+    $message = "Vriendschapsverzoek aanvaard.";
+    $type = "success";
+
+    // AWARD_GILLES SECTION
+    // Get how many friends a user has
+    $stmt = $pdo->prepare('SELECT COUNT(UserId) AS Count
+    FROM table_Friends
+    WHERE Id = ?
+    GROUP BY Id');
+
+    // User 1: If 10 friends -> Give award
+    $stmt->execute([ $inviterId ]);
+    $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
+      giveAward($inviterId, AWARD_GILLES);
+    }
+    // User 2: If 10 friends -> Give award
+    $stmt->execute([ $invitedId ]);
+    $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
+      giveAward($invitedId, AWARD_GILLES);
+    }
+  }else{
+    // Notify user
+    $message = "U bent al bevriend met deze gebruiker.";
+    $type = "warning";
   }
+  
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
 
-  // User 2: If 10 friends -> Give award
-  $stmt->execute([ $invitedId ]);
-  $amount_friends = $stmt->fetch(PDO::FETCH_ASSOC);
-  if ($amount_friends["Count"] >= AWARD_GILLES_AMOUNT) {
-    giveAward($invitedId, AWARD_GILLES);
+function deleteNotification($invitedId, $inviterId, $notificationType){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Search notification
+  $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE InvitedId = ? AND InviterId = ? AND NotificationType = ?');
+  $stmt->execute([ $invitedId, $inviterId, $notificationType ]);
+  $notification = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Notification exists -> delete
+  if($notification){
+    // Remove notification
+    $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND InviterId = ? AND NotificationType = ?');
+    $stmt->execute([ $invitedId, $inviterId, $notificationType ]);
+    // Notify user
+    $message = "Verzoek geweigerd."; 
+    $type = "success";
+  }else{
+    // Notify user
+    $message = "Verzoek bestaat niet."; 
+    $type = "warning";
   }
   
   return (object)[
@@ -523,8 +564,7 @@ function addUserToGroup($id, $groupId){
     $stmt = $pdo->prepare('INSERT INTO table_UsersInGroups (UserId, GroupId) VALUES (?, ?)');
     $stmt->execute([ $id, $groupId ]);
     // Remove notification
-    $stmt = $pdo->prepare('DELETE FROM table_Notifications WHERE InvitedId = ? AND GroupId = ?');
-    $stmt->execute([ $id, $groupId ]);
+    deleteNotification($id, $groupId, 1);
     // Notify user
     $message = "Aangesloten bij groep.";
     $type = "success";
