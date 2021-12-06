@@ -165,24 +165,18 @@ if (isset($_POST["saveUserSettings"])){
       <img src="img/awards/<?=$award['AwardId']?>.png" alt="award foto van <?=$award['Name']?>">
     <?php $count_awards++; endforeach; ?>
   </div>
-
+    
+  <h3>Dossier</h3>
   <div class="profileInfo">
-    <div class="paper">
-      <div class="lines">
-        <div class="text">
-          <span>Dossier <?=$firstname?></span><br /><br />
-          <span>Score:</span> <?=$votedPoints + $account["Score"]?> <br>
-          <span>Gebruikersnaam:</span> <?=$account["Username"]?> <br>
-          <?php if ($user_owns_account): ?>
-          <span>Email:</span> <?=$account["Email"] ? $account["Email"] : "Geen"?> <br>
-          <?php else: ?>
-          <span style="text-decoration: line-through;">Email:</span> <span style="text-decoration: line-through; color:#000;"><?=$account["Username"]?>@mol.be</span> <br>
-          <?php endif; ?>
-          <span>FriendCode:</span> #<?=$account["Friendcode"]?>
-        </div>
-      </div>
-      <img src="img/assets/demol_logo_classified.png" alt="">
-    </div>
+    <span>Score:</span> <?=$votedPoints + $account["Score"]?> <br>
+    <span>Gebruikersnaam:</span> <?=$account["Username"]?> <br>
+    <?php if ($user_owns_account): ?>
+    <span>Email:</span> <?=$account["Email"] ? $account["Email"] : "Geen"?> <br>
+    <?php else: ?>
+    <span style="text-decoration: line-through;">Email:</span> <span style="text-decoration: line-through; color:#000;"><?=$account["Username"]?>@mol.be</span> <br>
+    <?php endif; ?>
+    <span>FriendCode:</span> #<?=$account["Friendcode"]?>
+    <img src="img/assets/demol_logo_classified.png" alt="">
   </div>
   
   <!-- <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awards.php'>Overzicht</a>"; } ?></h3>
