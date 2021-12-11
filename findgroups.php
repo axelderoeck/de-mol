@@ -37,7 +37,7 @@ WHERE GroupId = ?');
         <a href="group.php?g=<?=$group["Id"]?>">
           <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
             <div>
-              <span><?=$groupScore?></span>
+              <!-- <span><?=$groupScore?></span> -->
               <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
             </div>
             <span><?=$group["Name"]?></span>
@@ -47,8 +47,5 @@ WHERE GroupId = ?');
       <?php else: ?>
         <p style="text-align: center !important;">Geen groepen gevonden.</p>
       <?php endif; ?>
-
-    <hr>
-    <button onclick="location.href = 'creategroup.php';" class="styledBtn" type="submit" name="button">Maak een groep</button>
 
 <?php include "includes/footer.php"; ?>
