@@ -114,13 +114,15 @@ if (isset($_POST["leaveGroup"])){
           <a href="profile.php?u=<?=$member["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
               <div>
-                <span><?=$member["Score"]?></span>
-                <?php if($member["LastScreen"] == 1): ?>
-                  <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
-                <?php elseif($member["LastScreen"] == 2): ?>
-                  <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
-                <?php else: ?>
-                  <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
+                <?php if($member["Voted"] == 0): ?>
+                  <span><?=$member["Score"]?></span>
+                  <?php if($member["LastScreen"] == 1): ?>
+                    <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
+                  <?php elseif($member["LastScreen"] == 2): ?>
+                    <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
+                  <?php else: ?>
+                    <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
+                  <?php endif; ?>
                 <?php endif; ?>
               </div>
               <span><?=$member["Username"]?></span>
