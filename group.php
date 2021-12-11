@@ -109,7 +109,11 @@ if (isset($_POST["leaveGroup"])){
   <p><?=$group["Description"]?></p>
   <p>Deze groep is <?php if($group["Private"] == 0){echo "publiek.";}else{echo "privé.";} ?></p>
   <!-- <p>Score: <?=$groupScore?></p> -->
-  <h3>Leden (<?=$groupMembers?>)</h3>
+  <h3>Leden 
+    <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
+      (<?=$groupMembers?>)
+    <?php endif; ?>
+  </h3>
   <div>
     <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
       <?php if(!empty($members)): ?>
