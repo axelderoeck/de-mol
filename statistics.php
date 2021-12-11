@@ -18,11 +18,6 @@ $stmt = $pdo->prepare('SELECT DISTINCT SUM(Score) FROM table_Scores');
 $stmt->execute();
 $total_voted = $stmt->fetchColumn(0);
 
-// Get the amount of users that voted
-$stmt = $pdo->prepare('SELECT COUNT(Id) FROM table_Users WHERE Voted = 1');
-$stmt->execute();
-$users_voted = $stmt->fetchColumn(0);
-
 ?>
 
 <?php include "includes/header.php"; ?>
@@ -33,18 +28,22 @@ $users_voted = $stmt->fetchColumn(0);
       <h2>Verdenkingen</h2>
       
       <div>
-        <?php foreach($scores as $score): ?>
-          <?php 
-            $percentCalc = round(($score["TotalScore"] / $total_voted) * 100, 2);
-            $percentScore = explode(".", $percentCalc);
-            ?>
-            <div class="status">
-              <p><?=$score['Name']?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
-            </div>
-            <div class="meter">
-              <span style="width: <?=$percentScore[0]; ?>%"></span>
-            </div>
-        <?php endforeach; ?>
+        <?php if(!empty($scores)): ?>
+          <?php foreach($scores as $score): ?>
+            <?php 
+              $percentCalc = round(($score["TotalScore"] / $total_voted) * 100, 2);
+              $percentScore = explode(".", $percentCalc);
+              ?>
+              <div class="status">
+                <p><?=$score['Name']?> - <span class="percent"><?=$percentScore[0]; ?><span class="smaller">.<?=$percentScore[1]; ?></span>%</span></p>
+              </div>
+              <div class="meter">
+                <span style="width: <?=$percentScore[0]; ?>%"></span>
+              </div>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p style="text-align: center !important;">Er is nog niet gestemd deze week</p>
+        <?php endif; ?>
       </div>
           
 <?php include "includes/footer.php"; ?>

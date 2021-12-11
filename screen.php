@@ -21,7 +21,7 @@ $lostPoints = $stmt->fetchColumn(0);
 $stmt = $pdo->prepare('SELECT * FROM table_Scores
 LEFT JOIN table_Candidates
 ON table_Scores.CandidateId = table_Candidates.Id
-WHERE UserId = ?');
+WHERE UserId = ? AND Score > 0');
 $stmt->execute([ $_SESSION["Id"] ]);
 $scores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -46,10 +46,12 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
       $file_name = "demol_logo_geen_tekst_rood.png";
       $color = "red";
       $text = "Tekst rood scherm";
+      $screen = 2;
     }else{
       $file_name = "demol_logo_geen_tekst_groen.png";
       $color = "green";
       $text = "Tekst groen scherm";
+      $screen = 1;
     }
 
     // Get name to type out in animation
@@ -101,17 +103,13 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
       $newScore += $bonusScore;
     }
     
-    // Set new user score
-    $stmt = $pdo->prepare('UPDATE table_Users SET Score = ? WHERE Id = ?');
-    $stmt->execute([ $newScore, $account["Id"] ]);
+    // Update users values
+    $stmt = $pdo->prepare('UPDATE table_Users SET Score = ?, SeenResults = ?, LastScreen = ? WHERE Id = ?');
+    $stmt->execute([ $newScore, 1, $screen, $account["Id"] ]);
 
     // Delete score table
     $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');
     $stmt->execute([ $account["Id"] ]);
-
-    // Set "SeenResults" to 1 after the query so it will only execute once
-    $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = ? WHERE Id = ?');
-    $stmt->execute([ 1, $account["Id"] ]);
   }else{
     header('location: home.php');
   }
