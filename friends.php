@@ -19,17 +19,27 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1>Vrienden</h1>
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden.</p>
 
+    <?php if(!empty($friends)): ?>
       <?php $i = 0; foreach($friends as $friend): ?>
-      <a href="profile.php?u=<?=$friend["IsFriendsWithId"]?>">
-        <div class="displayUser">
-          <div>
-            <span><?=$friend["Score"]?></span>
-            <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
+        <a href="profile.php?u=<?=$friend["IsFriendsWithId"]?>">
+          <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
+            <div>
+              <span><?=$friend["Score"]?></span>
+              <?php if($friend["LastScreen"] == 1): ?>
+                <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
+              <?php elseif($friend["LastScreen"] == 2): ?>
+                <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
+              <?php else: ?>
+                <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
+              <?php endif; ?>
+            </div>
+            <span><?=$friend["Username"]?></span>
           </div>
-          <span><?=$friend["Username"]?></span>
-        </div>
-      </a>
+        </a>
       <?php $i++; endforeach; ?>
+    <?php else: ?>
+      <p style="text-align: center !important;">Je hebt nog geen vrienden</p>
+    <?php endif; ?>
 
     <hr>
     <button onclick="location.href = 'adduser.php';" class="styledBtn" type="submit" name="button">Voeg spelers toe</button>

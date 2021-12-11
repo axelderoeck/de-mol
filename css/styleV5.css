@@ -270,7 +270,7 @@
   background-color: rgba(0, 0, 0, 0.4);
   width: 90%;
   height: 70px;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 10px auto;
 }
 
 .displayUser span {
@@ -587,30 +587,6 @@
   top: -50px;
   right: 20%;
   width: 20%;
-}
-
-/* DEELNEMERS */
-
-.deelnemerItem {
-  margin: 5px auto !important;
-  position: relative;
-  transition: 0.2s;
-}
-
-.deelnemerItem:hover {
-  transform: scale(1.05);
-  transition: 0.2s;
-}
-
-.deelnemerItem i {
-  position: absolute;
-}
-
-.deelnemerItem .right {
-  right: 5px;
-}
-.deelnemerItem .left {
-  left: 5px;
 }
 
 /* AWARDSLIST PAGE */

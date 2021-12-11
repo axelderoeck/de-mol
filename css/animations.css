@@ -107,6 +107,12 @@
   -moz-animation: swoopIn 1.2s ease backwards;
 }
 
+.displayUser {
+  animation: swoopIn 1.2s ease backwards;
+  -webkit-animation: swoopIn 1.2s ease backwards;
+  -moz-animation: swoopIn 1.2s ease backwards;
+}
+
 .rangItem {
   animation: swoopIn 1.2s ease both;
   -webkit-animation: swoopIn 1.2s ease both;

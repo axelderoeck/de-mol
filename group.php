@@ -14,6 +14,26 @@ WHERE GroupId = ? LIMIT 10');
 $stmt->execute([ $group["Id"] ]);
 $members = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Get the total score of all group members
+$getGroupScore = $pdo->prepare('SELECT SUM(Score)
+FROM table_Groups
+LEFT JOIN table_UsersInGroups
+ON table_Groups.Id = table_UsersInGroups.GroupId
+LEFT JOIN table_Users
+ON table_UsersInGroups.UserId = table_Users.Id
+WHERE GroupId = ?');
+$getGroupScore->execute([ $group["Id"] ]);
+$groupScore = $getGroupScore->fetchColumn(0); 
+
+// Get amount of group members
+$getAmountMembers = $pdo->prepare('SELECT COUNT(UserId)
+FROM table_Groups
+LEFT JOIN table_UsersInGroups
+ON table_Groups.Id = table_UsersInGroups.GroupId
+WHERE GroupId = ?');
+$getAmountMembers->execute([ $group["Id"] ]);
+$groupMembers = $getAmountMembers->fetchColumn(0); 
+
 // Check if current user is a member of this group
 $stmt = $pdo->prepare('SELECT UserId FROM table_UsersInGroups WHERE UserId = ? AND GroupId = ?');
 $stmt->execute([ $_SESSION["Id"], $_GET["g"] ]);
@@ -80,16 +100,28 @@ if (isset($_POST["leaveGroup"])){
   <h1><?=$group["Name"]?></h1>
   <p><?=$group["Description"]?></p>
   <p>Deze groep is <?php if($group["Private"] == 0){echo "publiek.";}else{echo "privé.";} ?></p>
-
-  <h3>Leden</h3>
+  <p>Score: <?=$groupScore?></p>
+  <h3>Leden (<?=$groupMembers?>)</h3>
   <div>
     <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
       <?php if(!empty($members)): ?>
-        <?php foreach($members as $member): ?>
+        <?php $i = 0; foreach($members as $member): ?>
           <a href="profile.php?u=<?=$member["Id"]?>">
-            <p><?=$member["Username"]?></p>
+            <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
+              <div>
+                <span><?=$member["Score"]?></span>
+                <?php if($member["LastScreen"] == 1): ?>
+                  <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
+                <?php elseif($member["LastScreen"] == 2): ?>
+                  <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
+                <?php else: ?>
+                  <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
+                <?php endif; ?>
+              </div>
+              <span><?=$member["Username"]?></span>
+            </div>
           </a>
-        <?php endforeach; ?>
+        <?php $i++; endforeach; ?>
       <?php else: ?>
         <p style="text-align: center !important;">Er zijn nog geen leden</p>
       <?php endif; ?>
