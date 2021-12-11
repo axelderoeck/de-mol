@@ -35,7 +35,7 @@ WHERE GroupId = ?');
         <a href="group.php?g=<?=$group["Id"]?>">
           <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
             <div>
-              <span><?=$groupScore?></span>
+              <!-- <span><?=$groupScore?></span> -->
               <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
             </div>
             <span><?=$group["Name"]?></span>

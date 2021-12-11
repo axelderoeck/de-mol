@@ -39,6 +39,9 @@ WHERE GroupId = ?');
 $getAmountMembers->execute([ $group["Id"] ]);
 $groupMembers = $getAmountMembers->fetchColumn(0); 
 
+// Get voted points query
+$getVotedPoints = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
+
 // Check if current user is a member of this group
 $stmt = $pdo->prepare('SELECT UserId FROM table_UsersInGroups WHERE UserId = ? AND GroupId = ?');
 $stmt->execute([ $_SESSION["Id"], $_GET["g"] ]);
@@ -105,24 +108,26 @@ if (isset($_POST["leaveGroup"])){
   <h1><?=$group["Name"]?></h1>
   <p><?=$group["Description"]?></p>
   <p>Deze groep is <?php if($group["Private"] == 0){echo "publiek.";}else{echo "privé.";} ?></p>
-  <p>Score: <?=$groupScore?></p>
+  <!-- <p>Score: <?=$groupScore?></p> -->
   <h3>Leden (<?=$groupMembers?>)</h3>
   <div>
     <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
       <?php if(!empty($members)): ?>
         <?php $i = 0; foreach($members as $member): ?>
+          <?php
+          $getVotedPoints->execute([ $member["Id"] ]);
+          $votedPoints = $getVotedPoints->fetchColumn(0);
+          ?>
           <a href="profile.php?u=<?=$member["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
               <div>
-                <?php if($member["Voted"] == 0): ?>
-                  <span><?=$member["Score"]?></span>
-                  <?php if($member["LastScreen"] == 1): ?>
-                    <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
-                  <?php elseif($member["LastScreen"] == 2): ?>
-                    <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
-                  <?php else: ?>
-                    <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
-                  <?php endif; ?>
+                <span><?=$votedPoints + $member["Score"]?></span>
+                <?php if($member["LastScreen"] == 1): ?>
+                  <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
+                <?php elseif($member["LastScreen"] == 2): ?>
+                  <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
+                <?php else: ?>
+                  <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
                 <?php endif; ?>
               </div>
               <span><?=$member["Username"]?></span>
