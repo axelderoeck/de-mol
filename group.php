@@ -7,6 +7,11 @@ $stmt = $pdo->prepare('SELECT * FROM table_Groups WHERE Id = ?');
 $stmt->execute([ $_GET["g"] ]);
 $group = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// If group doesn't exist -> go back
+if(empty($group)){
+  header('location: groups.php');
+}
+
 // Select all the group members from the url id
 $stmt = $pdo->prepare('SELECT DISTINCT * FROM table_UsersInGroups 
 LEFT JOIN table_Users ON table_UsersInGroups.UserId = table_Users.Id 

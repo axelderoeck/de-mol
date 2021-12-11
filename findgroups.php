@@ -13,6 +13,14 @@ ORDER BY Members DESC');
 $stmt->execute();
 $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+$getGroupScore = $pdo->prepare('SELECT SUM(Score)
+FROM table_Groups
+LEFT JOIN table_UsersInGroups
+ON table_Groups.Id = table_UsersInGroups.GroupId
+LEFT JOIN table_Users
+ON table_UsersInGroups.UserId = table_Users.Id
+WHERE GroupId = ?');
+
 ?>
 
 <?php include "includes/header.php"; ?>
@@ -20,18 +28,25 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Publieke Groepen</h1>
 
-    <div class="deelnemersList">
-      <?php if(!empty($groups)): ?>
+    <?php if(!empty($groups)): ?>
       <?php $i = 0; foreach($groups as $group): ?>
-      <a class="deelnemerItem info" style="animation-delay: <?=$i/6?>s;" href="group.php?g=<?=$group["Id"]?>">
-        <i class='fas fa-users left'><?=$group["Members"]?></i>
-          <?=$group["Name"]?>
-      </a>
+      <?php 
+        $getGroupScore->execute([ $group["Id"] ]);
+        $groupScore = $getGroupScore->fetchColumn(0); 
+      ?>
+        <a href="group.php?g=<?=$group["Id"]?>">
+          <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
+            <div>
+              <span><?=$groupScore?></span>
+              <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
+            </div>
+            <span><?=$group["Name"]?></span>
+          </div>
+        </a>
       <?php $i++; endforeach; ?>
       <?php else: ?>
-      <h2>Geen groepen gevonden</h2>
+        <p style="text-align: center !important;">Geen groepen gevonden.</p>
       <?php endif; ?>
-    </div>
 
     <hr>
     <button onclick="location.href = 'creategroup.php';" class="styledBtn" type="submit" name="button">Maak een groep</button>
