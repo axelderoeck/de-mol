@@ -648,6 +648,17 @@ function getVotedPoints($id){
   return $stmt->fetchColumn(0);
 }
 
+function getNotificationCount($id){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Count amount of notifications user has
+  $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_Notifications WHERE InvitedId = ?');
+  $stmt->execute([ $id ]);
+  
+  return $stmt->fetchColumn(0);
+}
+
 /*
 function name($variable){
   // DB connection

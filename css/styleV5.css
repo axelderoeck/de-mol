@@ -406,45 +406,6 @@
   border-left: 2px solid darkgray;
   margin-left: 20px;
 }
-
-/* Profile screen */
-
-.userInfo {
-  margin: 0;
-}
-
-.awards {
-  overflow: auto;
-  white-space: nowrap;
-}
-
-.awards div {
-  width: 150px;
-  display: inline-block;
-  margin: 10px;
-}
-
-.awards div img {
-  width: 100%;
-}
-
-.awards div p {
-  font-size: 25px;
-  text-align: center !important;
-  margin: 10px auto;
-  text-transform: capitalize;
-}
-
-#collapsible {
-  transition: 0.4s;
-}
-
-#collapsible-content {
-  display: none;
-  overflow: hidden;
-  transition: 0.4s;
-}
-
 .delete {
   text-align: center;
   margin-top: 30px;
@@ -454,6 +415,8 @@
   color: #ffffff;
 }
 
+/* ----------------------------------- Profile Screen */
+/* Fingerprint Section */
 .profileFingerprint {
   width: 100%;
   height: 200px;
@@ -462,6 +425,7 @@
   margin: 100px 0 0 0;
 }
 
+/* Profile Fingerprint */
 .profileFingerprint img {
   position: absolute;
   width: 40%;
@@ -473,6 +437,7 @@
   margin-right: auto; 
 }
 
+/* Profile Username*/
 .profileFingerprint h1 {
   margin: 0;
   padding: 0;
@@ -483,6 +448,7 @@
   text-shadow: -5px 2px 5px rgba(0,0,0,0.47);
 }
 
+/* Profile Friendcode */
 .profileFingerprint span {
   margin: 0;
   padding: 0;
@@ -493,10 +459,7 @@
   z-index: 2 !important;
 }
 
-.profileAwards {
-  margin: 0 0 50px 0;
-}
-
+/* Profile Info Section */
 .profileInfo {
   width: 100%;
   position: relative;
@@ -508,8 +471,30 @@
   color: #fff;
 }
 
+/* Profile Awards Section */
+.profileAwards {
+  overflow: auto;
+  white-space: nowrap;
+}
 
+.profileAwards div {
+  width: 150px;
+  display: inline-block;
+  margin: 10px;
+}
 
+.profileAwards div img {
+  width: 100%;
+}
+
+.profileAwards div p {
+  font-size: 25px;
+  text-align: center !important;
+  margin: 10px auto;
+  text-transform: capitalize;
+}
+
+/* Profile Add/Delete Friend Section */
 .profileButton input[type="submit"]{
   margin: 0;
   display: inline;
@@ -564,30 +549,6 @@
   top: 10px;
 }
 
-/* change password popup menu */
-
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
 .close {
   color: #aaaaaa;
   float: right;
@@ -602,22 +563,6 @@
   cursor: pointer;
 }
 
-
-/* deelnemers list */
-
-.deelnemersList {
-  width: 100%;
-}
-
-.deelnemersList a {
-  display: inline-block;
-  width: 90%;
-  padding: 5px;
-  color: #ffffff !important;
-  font-size: 30px;
-  margin: 10px 0;
-  text-transform: capitalize;
-}
 
 .goBackArrow {
   width: 50px;

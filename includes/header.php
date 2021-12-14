@@ -19,24 +19,19 @@
     <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2b5797">
     <meta name="theme-color" content="#ffffff">
-
     <!-- CSS -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/theme<?php echo "V" . STYLE_VERSION; ?>.css">
-    <link rel="stylesheet" href="css/style<?php echo "V" . STYLE_VERSION; ?>.css">
-    <link rel="stylesheet" href="css/navigation<?php echo "V" . STYLE_VERSION; ?>.css">
-    <link rel="stylesheet" href="css/desktop<?php echo "V" . STYLE_VERSION; ?>.css">
-
+    <link rel="stylesheet" href="css/theme<?="V" . STYLE_VERSION?>.css">
+    <link rel="stylesheet" href="css/navigation<?="V" . STYLE_VERSION?>.css">
+    <link rel="stylesheet" href="css/style<?="V" . STYLE_VERSION?>.css">
+    <link rel="stylesheet" href="css/desktop<?="V" . STYLE_VERSION?>.css">
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
-
-    <!-- FONTAWESOME -->
+    <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/90f9e5d42f.js" crossorigin="anonymous"></script>
-
-    <!-- EXTERNAL SCRIPTS -->
+    <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
-
     <!-- META -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -57,13 +52,8 @@
 </head>
 <body style="<?=$css_body?>">
     <?php
-    $enddate = new DateTime(SEASON_END);
-    $now = new DateTime();
-
-    // Get all notifications for logged in user
-    $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_Notifications WHERE InvitedId = ?');
-    $stmt->execute([ $_SESSION["Id"] ]);
-    $amount_notifications = $stmt->fetchColumn(0);
+        $enddate = new DateTime(SEASON_END);
+        $now = new DateTime();
     ?>
 
     <!-- Navigation -->
@@ -77,7 +67,7 @@
         <a href="groups.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Groepen</a>
         <a href="statistics.php"><i class="fas fa-chart-bar"></i>Statistieken</a>
         <a href="scores.php"><i class="fas fa-award"></i>Scores</a>
-        <a href="notifications.php"><i class="fas fa-bell"><span><?=$amount_notifications?></span></i>Meldingen</a>
+        <a href="notifications.php"><i class="fas fa-bell"><span><?=getNotificationCount($_SESSION["Id"])?></span></i>Meldingen</a>
         <a href="settings.php"><i class="fas fa-cog"></i>Instellingen</a>
         <?php if ($_SESSION["Admin"] == 1): ?>
             <a href="admin/index.php"><i class="fas fa-hammer"></i>Admin</a>

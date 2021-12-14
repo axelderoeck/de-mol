@@ -80,7 +80,7 @@ if (isset($_POST["addFriend"])){
   
   <!-- User Awards -->
   <h3 style="margin: 30px 0 0 0;">Awards</h3>
-  <div class="awards">
+  <div class="profileAwards">
     <?php if(!empty($awards)): ?>
     <?php $i = 0; foreach($awards as $award): ?>
       <div style="animation-delay: <?=$i/4?>s;" >
