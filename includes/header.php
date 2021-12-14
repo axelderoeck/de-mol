@@ -78,7 +78,9 @@
         <a href="friends.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Vrienden</a>
         <a href="groups.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Groepen</a>
         <a href="statistics.php"><i class="fas fa-chart-bar"></i>Statistieken</a>
+        <a href="scores.php"><i class="fas fa-award"></i>Scores</a>
         <a href="notifications.php"><i class="fas fa-bell"><span><?=$amount_notifications?></span></i>Meldingen</a>
+        <a href="settings.php"><i class="fas fa-cog"></i>Instellingen</a>
         <?php if ($_SESSION["Admin"] == 1): ?>
             <a href="admin/index.php"><i class="fas fa-hammer"></i>Admin</a>
         <?php endif; ?>
