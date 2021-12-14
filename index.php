@@ -165,7 +165,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
 </head>
 <body>
 
-  <div id="informationPopup">
+  <div id="notification">
     <!-- Dynamische info -->
   </div>
 

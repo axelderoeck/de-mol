@@ -27,8 +27,6 @@
     <link rel="stylesheet" href="css/style<?php echo "V" . STYLE_VERSION; ?>.css">
     <link rel="stylesheet" href="css/navigation<?php echo "V" . STYLE_VERSION; ?>.css">
     <link rel="stylesheet" href="css/desktop<?php echo "V" . STYLE_VERSION; ?>.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
@@ -90,7 +88,7 @@
     <span class="navButton" onclick="openNav()"><i class="fas fa-stream"></i></span>
 
     <!-- Dynamic popup -->
-    <div id="informationPopup"></div>
+    <div id="notification"></div>
     
     <!-- Main Page -->
     <div id="main">

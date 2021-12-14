@@ -641,6 +641,7 @@ function getVotedPoints($id){
   // DB connection
   $pdo = pdo_connect_mysql();
 
+  // Get the voted points
   $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
   $stmt->execute([ $id ]);
   

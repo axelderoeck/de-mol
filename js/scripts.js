@@ -73,7 +73,7 @@ function collapse(contentId, buttonId) {
 
 function showNotification(message = "", type = "warning") {
 	var notification = document.getElementById('informationPopup');
-	if(type != ""){
+	if(message != "" && type != null){
 		notification.classList.add(type);
 		notification.innerHTML = "<p>" + message + "</p>";
 		notification.style.top = "20px";
