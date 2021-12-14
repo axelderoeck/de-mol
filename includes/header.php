@@ -12,7 +12,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/animations.css">
+    <!-- <link rel="stylesheet" href="css/animations.css"> -->
     <link rel="stylesheet" href="css/theme<?php echo "V" . STYLE_VERSION; ?>.css">
     <link rel="stylesheet" href="css/style<?php echo "V" . STYLE_VERSION; ?>.css">
     <link rel="stylesheet" href="css/navigation<?php echo "V" . STYLE_VERSION; ?>.css">
