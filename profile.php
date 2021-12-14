@@ -2,16 +2,51 @@
 
 require_once("includes/phpdefault.php");
 
-// Get the logged in and selected user id
-$session_id = $_SESSION["Id"];
-$user_id = $_GET["u"];
+// Select all the user info from the id from url
+$stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+$stmt->execute([ $_GET["u"] ]);
+$account = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// check if the current profile is from the logged in user or not
-if ($user_id == $session_id) {
+// Get firstname if exists
+if($account["Name"] != null || $account["Name"] != ""){
+  $firstname = $account["Name"];
+}else{
+  $firstname = $account["Username"];
+}
+
+// Get voted points
+$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
+$stmt->execute([ $account["Id"] ]);
+$votedPoints = $stmt->fetchColumn(0);
+
+// Select all the awards the specified user has
+$stmt = $pdo->prepare('SELECT *
+                      FROM table_UserAwards
+                      LEFT JOIN table_Awards
+                      ON table_UserAwards.AwardId = table_Awards.Id
+                      WHERE table_UserAwards.UserId = ?');
+$stmt->execute([ $_GET["u"] ]);
+$awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Check if the current profile is from the logged in user or not
+if ($_GET["u"] == $_SESSION["Id"]) {
   $user_owns_account = true;
+  $awards_notification = "Je hebt nog geen <span>awards</span>.";
 }else{
   $user_owns_account = false;
+  $awards_notification = "Deze gebruiker heeft nog geen <span>awards</span>.";
+
+  // Search for a friendship with user
+  $stmt = $pdo->prepare('SELECT * FROM table_Friends WHERE Id = ? AND IsFriendsWithId = ?');
+  $stmt->execute([ $_SESSION["Id"], $_GET["u"] ]);
+  $friendship = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Search for a pending friend invite with user
+  $stmt = $pdo->prepare('SELECT * FROM table_Notifications WHERE InviterId = ? AND InvitedId = ?');
+  $stmt->execute([ $_SESSION["Id"], $_GET["u"] ]);
+  $friendinvite = $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
 // Change password
 if (isset($_POST["changePassword"])){
   $notification = changePassword($_SESSION["Id"], $_POST["oldPassword"], $_POST["password"], $_POST["confirmPassword"]);
@@ -30,45 +65,6 @@ if (isset($_POST["deleteAccount"])){
   header('location:index.php?logout=1');
 }
 
-// Select all the user info from the id from url
-$stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
-$stmt->execute([ $user_id ]);
-$account = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Get voted points
-$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-$stmt->execute([ $account["Id"] ]);
-$votedPoints = $stmt->fetchColumn(0);
-
-// Get firstname if exists
-if($account["Name"] != null || $account["Name"] != ""){
-  $firstname = $account["Name"];
-}else{
-  $firstname = $account["Username"];
-}
-
-// Select all the awards the specified user has
-$stmt = $pdo->prepare('SELECT *
-                      FROM table_UserAwards
-                      LEFT JOIN table_Awards
-                      ON table_UserAwards.AwardId = table_Awards.Id
-                      WHERE table_UserAwards.UserId = ?');
-$stmt->execute([ $user_id ]);
-$awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-if ($user_owns_account) {
-  $geenAwardsMelding = "Je hebt nog geen <span>awards</span>.";
-}else{
-  $geenAwardsMelding = "Deze gebruiker heeft nog geen <span>awards</span>.";
-
-  if (isset($_POST["deleteFromFollowing"])){
-    $stmt = $pdo->prepare('DELETE FROM table_Followers WHERE UserId = ? AND UserIsFollowingId = ?');
-    $stmt->execute([ $session_id, $user_id ]);
-
-    header('location:friends.php');
-  }
-}
-
 if (isset($_POST["saveUserSettings"])){
   // Check if something changed before executing function
   if($_POST["username"] != $account["Username"]){
@@ -84,6 +80,18 @@ if (isset($_POST["saveUserSettings"])){
     // Refresh after 1 second to show the updated info
     header('Refresh:1');
   }
+}
+
+// Delete friend
+if (isset($_POST["deleteFriend"])){
+  $notification = deleteFriend($_SESSION["Id"], $$_GET["u"]);
+  header('location:friends.php');
+}
+// Add friend
+if (isset($_POST["addFriend"])){
+  $notification = sendFriendInvite($_SESSION["Id"], $account["Friendcode"]);
+  // Refresh page
+  header('Refresh:1');
 }
 
 ?>
@@ -157,30 +165,18 @@ if (isset($_POST["saveUserSettings"])){
   <div class="profileFingerprint">
     <img src="img/assets/demol_logo_geen_tekst.png" alt="logo van de mol">
     <h1><?=$firstname?></h1>
+    <span>#<?=$account["Friendcode"]?></span>
   </div>
 
-  <h3 style="margin: 30px 0 0 0;">Awards</h3>
-  <div class="profileAwards">
-    <?php $count_awards = 0; foreach($awards as $award): ?>
-      <img src="img/awards/<?=$award['AwardId']?>.png" alt="award foto van <?=$award['Name']?>">
-    <?php $count_awards++; endforeach; ?>
-  </div>
-    
-  <h3>Dossier</h3>
   <div class="profileInfo">
-    <span>Score:</span> <?=$votedPoints + $account["Score"]?> <br>
-    <span>Gebruikersnaam:</span> <?=$account["Username"]?> <br>
-    <?php if ($user_owns_account): ?>
-    <span>Email:</span> <?=$account["Email"] ? $account["Email"] : "Geen"?> <br>
-    <?php else: ?>
-    <span style="text-decoration: line-through;">Email:</span> <span style="text-decoration: line-through; color:#000;"><?=$account["Username"]?>@mol.be</span> <br>
+    Score <span>//</span> <?=$votedPoints + $account["Score"]?>
+    <br>
+    <?php if($user_owns_account): $email = explode("@",$account["Email"]); ?>
+      <?=$email[0]?><span>@<?=$email[1]?></span>
     <?php endif; ?>
-    <span>FriendCode:</span> #<?=$account["Friendcode"]?>
-    <img src="img/assets/demol_logo_classified.png" alt="">
   </div>
   
-  <!-- <h3>Awards <?php if ($user_owns_account == true) { echo "- <a class='smallBtn info' href='awards.php'>Overzicht</a>"; } ?></h3>
-  <span class="awardsTitle">Awards</span>
+  <h3 style="margin: 30px 0 0 0;">Awards</h3>
   <div class="awards">
     <?php if(!empty($awards)): ?>
     <?php $i = 0; foreach($awards as $award): ?>
@@ -190,13 +186,17 @@ if (isset($_POST["saveUserSettings"])){
       </div>
     <?php $i++; endforeach; ?>
     <?php else: ?>
-      <p style="text-align: center !important;"><?php echo $geenAwardsMelding; ?></p>
+      <p style="text-align: center !important;"><?=$awards_notification?></p>
     <?php endif; ?>
-  </div> -->
+  </div>
 
   <?php if($user_owns_account == false) {?>
-    <form action="" method="post">
-      <input type="submit" name="deleteFromFollowing" id="deleteFromFollowing" value="Verwijder van lijst">
+    <form class="profileButton" action="" method="post">
+      <?php if($friendship): ?>
+      <input class="delete" type="submit" name="deleteFriend" value="Verwijder vriend">
+      <?php else: ?>
+      <input <?php if($friendinvite){echo "disabled";} ?> class="add" type="submit" name="addFriend" value="<?php if($friendinvite){echo "Vriendschapsverzoek verzonden";} ?>">
+      <?php endif; ?>
     </form>
   <?php } ?>
 
@@ -244,29 +244,6 @@ if (isset($_POST["saveUserSettings"])){
 
 <!-- JavaScript -->
 <script type="text/javascript" src="js/scripts.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<script type="text/javascript">
-    $(document).ready(function(){
-      // Slick settings for candidate list
-      $('.profileAwards').slick({
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        dots: false,
-        arrows: false,
-        centerMode: true,
-        centerPadding: '5%',
-        focusOnSelect: true,
-        draggable: true,
-        mobileFirst: true,
-        infinite: false,
-        swipe: true,
-        initialSlide: <?=round($count_awards/2)?>
-      });
-    });
-</script>
 
 </body>
 </html>

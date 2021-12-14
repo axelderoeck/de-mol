@@ -1,3 +1,13 @@
+<?php
+    switch(basename($_SERVER['PHP_SELF'])){
+        case "profile.php":
+            $css_body = "background-image: url(./img/assets/background_dots.jpg)";
+            break;
+        default:
+            break;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -32,7 +42,8 @@
     <!-- META -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>De Mol</title>
+    <!-- Show current page name -->
+    <title>De Mol - <?=ucwords(explode(".php", basename($_SERVER['PHP_SELF']))[0])?></title>
 
     <!-- NOTIFICATION LOAD -->
     <script>
@@ -46,7 +57,7 @@
         })
     </script>
 </head>
-<body>
+<body style="<?=$css_body?>">
     <?php
     $enddate = new DateTime(SEASON_END);
     $now = new DateTime();
