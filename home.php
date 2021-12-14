@@ -8,10 +8,6 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-$stmt->execute([ $_SESSION["Id"] ]);
-$votedPoints = $stmt->fetchColumn(0);
-
 // DEV - DELETE ON PROD
 if (isset($_POST["resetVote"])){
   $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0 WHERE Id = ?');
@@ -93,7 +89,7 @@ if (isset($_POST["resetSeenResults"])){
     <div class="userBox info">
       <span><?=$account["Username"]?></span><br>
       <span class="friendcode">#<?=$account["Friendcode"]?></span><br>
-      <span><?=$votedPoints + $account["Score"]?> <i class="fas fa-fingerprint"></i></span>
+      <span><?=getVotedPoints($account["Id"]) + $account["Score"]?> <i class="fas fa-fingerprint"></i></span>
     </div>
   </a>
 

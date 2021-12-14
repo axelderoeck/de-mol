@@ -637,6 +637,16 @@ function deleteUserFromGroup($id, $groupId){
   ];
 }
 
+function getVotedPoints($id){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
+  $stmt->execute([ $id ]);
+  
+  return $stmt->fetchColumn(0);
+}
+
 /*
 function name($variable){
   // DB connection

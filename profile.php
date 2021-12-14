@@ -14,11 +14,6 @@ if($account["Name"] != null || $account["Name"] != ""){
   $firstname = $account["Username"];
 }
 
-// Get voted points
-$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-$stmt->execute([ $account["Id"] ]);
-$votedPoints = $stmt->fetchColumn(0);
-
 // Select all the awards the specified user has
 $stmt = $pdo->prepare('SELECT *
                       FROM table_UserAwards
@@ -169,7 +164,7 @@ if (isset($_POST["addFriend"])){
   </div>
 
   <div class="profileInfo">
-    Score <span>//</span> <?=$votedPoints + $account["Score"]?>
+    Score <span>//</span> <?=getVotedPoints($account["Id"]) + $account["Score"]?>
     <br>
     <?php if($user_owns_account): $email = explode("@",$account["Email"]); ?>
       <?=$email[0]?><span>@<?=$email[1]?></span>

@@ -39,9 +39,6 @@ WHERE GroupId = ?');
 $getAmountMembers->execute([ $group["Id"] ]);
 $groupMembers = $getAmountMembers->fetchColumn(0); 
 
-// Get voted points query
-$getVotedPoints = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-
 // Check if current user is a member of this group
 $stmt = $pdo->prepare('SELECT UserId FROM table_UsersInGroups WHERE UserId = ? AND GroupId = ?');
 $stmt->execute([ $_SESSION["Id"], $_GET["g"] ]);
@@ -118,14 +115,10 @@ if (isset($_POST["leaveGroup"])){
     <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
       <?php if(!empty($members)): ?>
         <?php $i = 0; foreach($members as $member): ?>
-          <?php
-          $getVotedPoints->execute([ $member["Id"] ]);
-          $votedPoints = $getVotedPoints->fetchColumn(0);
-          ?>
           <a href="profile.php?u=<?=$member["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
               <div>
-                <span><?=$votedPoints + $member["Score"]?></span>
+                <span><?=getVotedPoints($member["Id"]) + $member["Score"]?></span>
                 <?php if($member["LastScreen"] == 1): ?>
                   <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
                 <?php elseif($member["LastScreen"] == 2): ?>

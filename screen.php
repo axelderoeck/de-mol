@@ -6,9 +6,7 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-$stmt->execute([ $_SESSION["Id"] ]);
-$votedPoints = $stmt->fetchColumn(0);
+// $votedPoints = getVotedPoints($account["Id"]);
 
 $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores
 LEFT JOIN table_Candidates

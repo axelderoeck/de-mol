@@ -11,9 +11,6 @@ $stmt = $pdo->prepare('SELECT *
 $stmt->execute([ $_SESSION["Id"] ]);
 $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Get voted points query
-$getVotedPoints = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserId = ? GROUP BY UserId');
-
 ?>
 
 <?php include "includes/header.php"; ?>
@@ -24,14 +21,10 @@ $getVotedPoints = $pdo->prepare('SELECT SUM(Score) FROM table_Scores WHERE UserI
 
     <?php if(!empty($friends)): ?>
       <?php $i = 0; foreach($friends as $friend): ?>
-        <?php
-          $getVotedPoints->execute([ $friend["IsFriendsWithId"] ]);
-          $votedPoints = $getVotedPoints->fetchColumn(0);
-        ?>
         <a href="profile.php?u=<?=$friend["IsFriendsWithId"]?>">
           <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
             <div>
-              <span><?=$votedPoints + $friend["Score"]?></span>
+              <span><?=getVotedPoints($friend["IsFriendsWithId"]) + $friend["Score"]?></span>
               <?php if($friend["LastScreen"] == 1): ?>
                 <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
               <?php elseif($friend["LastScreen"] == 2): ?>

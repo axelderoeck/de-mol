@@ -76,7 +76,7 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <a href="profile.php?u=<?=$score["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
               <div>
-                <span><?=$votedPoints + $score["TotalScore"]?></span>
+                <span><?=$score["TotalScore"]?></span>
                 <?php if($score["LastScreen"] == 1): ?>
                   <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
                 <?php elseif($score["LastScreen"] == 2): ?>
@@ -101,7 +101,7 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <a href="profile.php?u=<?=$score["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
               <div>
-                <span><?=$votedPoints + $score["TotalScore"]?></span>
+                <span><?=$score["TotalScore"]?></span>
                 <?php if($score["LastScreen"] == 1): ?>
                   <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
                 <?php elseif($score["LastScreen"] == 2): ?>
@@ -131,7 +131,7 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <a href="profile.php?u=<?=$score["Id"]?>">
               <div style="animation-delay: <?=$i/4;?>s;" class="displayUser <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
                 <div>
-                  <span><?=$votedPoints + $score["TotalScore"]?></span>
+                  <span><?=$score["TotalScore"]?></span>
                   <?php if($score["LastScreen"] == 1): ?>
                     <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
                   <?php elseif($score["LastScreen"] == 2): ?>
