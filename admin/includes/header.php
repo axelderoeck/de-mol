@@ -62,11 +62,19 @@
                   Dashboard
                 </a>
               </li>
-              <li class="app-sidebar__heading">Subtitel</li>
+              <li class="app-sidebar__heading">Main</li>
               <li>
-                <a href="tables-regular.html">
+                <a href="users.php">
                   <i class="metismenu-icon pe-7s-display2"></i>
-                  Pagina
+                  Users
+                </a>
+                <a href="groups.php">
+                  <i class="metismenu-icon pe-7s-display2"></i>
+                  Groups
+                </a>
+                <a href="candidates.php">
+                  <i class="metismenu-icon pe-7s-display2"></i>
+                  Candidates
                 </a>
               </li>
               <li class="app-sidebar__heading">Subtitel</li>
