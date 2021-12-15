@@ -87,19 +87,17 @@
 }
 
 .editmenu form {
-  background-color: rgba(255,255,255,0.7);
-  border: 1px solid steelblue;
+  background-color: rgba(0,0,0,0.8);
+  border: 1px solid #53adb5;
   padding: 20px;
   margin: 5px;
 }
 
-.editmenu form input {
-  color: #000;
-  font-family: 'Knockout';
-}
-
 .editmenu a {
-  font-size: 50px;
+  font-size: 100px;
+  position: absolute;
+  top: 40px;
+  right: 20px;
 }
 
 #editscreen {
@@ -321,7 +319,7 @@
 /* LOGIN SCREEN */
 
 #loginbox {
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
 }
 

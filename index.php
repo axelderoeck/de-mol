@@ -184,25 +184,31 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
                     <label>Wachtwoord</label>
                     <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
                     <br>
-                    <input type="submit" name="userLogin" id="userLogin" value="Login">
-                    <br>
+                    <label>Onthoud mij</label>
+                    <input style="border: 0;" type="text" readonly>
                     <input type="checkbox" name="remember" id="remember" value="1">
-                    <label>Onthoud Mij</label>                
+                    <br>
+                    <input type="submit" name="userLogin" id="userLogin" value="Login">
+                    <br>             
                 </form>
                 <a href="forgotpassword.php">wachtwoord vergeten?</a>
                 <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
             </div>
             <div id="reg">
                 <form name="formRegister" action="" method="post">
+                    <label>Email</label>
                     <input placeholder="Email" name="email" id="email" type="text" required>
                     <br>
+                    <label>Gebruikersnaam</label>
                     <input placeholder="Gebruikersnaam" name="username" id="username" type="text" required>
                     <br>
+                    <label>Wachtwoord</label>
                     <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
                     <br>
+                    <label>Bevestig Wachtwoord</label>
                     <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
                     <br>
-                    <input type="submit" name="userRegister" id="userRegister" value="Register">
+                    <input type="submit" name="userRegister" id="userRegister" value="Registreer">
                     <br>
                 </form>
                 <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>

@@ -193,6 +193,7 @@ input[type="checkbox"] {
   width: 25px;
   background-color: #eee;
   border: 0;
+  transform: translate(-140px, -50px);
 }
 
 input[type="range"] {
