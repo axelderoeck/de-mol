@@ -1,6 +1,6 @@
 /* All Animations */
 
-@keyframes showScreen {
+/* @keyframes showScreen {
     0% {
       filter: brightness(0%);
     }
@@ -13,6 +13,24 @@
     100% {
       filter: brightness(100%);
     }
+} */
+
+@keyframes showScreen {
+  0% {
+    filter: brightness(10%);
+  }
+  33% {
+    filter: brightness(150%);
+  }
+  60% {
+    filter: brightness(0%);
+  }
+  70% {
+    filter: brightness(0%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
 }
 
 @keyframes swoopIn {
@@ -129,4 +147,10 @@
   animation: ploop 1s ease backwards;
   -webkit-animation: ploop 1s ease backwards;
   -moz-animation: ploop 1s ease backwards;
+}
+
+.cookieconsent {
+  animation: swoopIn 1.2s ease backwards;
+  -webkit-animation: swoopIn 1.2s ease backwards;
+  -moz-animation: swoopIn 1.2s ease backwards;
 }

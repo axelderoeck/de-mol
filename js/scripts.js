@@ -7,6 +7,29 @@ function hamburgerMenu() {
 	}
 }
 
+// Cookie Consent alert
+(function() {
+	if (!localStorage.getItem("cookieconsent")) {
+	  document.body.innerHTML +=
+		'\
+	  <div class="cookieconsent info">\
+		<p class="title">De mol eet ook cookies</p>\
+		<p>Door het verdere gebruik van deze site ga je akkoord met het gebruik van cookies.</p>\
+		<br>\
+		<a href="#">\
+			Akkoord\
+		</a>\
+		<img src="img/assets/demol_logo_geen_tekst_cookie.png" />\
+	  </div>\
+	  ';
+	  document.querySelector(".cookieconsent a").onclick = function(e) {
+		e.preventDefault();
+		document.querySelector(".cookieconsent").style.display = "none";
+		localStorage.setItem("cookieconsent", true);
+	  };
+	}
+})();
+
 window.stemKnop = function(toggle) {
 	if (toggle == "aan") {
 		document.getElementById('stemKnop').disabled = false;
@@ -140,9 +163,12 @@ function screenAnimation(textid, name, color) {
 		$("#screenPage").css({
 			"opacity": "0"
 		})
+		$("#screenFingerprint").css({
+			"opacity": "1"
+		})
 		// Set screen to correct color
 		$("#screen_"+color).css({
-			"animation": "showScreen 1s backwards",
+			"animation": "showScreen 0.5s backwards ease",
 			"opacity": "1"
 		});
 	})

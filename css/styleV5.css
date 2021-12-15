@@ -504,12 +504,12 @@
   font-size: 25px;
 }
 
-.profileButton .delete {
+.delete {
   background-color: rgba(255, 0, 0, 0.4);
   border-color: #eb2626;
 }
 
-.profileButton .add {
+.add {
   background-color: rgba(57, 179, 27, 0.4);
   border-color: #39b31b;
 }
@@ -802,12 +802,27 @@
   z-index: 100 !important;
   position: absolute;
   overflow-y: hidden;
+  padding: 5% 0 0 0;
 }
 
 .screen .mainImage {
   padding: 30px 0 0 0;
   width: 60%;
   margin: 0 auto;
+  visibility: hidden;
+  opacity: 0;
+}
+
+#screenFingerprint {
+  position: absolute;
+  padding: 30px 0 0 0;
+  width: 60%;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto; 
+  z-index: 9999;
+  opacity: 0;
 }
 
 .voteScreen {
@@ -818,6 +833,7 @@
   text-align: center;
   transition: margin-left 0.5s;
   overflow-x: hidden;
+  position: relative;
 }
 
 #textfield span {
@@ -865,4 +881,51 @@
   text-align: left;
   float: left;
   text-decoration: none;
+}
+
+.cookieconsent {
+  position: fixed;
+  z-index: 9999;
+  bottom: 1%;
+  left: 1%;
+  width: 98%;
+  background-color: rgba(0,0,0, 0.6);
+  color: #fff;
+  padding: 0 0 5px 0;
+  margin: 0;
+}
+
+.cookieconsent .title {
+  position: absolute;
+  bottom: 100%;
+  text-transform: uppercase;
+}
+
+.cookieconsent img {
+  position: absolute;
+  z-index: 9998;
+  width: 150px;
+  bottom: 0;
+  right: 0;
+}
+
+.cookieconsent a {
+  color: #fff;
+  margin: 0;
+  display: inline;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 25px;
+  border: 0;
+  margin: 5px;
+  font-size: 30px;
+  text-transform: uppercase;
+  z-index: 9999;
+  background-color: rgba(83, 173, 181, 0.9);
+}
+
+.cookieconsent p {
+  padding: 5px;
+  margin: 0;
+  max-width: 60%;
 }

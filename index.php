@@ -213,6 +213,5 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
 
   <!-- JavaScript -->
   <script type="text/javascript" src="js/scripts.js"></script>
-
 </body>
 </html>

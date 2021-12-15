@@ -6,8 +6,6 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// $votedPoints = getVotedPoints($account["Id"]);
-
 $stmt = $pdo->prepare('SELECT SUM(Score) FROM table_Scores
 LEFT JOIN table_Candidates
 ON table_Scores.CandidateId = table_Candidates.Id
@@ -100,7 +98,7 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     if($bonus == true){
       $newScore += $bonusScore;
     }
-    
+        
     // Update users values
     $stmt = $pdo->prepare('UPDATE table_Users SET Score = ?, SeenResults = ?, LastScreen = ? WHERE Id = ?');
     $stmt->execute([ $newScore, 1, $screen, $account["Id"] ]);
@@ -108,6 +106,7 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     // Delete score table
     $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');
     $stmt->execute([ $account["Id"] ]);
+
   }else{
     header('location: home.php');
   }
@@ -123,11 +122,11 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
 </head>
 
 <body class="voteScreen">
+  <img id="screenFingerprint" src="img/assets/<?=$file_name?>" alt="logo van de mol">
   <?php if($account["SeenResults"] == 0 && $account["Voted"] == 0): ?>
     <div id="screen_<?=$color?>" class="screen">
       <div class="respContainer" style="height: 100%;">
         <img class="mainImage" src="img/assets/<?=$file_name?>" alt="logo van de mol">
-        <h2>Resultaat</h2>
         <p><?=$text?></p>
         <?php if($account["Score"] > 0): ?>
         <p>Niet gebruikte punten: <?=$account["Score"]?></p>
@@ -172,8 +171,6 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
   <!-- JavaScript -->
   <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script type="text/javascript" src="js/scripts.js"></script>
   <!-- Slick.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
