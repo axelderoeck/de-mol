@@ -42,12 +42,13 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
       $file_name = "demol_logo_geen_tekst_rood.png";
       $color = "red";
       $text = "Tekst rood scherm";
-      $screen = 2;
+      // Update screen to red
+      $stmt = $pdo->prepare('UPDATE table_Users SET Screen = ? WHERE Id = ?');
+      $stmt->execute([ 1, $account["Id"] ]);
     }else{
       $file_name = "demol_logo_geen_tekst_groen.png";
       $color = "green";
       $text = "Tekst groen scherm";
-      $screen = 1;
     }
 
     // Get name to type out in animation
@@ -100,8 +101,8 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     }
         
     // Update users values
-    $stmt = $pdo->prepare('UPDATE table_Users SET Score = ?, SeenResults = ?, LastScreen = ? WHERE Id = ?');
-    $stmt->execute([ $newScore, 1, $screen, $account["Id"] ]);
+    $stmt = $pdo->prepare('UPDATE table_Users SET Score = ?, SeenResults = ? WHERE Id = ?');
+    $stmt->execute([ $newScore, 1, $account["Id"] ]);
 
     // Delete score table
     $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');

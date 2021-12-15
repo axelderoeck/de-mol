@@ -25,9 +25,9 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
           <div style="animation-delay: <?=$i/4;?>s;" class="displayUser">
             <div>
               <span><?=getVotedPoints($friend["IsFriendsWithId"]) + $friend["Score"]?></span>
-              <?php if($friend["LastScreen"] == 1): ?>
+              <?php if($friend["Screen"] == 0): ?>
                 <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
-              <?php elseif($friend["LastScreen"] == 2): ?>
+              <?php elseif($friend["Screen"] == 1): ?>
                 <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
               <?php else: ?>
                 <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
