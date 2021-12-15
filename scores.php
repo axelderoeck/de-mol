@@ -2,7 +2,7 @@
 
 require_once("includes/phpdefault.php");
 
-$stmt = $pdo->prepare('SELECT table_Users.Id, Username, LastScreen, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
+$stmt = $pdo->prepare('SELECT table_Users.Id, Username, Screen, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
 FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
@@ -17,7 +17,7 @@ ORDER BY TotalScore DESC');
 $stmt->execute([ $_SESSION["Id"], $_SESSION["Id"] ]);
 $scores_friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare('SELECT table_Users.Id, Username, LastScreen, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
+$stmt = $pdo->prepare('SELECT table_Users.Id, Username, Screen, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
 FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
@@ -28,7 +28,7 @@ $stmt->execute();
 $scores_all = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Prepare group scores statement
-$stmt_group = $pdo->prepare('SELECT table_Users.Id, Username, LastScreen, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
+$stmt_group = $pdo->prepare('SELECT table_Users.Id, Username, Screen, IFNULL(SUM(table_Scores.Score), 0) + IFNULL(table_Users.Score, 0) AS "TotalScore"
 FROM table_Users
 LEFT JOIN table_Scores
 ON table_Users.Id = table_Scores.UserId
@@ -70,16 +70,16 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
   <div class="slider-for">
     <!-- Scores Everyone -->
-    <div>
+    <div style="overflow-x: hidden;">
       <?php if(!empty($scores_all)): ?>
         <?php $i = 1; foreach($scores_all as $score): ?>
           <a href="profile.php?u=<?=$score["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
               <div>
                 <span><?=$score["TotalScore"]?></span>
-                <?php if($score["LastScreen"] == 1): ?>
+                <?php if($score["Screen"] == 0): ?>
                   <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
-                <?php elseif($score["LastScreen"] == 2): ?>
+                <?php elseif($score["Screen"] == 1): ?>
                   <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
                 <?php else: ?>
                   <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
@@ -95,16 +95,16 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <!-- Scores Friends -->
-    <div>
+    <div style="overflow-x: hidden;">
       <?php if(!empty($scores_friends)): ?>
         <?php $i = 1; foreach($scores_friends as $score): ?>
           <a href="profile.php?u=<?=$score["Id"]?>">
             <div style="animation-delay: <?=$i/4;?>s;" class="displayUser <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
               <div>
                 <span><?=$score["TotalScore"]?></span>
-                <?php if($score["LastScreen"] == 1): ?>
+                <?php if($score["Screen"] == 0): ?>
                   <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
-                <?php elseif($score["LastScreen"] == 2): ?>
+                <?php elseif($score["Screen"] == 1): ?>
                   <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
                 <?php else: ?>
                   <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
@@ -125,16 +125,16 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
       $stmt_group->execute([ $group["Id"] ]);
       $scores_group = $stmt_group->fetchAll(PDO::FETCH_ASSOC); 
       ?>
-      <div>
+      <div style="overflow-x: hidden;">
         <?php if(!empty($scores_group)): ?>
           <?php $i = 1; foreach($scores_group as $score): ?>
             <a href="profile.php?u=<?=$score["Id"]?>">
               <div style="animation-delay: <?=$i/4;?>s;" class="displayUser <?php if($score['Id'] == $_SESSION["Id"]){echo "selected";} ?>">
                 <div>
                   <span><?=$score["TotalScore"]?></span>
-                  <?php if($score["LastScreen"] == 1): ?>
+                  <?php if($score["Screen"] == 0): ?>
                     <img src="img/assets/demol_logo_geen_tekst_groen.png" alt="de mol logo">
-                  <?php elseif($score["LastScreen"] == 2): ?>
+                  <?php elseif($score["Screen"] == 1): ?>
                     <img src="img/assets/demol_logo_geen_tekst_rood.png" alt="de mol logo">
                   <?php else: ?>
                     <img src="img/assets/demol_logo_geen_tekst.png" alt="de mol logo">
