@@ -19,6 +19,8 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h1>Vrienden</h1>
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden.</p>
 
+    <button onclick="location.href = 'adduser.php';" class="styledBtn" type="submit" name="button">Voeg vrienden toe</button>
+
     <?php if(!empty($friends)): ?>
       <?php $i = 0; foreach($friends as $friend): ?>
         <a href="profile.php?u=<?=$friend["IsFriendsWithId"]?>">
@@ -40,8 +42,5 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php else: ?>
       <p style="text-align: center !important;">Je hebt nog geen vrienden</p>
     <?php endif; ?>
-
-    <hr>
-    <button onclick="location.href = 'adduser.php';" class="styledBtn" type="submit" name="button">Voeg spelers toe</button>
     
 <?php include "includes/footer.php"; ?>

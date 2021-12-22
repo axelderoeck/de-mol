@@ -46,7 +46,7 @@ if ($_GET["u"] == $_SESSION["Id"]) {
 
 // Delete friend
 if (isset($_POST["deleteFriend"])){
-  $notification = deleteFriend($_SESSION["Id"], $$_GET["u"]);
+  $notification = deleteFriend($_SESSION["Id"], $_GET["u"]);
   header('location:friends.php');
 }
 // Add friend
@@ -100,11 +100,4 @@ if (isset($_POST["addFriend"])){
     </form>
   <?php } ?>
 
-  </div>
-</div>
-
-<!-- JavaScript -->
-<script type="text/javascript" src="js/scripts.js"></script>
-
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

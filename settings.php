@@ -57,7 +57,7 @@ if (isset($_POST["deleteAccount"])){
         <label>Gebruikersnaam</label>
         <input name="username" id="username" type="text" value="<?=$account["Username"]?>">
         <br>
-        <label>Voornaam (Niet verplicht)</label>
+        <label>Voornaam (Optioneel)</label>
         <input name="firstname" id="firstname" type="text" value="<?=$account["Name"]?>">
         <br>
         <label>Email</label>

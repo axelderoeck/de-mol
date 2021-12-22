@@ -47,6 +47,40 @@
                 echo "showNotification('$notification->message','$notification->type');"; //message + color style
             }
             ?>
+            <?php if(basename($_SERVER['PHP_SELF']) == "home.php" || basename($_SERVER['PHP_SELF']) == "screen.php"): ?>
+                <?php
+                $votetime = str_split(VOTE_HOUR, 2);
+                $begindate = new DateTime(SEASON_START);
+                $enddate = new DateTime(SEASON_END);
+                $now = new DateTime();
+
+                if($begindate > $now): ?>
+                    stemKnop("uit");
+                    infoTekst("Het <span>seizoen</span> is nog niet begonnen.");
+                <?php elseif($enddate < $now): ?>
+                    stemKnop("uit");
+                    infoTekst("Het <span>seizoen</span> is voorbij. <br> <button type='submit' onclick='location.href = `scores.php`;'>Bekijk de scores</button>");
+                <?php elseif(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR): ?>
+                    stemKnop("uit");
+                    infoTekst("Vanaf <?=$votetime[0] . ":" . $votetime[1]?>u kan je <span>stemmen</span>.");
+                    <?php
+                        // Reset has voted
+                        $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0, SeenResults = 0');
+                        $stmt->execute();
+                    ?>
+                <?php else: ?>
+                    <?php if($account["SeenResults"] == 0 && $account["Voted"] == 0):
+                        header('location: screen.php');
+                    endif; ?>
+                    <?php if($account["Voted"] == 0): ?>
+                        stemKnop("aan");
+                        infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i class='fas fa-clock'></i>");
+                    <?php elseif($account["Voted"] == 1): ?>
+                        stemKnop("uit");
+                        infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i><br>Kom terug na de volgende aflevering!");
+                    <?php endif; ?>
+                <?php endif; ?>
+            <?php endif; ?>
         })
     </script>
 </head>
@@ -56,6 +90,7 @@
         $now = new DateTime();
     ?>
 
+    <?php if(basename($_SERVER['PHP_SELF']) != "index.php"): ?>
     <!-- Navigation -->
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times closeIcon"></i></a>
@@ -73,9 +108,10 @@
             <a href="admin/index.php"><i class="fas fa-hammer"></i>Admin</a>
         <?php endif; ?>
         <a href="index.php?logout=1"><i class="fas fa-sign-out-alt"></i>Uitloggen</a>
-        <img src="img/assets/demol_logo.png" alt="logo de mol">
+        <!-- <img src="img/assets/demol_logo.png" alt="logo de mol"> -->
     </div>
     <span class="navButton" onclick="openNav()"><i class="fas fa-stream"></i></span>
+    <?php endif; ?>
 
     <!-- Dynamic popup -->
     <div id="notification"></div>

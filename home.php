@@ -2,8 +2,6 @@
 
 require_once("includes/phpdefault.php");
 
-$votetime = str_split(VOTE_HOUR, 2);
-
 $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -15,7 +13,6 @@ if (isset($_POST["resetVote"])){
 
   $_SESSION["Voted"] = 0;
 }
-
 if (isset($_POST["resetSeenResults"])){
   $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = 0 WHERE Id = ?');
   $stmt->execute([ $_SESSION["Id"] ]);
@@ -25,73 +22,13 @@ if (isset($_POST["resetSeenResults"])){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <!-- <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="aksol" data-description="Support me on Buy me a coffee!" data-message="Ben je tevreden met mijn werk en wil je me steunen?" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script> -->
+<?php include "includes/header.php"; ?>
 
-  <?php include "includes/headinfo.php"; ?>
-  <script>
-    window.addEventListener('load', function() {
-      <?php
-      $begindate = new DateTime(SEASON_START);
-      $enddate = new DateTime(SEASON_END);
-      $now = new DateTime();
-
-      if($begindate > $now) {
-        ?>
-        stemKnop("uit");
-        infoTekst("Het <span>seizoen</span> is nog niet begonnen.");
-        <?php
-      }elseif($enddate < $now) {
-        ?>
-        stemKnop("uit");
-        infoTekst("Het <span>seizoen</span> is voorbij. <br> <button type='submit' onclick='location.href = `scores.php`;'>Bekijk de scores</button>");
-        <?php
-      }elseif(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
-        ?>
-        stemKnop("uit");
-        infoTekst("Vanaf <?=$votetime[0] . ":" . $votetime[1]?>u kan je <span>stemmen</span>.");
-        <?php
-        // Reset has voted
-        // IF screen stops working -> remove seenresult reset here and add it back to vote function
-        $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0, SeenResults = 0');
-        $stmt->execute();
-      }else{
-        if($account["SeenResults"] == 0 && $account["Voted"] == 0){
-          header('location: screen.php');
-        }
-        if($account["Voted"] == 0) {
-          ?>
-          stemKnop("aan");
-          infoTekst("Je hebt nog tot en met <span>zaterdag</span> om te stemmen <i class='fas fa-clock'></i>");
-          <?php
-        }elseif($account["Voted"] == 1) {
-          ?>
-          stemKnop("uit");
-          infoTekst("Je hebt al <span>gestemd</span> <i class='fas fa-check'></i><br>Kom terug na de volgende aflevering!");
-          <?php
-        }
-      }
-      ?>
-
-    })
-  </script>
-</head>
-<body>
-  <?php include "includes/navigation.php"; ?>
-
-<div class="homeScreen" id="main">
-
-  <div class="respContainer">
-  
-  <a href="profile.php?u=<?=$_SESSION["Id"]?>">
-    <div class="userBox info">
-      <span><?=$account["Username"]?></span><br>
-      <span class="friendcode">#<?=$account["Friendcode"]?></span><br>
-      <span><?=getVotedPoints($account["Id"]) + $account["Score"]?> <i class="fas fa-fingerprint"></i></span>
-    </div>
-  </a>
+  <div class="userBox">
+    <span><?=$account["Username"]?><span>#<?=$account["Friendcode"]?></span></span>
+    <br>
+    <span><?=getVotedPoints($account["Id"]) + $account["Score"]?> <i class="fas fa-fingerprint"></i></span>
+  </div>
 
   <h1>Dag <?=$account["Username"]?></h1>
 
@@ -117,15 +54,7 @@ if (isset($_POST["resetSeenResults"])){
 
   <p class="hiddenField">.- -. - .-. --- .--. --- -. -.-- -- .. .</p>
 
-  </div>
-</div>
+<?php include "includes/footer.php"; ?>
 
-  <!-- JavaScript -->
-  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script type="text/javascript" src="js/scripts.js"></script>
 
-</body>
-</html>
+

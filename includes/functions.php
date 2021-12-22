@@ -257,8 +257,8 @@ function sendFriendInvite($inviterId, $friendcode){
   $pdo = pdo_connect_mysql();
 
   // Search for an existing user
-  $stmt = $pdo->prepare('SELECT Id FROM table_Users WHERE Friendcode = ?');
-  $stmt->execute([ $friendcode ]);
+  $stmt = $pdo->prepare('SELECT Id FROM table_Users WHERE Friendcode = ? OR Username = ?');
+  $stmt->execute([ $friendcode, $friendcode ]);
   $invitedId = $stmt->fetchColumn(0);
   // If user exists -> invite
   if($invitedId){
@@ -284,8 +284,8 @@ function sendGroupInvite($groupId, $friendcode){
   $pdo = pdo_connect_mysql();
 
   // Search for an existing user
-  $stmt = $pdo->prepare('SELECT Id FROM table_Users WHERE Friendcode = ?');
-  $stmt->execute([ $friendcode ]);
+  $stmt = $pdo->prepare('SELECT Id FROM table_Users WHERE Friendcode = ? OR Username = ?');
+  $stmt->execute([ $friendcode, $friendcode ]);
   $invitedId = $stmt->fetchColumn(0);
 
   // If user exists -> invite
@@ -737,7 +737,7 @@ function getNotificationCount($id){
   $pdo = pdo_connect_mysql();
 
   // Count amount of notifications user has
-  $stmt = $pdo->prepare('SELECT COUNT(*) FROM table_Notifications WHERE InvitedId = ?');
+  $stmt = $pdo->prepare('SELECT DISTINCT COUNT(*) FROM table_Notifications WHERE InvitedId = ?');
   $stmt->execute([ $id ]);
   
   return $stmt->fetchColumn(0);

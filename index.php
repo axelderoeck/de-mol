@@ -144,80 +144,53 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
 
 ?>
 
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-  <script>
-  window.addEventListener('load', function() {
-    <?php
-      $pageRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) &&($_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=0' ||  $_SERVER['HTTP_CACHE_CONTROL'] == 'no-cache');
-      if($pageRefreshed == 1){
-        echo "showNotification('$foutmelding','$meldingSoort');"; //message + color style
-      }
-      if ($code == 9) {
-        echo "showNotification('$foutmelding','$meldingSoort');";
-      }
-    ?>
-  })
-  </script>
-</head>
-<body>
-
-  <div id="notification">
-    <!-- Dynamische info -->
-  </div>
-
-  <div class="respContainer">
+<?php include "includes/header.php"; ?>
 
   <div style="text-align: center; margin: 10% 0;">
     <img class="loginImg" src="img/assets/demol_logo.png" alt="logo">
   </div>
 
   <div id="loginbox">
-            <div id="log">
-                <form name="formLogin" action="" method="post">
-                    <label>Gebruikersnaam of Email</label>
-                    <input placeholder="Gebruikersnaam of Email" name="email" id="email" type="text" required>
-                    <br>
-                    <label>Wachtwoord</label>
-                    <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
-                    <br>
-                    <label>Onthoud mij</label>
-                    <input style="border: 0;" type="text" readonly>
-                    <input type="checkbox" name="remember" id="remember" value="1">
-                    <br>
-                    <input type="submit" name="userLogin" id="userLogin" value="Login">
-                    <br>             
-                </form>
-                <a href="forgotpassword.php">wachtwoord vergeten?</a>
-                <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
-            </div>
-            <div id="reg">
-                <form name="formRegister" action="" method="post">
-                    <label>Email</label>
-                    <input placeholder="Email" name="email" id="email" type="text" required>
-                    <br>
-                    <label>Gebruikersnaam</label>
-                    <input placeholder="Gebruikersnaam" name="username" id="username" type="text" required>
-                    <br>
-                    <label>Wachtwoord</label>
-                    <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
-                    <br>
-                    <label>Bevestig Wachtwoord</label>
-                    <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
-                    <br>
-                    <input type="submit" name="userRegister" id="userRegister" value="Registreer">
-                    <br>
-                </form>
-                <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
-            </div>
-            <?php include "includes/legal.php"; ?>
+    <div id="log">
+      <form name="formLogin" action="" method="post">
+        <label>Gebruikersnaam of Email</label>
+        <input placeholder="Gebruikersnaam of Email" name="email" id="email" type="text" required>
+        <br>
+        <label>Wachtwoord</label>
+        <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
+        <br>
+        <label>Onthoud mij</label>
+        <input style="border: 0;" type="text" readonly>
+        <input type="checkbox" name="remember" id="remember" value="1">
+        <br>
+        <input type="submit" name="userLogin" id="userLogin" value="Login">
+        <br>             
+      </form>
+      <a href="forgotpassword.php">wachtwoord vergeten?</a>
+      <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
     </div>
+    
+    <div id="reg">
+      <form name="formRegister" action="" method="post">
+        <label>Email</label>
+        <input placeholder="Email" name="email" id="email" type="text" required>
+        <br>
+        <label>Gebruikersnaam</label>
+        <input placeholder="Gebruikersnaam" name="username" id="username" type="text" required>
+        <br>
+        <label>Wachtwoord</label>
+        <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
+        <br>
+        <label>Bevestig Wachtwoord</label>
+        <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
+        <br>
+        <input type="submit" name="userRegister" id="userRegister" value="Registreer">
+        <br>
+      </form>
+      <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
+    </div>
+    <?php include "includes/legal.php"; ?>
   </div>
 
-  <!-- JavaScript -->
-  <script type="text/javascript" src="js/scripts.js"></script>
-</body>
-</html>
+<?php include "includes/footer.php"; ?>
+
