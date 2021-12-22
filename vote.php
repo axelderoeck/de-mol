@@ -108,11 +108,15 @@ if (isset($_POST["formSubmitVote"])){
     <!-- form carousel -->
     <div class="slider-for">
       <?php foreach($candidates as $candidate): ?>
-        <div class="candidateInfo">
-          <p><?=$candidate['Name']?>
-          <br><?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
-          <p class="userPointsLeft"><?=$account['Score']?></p>
-          <p class="pointsCandidate<?=$candidate['Id']?>">0</p>
+        <div class="candidateSlide">
+          <div class="scoreLeft">
+            <p class="userPointsLeft"><?=$account['Score']?></p>
+          </div>
+          <div class="candidateInfo">
+            <p><span><?=$candidate['Name']?></span>
+            <br><?=$candidate['Age']?> <span style="font-weight: 800">//</span> <?=$candidate['Job']?></p>
+            <p class="candidatePoints pointsCandidate<?=$candidate['Id']?>">0</p>
+          </div>
           <input <?php if($candidate["Status"] == 0){echo "disabled";} ?> form="deMolForm" type="range" min="0" max="<?=$account["Score"]?>" step="1" value="0" class="demolslider" name="slider<?=$candidate['Id']?>" id="slider<?=$candidate['Id']?>" oninput="checkScore('<?=$candidate['Id']?>')">
         </div>
       <?php endforeach; ?>
@@ -124,7 +128,9 @@ if (isset($_POST["formSubmitVote"])){
       <?php foreach($candidates as $candidate): ?>
         <div class='candidate' id='candidate<?=$candidate['Id']?>'>
           <?php if($candidate["Status"] == 0): ?>
-          <img class="red" src="img/assets/demol_logo_geen_tekst_rood.png" alt="logo de mol rood">
+            <img class="red" src="img/assets/demol_logo_geen_tekst_rood.png" alt="logo de mol rood">
+          <?php else: ?>
+            <p class="candidateSliderPoints pointsCandidate<?=$candidate['Id']?>">0</p>
           <?php endif; ?>
           <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
         </div>

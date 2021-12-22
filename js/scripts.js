@@ -1,11 +1,11 @@
-function hamburgerMenu() {
-	var x = document.getElementById("myLinks");
-	if (x.style.display === "block") {
-		x.style.display = "none";
-	} else {
-		x.style.display = "block";
-	}
-}
+// function hamburgerMenu() {
+// 	var x = document.getElementById("myLinks");
+// 	if (x.style.display === "block") {
+// 		x.style.display = "none";
+// 	} else {
+// 		x.style.display = "block";
+// 	}
+// }
 
 // Cookie Consent alert
 (function() {
@@ -62,15 +62,6 @@ function openReg() {
 	}
 }
 
-document.getElementById('menu-btn').onclick = function() {
-	// access properties using this keyword
-	if (this.checked) {
-		document.getElementById("sideNav").style.width = "250px";
-	} else {
-		document.getElementById("sideNav").style.width = "0";
-	}
-};
-
 function openNav() {
 	document.getElementById("mySidenav").style.width = "250px";
 	// document.getElementById("main").style.marginLeft = "250px";
@@ -123,13 +114,6 @@ function showPopup(id, showhide) {
 		document.getElementById(id).style.display = "none";
 	}
 }
-
-$(document).ready(function() {
-	$('ul.tabs').tabs({
-		swipeable: true,
-		responsiveThreshold: 1920
-	});
-});
 
 /* Indicator swipe function */
 function setIndicator(direction) {
