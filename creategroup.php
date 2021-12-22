@@ -10,8 +10,6 @@ if (isset($_POST["createGroup"])){
 
 <?php include "includes/header.php"; ?>
 
-    <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
     <h1>Maak een groep aan</h1>
     <form action="" method="post">
       <label>Naam</label>

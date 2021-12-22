@@ -27,7 +27,6 @@ $awards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include "includes/header.php"; ?>
 
-    <a href="profile.php?u=<?=$_SESSION["Id"] ?>"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <div class="awardslist">
       <?php $delay = 0; /* Animation delay value */ ?>
 

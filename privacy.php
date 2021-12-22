@@ -1,7 +1,5 @@
 <?php include "includes/header.php"; ?>
 
-  <a href="index.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
   <h1>Privacy Beleid</h1>
   <h2>Gegevens</h2>
   <p>Deze site vraagt enkel een basis van gegevens op waaronder uw <span>voornaam</span> en een <span>gebruikersnaam</span>.

@@ -23,7 +23,6 @@ WHERE GroupId = ?');
 
 <?php include "includes/header.php"; ?>
 
-    <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Mijn Groepen</h1>
 
     <button onclick="location.href = 'creategroup.php';" class="styledBtn" type="submit" name="button">Maak een groep</button>

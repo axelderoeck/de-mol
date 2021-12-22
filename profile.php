@@ -60,8 +60,6 @@ if (isset($_POST["addFriend"])){
 
 <?php include "includes/header.php"; ?>
 
-  <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
   <!-- User Name -->
   <div class="profileFingerprint">
     <img src="img/assets/demol_logo_geen_tekst.png" alt="logo van de mol">

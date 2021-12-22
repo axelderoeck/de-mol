@@ -6,7 +6,6 @@ require_once("includes/phpdefault.php");
 
 <?php include "includes/header.php"; ?>
 
-      <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
       <h1>Mijn Molboek</h1>
       <h2>Jouw gespendeerde punten:</h2>
       <?php

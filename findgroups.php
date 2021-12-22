@@ -25,7 +25,6 @@ WHERE GroupId = ?');
 
 <?php include "includes/header.php"; ?>
 
-    <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Publieke Groepen</h1>
 
     <?php if(!empty($groups)): ?>

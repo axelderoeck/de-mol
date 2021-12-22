@@ -10,7 +10,6 @@ if (isset($_POST["submitFriendInvite"])){
 
 <?php include "includes/header.php"; ?>
 
-    <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Voeg een vriend toe</h1>
     <form action="" method="post">
       <label>Friendcode/Gebruikersnaam</label>

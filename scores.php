@@ -54,8 +54,6 @@ $groups = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include "includes/header.php"; ?>
 
-  <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
   <h1>Scores</h1>
 
   <div class="slider-nav">

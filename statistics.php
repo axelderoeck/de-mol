@@ -22,8 +22,6 @@ $total_voted = $stmt->fetchColumn(0);
 
 <?php include "includes/header.php"; ?>
 
-      <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
       <h1>Statistieken</h1>
       <h2>Verdenkingen</h2>
       

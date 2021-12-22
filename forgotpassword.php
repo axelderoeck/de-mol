@@ -47,8 +47,6 @@ if (isset($_POST["sendMail"])){
 
 <?php include "includes/header.php"; ?>
 
-  <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
   <h1>Wachtwoord vergeten</h1>
   <h2>We vergeten allemaal wel eens.</h2>
 

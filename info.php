@@ -8,8 +8,6 @@ $votetime = str_split(VOTE_HOUR, 2);
 
 <?php include "includes/header.php"; ?>
 
-    <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
     <h1>Uitleg</h1>
     <h2>Het doel</h2>
     <p>De bedoeling is om zo snel mogelijk de <span>mol</span> te ontmaskeren voor dat de anderen dit doen.</p>

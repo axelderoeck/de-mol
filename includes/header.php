@@ -47,7 +47,7 @@
                 echo "showNotification('$notification->message','$notification->type');"; //message + color style
             }
             ?>
-            <?php if(basename($_SERVER['PHP_SELF']) == "home.php" || basename($_SERVER['PHP_SELF']) == "screen.php"): ?>
+            <?php if(basename($_SERVER['PHP_SELF']) == "home.php"): ?>
                 <?php
                 $votetime = str_split(VOTE_HOUR, 2);
                 $begindate = new DateTime(SEASON_START);
@@ -119,3 +119,7 @@
     <!-- Main Page -->
     <div id="main">
         <div class="respContainer">
+          
+        <?php if(basename($_SERVER['PHP_SELF']) != "home.php"): ?>
+            <a onclick="history.go(-1);"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+        <?php endif; ?>

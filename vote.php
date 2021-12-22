@@ -99,8 +99,6 @@ if (isset($_POST["formSubmitVote"])){
 
 <?php include "includes/header.php"; ?>
 
-  <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
   <h1>WIE IS DE <span>MOL</span> ?</h1>
   <h2><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</h2>
   

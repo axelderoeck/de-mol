@@ -15,7 +15,6 @@ $friends = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <?php include "includes/header.php"; ?>
 
-    <a href="home.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Vrienden</h1>
     <p class="example">Hier kan je al jouw mede-mollenjagers vinden.</p>
 

@@ -25,7 +25,6 @@ if (isset($_POST["deleteNotification"])){
 
 <?php include "includes/header.php"; ?>
 
-    <a href="friends.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
     <h1>Meldingen</h1>
 
     <?php if(!empty($notifications)): ?>
