@@ -16,11 +16,17 @@ define('DB_PASS', $password);
 // Database name
 define('DB_NAME', $database);
 
-/* REGISTER SETTINGS */
+/* CRITERIA */
 // Minimum characters username
 define('MIN_CHAR_USERNAME', 3);
 // Maximum characters username
-define('MAX_CHAR_USERNAME', 20);
+define('MAX_CHAR_USERNAME', 16);
+// Maximum characters firstname
+define('MAX_CHAR_FIRSTNAME', 16);
+// Minimum characters groupname
+define('MIN_CHAR_GROUPNAME', 3);
+// Maximum characters groupname
+define('MAX_CHAR_GROUPNAME', 16);
 // Minimum characters password
 define('MIN_CHAR_PASSWORD', 3);
 // Maximum characters password

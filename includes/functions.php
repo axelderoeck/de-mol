@@ -72,14 +72,20 @@ function changePassword($id, $old, $new, $confirmNew){
   // Check if user exists and password is correct
   if($user && password_verify($old, $user['Password'])){
     if($new == $confirmNew){
-      // Hash the password
-      $password = password_hash($new, PASSWORD_DEFAULT);
-      // Update password from user
-      $stmt = $pdo->prepare('UPDATE table_Users SET Password = ? WHERE Id = ?');
-      $stmt->execute([ $password, $id ]);
-      // Notify user
-      $type = "success";
-      $message = "Wachtwoord is aangepast.";
+      if(strlen($new) > MAX_CHAR_PASSWORD || strlen($new) < MIN_CHAR_PASSWORD){
+        // Notify user
+        $type = "warning";
+        $message = "Wachtwoord moet tussen " . MIN_CHAR_PASSWORD . " en " . MAX_CHAR_PASSWORD . " karakters zijn.";
+      }else{
+        // Hash the password
+        $password = password_hash($new, PASSWORD_DEFAULT);
+        // Update password from user
+        $stmt = $pdo->prepare('UPDATE table_Users SET Password = ? WHERE Id = ?');
+        $stmt->execute([ $password, $id ]);
+        // Notify user
+        $type = "success";
+        $message = "Wachtwoord is aangepast.";
+      }
     }else{
       // Notify user
       $type = "warning";
@@ -137,15 +143,47 @@ function changeUsername($id, $username){
 
   // User with name doesn't exist -> change name
   if(!$user){
-    $stmt = $pdo->prepare('UPDATE table_Users SET Username = ? WHERE Id = ?');
-    $stmt->execute([ $username, $id ]);
-    // Notify user
-    $type = "success";
-    $message = "Gebruikersnaam is gewijzigd.";
+    // Check if username meets criteria
+    if(strlen($username) > MAX_CHAR_USERNAME || strlen($username) < MIN_CHAR_USERNAME){
+      // Notify user
+      $type = "warning";
+      $message = "Gebruikersnaam moet tussen " . MIN_CHAR_USERNAME . " en " . MAX_CHAR_USERNAME . " karakters zijn.";
+    }else{
+      // Change username
+      $stmt = $pdo->prepare('UPDATE table_Users SET Username = ? WHERE Id = ?');
+      $stmt->execute([ $username, $id ]);
+      // Notify user
+      $type = "success";
+      $message = "Gebruikersnaam is gewijzigd.";
+    }
   }else{
     // Notify user
     $type = "warning";
     $message = "Deze gebruikersnaam is al in gebruik.";
+  }
+
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function changeFirstname($id, $firstname){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Check if name meets criteria
+  if(strlen($firstname) > MAX_CHAR_FIRSTNAME){
+    // Notify user
+    $type = "warning";
+    $message = "Voornaam mag maximaal " . MAX_CHAR_FIRSTNAME . " karakters bevatten.";
+  }else{
+    // Change name
+    $stmt = $pdo->prepare('UPDATE table_Users SET Name = ? WHERE Id = ?');
+    $stmt->execute([ $firstname, $id ]);
+    // Notify user
+    $type = "success";
+    $message = "naam is gewijzigd.";
   }
 
   return (object)[
@@ -174,6 +212,38 @@ function changeFriendcode($id, $friendcode){
     // Notify user
     $type = "warning";
     $message = "Deze friendcode is al in gebruik.";
+  }
+
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
+function generateNewFriendcode($id){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Prepare statement -> Search for user with friendcode
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Friendcode = ?');
+  
+  // Create while loop
+  $inserted_friendcode = false;
+  while($inserted_friendcode == false) {
+    // Generate random friendcode
+    $friend_code = generateRandomInt(FRIENDCODE_LENGTH);
+    // Search for existing account with generated friendcode
+    $stmt->execute([ $friend_code ]);
+    $account = $stmt->fetch(PDO::FETCH_ASSOC);
+    if(!$account) {
+      // Account does not exist -> add friendcode
+      $stmt = $pdo->prepare('UPDATE table_Users SET Friendcode = ? WHERE Id = ?');
+      $stmt->execute([ $friend_code, $id ]);
+      $inserted_friendcode = true;
+      // Notify user
+      $type = "success";
+      $message = "Nieuwe friendcode is aangemaakt.";
+    }
   }
 
   return (object)[
@@ -289,13 +359,20 @@ function createGroup($adminId, $name, $description, $private){
 
   // Group doesn't exist -> create group
   if(!$group){
-    $stmt = $pdo->prepare('INSERT INTO table_Groups (AdminId, Name, Description, Private) VALUES (?,?,?,?)');
-    $stmt->execute([ $adminId, $name, $description, $private ]);
-    $group_id = $pdo->lastInsertId();
-    addUserToGroup($adminId, $group_id);
-    // Notify User
-    $type = 'success';
-    $message = 'Groep is aangemaakt.';
+    if(strlen($name) > MAX_CHAR_GROUPNAME || strlen($name) < MIN_CHAR_GROUPNAME){
+      // Notify user
+      $type = "warning";
+      $message = "Groepsnaam moet tussen " . MIN_CHAR_GROUPNAME . " en " . MAX_CHAR_GROUPNAME . " karakters zijn.";
+    }else{
+      // Create group
+      $stmt = $pdo->prepare('INSERT INTO table_Groups (AdminId, Name, Description, Private) VALUES (?,?,?,?)');
+      $stmt->execute([ $adminId, $name, $description, $private ]);
+      $group_id = $pdo->lastInsertId();
+      addUserToGroup($adminId, $group_id);
+      // Notify User
+      $type = 'success';
+      $message = 'Groep is aangemaakt.';
+    }
   }else{
     // Notify User
     $type = 'warning';
@@ -356,11 +433,18 @@ function changeGroupName($groupId, $name){
     $group = $stmt->fetch(PDO::FETCH_ASSOC);
     // Group with name doesn't exist -> change name
     if(!$group){
-      $stmt = $pdo->prepare('UPDATE table_Groups SET Name = ? WHERE Id = ?');
-      $stmt->execute([ $name, $groupId ]);
-      // Notify user
-      $type = "success";
-      $message = "Groepsnaam is gewijzigd.";
+      if(strlen($name) > MAX_CHAR_GROUPNAME || strlen($name) < MIN_CHAR_GROUPNAME){
+        // Notify user
+        $type = "warning";
+        $message = "Groepsnaam moet tussen " . MIN_CHAR_GROUPNAME . " en " . MAX_CHAR_GROUPNAME . " karakters zijn.";
+      }else{
+        // Change name
+        $stmt = $pdo->prepare('UPDATE table_Groups SET Name = ? WHERE Id = ?');
+        $stmt->execute([ $name, $groupId ]);
+        // Notify user
+        $type = "success";
+        $message = "Groepsnaam is gewijzigd.";
+      }
     }else{
       // Notify user
       $type = "warning";

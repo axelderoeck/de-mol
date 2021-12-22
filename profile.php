@@ -72,10 +72,6 @@ if (isset($_POST["addFriend"])){
   <!-- User Info -->
   <div class="profileInfo">
     Score <span>//</span> <?=getVotedPoints($account["Id"]) + $account["Score"]?>
-    <br>
-    <?php if($user_owns_account): $email = explode("@",$account["Email"]); ?>
-      <?=$email[0]?><span>@<?=$email[1]?></span>
-    <?php endif; ?>
   </div>
   
   <!-- User Awards -->

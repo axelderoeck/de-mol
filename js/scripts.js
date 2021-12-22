@@ -94,15 +94,25 @@ function collapse(contentId, buttonId) {
 	}
 }
 
-function showNotification(message = "", type = "warning") {
-	var notification = document.getElementById('informationPopup');
-	if(message != "" && type != null){
-		notification.classList.add(type);
-		notification.innerHTML = "<p>" + message + "</p>";
-		notification.style.top = "20px";
+function showNotification(message, type, delay = 4000) {
+	// Check if message and type arent empty
+	if(message != "" && type != ""){
+		// Select notification element
+		let notification = $("#notification");
+		// Add correct style
+		notification.addClass(type);
+		// Add the message
+		notification.html("<p>" + message + "</p>");
+		// Display the notification
+		notification.css({
+			"top": "20px"
+		});
+		// Hide the notification
 		setTimeout(function() {
-			notification.style.top = "-50px";
-		}, 4000); //wait 4 seconds before closing again
+			notification.css({
+				"top": "-100px"
+			});
+		}, delay);
 	}
 }
 
@@ -148,9 +158,9 @@ function editMode(id, visible){
 
 function screenAnimation(textid, name, color) {
 	// Get the element to start the typewriter animation on
-	var textfield = document.querySelector("#"+textid);
+	let textfield = document.querySelector("#"+textid);
 	// Initiate typewriter object
-	var typewriter = new Typewriter(textfield, {
+	let typewriter = new Typewriter(textfield, {
 		loop: false,
 		delay: 300,
 	});

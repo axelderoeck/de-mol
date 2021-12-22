@@ -13,6 +13,9 @@ if (isset($_POST["saveUserSettings"])){
     if($_POST["username"] != $account["Username"]){
       $notification = changeUsername($account["Id"], $_POST["username"]);
     }
+    if($_POST["firstname"] != $account["Name"]){
+      $notification = changeFirstname($account["Id"], $_POST["firstname"]);
+    }
     if($_POST["email"] != $account["Email"]){
       $notification = changeEmail($account["Id"], $_POST["email"]);
     }
@@ -20,9 +23,9 @@ if (isset($_POST["saveUserSettings"])){
     if($notification->type != 'warning'){
       $notification->type = "success";
       $notification->message = "Gegevens opgeslagen";
-      // Refresh after 1 second to show the updated info
-      header('Refresh:1');
     }
+    // Refresh after 1 second to show the updated info
+    header('Refresh:2');
 }
 
 // Change password
@@ -49,12 +52,13 @@ if (isset($_POST["deleteAccount"])){
         </div>
     </div>
 
-    <h3>Voorkeuren</h3>
-
-    <h3>Gegevens</h3>
-    <form action="" method="post">
+    <h3 style="margin-top: 100px;">Gegevens</h3>
+    <form style="width: 90%; margin: 0 auto;" action="" method="post">
         <label>Gebruikersnaam</label>
         <input name="username" id="username" type="text" value="<?=$account["Username"]?>">
+        <br>
+        <label>Voornaam (Niet verplicht)</label>
+        <input name="firstname" id="firstname" type="text" value="<?=$account["Name"]?>">
         <br>
         <label>Email</label>
         <input name="email" id="email" type="text" value="<?=$account["Email"]?>">
@@ -63,7 +67,7 @@ if (isset($_POST["deleteAccount"])){
     </form>
 
     <h3>Wachtwoord wijzigen</h3>
-    <form name="formChangePassword" action="" method="post">
+    <form style="width: 90%; margin: 0 auto 100px auto;" name="formChangePassword" action="" method="post">
         <label>Oud wachtwoord</label>
         <input placeholder="Oud wachtwoord" name="oldPassword" id="oldPassword" type="password" required>
         <br>
