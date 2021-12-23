@@ -51,10 +51,10 @@ if (isset($_POST["resetSeenResults"])){
 
   <!-- DEV - DELETE ON PROD -->
   <form name="resetVoteForm" method="POST" action="">
-    <input type="submit" name="resetVote" value="(dev) Reset Vote status">
+    <input type="submit" name="resetVote" value="(Test) Reset Vote status">
   </form>
   <form name="resetSeenResultsForm" method="POST" action="">
-    <input type="submit" name="resetSeenResults" value="(dev) Reset SeenResults status">
+    <input type="submit" name="resetSeenResults" value="(Test) Reset SeenResults status">
   </form>
 
   <h2 id="infoTekst"></h2>
