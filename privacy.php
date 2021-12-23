@@ -2,8 +2,7 @@
 
   <h1>Privacy Beleid</h1>
   <h2>Gegevens</h2>
-  <p>Deze site vraagt enkel een basis van gegevens op waaronder uw <span>voornaam</span> en een <span>gebruikersnaam</span>.
-  Als de gebruiker gebruik wilt maken van de 'wachtwoord vergeten' functie, zal deze ook een <span>email</span> moeten voorzien (niet verplicht).
+  <p>Deze site vraagt enkel een basis van gegevens op waaronder uw <span>email</span> en een <span>gebruikersnaam</span> met optioneel de keuze voor je <span>voornaam</span>.
   <br>Als u registreert, gaat u <span>akkoord</span> dat deze website uw gegeven data mag gebruiken. <br>
   Deze gegevens worden <span>niet</span> gedeeld met een derde partij.</p>
 

@@ -3,6 +3,9 @@
         case "profile.php":
             $css_body = "background-image: url(./img/assets/background_dots.jpg)";
             break;
+        // case "index.php":
+        //     $css_body = "background-image: url(./img/assets/background_dots.jpg)";
+        //     break;
         default:
             break;
     }
@@ -121,5 +124,7 @@
         <div class="respContainer">
           
         <?php if(basename($_SERVER['PHP_SELF']) != "home.php"): ?>
+        <?php if(basename($_SERVER['PHP_SELF']) != "index.php"): ?>
             <a onclick="history.go(-1);"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
+        <?php endif; ?>
         <?php endif; ?>

@@ -1,34 +1,25 @@
-// function hamburgerMenu() {
-// 	var x = document.getElementById("myLinks");
-// 	if (x.style.display === "block") {
-// 		x.style.display = "none";
-// 	} else {
-// 		x.style.display = "block";
-// 	}
-// }
-
 // Cookie Consent alert
-(function() {
-	if (!localStorage.getItem("cookieconsent")) {
-	  document.body.innerHTML +=
-		'\
-	  <div class="cookieconsent info">\
-		<p class="title">De mol eet ook cookies</p>\
-		<p>Door het verdere gebruik van deze site ga je akkoord met het gebruik van cookies.</p>\
-		<br>\
-		<a href="#">\
-			Akkoord\
-		</a>\
-		<img src="img/assets/demol_logo_geen_tekst_cookie.png" />\
-	  </div>\
-	  ';
-	  document.querySelector(".cookieconsent a").onclick = function(e) {
-		e.preventDefault();
-		document.querySelector(".cookieconsent").style.display = "none";
-		localStorage.setItem("cookieconsent", true);
-	  };
-	}
-})();
+// (function() {
+// 	if (!localStorage.getItem("cookieconsent")) {
+// 	  document.body.innerHTML +=
+// 		'\
+// 	  <div class="cookieconsent info">\
+// 		<p class="title">De mol eet ook cookies</p>\
+// 		<p>Door het verdere gebruik van deze site ga je akkoord met het gebruik van cookies.</p>\
+// 		<br>\
+// 		<a href="#">\
+// 			Akkoord\
+// 		</a>\
+// 		<img src="img/assets/demol_logo_geen_tekst_cookie.png" />\
+// 	  </div>\
+// 	  ';
+// 	  document.querySelector(".cookieconsent a").onclick = function(e) {
+// 		e.preventDefault();
+// 		document.querySelector(".cookieconsent").style.display = "none";
+// 		localStorage.setItem("cookieconsent", true);
+// 	  };
+// 	}
+// })();
 
 window.stemKnop = function(toggle) {
 	if (toggle == "aan") {
