@@ -192,8 +192,17 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
       </form>
       <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
     </div>
+    
     <?php include "includes/legal.php"; ?>
   </div>
 
+  <!-- <p>Deze site is <span>niet</span> officieel
+    en is gemaakt <span>zonder</span> commercieel belang.
+    Alle rechten zijn voorbehouden aan de eigenaars/productie van 'De Mol' België.</p>
+
+  <a href="https://www.goplay.be/">GoPlay</a>
+  <a href="https://www.woestijnvis.be/">Woestijnvis</a>
+
+  <p> <span>contact@axelderoeck.com</span></p> -->
 <?php include "includes/footer.php"; ?>
 
