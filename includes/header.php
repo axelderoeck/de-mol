@@ -38,7 +38,7 @@
     <meta charset="UTF-8">
     <!-- <meta name="theme-color" media="(prefers-color-scheme: light)" content="black">
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black"> -->
-    <meta name="viewport" content="width=device-width, viewport-fit=cover, user-scalable=no, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1">
     <!-- Show current page name -->
     <title>De Mol - <?=ucwords(explode(".php", basename($_SERVER['PHP_SELF']))[0])?></title>
 
