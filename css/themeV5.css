@@ -46,9 +46,12 @@ body {
   scrollbar-width: none;  /* Firefox */
 }
 
-input {
-  border-radius: 0;
-  -webkit-border-radius: 0;
+textarea,
+input[type="text"],
+input[type="button"],
+input[type="submit"] {
+     -webkit-appearance: none;
+     border-radius: 0;
 }
 
 @supports(padding:max(0px)) {
