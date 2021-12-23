@@ -9,6 +9,7 @@ $votetime = str_split(VOTE_HOUR, 2);
 <?php include "includes/header.php"; ?>
 
     <h1>Uitleg</h1>
+    <h1>OUDE UITLEG -> MOET UPDATEN</h1>
     <h2>Het doel</h2>
     <p>De bedoeling is om zo snel mogelijk de <span>mol</span> te ontmaskeren voor dat de anderen dit doen.</p>
 

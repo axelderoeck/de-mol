@@ -6,6 +6,13 @@ $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
 $stmt->execute([ $_SESSION["Id"] ]);
 $account = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Get name
+if($account["Name"] != null || $account["Name"] != ""){
+  $firstname = $account["Name"];
+}else{
+  $firstname = $account["Username"];
+}
+
 // DEV - DELETE ON PROD
 if (isset($_POST["resetVote"])){
   $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0 WHERE Id = ?');
@@ -30,7 +37,7 @@ if (isset($_POST["resetSeenResults"])){
     <span><?=getVotedPoints($account["Id"]) + $account["Score"]?> <i class="fas fa-fingerprint"></i></span>
   </div>
 
-  <h1>Dag <?=$account["Username"]?></h1>
+  <h1>Dag <?=$firstname?></h1>
 
   <div class="buttonsDiv">
     <a href="molboek.php"><i class="fas fa-fingerprint translucent"></i></a>
