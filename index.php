@@ -153,7 +153,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
   <div id="loginbox">
     <div id="log">
       <form name="formLogin" action="" method="post">
-        <label>Gebruikersnaam of Email</label>
+        <label>Gebruikersnaam of Email HALLO</label>
         <input placeholder="Gebruikersnaam of Email" name="email" id="email" type="text" required>
         <br>
         <label>Wachtwoord</label>
