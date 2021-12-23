@@ -37,10 +37,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <!-- META -->
     <meta charset="UTF-8">
-    <meta name="theme-color" 
-      content="#0b3e05" 
-      media="(prefers-color-scheme: dark)">
-    <meta name="viewport" content="width=device-width, height=device-height, viewport-fit=cover, user-scalable=no, initial-scale=0.9, shrink-to-fit=no">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="black">
+    <meta name="viewport" content="width=device-width, height=device-height, viewport-fit=cover, user-scalable=no, initial-scale=1.0, shrink-to-fit=no">
     <!-- Show current page name -->
     <title>De Mol - <?=ucwords(explode(".php", basename($_SERVER['PHP_SELF']))[0])?></title>
 
