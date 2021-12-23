@@ -166,7 +166,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
         <input style="border: 0;" type="text" readonly> -->
         <input type="hidden" name="remember" id="remember" value="1">
         <br>
-        <input type="submit" name="userLogin" id="userLogin" value="Login">
+        <input style="width: 95%;" type="submit" name="userLogin" id="userLogin" value="Login">
         <br>             
       </form>
       <a href="forgotpassword.php">wachtwoord vergeten?</a>
@@ -187,7 +187,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
         <label>Bevestig Wachtwoord</label>
         <input placeholder="Wachtwoord" name="confirmPassword" id="confirmPassword" type="password" required>
         <br>
-        <input type="submit" name="userRegister" id="userRegister" value="Registreer">
+        <input style="width: 95%;" type="submit" name="userRegister" id="userRegister" value="Registreer">
         <br>
       </form>
       <p class="loginLink">Ga terug naar <a href="javascript:openReg();">login.</a></p>
