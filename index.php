@@ -147,7 +147,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
 <?php include "includes/header.php"; ?>
 
   <div style="text-align: center; margin: 10% 0;">
-    <img class="loginImg" src="img/assets/demol_logo.png" alt="logo">
+    <img class="loginImg" src="img/assets/demol_logo_animated.gif" alt="logo">
   </div>
 
   <div id="loginbox">
