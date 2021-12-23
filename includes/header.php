@@ -3,8 +3,11 @@
         case "profile.php":
             $css_body = "background-image: url(./img/assets/background_dots.jpg)";
             break;
+        // case "index.php":
+        //     $css_body = "background-image: url(./img/assets/background_login.jpg)";
+        //     break;
         case "index.php":
-            $css_body = "background-image: url(./img/assets/background_login.jpg)";
+            $css_body = "background-image: none";
             break;
         default:
             break;
