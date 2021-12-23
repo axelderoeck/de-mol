@@ -13,6 +13,9 @@
   #informationPopup {
     width: 30%;
   }
+  #screenFingerprint {
+    width: 200px;
+  }
 }
 
 /* desktop styling */

@@ -6,17 +6,6 @@
   src: url("../fonts/Knockout.otf") format("truetype");
 }
 
-/* import notepad font */
-@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
-/* Notepad Font*/ 
-@font-face {
-  font-family: 'Indie Flower';
-  font-style: normal;
-  font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/indieflower/v12/m8JVjfNVeKWVnh3QMuKkFcZVaUuH99GUDg.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 /* Browser Text Highlight style */
 ::selection {
   color: #53adb5;
@@ -30,6 +19,7 @@
 
 html,
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   font-family: "Knockout", sans-serif;
@@ -44,30 +34,6 @@ body {
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
-  /* Hide selected highlight */
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-textarea,
-input[type="text"],
-input[type="button"],
-input[type="submit"] {
-  -webkit-appearance: none;
-  -webkit-border-radius: 0;
-  border-radius: 0;
-}
-
-@supports(padding:max(0px)) {
-  body, header, footer {
-      padding-left: min(0vmin, env(safe-area-inset-left));
-      padding-right: min(0vmin, env(safe-area-inset-right));
-  }
 }
 
 #main {
@@ -76,7 +42,6 @@ input[type="submit"] {
   text-align: center;
   transition: margin-left 0.5s;
   overflow-x: hidden;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 h1,

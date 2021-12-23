@@ -41,14 +41,14 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     if($redScreen == true){
       $file_name = "demol_logo_geen_tekst_rood.png";
       $color = "red";
-      $text = "Tekst rood scherm";
+      $text = "";
       // Update screen to red
       $stmt = $pdo->prepare('UPDATE table_Users SET Screen = ? WHERE Id = ?');
       $stmt->execute([ 1, $account["Id"] ]);
     }else{
       $file_name = "demol_logo_geen_tekst_groen.png";
       $color = "green";
-      $text = "Tekst groen scherm";
+      $text = "";
     }
 
     // Get name to type out in animation
@@ -126,8 +126,6 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
   <link rel="manifest" href="img/favicon/site.webmanifest">
   <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#2b5797">
-  <meta name="theme-color" content="#ffffff">
-
   <!-- CSS -->
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/animations.css">
@@ -171,19 +169,7 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
             </div>
           <?php endforeach; ?>
         </div>
-
-        <table>
-          <?php if($bonus == true): ?>
-            <tr>
-              <td>Bonus</td>
-              <td>+<?=$bonusScore?></td>
-            </tr>
-          <?php endif; ?>
-            <tr>
-              <td>Score</td>
-              <td><?=$newScore?></td>
-            </tr>
-        </table>
+        <p>Nieuwe score: <?=$newScore?></p>
         <button onclick="location.href = 'home.php';" class="styledBtn" type="submit">Ga door</button>
       </div>
     </div>
