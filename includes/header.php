@@ -21,7 +21,7 @@
     <link rel="manifest" href="img/favicon/site.webmanifest">
     <link rel="mask-icon" href="img/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#2b5797">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="black">
     <!-- CSS -->
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/animations.css">
@@ -37,8 +37,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
     <!-- META -->
     <meta charset="UTF-8">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="theme-color" content="black">
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="black">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black">
     <meta name="viewport" content="width=device-width, viewport-fit=cover, user-scalable=no, initial-scale=1, shrink-to-fit=no">
     <!-- Show current page name -->
     <title>De Mol - <?=ucwords(explode(".php", basename($_SERVER['PHP_SELF']))[0])?></title>
