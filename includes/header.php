@@ -4,7 +4,7 @@
             $css_body = "background-image: url(./img/assets/background_dots.jpg)";
             break;
         case "index.php":
-            $css_body = "background-image: none";
+            $css_body = "background-image: url(./img/assets/background_login.jpg)";
             break;
         default:
             break;

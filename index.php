@@ -147,8 +147,11 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
 <?php include "includes/header.php"; ?>
 
   <div style="text-align: center; margin: 10% 0;">
-    <img class="loginImg" src="img/assets/testgif.gif" alt="logo">
+    <img class="loginImg" src="img/assets/demol_logo_animated.gif" alt="logo de mol animated">
   </div>
+
+  <!-- <button onclick="location.href = 'nothingyet.php';" class="styledBtn" type="submit" name="button">Inloggen</button>
+  <button onclick="location.href = 'nothingyet.php';" class="styledBtn" type="submit" name="button">Registreren</button> -->
 
   <div id="loginbox">
     <div id="log">
@@ -159,9 +162,9 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
         <label>Wachtwoord</label>
         <input placeholder="Wachtwoord" name="password" id="password" type="password" required>
         <br>
-        <label>Onthoud mij</label>
-        <input style="border: 0;" type="text" readonly>
-        <input type="checkbox" name="remember" id="remember" value="1">
+        <!-- <label>Onthoud mij</label>
+        <input style="border: 0;" type="text" readonly> -->
+        <input type="hidden" name="remember" id="remember" value="1">
         <br>
         <input type="submit" name="userLogin" id="userLogin" value="Login">
         <br>             
