@@ -27,7 +27,11 @@ require_once("includes/phpdefault.php");
         $i = 0; foreach($candidates as $candidate): ?>
           <div style="animation-delay: <?=$i/4;?>s;" class="displayItem">
             <div>
-              <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate["Name"]?>">
+              <?php if(file_exists("img/candidates/" . $candidate['Name'] . ".jpg")): ?>
+                <img src="img/candidates/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
+              <?php else: ?>
+                <img src="img/candidates/unknown.jpg" alt="foto momenteel niet beschikbaar" />
+              <?php endif; ?>
             </div>
             <span><?=$candidate['Name']?></span>
             <span><?=$candidate['Score']?></span>

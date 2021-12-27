@@ -130,7 +130,11 @@ if (isset($_POST["formSubmitVote"])){
           <?php else: ?>
             <p class="candidateSliderPoints pointsCandidate<?=$candidate['Id']?>">0</p>
           <?php endif; ?>
-          <img src="img/kandidaten/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
+          <?php if(file_exists("img/candidates/" . $candidate['Name'] . ".jpg")): ?>
+            <img src="img/candidates/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
+          <?php else: ?>
+            <img src="img/candidates/unknown.jpg" alt="foto momenteel niet beschikbaar" />
+          <?php endif; ?>
         </div>
       <?php endforeach; ?>
     </div>
