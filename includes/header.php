@@ -109,7 +109,11 @@
         <a href="groups.php"><i style="transform: translateX(-5px);" class="fas fa-users"></i>Groepen</a>
         <a href="statistics.php"><i class="fas fa-chart-bar"></i>Statistieken</a>
         <a href="scores.php"><i class="fas fa-award"></i>Scores</a>
-        <a href="notifications.php"><i class="fas fa-bell"><span><?=getNotificationCount($_SESSION["Id"])?></span></i>Meldingen</a>
+        <a href="notifications.php"><i class="fas fa-bell">
+        <?php if(getNotificationCount($_SESSION["Id"]) > 0):?>
+            <span class="notificationDot"></span>
+        <?php endif; ?>
+        </i>Meldingen</a>
         <a href="settings.php"><i class="fas fa-cog"></i>Instellingen</a>
         <?php if ($_SESSION["Admin"] == 1): ?>
             <a href="admin/index.php"><i class="fas fa-hammer"></i>Admin</a>

@@ -638,6 +638,15 @@
 
 /* Notification page*/
 
+.notificationDot::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  position: absolute;
+}
+
 .notification {
   width: 100%;
   margin: 0 0 30px 0;
