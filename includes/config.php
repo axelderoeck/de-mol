@@ -4,7 +4,7 @@
 include_once("./db/db_info.php");
 // Set the timezone
 date_default_timezone_set('Europe/Brussels');
-define('STYLE_VERSION', 5);
+define('STYLE_VERSION', 6);
 
 /* DATABASE SETTINGS */
 // Database hostname

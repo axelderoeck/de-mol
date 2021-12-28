@@ -13,20 +13,6 @@ if($account["Name"] != null || $account["Name"] != ""){
   $firstname = $account["Username"];
 }
 
-// DEV - DELETE ON PROD
-if (isset($_POST["resetVote"])){
-  $stmt = $pdo->prepare('UPDATE table_Users SET Voted = 0 WHERE Id = ?');
-  $stmt->execute([ $_SESSION["Id"] ]);
-
-  $_SESSION["Voted"] = 0;
-}
-if (isset($_POST["resetSeenResults"])){
-  $stmt = $pdo->prepare('UPDATE table_Users SET SeenResults = 0 WHERE Id = ?');
-  $stmt->execute([ $_SESSION["Id"] ]);
-
-  $_SESSION["Voted"] = 0;
-}
-
 ?>
 
 <?php include "includes/header.php"; ?>
@@ -48,14 +34,6 @@ if (isset($_POST["resetSeenResults"])){
   <div class="submitDiv">
     <button onclick="location.href = 'vote.php';" id="stemKnop" class="styledBtn" type="submit">Stemmen</button>
   </div>
-
-  <!-- DEV - DELETE ON PROD -->
-  <form name="resetVoteForm" method="POST" action="">
-    <input type="submit" name="resetVote" value="(Test) Reset Vote status">
-  </form>
-  <form name="resetSeenResultsForm" method="POST" action="">
-    <input type="submit" name="resetSeenResults" value="(Test) Reset SeenResults status">
-  </form>
 
   <h2 id="infoTekst"></h2>
 

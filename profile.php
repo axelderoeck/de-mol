@@ -93,7 +93,7 @@ if (isset($_POST["addFriend"])){
       <?php if($friendship): ?>
         <input class="delete" type="submit" name="deleteFriend" value="Verwijder vriend">
       <?php else: ?>
-        <input <?php if($friendinvite){echo "disabled";} ?> class="add" type="submit" name="addFriend" value="<?php if($friendinvite){echo "Vriendschapsverzoek verzonden";} ?>">
+        <input <?php if($friendinvite){echo "disabled";} ?> class="add" type="submit" name="addFriend" value="<?php if($friendinvite){echo "Vriendschapsverzoek verzonden";}else{echo "Voeg toe";} ?>">
       <?php endif; ?>
     </form>
   <?php } ?>
