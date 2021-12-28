@@ -44,6 +44,11 @@ If you voted on a candidate that had to go home this episode, you will have a **
 
 Looking for the mole alone is no fun. That's why u can also add friends and groups to the search. 
 
-// scores and friends and groups gifs
+// friends and groups gifs
 
-<hr>
+On the scores page u can compare your scores with everyone and see who wins at the end.
+
+// scores gif
+
+>[!WARNING]
+>This is a warning test
