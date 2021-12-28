@@ -165,7 +165,11 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
                 <img class="green" src="img/assets/demol_logo_geen_tekst_groen.png" alt="logo de mol groen">
                 <span>+<?=round($score["Score"]*$multiplier)?></span> 
               <?php endif; ?>
-              <img src="img/kandidaten/<?=$score['Name']?>.jpg" alt="foto van <?=$score['Name']?>" />
+              <?php if(file_exists("img/candidates/" . $candidate['Name'] . ".jpg")): ?>
+                <img src="img/candidates/<?=$candidate['Name']?>.jpg" alt="foto van <?=$candidate['Name']?>" />
+              <?php else: ?>
+                <img src="img/candidates/unknown.jpg" alt="foto momenteel niet beschikbaar" />
+              <?php endif; ?>
             </div>
           <?php endforeach; ?>
         </div>
