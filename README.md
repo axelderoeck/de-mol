@@ -1,44 +1,49 @@
-# De Mol Spel
-<img src="https://github.com/AxelDeRoeck/DeMolGame/blob/main/img/assets/molLogo.png" alt="De Mol Logo" width="250"/>
+# De Mol Web App
+<img src="https://github.com/AxelDeRoeck/DeMolGame/blob/main/img/assets/demol_logo.png" alt="De Mol Logo" width="250"/>
+<img src="" alt="De Mol Logo banner" width="100%"/>
 
-Dag vrienden...
-**De Mol** is weer begonnen.  Jullie kunnen niet alleen kijken, maar ook meedoen.
-De bedoeling van deze site is om zo snel mogelijk de **mol** te ontmaskeren voor dat de anderen dit doen.
+## Background
+This web app is based on a Belgian TV game show. The show revolves around a group of people earning as much money as possible with challenges, all while finding the 1 mole whose task is to sabotage the challenges. Every episode there is a test with questions about the mole. The candidate who has the weakest test result has to go home. The last 2 candidates have to fight for the best test result about the mole in order to win.
 
-Veel succes.
+**De Mol** is owned by **[Woestijnvis](https://www.woestijnvis.be/producties/de-mol)**, **[GoPlay](https://www.goplay.be/)** and **[SBSBelgium](https://www.sbsbelgium.be/)**.
 
 <hr>
 
-# Het Spel
+## The Web App
 
-Je kan wekelijks per aflevering **10** punten inzetten op wie dat jij denkt de **mol** is.
-Deze **10** punten kan je ook verspreiden over meerdere kandidaten.
->Bijvoorbeeld: <br/>
->**6** -> **Bart** <br/>
->**4** -> **Alina**
+### Goal
 
-## Wanneer kan ik stemmen?
+The point of this web app is to play along with the tv show. U start out with **10** points and u have to submit these points to the candidates u find the most suspicious. 
 
-De eerste aflevering is een cadeau. 
->Wegens hoe het systeem werkt is dit de beste oplossing.
+// gif vote page
 
-Daarna ga je elke week **stemmen** voor de komende aflevering.
-Je kan **niet** op de dag van de aflevering zelf stemmen. Dus vergeet niet te stemmen op ten laatste **zaterdag**.
->Stemmen is dus beschikbaar van Maandag t.e.m. Zaterdag.
+After the episode airs, u will get a screen that displays your results.
+If u voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
 
-Op deze manier stem je **voor** dat de finale begint als laatste keer.
+!!! example Example
+    This is what I voted.
+    - Lennart: 8pts
+    - Dami: 2pts
+    
+    Dami had to go home this episode, this means I lose those 2 points.
+    But my points on Lennart are still correct, that means I get double the amount back = 16pts total.
 
-## Hoe stemmen?
+!!! question What screen do I get if I am both correct and wrong like in the example above?
+    You will still get a red screen, but only lose the wrong points.
 
-Als je op de homepage op de knop 'Stemmen' drukt ga je naar de stemmen pagina. 
-Daarna kan je **swipen** tussen de mogelijke kandidaten en je punten inzetten a.d.h.v. de + en - knop.
-Klaar? druk op de 'Inzenden' knop. Nu kan je niet meer stemmen tot dat de volgende aflevering is geweest.
->**Opgelet!** Je kan maar 1 keer per week inzenden dus zet alle 10 punten in.
+!!! question What if I lose all my points?
+    If you happen to lose all your points, you will receive another 10 points to start again.
 
-## Molboek
+// gif screen page
 
-Op deze pagina kan je al jouw ingezette punten bekijken. Gerangschikt van hoog naar laag.
+<hr>
 
-## Ranglijst
+### Social
 
-Wanneer de **mol** bekend is zal deze pagina verschijnen die alle gebruikers hun punten gaat vergelijken. Degene met de meeste punten op de juiste **mol** wint!
+// profile page image
+
+Looking for the mole alone is no fun. That's why u can also add friends and groups to the search. 
+
+// scores and friends and groups gifs
+
+<hr>

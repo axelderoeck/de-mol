@@ -3,9 +3,6 @@
         case "profile.php":
             $css_body = "background-image: url(./img/assets/background_dots.jpg)";
             break;
-        // case "index.php":
-        //     $css_body = "background-image: url(./img/assets/background_login.jpg)";
-        //     break;
         case "index.php":
             $css_body = "background-image: none";
             break;
@@ -98,6 +95,7 @@
     ?>
 
     <?php if(basename($_SERVER['PHP_SELF']) != "index.php"): ?>
+    <?php if(basename($_SERVER['PHP_SELF']) != "forgotpassword.php"): ?>
     <!-- Navigation -->
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fas fa-times closeIcon"></i></a>
@@ -122,6 +120,7 @@
         <!-- <img src="img/assets/demol_logo.png" alt="logo de mol"> -->
     </div>
     <span class="navButton" onclick="openNav()"><i class="fas fa-stream"></i></span>
+    <?php endif; ?>
     <?php endif; ?>
 
     <!-- Dynamic popup -->

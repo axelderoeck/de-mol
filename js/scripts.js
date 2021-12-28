@@ -1,4 +1,4 @@
-// Cookie Consent alert
+//Cookie Consent alert
 // (function() {
 // 	if (!localStorage.getItem("cookieconsent")) {
 // 	  document.body.innerHTML +=
