@@ -1,6 +1,6 @@
-# De Mol Web App
-<img src="https://github.com/AxelDeRoeck/DeMolGame/blob/main/img/assets/demol_logo.png" alt="De Mol Logo" width="250"/>
-<img src="" alt="De Mol Logo banner" width="100%"/>
+<!-- <img src="https://github.com/AxelDeRoeck/demolapp-web/blob/2022-update/img/repo_img/repo_cover.jpg" alt="De Mol repo banner" width="100%"/> -->
+<img src="img/repo_img/repo_cover.jpg" alt="De Mol repo banner" width="100%"/>
+
 
 ## Background
 This web app is based on a Belgian TV game show. The show revolves around a group of people earning as much money as possible with challenges, all while finding the 1 mole whose task is to sabotage the challenges. Every episode there is a test with questions about the mole. The candidate who has the weakest test result has to go home. The last 2 candidates have to fight for the best test result about the mole in order to win.
@@ -13,12 +13,12 @@ This web app is based on a Belgian TV game show. The show revolves around a grou
 
 ### Goal
 
-The point of this web app is to play along with the tv show. U start out with **10** points and u have to submit these points to the candidates u find the most suspicious. 
+The point of this web app is to play along with the tv show. You start out with **10** points and u have to submit these points to the candidates u find the most suspicious. 
 
 // gif vote page
 
-After the episode airs, u will get a screen that displays your results.
-If u voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
+After the episode airs, you will get a screen that displays your results.
+If you voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
 
 !!! example Example
     This is what I voted.
