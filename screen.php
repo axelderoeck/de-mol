@@ -84,9 +84,9 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
     }
     // Bonuses
     // If user only voted on 1 candidate
-    if($count == 1){
-      $bonusScore += round($newScore / 5);
-    }
+    // if($count == 1){
+    //   $bonusScore += round($newScore / 5);
+    // }
     //Award IDEA: Royal Flush -> IF more than .... points
     //Award IDEA: Name -> IF user voted on 10 candidates
     //Award IDEA: Name -> IF lost more than .... points
@@ -96,9 +96,9 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
       $newScore = 10;
     }
 
-    if($bonus == true){
-      $newScore += $bonusScore;
-    }
+    // if($bonus == true){
+    //   $newScore += $bonusScore;
+    // }
         
     // Update users values
     $stmt = $pdo->prepare('UPDATE table_Users SET Score = ?, SeenResults = ? WHERE Id = ?');
