@@ -1,30 +1,14 @@
-<!DOCTYPE html>
-<html lang="nl">
-<head>
-  <?php include "includes/headinfo.php"; ?>
-</head>
-<body>
-
-<div id="main">
-  <div class="respContainer">
-
-  <a href="index.php"><img class="goBackArrow" src="img/assets/arrow.png" alt="arrow"></a>
-
+<?php include "includes/header.php"; ?>
   <h1>Disclaimer</h1>
   <h2>Rechten</h2>
   <p>Deze site is <span>niet</span> officieel
     en is gemaakt <span>zonder</span> commercieel belang.
     Alle rechten zijn voorbehouden aan de eigenaars/productie van 'De Mol' België.</p>
 
+  <a href="https://www.goplay.be/">GoPlay</a>
+  <a href="https://www.woestijnvis.be/">Woestijnvis</a>
+
   <h2>Contact</h2>
-  <p>U kan mij altijd contacteren op <span>mail@aksol.be</span></p>
+  <p>U kan mij altijd contacteren op <span>contact@axelderoeck.com</span></p>
 
-</div>
-</div>
-
-  <!-- JavaScript -->
-
-  <script type="text/javascript" src="js/scripts.js"></script>
-
-</body>
-</html>
+<?php include "includes/footer.php"; ?>

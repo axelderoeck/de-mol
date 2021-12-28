@@ -1,11 +1,25 @@
-function hamburgerMenu() {
-	var x = document.getElementById("myLinks");
-	if (x.style.display === "block") {
-		x.style.display = "none";
-	} else {
-		x.style.display = "block";
-	}
-}
+//Cookie Consent alert
+// (function() {
+// 	if (!localStorage.getItem("cookieconsent")) {
+// 	  document.body.innerHTML +=
+// 		'\
+// 	  <div class="cookieconsent info">\
+// 		<p class="title">De mol eet ook cookies</p>\
+// 		<p>Door het verdere gebruik van deze site ga je akkoord met het gebruik van cookies.</p>\
+// 		<br>\
+// 		<a href="#">\
+// 			Akkoord\
+// 		</a>\
+// 		<img src="img/assets/demol_logo_geen_tekst_cookie.png" />\
+// 	  </div>\
+// 	  ';
+// 	  document.querySelector(".cookieconsent a").onclick = function(e) {
+// 		e.preventDefault();
+// 		document.querySelector(".cookieconsent").style.display = "none";
+// 		localStorage.setItem("cookieconsent", true);
+// 	  };
+// 	}
+// })();
 
 window.stemKnop = function(toggle) {
 	if (toggle == "aan") {
@@ -39,24 +53,15 @@ function openReg() {
 	}
 }
 
-document.getElementById('menu-btn').onclick = function() {
-	// access properties using this keyword
-	if (this.checked) {
-		document.getElementById("sideNav").style.width = "250px";
-	} else {
-		document.getElementById("sideNav").style.width = "0";
-	}
-};
-
 function openNav() {
 	document.getElementById("mySidenav").style.width = "250px";
-	document.getElementById("main").style.marginLeft = "250px";
+	// document.getElementById("main").style.marginLeft = "250px";
 }
 
 /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 function closeNav() {
 	document.getElementById("mySidenav").style.width = "0";
-	document.getElementById("main").style.marginLeft = "0";
+	// document.getElementById("main").style.marginLeft = "0";
 }
 
 function collapse(contentId, buttonId) {
@@ -71,14 +76,26 @@ function collapse(contentId, buttonId) {
 	}
 }
 
-function showNotification(message, type) {
-	var notification = document.getElementById('informationPopup')
-	notification.classList.add(type);
-	notification.innerHTML = "<p>" + message + "</p>";
-	notification.style.top = "20px";
-	setTimeout(function() {
-		notification.style.top = "-50px";
-	}, 4000); //wait 4 seconds before closing again
+function showNotification(message, type, delay = 4000) {
+	// Check if message and type arent empty
+	if(message != "" && type != ""){
+		// Select notification element
+		let notification = $("#notification");
+		// Add correct style
+		notification.addClass(type);
+		// Add the message
+		notification.html("<p>" + message + "</p>");
+		// Display the notification
+		notification.css({
+			"top": "20px"
+		});
+		// Hide the notification
+		setTimeout(function() {
+			notification.css({
+				"top": "-100px"
+			});
+		}, delay);
+	}
 }
 
 function showPopup(id, showhide) {
@@ -88,13 +105,6 @@ function showPopup(id, showhide) {
 		document.getElementById(id).style.display = "none";
 	}
 }
-
-$(document).ready(function() {
-	$('ul.tabs').tabs({
-		swipeable: true,
-		responsiveThreshold: 1920
-	});
-});
 
 /* Indicator swipe function */
 function setIndicator(direction) {
@@ -107,5 +117,45 @@ function setIndicator(direction) {
 	document.getElementById('thecooler_indicator').style.transform = "translateX(" + percent + "%)";
 	document.getElementById('thecooler_indicator').style["-webkit-transform"] = "translateX(" + percent + "%)";
 	document.getElementById('thecooler_indicator').style["-ms-transform"] = "translateX(" + percent + "%)";
+}
 
+function editMode(id, visible){
+	if(visible == true){
+		document.getElementById(id).style.transform = "translateX(0%)";
+		document.getElementById(id).style["-webkit-transform"] = "translateX(0%)";
+		document.getElementById(id).style["-ms-transform"] = "translateX(0%)";
+	}else if(visible == false){
+		document.getElementById(id).style.transform = "translateX(100%)";
+		document.getElementById(id).style["-webkit-transform"] = "translateX(100%)";
+		document.getElementById(id).style["-ms-transform"] = "translateX(100%)";
+	}
+}
+
+function screenAnimation(textid, name, color) {
+	// Get the element to start the typewriter animation on
+	let textfield = document.querySelector("#"+textid);
+	// Initiate typewriter object
+	let typewriter = new Typewriter(textfield, {
+		loop: false,
+		delay: 300,
+	});
+	// Start typewriter animation
+	typewriter.typeString(name)
+	.pauseFor(1000)
+	// Typing completed ->
+	.callFunction(() => {
+		// Hide all elements from page
+		$("#screenPage").css({
+			"opacity": "0"
+		})
+		$("#screenFingerprint").css({
+			"opacity": "1"
+		})
+		// Set screen to correct color
+		$("#screen_"+color).css({
+			"animation": "showScreen 0.5s backwards ease",
+			"opacity": "1"
+		});
+	})
+	.start();
 }

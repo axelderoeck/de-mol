@@ -1,0 +1,156 @@
+/* All Animations */
+
+/* @keyframes showScreen {
+    0% {
+      filter: brightness(0%);
+    }
+    15% {
+      filter: brightness(20%);
+    }
+    25% {
+      filter: brightness(120%);
+    }
+    100% {
+      filter: brightness(100%);
+    }
+} */
+
+@keyframes showScreen {
+  0% {
+    filter: brightness(10%);
+  }
+  33% {
+    filter: brightness(150%);
+  }
+  60% {
+    filter: brightness(0%);
+  }
+  70% {
+    filter: brightness(0%);
+  }
+  100% {
+    filter: brightness(100%);
+  }
+}
+
+@keyframes swoopIn {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@-webkit-keyframes swoopIn {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes swoopIn {
+  0% {
+    transform: translateX(-130%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes size {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes size {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@-moz-keyframes size {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ploop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes ploop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@-moz-keyframes ploop {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Assign Animations */
+
+.displayItem {
+  animation: swoopIn 1.2s ease backwards;
+  -webkit-animation: swoopIn 1.2s ease backwards;
+  -moz-animation: swoopIn 1.2s ease backwards;
+}
+
+.displayUser {
+  animation: swoopIn 1.2s ease backwards;
+  -webkit-animation: swoopIn 1.2s ease backwards;
+  -moz-animation: swoopIn 1.2s ease backwards;
+}
+
+.awards div {
+  animation: ploop 1s ease backwards;
+  -webkit-animation: ploop 1s ease backwards;
+  -moz-animation: ploop 1s ease backwards;
+}
+
+.deelnemerItem {
+  animation: ploop 1s ease backwards;
+  -webkit-animation: ploop 1s ease backwards;
+  -moz-animation: ploop 1s ease backwards;
+}
+
+.awardslist div {
+  animation: ploop 1s ease backwards;
+  -webkit-animation: ploop 1s ease backwards;
+  -moz-animation: ploop 1s ease backwards;
+}
+
+.cookieconsent {
+  animation: swoopIn 1.2s ease backwards;
+  -webkit-animation: swoopIn 1.2s ease backwards;
+  -moz-animation: swoopIn 1.2s ease backwards;
+}
