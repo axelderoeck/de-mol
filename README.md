@@ -19,7 +19,7 @@ This web app is based on a Belgian TV game show. The show revolves around a grou
 
 <img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/app_overview.png" alt="App overview" width="100%"/>
 
-<img align="right" src="img/repo_img/vote.gif" alt="vote animation" width="300"/>
+<img align="right" src="img/repo_img/vote.gif" alt="vote animation" width="500"/>
 
 ### Goal
 
