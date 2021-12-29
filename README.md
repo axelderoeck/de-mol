@@ -14,13 +14,13 @@ This web application is based on a Belgian TV game show called 'De Mol' [^1]. Th
 
 <img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/app_overview.png" alt="App overview" width="100%"/>
 
-<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote_scores.gif" alt="vote animation" width="100%"/> [^3]
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote_scores.gif" alt="vote animation" width="100%"/>
 
 The goal of this web application is to play along with the tv show. You start out with **10** points, then you have to submit these points to the candidates you find the most suspicious. 'Molboek' is your weekly overview of your votes. On the scores page u can compare your score with everyone, friends and groups to see who is the best detective.
 
-<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="screen animation" width="100%"/> [^3]
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="screen animation" width="100%"/>
 
-After the episode airs, you will get a screen that displays your results.
+After the episode airs, you will get a screen [^3] that displays your results.
 If you voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
 
 >**:pencil2: Example**
