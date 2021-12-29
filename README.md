@@ -23,7 +23,7 @@ This web app is based on a Belgian TV game show. The show revolves around a grou
 
 The point of this web app is to play along with the tv show. You start out with **10** points and u have to submit these points to the candidates u find the most suspicious. 
 
-// gif vote page
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote_scores.gif" alt="vote animation" width="100%"/>
 
 After the episode airs, you will get a screen that displays your results.
 If you voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
@@ -41,7 +41,7 @@ If you voted on a candidate that had to go home this episode, you will have a **
 >**What if I lose all my points?**
 >If you happen to lose all your points, you will receive another 10 points to start again.
 
-<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="De Mol repo banner" width="100%"/>
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="screen animation" width="100%"/>
 
 <hr>
 
