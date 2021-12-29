@@ -47,7 +47,7 @@ If you voted on a candidate that had to go home this episode, you will have a **
 
 **Q:** Is this an official app?
 
-**A:** No, I do not own De Mol in any way nor do I have anything to do with it. This is purely a fan-made project with no commercial intention.
+**A:** No, I do not own **De Mol** in any way nor do I have anything to do with it. This is purely a fan-made project with **no** commercial intention.
 
 [^1]: **De Mol** is owned by **[Woestijnvis](https://www.woestijnvis.be/producties/de-mol)**, **[GoPlay](https://www.goplay.be/)** and **[SBSBelgium](https://www.sbsbelgium.be/)**..
 [^2]: **De Mol Web App** is made entirely by me (*Axel De Roeck*).
