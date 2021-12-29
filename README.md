@@ -21,7 +21,9 @@ This web app is based on a Belgian TV game show. The show revolves around a grou
 
 ### Goal
 
-The point of this web app is to play along with the tv show. You start out with **10** points and u have to submit these points to the candidates u find the most suspicious. 
+The point of this web app is to play along with the tv show. You start out with **10** points and you have to submit these points to the candidates u find the most suspicious. On the scores page u can compare your scores with everyone and see who is the best detective.
+
+<img align="right" src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote.gif" alt="vote animation"/>
 
 <img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote_scores.gif" alt="vote animation" width="100%"/>
 
@@ -32,6 +34,7 @@ If you voted on a candidate that had to go home this episode, you will have a **
 >This is what I voted:
 >- Lennart: 8pts
 >- Dami: 2pts
+>
 >Dami had to go home this episode, this means I lose those 2 points.
 >But my points on Lennart are still correct, that means I get double the amount back = 16pts total.
 
@@ -53,6 +56,3 @@ Looking for the mole alone is no fun. That's why u can also add friends and grou
 
 // friends and groups gifs
 
-On the scores page u can compare your scores with everyone and see who wins at the end.
-
-// scores gif
