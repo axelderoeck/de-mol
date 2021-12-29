@@ -1,5 +1,5 @@
 >**:warning: Warning** 
->The owners of the TV show have refused to grant me permission to host the website.
+>The owners of De Mol have denied permission to host the website.
 >Because of this the webapp is no longer in development and will remain unfinished.
     
 <img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/repo_cover.jpg" alt="De Mol repo banner" width="100%"/>
