@@ -2,7 +2,7 @@
 >The owners of the TV show have refused to grant me permission to host the website.
 >Because of this the webapp is no longer in development and will remain unfinished.
     
-<img src="https://github.com/AxelDeRoeck/demolapp-web/blob/main/img/repo_img/repo_cover.jpg" alt="De Mol repo banner" width="100%"/>
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/repo_cover.jpg" alt="De Mol repo banner" width="100%"/>
 
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![jQuery](https://img.shields.io/badge/jquery-%230769AD.svg?style=for-the-badge&logo=jquery&logoColor=white) ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white) ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)  ![Adobe Photoshop](https://img.shields.io/badge/adobephotoshop-%2331A8FF.svg?style=for-the-badge&logo=adobephotoshop&logoColor=white)
 <img src="https://img.shields.io/badge/made by-Axel De Roeck-blue?style=flat-square"/> <img src="https://img.shields.io/badge/php-7.4.12-green?style=flat-square"/> <img src="https://img.shields.io/badge/status-Development halted-red?style=flat-square"/> 
@@ -17,7 +17,7 @@ This web app is based on a Belgian TV game show. The show revolves around a grou
 
 ## The Web App
 
-<img src="https://github.com/AxelDeRoeck/DeMol_WebApp/blob/main/img/repo_img/app_overview.png" alt="App overview" width="100%"/>
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/app_overview.png" alt="App overview" width="100%"/>
 
 ### Goal
 
@@ -41,7 +41,7 @@ If you voted on a candidate that had to go home this episode, you will have a **
 >**What if I lose all my points?**
 >If you happen to lose all your points, you will receive another 10 points to start again.
 
-// gif screen page
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="De Mol repo banner" width="100%"/>
 
 <hr>
 
