@@ -34,7 +34,7 @@ define('MAX_CHAR_PASSWORD', 20);
 
 /* TIME SETTINGS */
 // Start of the season date
-define('SEASON_START', "03/21/2021"); // format: MM/DD/YYYY
+define('SEASON_START', "03/01/2022"); // format: MM/DD/YYYY
 // End of the season date
 define('SEASON_END', "05/09/2022"); // format: MM/DD/YYYY
 // Day of the episode
