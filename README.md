@@ -14,11 +14,11 @@ This web application is based on a Belgian TV game show called 'De Mol' [^1]. Th
 
 <img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/app_overview.png" alt="App overview" width="100%"/>
 
-<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote_scores.gif" alt="vote animation" width="100%"/>
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/vote_scores.gif" alt="vote animation" width="100%"/> [^3]
 
 The goal of this web application is to play along with the tv show. You start out with **10** points, then you have to submit these points to the candidates you find the most suspicious. 'Molboek' is your weekly overview of your votes. On the scores page u can compare your score with everyone, friends and groups to see who is the best detective.
 
-<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="screen animation" width="100%"/>
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/img/repo_img/screenanimation.gif" alt="screen animation" width="100%"/> [^3]
 
 After the episode airs, you will get a screen that displays your results.
 If you voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
@@ -29,9 +29,9 @@ If you voted on a candidate that had to go home this episode, you will have a **
 >
 >Dami had to go home this episode, this means I lose those 2 points.
 >But my points on Lennart are still correct, that means I get double the amount back = 16pts total.
-##
+## FAQ
 
-**Q:** What screen do I get if I am both correct and wrong like in the example above?
+**Q:** What screen do I get if I am both correct and wrong?
 
 **A:** You will still get a red screen, but only lose the wrong points.
 ##
@@ -39,5 +39,19 @@ If you voted on a candidate that had to go home this episode, you will have a **
 
 **A:** If you happen to lose all your points, you will receive another 10 points to start again.
 
+##
+**Q:** Can I play with friends?
+
+**A:** Yes, you can add friends by their friendcode. U can also create a group. There is a seperate leaderboard for each category (everyone, friends, groups).
+##
+
+**Q:** Is this an official app?
+
+**A:** No, I do not own De Mol in any way nor do I have anything to do with it. This is purely a fan-made project with no commercial intention.
+
 [^1]: **De Mol** is owned by **[Woestijnvis](https://www.woestijnvis.be/producties/de-mol)**, **[GoPlay](https://www.goplay.be/)** and **[SBSBelgium](https://www.sbsbelgium.be/)**..
 [^2]: **De Mol Web App** is made entirely by me (*Axel De Roeck*).
+[^3]: Libraries used: 
+  **[Slick.js](https://kenwheeler.github.io/slick/)** 
+  **[Typewriter.js](https://safi.me.uk/typewriterjs/)**
+  **[JQuery](https://jquery.com/)** 
