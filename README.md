@@ -1,6 +1,6 @@
 > **:warning: Warning** 
-    The owners of the TV show have refused to grant me permission to host the website.
-    Because of this the webapp is no longer in development and will remain unfinished.
+> The owners of the TV show have refused to grant me permission to host the website.
+> Because of this the webapp is no longer in development and will remain unfinished.
     
 <img src="https://github.com/AxelDeRoeck/demolapp-web/blob/main/img/repo_img/repo_cover.jpg" alt="De Mol repo banner" width="100%"/>
 
@@ -29,17 +29,17 @@ After the episode airs, you will get a screen that displays your results.
 If you voted on a candidate that had to go home this episode, you will have a **red screen** and lose those points. However if u voted correctly u will get a **green screen** and those points will be doubled.
 
 > **:pencil2: Example**
->    This is what I voted:
+> This is what I voted:
        - Lennart: 8pts
        - Dami: 2pts
     Dami had to go home this episode, this means I lose those 2 points.
     But my points on Lennart are still correct, that means I get > >  double the amount back = 16pts total.
 
 > **What screen do I get if I am both correct and wrong like in the example above?**
->    You will still get a red screen, but only lose the wrong points.
+> You will still get a red screen, but only lose the wrong points.
 
 > **What if I lose all my points?**
->    If you happen to lose all your points, you will receive another 10 points to start again.
+> If you happen to lose all your points, you will receive another 10 points to start again.
 
 // gif screen page
 
