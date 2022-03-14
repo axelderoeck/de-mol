@@ -34,9 +34,9 @@ define('MAX_CHAR_PASSWORD', 20);
 
 /* TIME SETTINGS */
 // Start of the season date
-define('SEASON_START', "03/01/2022"); // format: MM/DD/YYYY
+define('SEASON_START', "20/03/2022"); // format: MM/DD/YYYY
 // End of the season date
-define('SEASON_END', "05/09/2022"); // format: MM/DD/YYYY
+define('SEASON_END', "08/05/2022"); // format: MM/DD/YYYY
 // Day of the episode
 define('VOTE_DAY', "Sun"); // format: Mon, Tue, Wed, Thu, Fri, Sat, Sun
 // Vote hour
@@ -66,11 +66,11 @@ define('AWARD_SECRET_MOL', 11);
 
 /* EDITION AWARDS */
 // Award winnaar id
-define('AWARD_WINNAAR', 1);
+define('AWARD_WINNAAR', 13);
 // Award topper id
-define('AWARD_TOPPER', 2);
+define('AWARD_TOPPER', 14);
 // Award deelnemer id
-define('AWARD_DEELNEMER', 4);
+define('AWARD_DEELNEMER', 15);
 
 /* AWARDS CRITERIA */
 // Award mol code
