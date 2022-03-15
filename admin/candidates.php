@@ -1,3 +1,14 @@
+<?php
+
+require_once("includes/phpdefault.php");
+
+// Get all available awards
+$stmt = $pdo->prepare('SELECT * FROM table_Candidates');
+$stmt->execute();
+$candidates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
 <?php include("includes/header.php") ?>
 
   <!-- Table -->
@@ -19,9 +30,10 @@
                 <th class="text-center">Mol</th>
               </tr>
             </thead>
+            <?php foreach($candidates as $candidate): ?>
             <tbody>
               <tr>
-                <td class="text-center text-muted">1</td>
+                <td class="text-center text-muted"><?=$candidate['Id']?></td>
                 <td>
                   <div class="widget-content p-0">
                     <div class="widget-content-wrapper">
@@ -31,31 +43,48 @@
                         </div>
                       </div>
                       <div class="widget-content-left flex2">
-                        <div class="widget-heading">Bram</div>
+                        <div class="widget-heading"><?=$candidate['Name']?></div>
                         <div class="widget-subheading opacity-7"></div>
                       </div>
                     </div>
                   </div>
                 </td>
-                <td class="text-center">35</td>
-                <td class="text-center">Dopper</td>
+                <td class="text-center"><?=$candidate['Age']?></td>
+                <td class="text-center"><?=$candidate['Job']?></td>
                 <td class="text-center">
-                  <div class="badge badge-success">In</div>
+                  <?php if($candidate['Status'] == 1): ?>
+                    <div class="badge badge-success">In</div>
+                  <?php else: ?>
+                    <div class="badge badge-danger">Out</div>
+                  <?php endif; ?>
                 </td>
                 <td class="text-center">
+                  <?php if($candidate['Winner'] == 0): ?>
                   <div class="badge badge-danger">No</div>
+                  <?php else: ?>
+                  <div class="badge badge-success">Yes</div>
+                  <?php endif; ?>
                 </td>
                 <td class="text-center">
+                  <?php if($candidate['Loser'] == 0): ?>
                   <div class="badge badge-danger">No</div>
+                  <?php else: ?>
+                  <div class="badge badge-success">Yes</div>
+                  <?php endif; ?>
                 </td>
                 <td class="text-center">
+                  <?php if($candidate['Mol'] == 0): ?>
                   <div class="badge badge-danger">No</div>
+                  <?php else: ?>
+                  <div class="badge badge-success">Yes</div>
+                  <?php endif; ?>
                 </td>
                 <td class="text-center">
-                  <button onclick="location.href = 'candidate.php?id=1'" type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">View</button>
+                  <button onclick="location.href = 'candidate.php?id=<?=$candidate['Id']?>'" type="button" id="PopoverCustomT-1" class="btn btn-primary btn-sm">View</button>
                 </td>
               </tr>                               
             </tbody>
+            <?php endforeach; ?>
           </table>
         </div>
       </div>

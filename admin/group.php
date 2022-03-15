@@ -1,3 +1,9 @@
+<?php
+
+require_once("includes/phpdefault.php"); 
+
+?>
+
 <?php include("includes/header.php") ?>
   
 <div class="row">
