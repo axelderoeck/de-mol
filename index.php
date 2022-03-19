@@ -169,7 +169,7 @@ if (isset($_POST["userRegister"], $_POST['email'], $_POST['password'], $_POST['c
         <input style="width: 95%;" type="submit" name="userLogin" id="userLogin" value="Login">
         <br>             
       </form>
-      <a href="forgotpassword.php">wachtwoord vergeten?</a>
+      <!-- <a href="forgotpassword.php">wachtwoord vergeten?</a> -->
       <p class="loginLink">Geen account? Klik <a href="javascript:openReg();">hier.</a></p>
     </div>
     
