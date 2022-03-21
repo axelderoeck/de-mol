@@ -48,7 +48,7 @@ define('FRIENDCODE_LENGTH', 5);
 // Maximum amount of users in the top list
 define('LIMIT_TOPLIST', 20);
 // Amount of candidates
-define('CANDIDATES_AMOUNT', 10);
+define('CANDIDATES_AMOUNT', 11);
 // Days untill remember me cookie expires
 define('REMEMBER_ME_EXPIRE_DAYS', 30);
 
