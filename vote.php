@@ -101,6 +101,7 @@ if (isset($_POST["formSubmitVote"])){
 
   <h1>WIE IS DE <span>MOL</span> ?</h1>
   <h2><span>Swipe</span> tussen de kandidaten en <span>stem</span>.</h2>
+  <h2>Vanaf je jouw punten inzend kan je niet meer terug!</h2>
   
     <form id="deMolForm" method="POST" action=""></form>
     <!-- form carousel -->

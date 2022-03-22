@@ -60,18 +60,18 @@
 
                     // Check for max available points
                     if(totalVoted > <?=$account["Score"]?>){
-                    // Get the current selected value
-                    let selectedValue = $('#slider' + candidateId).val();
-                    // Calculate the new value correctly with set limit
-                    let newSelectedValue = selectedValue - (totalVoted - <?=$account["Score"]?>);
-                    // Change actual values
-                    $('#slider' + candidateId).val(newSelectedValue);
-                    // Change display values
-                    $(".pointsCandidate" + candidateId).text(newSelectedValue);
-                    $(".userPointsLeft").text(0);
+                        // Get the current selected value
+                        let selectedValue = $('#slider' + candidateId).val();
+                        // Calculate the new value correctly with set limit
+                        let newSelectedValue = selectedValue - (totalVoted - <?=$account["Score"]?>);
+                        // Change actual values
+                        $('#slider' + candidateId).val(newSelectedValue);
+                        // Change display values
+                        $(".pointsCandidate" + candidateId).text(newSelectedValue);
+                        $(".userPointsLeft").text(0);
                     }else{
-                    // Change display values
-                    $(".userPointsLeft").text(<?=$account["Score"]?> - totalVoted);
+                        // Change display values
+                        $(".userPointsLeft").text(<?=$account["Score"]?> - totalVoted);
                     }
                     // Change display values
                     $(".pointsCandidate" + candidateId).text($('#slider' + candidateId).val());
