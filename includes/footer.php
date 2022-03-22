@@ -58,6 +58,13 @@
                     totalVoted += parseInt($('#slider<?=$candidate['Id']?>').val());
                     <?php endforeach; ?>
 
+                    // Secure voting button for oopsies
+                    if(totalVoted < <?=$account["Score"]?>){
+                        $("#formSubmitVote").prop('disabled', true);
+                    }else{
+                        $("#formSubmitVote").prop('disabled', false);
+                    }
+
                     // Check for max available points
                     if(totalVoted > <?=$account["Score"]?>){
                         // Get the current selected value
