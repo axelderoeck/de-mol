@@ -82,11 +82,7 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
         $bonus = false;
       }
     }
-    // Bonuses
-    // If user only voted on 1 candidate
-    // if($count == 1){
-    //   $bonusScore += round($newScore / 5);
-    // }
+
     //Award IDEA: Royal Flush -> IF more than .... points
     //Award IDEA: Name -> IF user voted on 10 candidates
     //Award IDEA: Name -> IF lost more than .... points
@@ -96,9 +92,24 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
       $newScore = 10;
     }
 
-    // if($bonus == true){
-    //   $newScore += $bonusScore;
-    // }
+    // Bonuses
+    // Check if the score isnt the default
+    if ($newScore > 10){
+      // Add 3 points if the user has a green screen
+      if($redScreen != true){
+        $bonusScore += 3;
+      }
+      // Add another 3 points if the user never had a red screen before
+      if($account["Screen"] == 0){
+        $bonusScore += 3;
+      }
+      // Add 5 points if the user only voted on 1 candidate
+      if($count == 1){
+        $bonusScore += 5;
+      }
+
+      $newScore += $bonusScore;
+    }
         
     // Update users values
     $stmt = $pdo->prepare('UPDATE table_Users SET Score = ?, SeenResults = ? WHERE Id = ?');
@@ -173,7 +184,11 @@ if(date('D') == VOTE_DAY && date('Hi') < VOTE_HOUR) {
             </div>
           <?php endforeach; ?>
         </div>
-        <p>Nieuwe score: <?=$newScore?></p>
+        <p>Nieuwe score: <?=$newScore-$bonusScore?>
+          <?php if($bonusScore > 0): ?>
+          <br> Bonus: +<?=$bonusScore?>
+          <?php endif; ?>
+        </p>
         <button onclick="location.href = 'home.php';" class="styledBtn" type="submit">Ga door</button>
       </div>
     </div>

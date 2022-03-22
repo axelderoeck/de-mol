@@ -37,5 +37,10 @@ $votetime = str_split(VOTE_HOUR, 2);
     <h2>Scores</h2>
     <p>Op deze pagina kan je elkaars huidige <span>score</span> zien in de vorm van een toplijst gesorteerd op: <span>iedereen</span>, <span>vrienden</span> en <span>groepen</span>.</p>
 
+    <h2>Bonus punten</h2>
+    <p>Je krijgt <span>+3 punten</span> als je een groen scherm hebt. <br>
+    Je krijgt per aflevering een extra <span>+3 punten</span> als je nog steeds geen rood scherm hebt gehad (dit stopt vanaf je rood hebt). <br>
+    Je krijgt <span>+5 punten</span> als je alles op 1 persoon inzet wegens het risico.</p>
+
 <?php include "includes/footer.php"; ?>
 
