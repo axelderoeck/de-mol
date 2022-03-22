@@ -33,7 +33,7 @@ if (isset($_POST["sendMail"])){
     // Set mail values
     $subject = "De Mol: Wachtwoord Reset";
     $message = "Dag (vergeetachtige) mollenjager,\n\n
-    Jouw gebruikersnaam (moest je dat ook vergeten zijn) is: $username\n\n
+    Jouw gebruikersnaam is: $username\n\n
     Klik op de onderstaande link om je wachtwoord opnieuw in te stellen.\n
     https://aksol.be/demol/resetpassword.php?u=$id&s=$random\n\n
     *Heb jij dit niet aangevraagd? Geen probleem, dan kan je dit bericht gewoon negeren.";
@@ -57,7 +57,6 @@ if (isset($_POST["sendMail"])){
 <?php include "includes/header.php"; ?>
 
   <h1>Wachtwoord vergeten</h1>
-  <h2>We vergeten allemaal wel eens.</h2>
 
   <form method="post" action="">
     <p>Geef je email waar jouw account aan verbonden is.</p>
@@ -66,6 +65,7 @@ if (isset($_POST["sendMail"])){
   </form>
   
   <p class="example">Als je geen email hebt toegevoegd aan je account zal je hier geen gebruik van kunnen maken.</p>
+  <p class="example">Soms duurt het een paar minuten voor de email aankomt.</p>
   <p class="example">Komt de email niet aan? Check zeker je spam folder eens na. Probeer opnieuw als het na een paar minuten nog steeds niet is aangekomen.</p>
 
 <?php include "includes/footer.php"; ?>

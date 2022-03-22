@@ -1,6 +1,15 @@
 <?php
 
-require_once("includes/phpdefault.php");
+// Initialize a new session
+ob_start();
+session_start();
+
+// Include the configuration file
+include 'includes/config.php';
+// Include functions
+include 'includes/functions.php';
+// Connect to MySQL database
+$pdo = pdo_connect_mysql();
 
 // get id and key from url
 $url_userKey = $_GET["s"];
