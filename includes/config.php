@@ -40,7 +40,7 @@ define('SEASON_END', "05/08/2022"); // format: MM/DD/YYYY
 // Day of the episode
 define('VOTE_DAY', "Sun"); // format: Mon, Tue, Wed, Thu, Fri, Sat, Sun
 // Vote hour
-define('VOTE_HOUR', "2200"); // format: HHMM
+define('VOTE_HOUR', "2130"); // format: HHMM
 
 /* OTHER SETTINGS */
 // Length of the random generated friendcode
