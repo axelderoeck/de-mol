@@ -126,6 +126,10 @@ if (isset($_POST["leaveGroup"])){
     </form>
   <?php endif; ?>
 
+  <?php if($user_is_admin): ?>
+    <button onclick="location.href = 'addusertogroup.php?g=<?=$group["Id"]?>';" class="styledBtn" type="submit" name="button">Nodig spelers uit</button>
+  <?php endif; ?>
+
   <div>
     <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
       <?php if(!empty($members)): ?>
@@ -155,8 +159,6 @@ if (isset($_POST["leaveGroup"])){
   </div>
 
   <?php if($user_is_admin): ?>
-    <button onclick="location.href = 'addusertogroup.php?g=<?=$group["Id"]?>';" class="styledBtn" type="submit" name="button">Nodig spelers uit</button>
-
     <div id="editscreen" class="editmenu">
       <a href="javascript:editMode('editscreen', false);">&times;</a>
 
