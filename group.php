@@ -111,6 +111,21 @@ if (isset($_POST["leaveGroup"])){
       (<?=$groupMembers?>)
     <?php endif; ?>
   </h3>
+
+  <?php if($group["Private"] == 0): ?>
+    <?php if(!$user_is_member): ?>
+      <form action="" method="post">
+        <input type="submit" name="joinGroup" id="joinGroup" value="Aansluiten bij groep">
+      </form>
+    <?php endif; ?>
+  <?php endif; ?>
+
+  <?php if($user_is_member): ?>
+    <form action="" method="post">
+      <input type="submit" name="leaveGroup" id="leaveGroup" value="Groep verlaten">
+    </form>
+  <?php endif; ?>
+
   <div>
     <?php if($user_is_member && $group["Private"] == 1 || $group["Private"] == 0): ?>
       <?php if(!empty($members)): ?>
@@ -138,20 +153,6 @@ if (isset($_POST["leaveGroup"])){
       <p style="text-align: center !important;">Je kan geen leden bekijken van een privé groep.</p>
     <?php endif; ?>
   </div>
-  
-  <?php if($group["Private"] == 0): ?>
-    <?php if(!$user_is_member): ?>
-      <form action="" method="post">
-        <input type="submit" name="joinGroup" id="joinGroup" value="Aansluiten bij groep">
-      </form>
-    <?php endif; ?>
-  <?php endif; ?>
-
-  <?php if($user_is_member): ?>
-    <form action="" method="post">
-      <input type="submit" name="leaveGroup" id="leaveGroup" value="Groep verlaten">
-    </form>
-  <?php endif; ?>
 
   <?php if($user_is_admin): ?>
     <button onclick="location.href = 'addusertogroup.php?g=<?=$group["Id"]?>';" class="styledBtn" type="submit" name="button">Nodig spelers uit</button>
