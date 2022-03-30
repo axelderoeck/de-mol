@@ -24,7 +24,7 @@ $votetime = str_split(VOTE_HOUR, 2);
 
     <h2>Hoe stemmen?</h2>
     <p>Als je op de <span>homepage</span> op de knop <span>'stemmen'</span> drukt ga je naar de stem pagina. <br> Daarna kan je <span>swipen</span> tussen de mogelijke kandidaten en je beschikbare punten inzetten a.d.h.v. de <span>slider</span>. <br> <span>Klaar?</span> druk op de <span>'inzenden'</span> knop. <br> Nu kan je <span>niet</span> meer stemmen tot dat de <span>volgende</span> aflevering is geweest.</p>
-    <p class="example"><b>Opgelet!</b> Je kan maar 1 keer per week inzenden.</p>
+    <p class="example">Je kan je stem nog aanpassen in je molboek.</p>
 
     <h2>Hoe speel ik met anderen?</h2>
     <p>Als je naar de pagina <span>'vrienden'</span> gaat, kan je daar vrienden toevoegen aan de hand van hun <span>friendcode</span>.</p>

@@ -743,6 +743,40 @@ function getNotificationCount($id){
   return $stmt->fetchColumn(0);
 }
 
+function resetVotes($id){
+  // DB connection
+  $pdo = pdo_connect_mysql();
+
+  // Search for user with this id
+  $stmt = $pdo->prepare('SELECT * FROM table_Users WHERE Id = ?');
+  $stmt->execute([ $id ]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  // Check if user exists
+  if($user){
+    // Get the total score of user back
+    $votedPoints = getVotedPoints($id) + $user["Score"];
+    // Reset user values to before the vote
+    $stmt = $pdo->prepare('UPDATE table_Users SET Voted = ?, Score = ? WHERE Id = ?');
+    $stmt->execute([ 0, $votedPoints, $id ]);
+    // Delete voted points
+    $stmt = $pdo->prepare('DELETE FROM table_Scores WHERE UserId = ?');
+    $stmt->execute([ $id ]);
+    // Notify user
+    $type = "success";
+    $message = "Punten zijn gereset.";
+  }else{
+    // Notify user
+    $type = "warning";
+    $message = "Kan stem niet resetten.";
+  }
+
+  return (object)[
+    'type' => $type,
+    'message' => $message
+  ];
+}
+
 /*
 function name($variable){
   // DB connection

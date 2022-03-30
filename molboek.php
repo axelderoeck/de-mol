@@ -7,6 +7,11 @@ require_once("includes/phpdefault.php");
 <?php include "includes/header.php"; ?>
 
       <h1>Mijn Molboek</h1>
+
+      <?php if($_SESSION["Voted"] == 1): ?>
+        <p class="example">Wil je nog een wijziging maken? Klik <a href="resetvote.php">hier</a> om opnieuw te stemmen.</p>
+      <?php endif; ?>
+
       <h2>Jouw gespendeerde punten:</h2>
       <?php
       // Select all the scores the user has on the candidates and sort them from high to low

@@ -37,6 +37,10 @@ if($account["Name"] != null || $account["Name"] != ""){
 
   <h2 id="infoTekst"></h2>
 
+  <?php if($_SESSION["Voted"] == 1): ?>
+    <p class="example">Wil je nog een wijziging maken? Klik <a href="resetvote.php">hier</a> om opnieuw te stemmen.</p>
+  <?php endif; ?>
+
   <p class="hiddenField">.- -. - .-. --- .--. --- -. -.-- -- .. .</p>
 
 <?php include "includes/footer.php"; ?>
