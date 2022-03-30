@@ -77,13 +77,6 @@
                   Candidates
                 </a>
               </li>
-              <li class="app-sidebar__heading">Subtitel</li>
-              <li>
-                <a href="tables-regular.html">
-                  <i class="metismenu-icon pe-7s-display2"></i>
-                  Pagina 2
-                </a>
-              </li>
             </ul>
           </div>
         </div>
