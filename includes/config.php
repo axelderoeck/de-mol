@@ -36,7 +36,7 @@ define('MAX_CHAR_PASSWORD', 20);
 // Start of the season date
 define('SEASON_START', "03/19/2022"); // format: MM/DD/YYYY
 // End of the season date
-define('SEASON_END', "05/09/2022"); // format: MM/DD/YYYY +1 day
+define('SEASON_END', "05/08/2022"); // format: MM/DD/YYYY
 // Day of the episode
 define('VOTE_DAY', "Sun"); // format: Mon, Tue, Wed, Thu, Fri, Sat, Sun
 // Vote hour
