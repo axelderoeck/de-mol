@@ -1,3 +1,5 @@
+<img src="https://github.com/AxelDeRoeck/demol-webapp/blob/main/readme_images/repo_cover.jpg" alt="De Mol repo banner" width="100%"/>
+
 # How to setup
 
 ## Uploading and establishing a database connection
